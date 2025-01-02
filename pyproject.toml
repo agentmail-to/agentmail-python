@@ -1,0 +1,7 @@
+[project]
+name = "agentmail-python"
+version = "0.1.0"
+description = "AgentMail Python SDK"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []

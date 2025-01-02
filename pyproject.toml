@@ -5,6 +5,7 @@ description = "AgentMail API Python client"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "email-validator>=2.2.0",
     "httpx>=0.28.1",
     "pydantic>=2.10.4",
 ]

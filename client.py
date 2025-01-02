@@ -1,7 +1,8 @@
 import httpx
-from typing import Optional
+from typing import Optional, List, Union
+from pydantic import EmailStr
 
-from models import CreateInboxRequest, CreateInboxResponse
+from models import Inbox, CreateInbox, Emails, Email, SendEmail, SentEmail
 
 
 class AgentMail:
@@ -9,12 +10,49 @@ class AgentMail:
         self.base_url = base_url
 
     def create_inbox(self, username: Optional[str] = None, domain: Optional[str] = None):
-        body = CreateInboxRequest(username=username, domain=domain)
-        response = httpx.post(f"{self.base_url}/inboxes", json=body.model_dump(exclude_none=True))
-        response.raise_for_status()
-        return CreateInboxResponse(**response.json())
+        body = CreateInbox(username=username, domain=domain)
+        response = httpx.post(f"{self.base_url}/inboxes", json=body.model_dump(exclude_none=True)).raise_for_status()
+        return Inbox(**response.json())
 
     def delete_inbox(self, address: str):
-        response = httpx.delete(f"{self.base_url}/inboxes/{address}")
-        response.raise_for_status()
+        response = httpx.delete(f"{self.base_url}/inboxes/{address}").raise_for_status()
         return response.status_code
+
+    def get_emails(self, address: str):
+        response = httpx.get(f"{self.base_url}/inboxes/{address}/emails").raise_for_status()
+        return Emails(**response.json())
+
+    def get_email(self, address: str, id: str):
+        response = httpx.get(f"{self.base_url}/inboxes/{address}/emails/{id}").raise_for_status()
+        return Email(**response.json())
+
+    def send_email(
+        self,
+        address: str,
+        to: Union[EmailStr, List[EmailStr]],
+        cc: Optional[Union[EmailStr, List[EmailStr]]] = None,
+        bcc: Optional[Union[EmailStr, List[EmailStr]]] = None,
+        subject: Optional[str] = None,
+        text: Optional[str] = None,
+        in_reply_to: Optional[str] = None,
+        references: Optional[Union[str, List[str]]] = None,
+    ):
+        body = SendEmail(to=to, cc=cc, bcc=bcc, subject=subject, text=text, in_reply_to=in_reply_to, references=references)
+        response = httpx.post(f"{self.base_url}/inboxes/{address}/emails", json=body.model_dump(exclude_none=True)).raise_for_status()
+        return SentEmail(**response.json())
+
+    def reply_email(
+        self,
+        address: str,
+        id: str,
+        to: Union[EmailStr, List[EmailStr]],
+        cc: Optional[Union[EmailStr, List[EmailStr]]] = None,
+        bcc: Optional[Union[EmailStr, List[EmailStr]]] = None,
+        subject: Optional[str] = None,
+        text: Optional[str] = None,
+        in_reply_to: Optional[str] = None,
+        references: Optional[Union[str, List[str]]] = None,
+    ):
+        body = SendEmail(to=to, cc=cc, bcc=bcc, subject=subject, text=text, in_reply_to=in_reply_to, references=references)
+        response = httpx.post(f"{self.base_url}/inboxes/{address}/emails/{id}/reply", json=body.model_dump(exclude_none=True)).raise_for_status()
+        return SentEmail(**response.json())

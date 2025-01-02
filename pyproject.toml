@@ -1,7 +1,13 @@
 [project]
 name = "agentmail-python"
 version = "0.1.0"
-description = "AgentMail Python SDK"
+description = "AgentMail API Python client"
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "httpx>=0.28.1",
+    "pydantic>=2.10.4",
+]
+
+[tool.black]
+line-length = 176

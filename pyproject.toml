@@ -7,7 +7,11 @@ requires-python = ">=3.11"
 dependencies = [
     "email-validator>=2.2.0",
     "httpx>=0.28.1",
+    "langchain-openai>=0.2.14",
+    "langchain>=0.3.13",
     "pydantic>=2.10.4",
+    "langgraph>=0.2.60",
+    "python-dotenv>=1.0.1",
 ]
 
 [tool.black]

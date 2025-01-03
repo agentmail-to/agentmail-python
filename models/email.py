@@ -40,14 +40,8 @@ class Email(BaseModel):
 
 
 class SendEmail(BaseModel):
-    to: Union[EmailStr, List[EmailStr]]
+    to: Optional[Union[EmailStr, List[EmailStr]]] = None
     cc: Optional[Union[EmailStr, List[EmailStr]]] = None
     bcc: Optional[Union[EmailStr, List[EmailStr]]] = None
     subject: Optional[str] = None
     text: Optional[str] = None
-    in_reply_to: Optional[str] = None
-    references: Optional[Union[str, List[str]]] = None
-
-
-class SentEmail(BaseModel):
-    message_id: str

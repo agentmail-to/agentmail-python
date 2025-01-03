@@ -15,7 +15,7 @@ def main():
     inbox = client.create_inbox(username=USERNAME, domain=DOMAIN)
     print(inbox, "\n")
 
-    sleep(2)
+    sleep(3)
 
     emails = client.get_emails(inbox.address)
     print(emails, "\n")
@@ -26,7 +26,7 @@ def main():
     sent_email = client.send_email(inbox.address, inbox.address, subject="Send subject", text="Send body")
     print(sent_email, "\n")
 
-    sleep(2)
+    sleep(3)
 
     emails = client.get_emails(inbox.address)
     print(emails, "\n")
@@ -34,10 +34,10 @@ def main():
     email = client.get_email(inbox.address, emails.emails[0].id)
     print(email, "\n")
 
-    sent_email = client.reply_email(inbox.address, emails.emails[0].id, inbox.address, text="Reply body")
+    sent_email = client.reply_to_email(inbox.address, emails.emails[0].id, text="Reply body")
     print(sent_email, "\n")
 
-    sleep(2)
+    sleep(3)
 
     emails = client.get_emails(inbox.address)
     print(emails, "\n")

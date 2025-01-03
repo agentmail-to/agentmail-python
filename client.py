@@ -2,7 +2,7 @@ import httpx
 from typing import Optional, List, Union
 from pydantic import EmailStr
 
-from models import Inbox, CreateInbox, Emails, Email, SendEmail, SentEmail
+from models import Inbox, CreateInbox, Emails, Email, SendEmail
 
 
 class AgentMail:
@@ -29,30 +29,26 @@ class AgentMail:
     def send_email(
         self,
         address: str,
-        to: Union[EmailStr, List[EmailStr]],
+        to: Optional[Union[EmailStr, List[EmailStr]]] = None,
         cc: Optional[Union[EmailStr, List[EmailStr]]] = None,
         bcc: Optional[Union[EmailStr, List[EmailStr]]] = None,
         subject: Optional[str] = None,
         text: Optional[str] = None,
-        in_reply_to: Optional[str] = None,
-        references: Optional[Union[str, List[str]]] = None,
     ):
-        body = SendEmail(to=to, cc=cc, bcc=bcc, subject=subject, text=text, in_reply_to=in_reply_to, references=references)
+        body = SendEmail(to=to, cc=cc, bcc=bcc, subject=subject, text=text)
         response = httpx.post(f"{self.base_url}/inboxes/{address}/emails", json=body.model_dump(exclude_none=True)).raise_for_status()
-        return SentEmail(**response.json())
+        return response.status_code
 
-    def reply_email(
+    def reply_to_email(
         self,
         address: str,
         id: str,
-        to: Union[EmailStr, List[EmailStr]],
+        to: Optional[Union[EmailStr, List[EmailStr]]] = None,
         cc: Optional[Union[EmailStr, List[EmailStr]]] = None,
         bcc: Optional[Union[EmailStr, List[EmailStr]]] = None,
         subject: Optional[str] = None,
         text: Optional[str] = None,
-        in_reply_to: Optional[str] = None,
-        references: Optional[Union[str, List[str]]] = None,
     ):
-        body = SendEmail(to=to, cc=cc, bcc=bcc, subject=subject, text=text, in_reply_to=in_reply_to, references=references)
+        body = SendEmail(to=to, cc=cc, bcc=bcc, subject=subject, text=text)
         response = httpx.post(f"{self.base_url}/inboxes/{address}/emails/{id}/reply", json=body.model_dump(exclude_none=True)).raise_for_status()
-        return SentEmail(**response.json())
+        return response.status_code

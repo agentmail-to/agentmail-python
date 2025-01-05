@@ -1,16 +1,15 @@
 from typing import Optional, List
-from time import sleep
 
 from dotenv import load_dotenv
-from langchain.agents import AgentType, initialize_agent
 from langchain.tools import tool
 from langchain_openai import ChatOpenAI
+from langchain_core.messages import SystemMessage, HumanMessage
+from langgraph.checkpoint.memory import MemorySaver
+from langgraph.prebuilt import create_react_agent
 
 from client import AgentMail
 
 BASE_URL = "https://api.agentmail.dev"
-USERNAME = "test"
-DOMAIN = "agentmail.dev"
 
 
 load_dotenv()
@@ -21,9 +20,7 @@ client = AgentMail(BASE_URL)
 @tool
 def create_inbox(username: str):
     """Create email inbox"""
-    client.delete_inbox(f"{username}@{DOMAIN}")
-    inbox = client.create_inbox(username, DOMAIN)
-    sleep(3)
+    inbox = client.create_inbox(username)
     return inbox
 
 
@@ -37,6 +34,18 @@ def get_emails(address: str):
 def get_email(address: str, id: str):
     """Get email from inbox"""
     return client.get_email(address, id)
+
+
+@tool
+def get_sent_emails(address: str):
+    """Get sent emails from inbox"""
+    return client.get_sent_emails(address)
+
+
+@tool
+def get_sent_email(address: str, id: str):
+    """Get sent email from inbox"""
+    return client.get_sent_email(address, id)
 
 
 @tool
@@ -61,21 +70,34 @@ def reply_to_email(
     return client.reply_to_email(address, id, to, cc, bcc, subject, text)
 
 
-agent = initialize_agent(
-    tools=[create_inbox.as_tool(), get_emails.as_tool(), get_email.as_tool(), send_email.as_tool(), reply_to_email.as_tool()],
-    llm=ChatOpenAI(model="gpt-4o", temperature=0),
-    agent=AgentType.OPENAI_FUNCTIONS,
-    verbose=True,
-)
-
-
 def main():
-    result = agent.invoke("Create an email inbox with username 'test'. Get the emails from the inbox and desribe them.")
+    inbox = client.create_inbox()
 
-    print("----------Input----------")
-    print(result["input"])
-    print("----------Output----------")
-    print(result["output"])
+    agent_executor = create_react_agent(
+        model=ChatOpenAI(model="gpt-4o", temperature=0),
+        tools=[create_inbox, get_emails, get_email, get_sent_emails, get_sent_email, send_email, reply_to_email],
+        state_modifier=SystemMessage(content=f"Your email address is {inbox.address}"),
+        checkpointer=MemorySaver(),
+    )
+
+    def invoke_agent(message: str):
+        config = {"configurable": {"thread_id": "0"}}
+        messages = agent_executor.invoke({"messages": [message]}, config)
+        return messages["messages"][-1]
+
+    while True:
+        prompt = input("---------------------Prompt---------------------\n\n")
+        if prompt.lower() == "quit":
+            break
+
+        print(f"\n--------------------Response--------------------\n")
+
+        message = HumanMessage(content=prompt)
+        response = invoke_agent(message).content
+
+        print(f"\n{response}\n")
+
+    client.delete_inbox(inbox.address)
 
 
 if __name__ == "__main__":

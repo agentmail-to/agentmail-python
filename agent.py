@@ -18,10 +18,15 @@ client = AgentMail(BASE_URL)
 
 
 @tool
-def create_inbox(username: str):
+def create_inbox(username: Optional[str] = None):
     """Create email inbox"""
-    inbox = client.create_inbox(username)
-    return inbox
+    return client.create_inbox(username)
+
+
+@tool
+def delete_inbox(address: str):
+    """Delete email inbox"""
+    return client.delete_inbox(address)
 
 
 @tool
@@ -75,9 +80,10 @@ def main():
 
     agent_executor = create_react_agent(
         model=ChatOpenAI(model="gpt-4o", temperature=0),
-        tools=[create_inbox, get_emails, get_email, get_sent_emails, get_sent_email, send_email, reply_to_email],
+        tools=[create_inbox, delete_inbox, get_emails, get_email, get_sent_emails, get_sent_email, send_email, reply_to_email],
         state_modifier=SystemMessage(content=f"Your email address is {inbox.address}"),
         checkpointer=MemorySaver(),
+        # debug=True,
     )
 
     def invoke_agent(message: str):

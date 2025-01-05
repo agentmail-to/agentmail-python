@@ -1,3 +1,4 @@
+from typing import Optional, List
 from time import sleep
 
 from dotenv import load_dotenv
@@ -19,7 +20,7 @@ client = AgentMail(BASE_URL)
 
 @tool
 def create_inbox(username: str):
-    """Create an email inbox"""
+    """Create email inbox"""
     client.delete_inbox(f"{username}@{DOMAIN}")
     inbox = client.create_inbox(username, DOMAIN)
     sleep(3)
@@ -28,12 +29,40 @@ def create_inbox(username: str):
 
 @tool
 def get_emails(address: str):
-    """Get emails from an inbox"""
+    """Get emails from inbox"""
     return client.get_emails(address)
 
 
+@tool
+def get_email(address: str, id: str):
+    """Get email from inbox"""
+    return client.get_email(address, id)
+
+
+@tool
+def send_email(
+    address: str, to: Optional[List[str]] = None, cc: Optional[List[str]] = None, bcc: Optional[List[str]] = None, subject: Optional[str] = None, text: Optional[str] = None
+):
+    """Send email"""
+    return client.send_email(address, to, cc, bcc, subject, text)
+
+
+@tool
+def reply_to_email(
+    address: str,
+    id: str,
+    to: Optional[List[str]] = None,
+    cc: Optional[List[str]] = None,
+    bcc: Optional[List[str]] = None,
+    subject: Optional[str] = None,
+    text: Optional[str] = None,
+):
+    """Reply to email"""
+    return client.reply_to_email(address, id, to, cc, bcc, subject, text)
+
+
 agent = initialize_agent(
-    tools=[create_inbox.as_tool(), get_emails.as_tool()],
+    tools=[create_inbox.as_tool(), get_emails.as_tool(), get_email.as_tool(), send_email.as_tool(), reply_to_email.as_tool()],
     llm=ChatOpenAI(model="gpt-4o", temperature=0),
     agent=AgentType.OPENAI_FUNCTIONS,
     verbose=True,

@@ -26,6 +26,14 @@ class AgentMail:
         response = httpx.get(f"{self.base_url}/inboxes/{address}/emails/{id}").raise_for_status()
         return Email(**response.json())
 
+    def get_sent_emails(self, address: str):
+        response = httpx.get(f"{self.base_url}/inboxes/{address}/sent").raise_for_status()
+        return Emails(**response.json())
+
+    def get_sent_email(self, address: str, id: str):
+        response = httpx.get(f"{self.base_url}/inboxes/{address}/sent/{id}").raise_for_status()
+        return Email(**response.json())
+
     def send_email(
         self,
         address: str,
@@ -36,7 +44,7 @@ class AgentMail:
         text: Optional[str] = None,
     ):
         body = SendEmail(to=to, cc=cc, bcc=bcc, subject=subject, text=text)
-        response = httpx.post(f"{self.base_url}/inboxes/{address}/emails", json=body.model_dump(exclude_none=True)).raise_for_status()
+        response = httpx.post(f"{self.base_url}/inboxes/{address}/sent", json=body.model_dump(exclude_none=True)).raise_for_status()
         return response.status_code
 
     def reply_to_email(

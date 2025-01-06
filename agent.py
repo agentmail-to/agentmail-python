@@ -78,30 +78,32 @@ def reply_to_email(
 def main():
     inbox = client.create_inbox()
 
-    agent_executor = create_react_agent(
+    agent = create_react_agent(
         model=ChatOpenAI(model="gpt-4o", temperature=0),
         tools=[create_inbox, delete_inbox, get_emails, get_email, get_sent_emails, get_sent_email, send_email, reply_to_email],
-        state_modifier=SystemMessage(content=f"Your email address is {inbox.address}"),
+        state_modifier=SystemMessage(
+            content=f"You are an agent that can send, receive, and manage emails. You were created by AgentMail. Your email address is {inbox.address}."
+        ),
         checkpointer=MemorySaver(),
-        # debug=True,
     )
 
     def invoke_agent(message: str):
+        input = {"messages": [message]}
         config = {"configurable": {"thread_id": "0"}}
-        messages = agent_executor.invoke({"messages": [message]}, config)
-        return messages["messages"][-1]
+        for output in agent.stream(input, config, stream_mode="values"):
+            message = output["messages"][-1]
+            message.pretty_print()
+            print("\n")
 
     while True:
-        prompt = input("---------------------Prompt---------------------\n\n")
+        prompt = input("Prompt:\n\n")
+        print(f"\n")
+
         if prompt.lower() == "quit":
             break
 
-        print(f"\n--------------------Response--------------------\n")
-
         message = HumanMessage(content=prompt)
-        response = invoke_agent(message).content
-
-        print(f"\n{response}\n")
+        invoke_agent(message)
 
     client.delete_inbox(inbox.address)
 

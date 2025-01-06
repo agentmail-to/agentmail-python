@@ -1,38 +1,51 @@
 import httpx
 from typing import Optional, List, Union
-from pydantic import EmailStr
+from pydantic import BaseModel, EmailStr
 
-from models import Inbox, CreateInbox, Emails, Email, SendEmail
+from models import ClientError, ServerError, Inbox, CreateInbox, Emails, Email, SendEmail
 
 
 class AgentMail:
     def __init__(self, base_url: str):
         self.base_url = base_url
 
+    def _request(self, method: str, path: str, body: Optional[BaseModel] = None):
+        json = body.model_dump(exclude_none=True) if body else None
+        response = httpx.request(method, f"{self.base_url}{path}", json=json)
+
+        if response.is_client_error:
+            raise Exception(ClientError(**response.json()))
+        if response.is_server_error:
+            raise Exception(ServerError(**response.json()))
+
+        if response.status_code == 204:
+            return None
+        return response.json()
+
     def create_inbox(self, username: Optional[str] = None, domain: Optional[str] = None):
         body = CreateInbox(username=username, domain=domain)
-        response = httpx.post(f"{self.base_url}/inboxes", json=body.model_dump(exclude_none=True)).raise_for_status()
-        return Inbox(**response.json())
+        response = self._request("POST", "/inboxes", body)
+        return Inbox(**response)
 
     def delete_inbox(self, address: str):
-        response = httpx.delete(f"{self.base_url}/inboxes/{address}").raise_for_status()
-        return response.status_code
+        self._request("DELETE", f"/inboxes/{address}")
+        return "Success"
 
     def get_emails(self, address: str):
-        response = httpx.get(f"{self.base_url}/inboxes/{address}/emails").raise_for_status()
-        return Emails(**response.json())
+        response = self._request("GET", f"/inboxes/{address}/emails")
+        return Emails(**response)
 
     def get_email(self, address: str, id: str):
-        response = httpx.get(f"{self.base_url}/inboxes/{address}/emails/{id}").raise_for_status()
-        return Email(**response.json())
+        response = self._request("GET", f"/inboxes/{address}/emails/{id}")
+        return Email(**response)
 
     def get_sent_emails(self, address: str):
-        response = httpx.get(f"{self.base_url}/inboxes/{address}/sent").raise_for_status()
-        return Emails(**response.json())
+        response = self._request("GET", f"/inboxes/{address}/sent")
+        return Emails(**response)
 
     def get_sent_email(self, address: str, id: str):
-        response = httpx.get(f"{self.base_url}/inboxes/{address}/sent/{id}").raise_for_status()
-        return Email(**response.json())
+        response = self._request("GET", f"/inboxes/{address}/sent/{id}")
+        return Email(**response)
 
     def send_email(
         self,
@@ -44,8 +57,8 @@ class AgentMail:
         text: Optional[str] = None,
     ):
         body = SendEmail(to=to, cc=cc, bcc=bcc, subject=subject, text=text)
-        response = httpx.post(f"{self.base_url}/inboxes/{address}/sent", json=body.model_dump(exclude_none=True)).raise_for_status()
-        return response.status_code
+        self._request("POST", f"/inboxes/{address}/sent", body)
+        return "Success"
 
     def reply_to_email(
         self,
@@ -58,5 +71,5 @@ class AgentMail:
         text: Optional[str] = None,
     ):
         body = SendEmail(to=to, cc=cc, bcc=bcc, subject=subject, text=text)
-        response = httpx.post(f"{self.base_url}/inboxes/{address}/emails/{id}/reply", json=body.model_dump(exclude_none=True)).raise_for_status()
-        return response.status_code
+        self._request("POST", f"/inboxes/{address}/emails/{id}/reply", body)
+        return "Success"

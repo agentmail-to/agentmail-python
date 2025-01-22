@@ -95,6 +95,8 @@ def main():
             message.pretty_print()
             print("\n")
 
+    print("\nAgent inbox:", inbox.address, "\n")
+
     while True:
         prompt = input("Prompt:\n\n")
         print(f"\n")
@@ -106,6 +108,8 @@ def main():
         invoke_agent(message)
 
     client.delete_inbox(inbox.address)
+
+    print("Inbox deleted\n")
 
 
 if __name__ == "__main__":

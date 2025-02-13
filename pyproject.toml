@@ -1,18 +1,64 @@
 [project]
-name = "agentmail-python"
-version = "0.1.0"
-description = "AgentMail API Python client"
+name = "agentmail"
+
+[tool.poetry]
+name = "agentmail"
+version = "0.0.3"
+description = ""
 readme = "README.md"
-requires-python = ">=3.11"
-dependencies = [
-    "email-validator>=2.2.0",
-    "httpx>=0.28.1",
-    "langchain-openai>=0.2.14",
-    "langchain>=0.3.13",
-    "pydantic>=2.10.4",
-    "langgraph>=0.2.60",
-    "python-dotenv>=1.0.1",
+authors = []
+keywords = []
+
+classifiers = [
+    "Intended Audience :: Developers",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: OS Independent",
+    "Operating System :: POSIX",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: Microsoft :: Windows",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed"
+]
+packages = [
+    { include = "agent_mail", from = "src"}
 ]
 
-[tool.black]
-line-length = 176
+[project.urls]
+Repository = 'https://github.com/agentmail-to/agentmail-python'
+
+[tool.poetry.dependencies]
+python = "^3.8"
+httpx = ">=0.21.2"
+pydantic = ">= 1.9.2"
+pydantic-core = "^2.18.2"
+typing_extensions = ">= 4.0.0"
+
+[tool.poetry.dev-dependencies]
+mypy = "1.0.1"
+pytest = "^7.4.0"
+pytest-asyncio = "^0.23.5"
+python-dateutil = "^2.9.0"
+types-python-dateutil = "^2.9.0.20240316"
+ruff = "^0.5.6"
+
+[tool.pytest.ini_options]
+testpaths = [ "tests" ]
+asyncio_mode = "auto"
+
+[tool.mypy]
+plugins = ["pydantic.mypy"]
+
+[tool.ruff]
+line-length = 120
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,12 +1,5 @@
-# Python-generated files
-__pycache__/
-*.py[oc]
-build/
 dist/
-wheels/
-*.egg-info
-
-# Virtual environments
-.venv
-
-.env
+.mypy_cache/
+__pycache__/
+poetry.toml
+.ruff_cache/

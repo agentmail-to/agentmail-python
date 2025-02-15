@@ -20,14 +20,12 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from agent_mail import AgentMailApi
-from agent_mail.environment import AgentMailApiEnvironment
+from agent_mail import AgentMail
 
-client = AgentMailApi(
+client = AgentMail(
     api_key="YOUR_API_KEY",
-    environment=AgentMailApiEnvironment.PRODUCTION,
 )
-client.inboxes.create_inbox(
+client.inboxes.create(
     domain="yourdomain.com",
 )
 ```
@@ -39,17 +37,15 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from agent_mail import AsyncAgentMailApi
-from agent_mail.environment import AgentMailApiEnvironment
+from agent_mail import AsyncAgentMail
 
-client = AsyncAgentMailApi(
+client = AsyncAgentMail(
     api_key="YOUR_API_KEY",
-    environment=AgentMailApiEnvironment.PRODUCTION,
 )
 
 
 async def main() -> None:
-    await client.inboxes.create_inbox(
+    await client.inboxes.create(
         domain="yourdomain.com",
     )
 
@@ -66,7 +62,7 @@ will be thrown.
 from agent_mail.core.api_error import ApiError
 
 try:
-    client.inboxes.create_inbox(...)
+    client.inboxes.create(...)
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -89,7 +85,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.inboxes.create_inbox(..., request_options={
+client.inboxes.create(..., request_options={
     "max_retries": 1
 })
 ```
@@ -100,16 +96,16 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-from agent_mail import AgentMailApi
+from agent_mail import AgentMail
 
-client = AgentMailApi(
+client = AgentMail(
     ...,
     timeout=20.0,
 )
 
 
 # Override timeout for a specific method
-client.inboxes.create_inbox(..., request_options={
+client.inboxes.create(..., request_options={
     "timeout_in_seconds": 1
 })
 ```
@@ -120,9 +116,9 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 ```python
 import httpx
-from agent_mail import AgentMailApi
+from agent_mail import AgentMail
 
-client = AgentMailApi(
+client = AgentMail(
     ...,
     httpx_client=httpx.Client(
         proxies="http://my.test.proxy.example.com",

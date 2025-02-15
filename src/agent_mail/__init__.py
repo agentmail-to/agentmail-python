@@ -3,8 +3,8 @@
 from .types import Count, ErrorName, ErrorResponse, LastKey, Limit, QueryLimit, ValidationErrorResponse
 from .errors import IsTakenError, NotFoundError, ValidationError
 from . import inboxes, messages, threads
-from .client import AgentMailApi, AsyncAgentMailApi
-from .environment import AgentMailApiEnvironment
+from .client import AgentMail, AsyncAgentMail
+from .environment import AgentMailEnvironment
 from .inboxes import CreateInboxRequest, DisplayName, Inbox, InboxId, ListInboxesResponse
 from .messages import (
     Addresses,
@@ -46,9 +46,9 @@ from .version import __version__
 
 __all__ = [
     "Addresses",
-    "AgentMailApi",
-    "AgentMailApiEnvironment",
-    "AsyncAgentMailApi",
+    "AgentMail",
+    "AgentMailEnvironment",
+    "AsyncAgentMail",
     "Attachment",
     "AttachmentId",
     "Count",

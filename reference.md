@@ -1,6 +1,6 @@
 # Reference
 ## Inboxes
-<details><summary><code>client.inboxes.<a href="src/agent_mail/inboxes/client.py">list_inboxes</a>(...)</code></summary>
+<details><summary><code>client.inboxes.<a href="src/agent_mail/inboxes/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -13,14 +13,12 @@
 <dd>
 
 ```python
-from agent_mail import AgentMailApi
-from agent_mail.environment import AgentMailApiEnvironment
+from agent_mail import AgentMail
 
-client = AgentMailApi(
+client = AgentMail(
     api_key="YOUR_API_KEY",
-    environment=AgentMailApiEnvironment.PRODUCTION,
 )
-client.inboxes.list_inboxes()
+client.inboxes.list()
 
 ```
 </dd>
@@ -64,7 +62,7 @@ client.inboxes.list_inboxes()
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.<a href="src/agent_mail/inboxes/client.py">get_inbox</a>(...)</code></summary>
+<details><summary><code>client.inboxes.<a href="src/agent_mail/inboxes/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -77,14 +75,12 @@ client.inboxes.list_inboxes()
 <dd>
 
 ```python
-from agent_mail import AgentMailApi
-from agent_mail.environment import AgentMailApiEnvironment
+from agent_mail import AgentMail
 
-client = AgentMailApi(
+client = AgentMail(
     api_key="YOUR_API_KEY",
-    environment=AgentMailApiEnvironment.PRODUCTION,
 )
-client.inboxes.get_inbox(
+client.inboxes.get(
     inbox_id="inbox_id",
 )
 
@@ -122,7 +118,7 @@ client.inboxes.get_inbox(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.<a href="src/agent_mail/inboxes/client.py">create_inbox</a>(...)</code></summary>
+<details><summary><code>client.inboxes.<a href="src/agent_mail/inboxes/client.py">create</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -135,14 +131,12 @@ client.inboxes.get_inbox(
 <dd>
 
 ```python
-from agent_mail import AgentMailApi
-from agent_mail.environment import AgentMailApiEnvironment
+from agent_mail import AgentMail
 
-client = AgentMailApi(
+client = AgentMail(
     api_key="YOUR_API_KEY",
-    environment=AgentMailApiEnvironment.PRODUCTION,
 )
-client.inboxes.create_inbox(
+client.inboxes.create(
     domain="yourdomain.com",
 )
 
@@ -196,80 +190,8 @@ client.inboxes.create_inbox(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.<a href="src/agent_mail/inboxes/client.py">delete_inbox</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete inbox and all of its threads, messages, and attachments.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agent_mail import AgentMailApi
-from agent_mail.environment import AgentMailApiEnvironment
-
-client = AgentMailApi(
-    api_key="YOUR_API_KEY",
-    environment=AgentMailApiEnvironment.PRODUCTION,
-)
-client.inboxes.delete_inbox(
-    inbox_id="yourinbox@agentmail.to",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**inbox_id:** `InboxId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## Messages
-<details><summary><code>client.messages.<a href="src/agent_mail/messages/client.py">list_messages</a>(...)</code></summary>
+<details><summary><code>client.messages.<a href="src/agent_mail/messages/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -282,14 +204,12 @@ client.inboxes.delete_inbox(
 <dd>
 
 ```python
-from agent_mail import AgentMailApi
-from agent_mail.environment import AgentMailApiEnvironment
+from agent_mail import AgentMail
 
-client = AgentMailApi(
+client = AgentMail(
     api_key="YOUR_API_KEY",
-    environment=AgentMailApiEnvironment.PRODUCTION,
 )
-client.messages.list_messages(
+client.messages.list(
     inbox_id="inbox_id",
 )
 
@@ -343,7 +263,7 @@ client.messages.list_messages(
 </dl>
 </details>
 
-<details><summary><code>client.messages.<a href="src/agent_mail/messages/client.py">get_message</a>(...)</code></summary>
+<details><summary><code>client.messages.<a href="src/agent_mail/messages/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -356,14 +276,12 @@ client.messages.list_messages(
 <dd>
 
 ```python
-from agent_mail import AgentMailApi
-from agent_mail.environment import AgentMailApiEnvironment
+from agent_mail import AgentMail
 
-client = AgentMailApi(
+client = AgentMail(
     api_key="YOUR_API_KEY",
-    environment=AgentMailApiEnvironment.PRODUCTION,
 )
-client.messages.get_message(
+client.messages.get(
     inbox_id="inbox_id",
     message_id="message_id",
 )
@@ -410,88 +328,7 @@ client.messages.get_message(
 </dl>
 </details>
 
-<details><summary><code>client.messages.<a href="src/agent_mail/messages/client.py">delete_message</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete message and its attachments.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agent_mail import AgentMailApi
-from agent_mail.environment import AgentMailApiEnvironment
-
-client = AgentMailApi(
-    api_key="YOUR_API_KEY",
-    environment=AgentMailApiEnvironment.PRODUCTION,
-)
-client.messages.delete_message(
-    inbox_id="inbox_id",
-    message_id="message_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**inbox_id:** `InboxId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**message_id:** `MessageId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.messages.<a href="src/agent_mail/messages/client.py">send_message</a>(...)</code></summary>
+<details><summary><code>client.messages.<a href="src/agent_mail/messages/client.py">send</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -504,14 +341,12 @@ client.messages.delete_message(
 <dd>
 
 ```python
-from agent_mail import AgentMailApi
-from agent_mail.environment import AgentMailApiEnvironment
+from agent_mail import AgentMail
 
-client = AgentMailApi(
+client = AgentMail(
     api_key="YOUR_API_KEY",
-    environment=AgentMailApiEnvironment.PRODUCTION,
 )
-client.messages.send_message(
+client.messages.send(
     inbox_id="inbox_id",
     to="to",
 )
@@ -598,7 +433,7 @@ client.messages.send_message(
 </dl>
 </details>
 
-<details><summary><code>client.messages.<a href="src/agent_mail/messages/client.py">reply_to_message</a>(...)</code></summary>
+<details><summary><code>client.messages.<a href="src/agent_mail/messages/client.py">reply</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -611,14 +446,12 @@ client.messages.send_message(
 <dd>
 
 ```python
-from agent_mail import AgentMailApi
-from agent_mail.environment import AgentMailApiEnvironment
+from agent_mail import AgentMail
 
-client = AgentMailApi(
+client = AgentMail(
     api_key="YOUR_API_KEY",
-    environment=AgentMailApiEnvironment.PRODUCTION,
 )
-client.messages.reply_to_message(
+client.messages.reply(
     inbox_id="inbox_id",
     message_id="message_id",
 )
@@ -706,7 +539,7 @@ client.messages.reply_to_message(
 </details>
 
 ## Threads
-<details><summary><code>client.threads.<a href="src/agent_mail/threads/client.py">list_threads</a>(...)</code></summary>
+<details><summary><code>client.threads.<a href="src/agent_mail/threads/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -719,14 +552,12 @@ client.messages.reply_to_message(
 <dd>
 
 ```python
-from agent_mail import AgentMailApi
-from agent_mail.environment import AgentMailApiEnvironment
+from agent_mail import AgentMail
 
-client = AgentMailApi(
+client = AgentMail(
     api_key="YOUR_API_KEY",
-    environment=AgentMailApiEnvironment.PRODUCTION,
 )
-client.threads.list_threads(
+client.threads.list(
     inbox_id="inbox_id",
 )
 
@@ -780,7 +611,7 @@ client.threads.list_threads(
 </dl>
 </details>
 
-<details><summary><code>client.threads.<a href="src/agent_mail/threads/client.py">get_thread</a>(...)</code></summary>
+<details><summary><code>client.threads.<a href="src/agent_mail/threads/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -793,95 +624,12 @@ client.threads.list_threads(
 <dd>
 
 ```python
-from agent_mail import AgentMailApi
-from agent_mail.environment import AgentMailApiEnvironment
+from agent_mail import AgentMail
 
-client = AgentMailApi(
+client = AgentMail(
     api_key="YOUR_API_KEY",
-    environment=AgentMailApiEnvironment.PRODUCTION,
 )
-client.threads.get_thread(
-    inbox_id="inbox_id",
-    thread_id="thread_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**inbox_id:** `InboxId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**thread_id:** `ThreadId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.threads.<a href="src/agent_mail/threads/client.py">delete_thread</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete thread and all of its messages and attachments.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agent_mail import AgentMailApi
-from agent_mail.environment import AgentMailApiEnvironment
-
-client = AgentMailApi(
-    api_key="YOUR_API_KEY",
-    environment=AgentMailApiEnvironment.PRODUCTION,
-)
-client.threads.delete_thread(
+client.threads.get(
     inbox_id="inbox_id",
     thread_id="thread_id",
 )

@@ -22,7 +22,7 @@ class ThreadsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list_threads(
+    def list(
         self,
         inbox_id: InboxId,
         *,
@@ -48,14 +48,12 @@ class ThreadsClient:
 
         Examples
         --------
-        from agent_mail import AgentMailApi
-        from agent_mail.environment import AgentMailApiEnvironment
+        from agent_mail import AgentMail
 
-        client = AgentMailApi(
+        client = AgentMail(
             api_key="YOUR_API_KEY",
-            environment=AgentMailApiEnvironment.PRODUCTION,
         )
-        client.threads.list_threads(
+        client.threads.list(
             inbox_id="inbox_id",
         )
         """
@@ -92,7 +90,7 @@ class ThreadsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_thread(
+    def get(
         self, inbox_id: InboxId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Thread:
         """
@@ -111,14 +109,12 @@ class ThreadsClient:
 
         Examples
         --------
-        from agent_mail import AgentMailApi
-        from agent_mail.environment import AgentMailApiEnvironment
+        from agent_mail import AgentMail
 
-        client = AgentMailApi(
+        client = AgentMail(
             api_key="YOUR_API_KEY",
-            environment=AgentMailApiEnvironment.PRODUCTION,
         )
-        client.threads.get_thread(
+        client.threads.get(
             inbox_id="inbox_id",
             thread_id="thread_id",
         )
@@ -137,62 +133,6 @@ class ThreadsClient:
                         object_=_response.json(),
                     ),
                 )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def delete_thread(
-        self, inbox_id: InboxId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
-        """
-        Delete thread and all of its messages and attachments.
-
-        Parameters
-        ----------
-        inbox_id : InboxId
-
-        thread_id : ThreadId
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from agent_mail import AgentMailApi
-        from agent_mail.environment import AgentMailApiEnvironment
-
-        client = AgentMailApi(
-            api_key="YOUR_API_KEY",
-            environment=AgentMailApiEnvironment.PRODUCTION,
-        )
-        client.threads.delete_thread(
-            inbox_id="inbox_id",
-            thread_id="thread_id",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads/{jsonable_encoder(thread_id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(
@@ -213,7 +153,7 @@ class AsyncThreadsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def list_threads(
+    async def list(
         self,
         inbox_id: InboxId,
         *,
@@ -241,17 +181,15 @@ class AsyncThreadsClient:
         --------
         import asyncio
 
-        from agent_mail import AsyncAgentMailApi
-        from agent_mail.environment import AgentMailApiEnvironment
+        from agent_mail import AsyncAgentMail
 
-        client = AsyncAgentMailApi(
+        client = AsyncAgentMail(
             api_key="YOUR_API_KEY",
-            environment=AgentMailApiEnvironment.PRODUCTION,
         )
 
 
         async def main() -> None:
-            await client.threads.list_threads(
+            await client.threads.list(
                 inbox_id="inbox_id",
             )
 
@@ -291,7 +229,7 @@ class AsyncThreadsClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_thread(
+    async def get(
         self, inbox_id: InboxId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Thread:
         """
@@ -312,17 +250,15 @@ class AsyncThreadsClient:
         --------
         import asyncio
 
-        from agent_mail import AsyncAgentMailApi
-        from agent_mail.environment import AgentMailApiEnvironment
+        from agent_mail import AsyncAgentMail
 
-        client = AsyncAgentMailApi(
+        client = AsyncAgentMail(
             api_key="YOUR_API_KEY",
-            environment=AgentMailApiEnvironment.PRODUCTION,
         )
 
 
         async def main() -> None:
-            await client.threads.get_thread(
+            await client.threads.get(
                 inbox_id="inbox_id",
                 thread_id="thread_id",
             )
@@ -344,70 +280,6 @@ class AsyncThreadsClient:
                         object_=_response.json(),
                     ),
                 )
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def delete_thread(
-        self, inbox_id: InboxId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
-        """
-        Delete thread and all of its messages and attachments.
-
-        Parameters
-        ----------
-        inbox_id : InboxId
-
-        thread_id : ThreadId
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from agent_mail import AsyncAgentMailApi
-        from agent_mail.environment import AgentMailApiEnvironment
-
-        client = AsyncAgentMailApi(
-            api_key="YOUR_API_KEY",
-            environment=AgentMailApiEnvironment.PRODUCTION,
-        )
-
-
-        async def main() -> None:
-            await client.threads.delete_thread(
-                inbox_id="inbox_id",
-                thread_id="thread_id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads/{jsonable_encoder(thread_id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
             if _response.status_code == 404:
                 raise NotFoundError(
                     typing.cast(

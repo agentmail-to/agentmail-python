@@ -36,7 +36,7 @@ class MessagesClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list_messages(
+    def list(
         self,
         inbox_id: InboxId,
         *,
@@ -62,14 +62,12 @@ class MessagesClient:
 
         Examples
         --------
-        from agent_mail import AgentMailApi
-        from agent_mail.environment import AgentMailApiEnvironment
+        from agent_mail import AgentMail
 
-        client = AgentMailApi(
+        client = AgentMail(
             api_key="YOUR_API_KEY",
-            environment=AgentMailApiEnvironment.PRODUCTION,
         )
-        client.messages.list_messages(
+        client.messages.list(
             inbox_id="inbox_id",
         )
         """
@@ -106,7 +104,7 @@ class MessagesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_message(
+    def get(
         self, inbox_id: InboxId, message_id: MessageId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Message:
         """
@@ -125,14 +123,12 @@ class MessagesClient:
 
         Examples
         --------
-        from agent_mail import AgentMailApi
-        from agent_mail.environment import AgentMailApiEnvironment
+        from agent_mail import AgentMail
 
-        client = AgentMailApi(
+        client = AgentMail(
             api_key="YOUR_API_KEY",
-            environment=AgentMailApiEnvironment.PRODUCTION,
         )
-        client.messages.get_message(
+        client.messages.get(
             inbox_id="inbox_id",
             message_id="message_id",
         )
@@ -217,63 +213,7 @@ class MessagesClient:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete_message(
-        self, inbox_id: InboxId, message_id: MessageId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
-        """
-        Delete message and its attachments.
-
-        Parameters
-        ----------
-        inbox_id : InboxId
-
-        message_id : MessageId
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        from agent_mail import AgentMailApi
-        from agent_mail.environment import AgentMailApiEnvironment
-
-        client = AgentMailApi(
-            api_key="YOUR_API_KEY",
-            environment=AgentMailApiEnvironment.PRODUCTION,
-        )
-        client.messages.delete_message(
-            inbox_id="inbox_id",
-            message_id="message_id",
-        )
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    def send_message(
+    def send(
         self,
         inbox_id: InboxId,
         *,
@@ -311,14 +251,12 @@ class MessagesClient:
 
         Examples
         --------
-        from agent_mail import AgentMailApi
-        from agent_mail.environment import AgentMailApiEnvironment
+        from agent_mail import AgentMail
 
-        client = AgentMailApi(
+        client = AgentMail(
             api_key="YOUR_API_KEY",
-            environment=AgentMailApiEnvironment.PRODUCTION,
         )
-        client.messages.send_message(
+        client.messages.send(
             inbox_id="inbox_id",
             to="to",
         )
@@ -373,7 +311,7 @@ class MessagesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def reply_to_message(
+    def reply(
         self,
         inbox_id: InboxId,
         message_id: MessageId,
@@ -411,14 +349,12 @@ class MessagesClient:
 
         Examples
         --------
-        from agent_mail import AgentMailApi
-        from agent_mail.environment import AgentMailApiEnvironment
+        from agent_mail import AgentMail
 
-        client = AgentMailApi(
+        client = AgentMail(
             api_key="YOUR_API_KEY",
-            environment=AgentMailApiEnvironment.PRODUCTION,
         )
-        client.messages.reply_to_message(
+        client.messages.reply(
             inbox_id="inbox_id",
             message_id="message_id",
         )
@@ -477,7 +413,7 @@ class AsyncMessagesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def list_messages(
+    async def list(
         self,
         inbox_id: InboxId,
         *,
@@ -505,17 +441,15 @@ class AsyncMessagesClient:
         --------
         import asyncio
 
-        from agent_mail import AsyncAgentMailApi
-        from agent_mail.environment import AgentMailApiEnvironment
+        from agent_mail import AsyncAgentMail
 
-        client = AsyncAgentMailApi(
+        client = AsyncAgentMail(
             api_key="YOUR_API_KEY",
-            environment=AgentMailApiEnvironment.PRODUCTION,
         )
 
 
         async def main() -> None:
-            await client.messages.list_messages(
+            await client.messages.list(
                 inbox_id="inbox_id",
             )
 
@@ -555,7 +489,7 @@ class AsyncMessagesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_message(
+    async def get(
         self, inbox_id: InboxId, message_id: MessageId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Message:
         """
@@ -576,17 +510,15 @@ class AsyncMessagesClient:
         --------
         import asyncio
 
-        from agent_mail import AsyncAgentMailApi
-        from agent_mail.environment import AgentMailApiEnvironment
+        from agent_mail import AsyncAgentMail
 
-        client = AsyncAgentMailApi(
+        client = AsyncAgentMail(
             api_key="YOUR_API_KEY",
-            environment=AgentMailApiEnvironment.PRODUCTION,
         )
 
 
         async def main() -> None:
-            await client.messages.get_message(
+            await client.messages.get(
                 inbox_id="inbox_id",
                 message_id="message_id",
             )
@@ -674,71 +606,7 @@ class AsyncMessagesClient:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete_message(
-        self, inbox_id: InboxId, message_id: MessageId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
-        """
-        Delete message and its attachments.
-
-        Parameters
-        ----------
-        inbox_id : InboxId
-
-        message_id : MessageId
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        None
-
-        Examples
-        --------
-        import asyncio
-
-        from agent_mail import AsyncAgentMailApi
-        from agent_mail.environment import AgentMailApiEnvironment
-
-        client = AsyncAgentMailApi(
-            api_key="YOUR_API_KEY",
-            environment=AgentMailApiEnvironment.PRODUCTION,
-        )
-
-
-        async def main() -> None:
-            await client.messages.delete_message(
-                inbox_id="inbox_id",
-                message_id="message_id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}",
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    typing.cast(
-                        ErrorResponse,
-                        parse_obj_as(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    )
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, body=_response.text)
-        raise ApiError(status_code=_response.status_code, body=_response_json)
-
-    async def send_message(
+    async def send(
         self,
         inbox_id: InboxId,
         *,
@@ -778,17 +646,15 @@ class AsyncMessagesClient:
         --------
         import asyncio
 
-        from agent_mail import AsyncAgentMailApi
-        from agent_mail.environment import AgentMailApiEnvironment
+        from agent_mail import AsyncAgentMail
 
-        client = AsyncAgentMailApi(
+        client = AsyncAgentMail(
             api_key="YOUR_API_KEY",
-            environment=AgentMailApiEnvironment.PRODUCTION,
         )
 
 
         async def main() -> None:
-            await client.messages.send_message(
+            await client.messages.send(
                 inbox_id="inbox_id",
                 to="to",
             )
@@ -846,7 +712,7 @@ class AsyncMessagesClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def reply_to_message(
+    async def reply(
         self,
         inbox_id: InboxId,
         message_id: MessageId,
@@ -886,17 +752,15 @@ class AsyncMessagesClient:
         --------
         import asyncio
 
-        from agent_mail import AsyncAgentMailApi
-        from agent_mail.environment import AgentMailApiEnvironment
+        from agent_mail import AsyncAgentMail
 
-        client = AsyncAgentMailApi(
+        client = AsyncAgentMail(
             api_key="YOUR_API_KEY",
-            environment=AgentMailApiEnvironment.PRODUCTION,
         )
 
 
         async def main() -> None:
-            await client.messages.reply_to_message(
+            await client.messages.reply(
                 inbox_id="inbox_id",
                 message_id="message_id",
             )

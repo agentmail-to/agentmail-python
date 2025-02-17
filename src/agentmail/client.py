@@ -45,7 +45,7 @@ class AgentMail:
 
     Examples
     --------
-    from agent_mail import AgentMail
+    from agentmail import AgentMail
 
     client = AgentMail(
         api_key="YOUR_API_KEY",
@@ -112,7 +112,7 @@ class AsyncAgentMail:
 
     Examples
     --------
-    from agent_mail import AsyncAgentMail
+    from agentmail import AsyncAgentMail
 
     client = AsyncAgentMail(
         api_key="YOUR_API_KEY",

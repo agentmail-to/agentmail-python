@@ -6,7 +6,7 @@ from __future__ import annotations
 import typing_extensions
 import typing_extensions
 import typing
-from agent_mail.core.serialization import FieldMetadata
+from agentmail.core.serialization import FieldMetadata
 
 
 class Base(typing_extensions.TypedDict):

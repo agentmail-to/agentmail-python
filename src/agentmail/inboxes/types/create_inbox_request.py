@@ -11,7 +11,7 @@ class CreateInboxRequest(UniversalBaseModel):
     """
     Examples
     --------
-    from agent_mail.inboxes import CreateInboxRequest
+    from agentmail.inboxes import CreateInboxRequest
 
     CreateInboxRequest(
         username="yourinbox",

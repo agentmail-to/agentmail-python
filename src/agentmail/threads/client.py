@@ -2,6 +2,8 @@
 
 from ..core.client_wrapper import SyncClientWrapper
 from ..inboxes.types.inbox_id import InboxId
+from ..types.received import Received
+from ..types.sent import Sent
 from ..types.query_limit import QueryLimit
 from ..types.last_key import LastKey
 import typing
@@ -26,14 +28,22 @@ class ThreadsClient:
         self,
         inbox_id: InboxId,
         *,
+        received: Received,
+        sent: Sent,
         limit: QueryLimit,
         last_key: LastKey,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
         """
+        List threads in inbox. If neither or both `received` and `sent` query parameters are set, all threads are returned.
+
         Parameters
         ----------
         inbox_id : InboxId
+
+        received : Received
+
+        sent : Sent
 
         limit : QueryLimit
 
@@ -48,7 +58,7 @@ class ThreadsClient:
 
         Examples
         --------
-        from agent_mail import AgentMail
+        from agentmail import AgentMail
 
         client = AgentMail(
             api_key="YOUR_API_KEY",
@@ -61,6 +71,8 @@ class ThreadsClient:
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads/",
             method="GET",
             params={
+                "received": received,
+                "sent": sent,
                 "limit": limit,
                 "last_key": last_key,
             },
@@ -109,7 +121,7 @@ class ThreadsClient:
 
         Examples
         --------
-        from agent_mail import AgentMail
+        from agentmail import AgentMail
 
         client = AgentMail(
             api_key="YOUR_API_KEY",
@@ -157,14 +169,22 @@ class AsyncThreadsClient:
         self,
         inbox_id: InboxId,
         *,
+        received: Received,
+        sent: Sent,
         limit: QueryLimit,
         last_key: LastKey,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
         """
+        List threads in inbox. If neither or both `received` and `sent` query parameters are set, all threads are returned.
+
         Parameters
         ----------
         inbox_id : InboxId
+
+        received : Received
+
+        sent : Sent
 
         limit : QueryLimit
 
@@ -181,7 +201,7 @@ class AsyncThreadsClient:
         --------
         import asyncio
 
-        from agent_mail import AsyncAgentMail
+        from agentmail import AsyncAgentMail
 
         client = AsyncAgentMail(
             api_key="YOUR_API_KEY",
@@ -200,6 +220,8 @@ class AsyncThreadsClient:
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads/",
             method="GET",
             params={
+                "received": received,
+                "sent": sent,
                 "limit": limit,
                 "last_key": last_key,
             },
@@ -250,7 +272,7 @@ class AsyncThreadsClient:
         --------
         import asyncio
 
-        from agent_mail import AsyncAgentMail
+        from agentmail import AsyncAgentMail
 
         client = AsyncAgentMail(
             api_key="YOUR_API_KEY",

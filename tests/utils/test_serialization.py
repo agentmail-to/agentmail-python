@@ -2,7 +2,7 @@
 
 from typing import List, Any
 
-from agent_mail.core.serialization import convert_and_respect_annotation_metadata
+from agentmail.core.serialization import convert_and_respect_annotation_metadata
 from .assets.models import ShapeParams, ObjectWithOptionalFieldParams
 
 

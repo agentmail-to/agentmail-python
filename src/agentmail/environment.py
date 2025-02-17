@@ -5,3 +5,4 @@ import enum
 
 class AgentMailEnvironment(enum.Enum):
     PRODUCTION = "https://api.agentmail.to"
+    DEVELOPMENT = "https://api.agentmail.dev"

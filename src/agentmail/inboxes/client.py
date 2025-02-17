@@ -46,7 +46,7 @@ class InboxesClient:
 
         Examples
         --------
-        from agent_mail import AgentMail
+        from agentmail import AgentMail
 
         client = AgentMail(
             api_key="YOUR_API_KEY",
@@ -91,7 +91,7 @@ class InboxesClient:
 
         Examples
         --------
-        from agent_mail import AgentMail
+        from agentmail import AgentMail
 
         client = AgentMail(
             api_key="YOUR_API_KEY",
@@ -157,7 +157,7 @@ class InboxesClient:
 
         Examples
         --------
-        from agent_mail import AgentMail
+        from agentmail import AgentMail
 
         client = AgentMail(
             api_key="YOUR_API_KEY",
@@ -228,7 +228,7 @@ class AsyncInboxesClient:
         --------
         import asyncio
 
-        from agent_mail import AsyncAgentMail
+        from agentmail import AsyncAgentMail
 
         client = AsyncAgentMail(
             api_key="YOUR_API_KEY",
@@ -281,7 +281,7 @@ class AsyncInboxesClient:
         --------
         import asyncio
 
-        from agent_mail import AsyncAgentMail
+        from agentmail import AsyncAgentMail
 
         client = AsyncAgentMail(
             api_key="YOUR_API_KEY",
@@ -355,7 +355,7 @@ class AsyncInboxesClient:
         --------
         import asyncio
 
-        from agent_mail import AsyncAgentMail
+        from agentmail import AsyncAgentMail
 
         client = AsyncAgentMail(
             api_key="YOUR_API_KEY",

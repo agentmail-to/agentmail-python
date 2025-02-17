@@ -3,6 +3,8 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..inboxes.types.inbox_id import InboxId
+from ..types.received import Received
+from ..types.sent import Sent
 from ..types.query_limit import QueryLimit
 from ..types.last_key import LastKey
 from ..core.request_options import RequestOptions
@@ -40,14 +42,22 @@ class MessagesClient:
         self,
         inbox_id: InboxId,
         *,
+        received: Received,
+        sent: Sent,
         limit: QueryLimit,
         last_key: LastKey,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListMessagesResponse:
         """
+        List messages in inbox. If neither or both `received` and `sent` query parameters are set, all messages are returned.
+
         Parameters
         ----------
         inbox_id : InboxId
+
+        received : Received
+
+        sent : Sent
 
         limit : QueryLimit
 
@@ -62,7 +72,7 @@ class MessagesClient:
 
         Examples
         --------
-        from agent_mail import AgentMail
+        from agentmail import AgentMail
 
         client = AgentMail(
             api_key="YOUR_API_KEY",
@@ -75,6 +85,8 @@ class MessagesClient:
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/",
             method="GET",
             params={
+                "received": received,
+                "sent": sent,
                 "limit": limit,
                 "last_key": last_key,
             },
@@ -123,7 +135,7 @@ class MessagesClient:
 
         Examples
         --------
-        from agent_mail import AgentMail
+        from agentmail import AgentMail
 
         client = AgentMail(
             api_key="YOUR_API_KEY",
@@ -251,7 +263,7 @@ class MessagesClient:
 
         Examples
         --------
-        from agent_mail import AgentMail
+        from agentmail import AgentMail
 
         client = AgentMail(
             api_key="YOUR_API_KEY",
@@ -349,7 +361,7 @@ class MessagesClient:
 
         Examples
         --------
-        from agent_mail import AgentMail
+        from agentmail import AgentMail
 
         client = AgentMail(
             api_key="YOUR_API_KEY",
@@ -417,14 +429,22 @@ class AsyncMessagesClient:
         self,
         inbox_id: InboxId,
         *,
+        received: Received,
+        sent: Sent,
         limit: QueryLimit,
         last_key: LastKey,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListMessagesResponse:
         """
+        List messages in inbox. If neither or both `received` and `sent` query parameters are set, all messages are returned.
+
         Parameters
         ----------
         inbox_id : InboxId
+
+        received : Received
+
+        sent : Sent
 
         limit : QueryLimit
 
@@ -441,7 +461,7 @@ class AsyncMessagesClient:
         --------
         import asyncio
 
-        from agent_mail import AsyncAgentMail
+        from agentmail import AsyncAgentMail
 
         client = AsyncAgentMail(
             api_key="YOUR_API_KEY",
@@ -460,6 +480,8 @@ class AsyncMessagesClient:
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/",
             method="GET",
             params={
+                "received": received,
+                "sent": sent,
                 "limit": limit,
                 "last_key": last_key,
             },
@@ -510,7 +532,7 @@ class AsyncMessagesClient:
         --------
         import asyncio
 
-        from agent_mail import AsyncAgentMail
+        from agentmail import AsyncAgentMail
 
         client = AsyncAgentMail(
             api_key="YOUR_API_KEY",
@@ -646,7 +668,7 @@ class AsyncMessagesClient:
         --------
         import asyncio
 
-        from agent_mail import AsyncAgentMail
+        from agentmail import AsyncAgentMail
 
         client = AsyncAgentMail(
             api_key="YOUR_API_KEY",
@@ -752,7 +774,7 @@ class AsyncMessagesClient:
         --------
         import asyncio
 
-        from agent_mail import AsyncAgentMail
+        from agentmail import AsyncAgentMail
 
         client = AsyncAgentMail(
             api_key="YOUR_API_KEY",

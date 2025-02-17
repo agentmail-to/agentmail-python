@@ -1,9 +1,9 @@
-# AgentMail Python Library
+# Agentmail Python Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Fagentmail-to%2Fagentmail-python)
 [![pypi](https://img.shields.io/pypi/v/agentmail)](https://pypi.python.org/pypi/agentmail)
 
-The AgentMail Python library provides convenient access to the AgentMail API from Python.
+The Agentmail Python library provides convenient access to the Agentmail API from Python.
 
 ## Installation
 
@@ -20,7 +20,7 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from agent_mail import AgentMail
+from agentmail import AgentMail
 
 client = AgentMail(
     api_key="YOUR_API_KEY",
@@ -37,7 +37,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from agent_mail import AsyncAgentMail
+from agentmail import AsyncAgentMail
 
 client = AsyncAgentMail(
     api_key="YOUR_API_KEY",
@@ -59,7 +59,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```python
-from agent_mail.core.api_error import ApiError
+from agentmail.core.api_error import ApiError
 
 try:
     client.inboxes.create(...)
@@ -96,7 +96,7 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-from agent_mail import AgentMail
+from agentmail import AgentMail
 
 client = AgentMail(
     ...,
@@ -116,7 +116,7 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 ```python
 import httpx
-from agent_mail import AgentMail
+from agentmail import AgentMail
 
 client = AgentMail(
     ...,

@@ -15,7 +15,7 @@ class Inbox(UniversalBaseModel):
     --------
     import datetime
 
-    from agent_mail.inboxes import Inbox
+    from agentmail.inboxes import Inbox
 
     Inbox(
         inbox_id="yourinbox@agentmail.to",

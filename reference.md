@@ -1,6 +1,6 @@
 # Reference
 ## Inboxes
-<details><summary><code>client.inboxes.<a href="src/agent_mail/inboxes/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from agent_mail import AgentMail
+from agentmail import AgentMail
 
 client = AgentMail(
     api_key="YOUR_API_KEY",
@@ -62,7 +62,7 @@ client.inboxes.list()
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.<a href="src/agent_mail/inboxes/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -75,7 +75,7 @@ client.inboxes.list()
 <dd>
 
 ```python
-from agent_mail import AgentMail
+from agentmail import AgentMail
 
 client = AgentMail(
     api_key="YOUR_API_KEY",
@@ -118,7 +118,7 @@ client.inboxes.get(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.<a href="src/agent_mail/inboxes/client.py">create</a>(...)</code></summary>
+<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">create</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -131,7 +131,7 @@ client.inboxes.get(
 <dd>
 
 ```python
-from agent_mail import AgentMail
+from agentmail import AgentMail
 
 client = AgentMail(
     api_key="YOUR_API_KEY",
@@ -191,9 +191,23 @@ client.inboxes.create(
 </details>
 
 ## Messages
-<details><summary><code>client.messages.<a href="src/agent_mail/messages/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.messages.<a href="src/agentmail/messages/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List messages in inbox. If neither or both `received` and `sent` query parameters are set, all messages are returned.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -204,7 +218,7 @@ client.inboxes.create(
 <dd>
 
 ```python
-from agent_mail import AgentMail
+from agentmail import AgentMail
 
 client = AgentMail(
     api_key="YOUR_API_KEY",
@@ -228,6 +242,22 @@ client.messages.list(
 <dd>
 
 **inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**received:** `Received` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sent:** `Sent` 
     
 </dd>
 </dl>
@@ -263,7 +293,7 @@ client.messages.list(
 </dl>
 </details>
 
-<details><summary><code>client.messages.<a href="src/agent_mail/messages/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.messages.<a href="src/agentmail/messages/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -276,7 +306,7 @@ client.messages.list(
 <dd>
 
 ```python
-from agent_mail import AgentMail
+from agentmail import AgentMail
 
 client = AgentMail(
     api_key="YOUR_API_KEY",
@@ -328,7 +358,7 @@ client.messages.get(
 </dl>
 </details>
 
-<details><summary><code>client.messages.<a href="src/agent_mail/messages/client.py">send</a>(...)</code></summary>
+<details><summary><code>client.messages.<a href="src/agentmail/messages/client.py">send</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -341,7 +371,7 @@ client.messages.get(
 <dd>
 
 ```python
-from agent_mail import AgentMail
+from agentmail import AgentMail
 
 client = AgentMail(
     api_key="YOUR_API_KEY",
@@ -433,7 +463,7 @@ client.messages.send(
 </dl>
 </details>
 
-<details><summary><code>client.messages.<a href="src/agent_mail/messages/client.py">reply</a>(...)</code></summary>
+<details><summary><code>client.messages.<a href="src/agentmail/messages/client.py">reply</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -446,7 +476,7 @@ client.messages.send(
 <dd>
 
 ```python
-from agent_mail import AgentMail
+from agentmail import AgentMail
 
 client = AgentMail(
     api_key="YOUR_API_KEY",
@@ -539,9 +569,23 @@ client.messages.reply(
 </details>
 
 ## Threads
-<details><summary><code>client.threads.<a href="src/agent_mail/threads/client.py">list</a>(...)</code></summary>
+<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List threads in inbox. If neither or both `received` and `sent` query parameters are set, all threads are returned.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -552,7 +596,7 @@ client.messages.reply(
 <dd>
 
 ```python
-from agent_mail import AgentMail
+from agentmail import AgentMail
 
 client = AgentMail(
     api_key="YOUR_API_KEY",
@@ -576,6 +620,22 @@ client.threads.list(
 <dd>
 
 **inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**received:** `Received` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sent:** `Sent` 
     
 </dd>
 </dl>
@@ -611,7 +671,7 @@ client.threads.list(
 </dl>
 </details>
 
-<details><summary><code>client.threads.<a href="src/agent_mail/threads/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -624,7 +684,7 @@ client.threads.list(
 <dd>
 
 ```python
-from agent_mail import AgentMail
+from agentmail import AgentMail
 
 client = AgentMail(
     api_key="YOUR_API_KEY",

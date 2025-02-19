@@ -42,10 +42,10 @@ class MessagesClient:
         self,
         inbox_id: InboxId,
         *,
-        received: Received,
-        sent: Sent,
-        limit: QueryLimit,
-        last_key: LastKey,
+        received: typing.Optional[Received] = None,
+        sent: typing.Optional[Sent] = None,
+        limit: typing.Optional[QueryLimit] = None,
+        last_key: typing.Optional[LastKey] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListMessagesResponse:
         """
@@ -55,13 +55,13 @@ class MessagesClient:
         ----------
         inbox_id : InboxId
 
-        received : Received
+        received : typing.Optional[Received]
 
-        sent : Sent
+        sent : typing.Optional[Sent]
 
-        limit : QueryLimit
+        limit : typing.Optional[QueryLimit]
 
-        last_key : LastKey
+        last_key : typing.Optional[LastKey]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -429,10 +429,10 @@ class AsyncMessagesClient:
         self,
         inbox_id: InboxId,
         *,
-        received: Received,
-        sent: Sent,
-        limit: QueryLimit,
-        last_key: LastKey,
+        received: typing.Optional[Received] = None,
+        sent: typing.Optional[Sent] = None,
+        limit: typing.Optional[QueryLimit] = None,
+        last_key: typing.Optional[LastKey] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListMessagesResponse:
         """
@@ -442,13 +442,13 @@ class AsyncMessagesClient:
         ----------
         inbox_id : InboxId
 
-        received : Received
+        received : typing.Optional[Received]
 
-        sent : Sent
+        sent : typing.Optional[Sent]
 
-        limit : QueryLimit
+        limit : typing.Optional[QueryLimit]
 
-        last_key : LastKey
+        last_key : typing.Optional[LastKey]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

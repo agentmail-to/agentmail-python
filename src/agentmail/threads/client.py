@@ -2,11 +2,11 @@
 
 from ..core.client_wrapper import SyncClientWrapper
 from ..inboxes.types.inbox_id import InboxId
+import typing
 from ..types.received import Received
 from ..types.sent import Sent
 from ..types.query_limit import QueryLimit
 from ..types.last_key import LastKey
-import typing
 from ..core.request_options import RequestOptions
 from .types.list_threads_response import ListThreadsResponse
 from ..core.jsonable_encoder import jsonable_encoder
@@ -28,10 +28,10 @@ class ThreadsClient:
         self,
         inbox_id: InboxId,
         *,
-        received: Received,
-        sent: Sent,
-        limit: QueryLimit,
-        last_key: LastKey,
+        received: typing.Optional[Received] = None,
+        sent: typing.Optional[Sent] = None,
+        limit: typing.Optional[QueryLimit] = None,
+        last_key: typing.Optional[LastKey] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
         """
@@ -41,13 +41,13 @@ class ThreadsClient:
         ----------
         inbox_id : InboxId
 
-        received : Received
+        received : typing.Optional[Received]
 
-        sent : Sent
+        sent : typing.Optional[Sent]
 
-        limit : QueryLimit
+        limit : typing.Optional[QueryLimit]
 
-        last_key : LastKey
+        last_key : typing.Optional[LastKey]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -169,10 +169,10 @@ class AsyncThreadsClient:
         self,
         inbox_id: InboxId,
         *,
-        received: Received,
-        sent: Sent,
-        limit: QueryLimit,
-        last_key: LastKey,
+        received: typing.Optional[Received] = None,
+        sent: typing.Optional[Sent] = None,
+        limit: typing.Optional[QueryLimit] = None,
+        last_key: typing.Optional[LastKey] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
         """
@@ -182,13 +182,13 @@ class AsyncThreadsClient:
         ----------
         inbox_id : InboxId
 
-        received : Received
+        received : typing.Optional[Received]
 
-        sent : Sent
+        sent : typing.Optional[Sent]
 
-        limit : QueryLimit
+        limit : typing.Optional[QueryLimit]
 
-        last_key : LastKey
+        last_key : typing.Optional[LastKey]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

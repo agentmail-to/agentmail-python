@@ -34,7 +34,7 @@ client.inboxes.list()
 <dl>
 <dd>
 
-**limit:** `QueryLimit` 
+**limit:** `typing.Optional[QueryLimit]` 
     
 </dd>
 </dl>
@@ -42,7 +42,7 @@ client.inboxes.list()
 <dl>
 <dd>
 
-**last_key:** `LastKey` 
+**last_key:** `typing.Optional[LastKey]` 
     
 </dd>
 </dl>
@@ -249,7 +249,7 @@ client.messages.list(
 <dl>
 <dd>
 
-**received:** `Received` 
+**received:** `typing.Optional[Received]` 
     
 </dd>
 </dl>
@@ -257,7 +257,7 @@ client.messages.list(
 <dl>
 <dd>
 
-**sent:** `Sent` 
+**sent:** `typing.Optional[Sent]` 
     
 </dd>
 </dl>
@@ -265,7 +265,7 @@ client.messages.list(
 <dl>
 <dd>
 
-**limit:** `QueryLimit` 
+**limit:** `typing.Optional[QueryLimit]` 
     
 </dd>
 </dl>
@@ -273,7 +273,7 @@ client.messages.list(
 <dl>
 <dd>
 
-**last_key:** `LastKey` 
+**last_key:** `typing.Optional[LastKey]` 
     
 </dd>
 </dl>
@@ -627,7 +627,7 @@ client.threads.list(
 <dl>
 <dd>
 
-**received:** `Received` 
+**received:** `typing.Optional[Received]` 
     
 </dd>
 </dl>
@@ -635,7 +635,7 @@ client.threads.list(
 <dl>
 <dd>
 
-**sent:** `Sent` 
+**sent:** `typing.Optional[Sent]` 
     
 </dd>
 </dl>
@@ -643,7 +643,7 @@ client.threads.list(
 <dl>
 <dd>
 
-**limit:** `QueryLimit` 
+**limit:** `typing.Optional[QueryLimit]` 
     
 </dd>
 </dl>
@@ -651,7 +651,7 @@ client.threads.list(
 <dl>
 <dd>
 
-**last_key:** `LastKey` 
+**last_key:** `typing.Optional[LastKey]` 
     
 </dd>
 </dl>

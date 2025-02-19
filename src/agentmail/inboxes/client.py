@@ -28,14 +28,18 @@ class InboxesClient:
         self._client_wrapper = client_wrapper
 
     def list(
-        self, *, limit: QueryLimit, last_key: LastKey, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        limit: typing.Optional[QueryLimit] = None,
+        last_key: typing.Optional[LastKey] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ListInboxesResponse:
         """
         Parameters
         ----------
-        limit : QueryLimit
+        limit : typing.Optional[QueryLimit]
 
-        last_key : LastKey
+        last_key : typing.Optional[LastKey]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -208,14 +212,18 @@ class AsyncInboxesClient:
         self._client_wrapper = client_wrapper
 
     async def list(
-        self, *, limit: QueryLimit, last_key: LastKey, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        limit: typing.Optional[QueryLimit] = None,
+        last_key: typing.Optional[LastKey] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> ListInboxesResponse:
         """
         Parameters
         ----------
-        limit : QueryLimit
+        limit : typing.Optional[QueryLimit]
 
-        last_key : LastKey
+        last_key : typing.Optional[LastKey]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

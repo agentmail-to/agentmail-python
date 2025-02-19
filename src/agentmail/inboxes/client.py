@@ -2,7 +2,7 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
-from ..types.query_limit import QueryLimit
+from ..types.limit import Limit
 from ..types.last_key import LastKey
 from ..core.request_options import RequestOptions
 from .types.list_inboxes_response import ListInboxesResponse
@@ -30,14 +30,14 @@ class InboxesClient:
     def list(
         self,
         *,
-        limit: typing.Optional[QueryLimit] = None,
+        limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListInboxesResponse:
         """
         Parameters
         ----------
-        limit : typing.Optional[QueryLimit]
+        limit : typing.Optional[Limit]
 
         last_key : typing.Optional[LastKey]
 
@@ -214,14 +214,14 @@ class AsyncInboxesClient:
     async def list(
         self,
         *,
-        limit: typing.Optional[QueryLimit] = None,
+        limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListInboxesResponse:
         """
         Parameters
         ----------
-        limit : typing.Optional[QueryLimit]
+        limit : typing.Optional[Limit]
 
         last_key : typing.Optional[LastKey]
 

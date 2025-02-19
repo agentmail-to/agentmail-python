@@ -5,7 +5,7 @@ from ..core.client_wrapper import SyncClientWrapper
 from ..inboxes.types.inbox_id import InboxId
 from ..types.received import Received
 from ..types.sent import Sent
-from ..types.query_limit import QueryLimit
+from ..types.limit import Limit
 from ..types.last_key import LastKey
 from ..core.request_options import RequestOptions
 from .types.list_messages_response import ListMessagesResponse
@@ -44,7 +44,7 @@ class MessagesClient:
         *,
         received: typing.Optional[Received] = None,
         sent: typing.Optional[Sent] = None,
-        limit: typing.Optional[QueryLimit] = None,
+        limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListMessagesResponse:
@@ -59,7 +59,7 @@ class MessagesClient:
 
         sent : typing.Optional[Sent]
 
-        limit : typing.Optional[QueryLimit]
+        limit : typing.Optional[Limit]
 
         last_key : typing.Optional[LastKey]
 
@@ -232,9 +232,9 @@ class MessagesClient:
         to: SendMessageTo,
         cc: SendMessageCc,
         bcc: SendMessageBcc,
-        subject: MessageSubject,
-        text: MessageText,
-        html: MessageHtml,
+        subject: typing.Optional[MessageSubject] = OMIT,
+        text: typing.Optional[MessageText] = OMIT,
+        html: typing.Optional[MessageHtml] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
@@ -248,11 +248,11 @@ class MessagesClient:
 
         bcc : SendMessageBcc
 
-        subject : MessageSubject
+        subject : typing.Optional[MessageSubject]
 
-        text : MessageText
+        text : typing.Optional[MessageText]
 
-        html : MessageHtml
+        html : typing.Optional[MessageHtml]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -330,9 +330,9 @@ class MessagesClient:
         *,
         cc: SendMessageCc,
         bcc: SendMessageBcc,
-        text: MessageText,
-        html: MessageHtml,
         to: typing.Optional[SendMessageTo] = OMIT,
+        text: typing.Optional[MessageText] = OMIT,
+        html: typing.Optional[MessageHtml] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
@@ -346,11 +346,11 @@ class MessagesClient:
 
         bcc : SendMessageBcc
 
-        text : MessageText
-
-        html : MessageHtml
-
         to : typing.Optional[SendMessageTo]
+
+        text : typing.Optional[MessageText]
+
+        html : typing.Optional[MessageHtml]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -431,7 +431,7 @@ class AsyncMessagesClient:
         *,
         received: typing.Optional[Received] = None,
         sent: typing.Optional[Sent] = None,
-        limit: typing.Optional[QueryLimit] = None,
+        limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListMessagesResponse:
@@ -446,7 +446,7 @@ class AsyncMessagesClient:
 
         sent : typing.Optional[Sent]
 
-        limit : typing.Optional[QueryLimit]
+        limit : typing.Optional[Limit]
 
         last_key : typing.Optional[LastKey]
 
@@ -635,9 +635,9 @@ class AsyncMessagesClient:
         to: SendMessageTo,
         cc: SendMessageCc,
         bcc: SendMessageBcc,
-        subject: MessageSubject,
-        text: MessageText,
-        html: MessageHtml,
+        subject: typing.Optional[MessageSubject] = OMIT,
+        text: typing.Optional[MessageText] = OMIT,
+        html: typing.Optional[MessageHtml] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
@@ -651,11 +651,11 @@ class AsyncMessagesClient:
 
         bcc : SendMessageBcc
 
-        subject : MessageSubject
+        subject : typing.Optional[MessageSubject]
 
-        text : MessageText
+        text : typing.Optional[MessageText]
 
-        html : MessageHtml
+        html : typing.Optional[MessageHtml]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -741,9 +741,9 @@ class AsyncMessagesClient:
         *,
         cc: SendMessageCc,
         bcc: SendMessageBcc,
-        text: MessageText,
-        html: MessageHtml,
         to: typing.Optional[SendMessageTo] = OMIT,
+        text: typing.Optional[MessageText] = OMIT,
+        html: typing.Optional[MessageHtml] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
@@ -757,11 +757,11 @@ class AsyncMessagesClient:
 
         bcc : SendMessageBcc
 
-        text : MessageText
-
-        html : MessageHtml
-
         to : typing.Optional[SendMessageTo]
+
+        text : typing.Optional[MessageText]
+
+        html : typing.Optional[MessageHtml]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

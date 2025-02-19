@@ -2,4 +2,4 @@
 
 import typing
 
-MessageBcc = typing.Optional[typing.List[str]]
+MessageBcc = typing.List[str]

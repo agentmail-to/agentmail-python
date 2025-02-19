@@ -7,6 +7,7 @@ from .message_sent_at import MessageSentAt
 import typing_extensions
 from .message_from import MessageFrom
 from ...core.serialization import FieldMetadata
+import typing
 from .message_subject import MessageSubject
 from .message_preview import MessagePreview
 from .message_to import MessageTo
@@ -14,7 +15,6 @@ from .message_cc import MessageCc
 from .message_bcc import MessageBcc
 from .message_attachments import MessageAttachments
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
-import typing
 import pydantic
 
 
@@ -23,12 +23,12 @@ class MessageItem(UniversalBaseModel):
     thread_id: ThreadId
     sent_at: MessageSentAt
     from_: typing_extensions.Annotated[MessageFrom, FieldMetadata(alias="from")]
-    subject: MessageSubject
-    preview: MessagePreview
+    subject: typing.Optional[MessageSubject] = None
+    preview: typing.Optional[MessagePreview] = None
     to: MessageTo
-    cc: MessageCc
-    bcc: MessageBcc
-    attachments: MessageAttachments
+    cc: typing.Optional[MessageCc] = None
+    bcc: typing.Optional[MessageBcc] = None
+    attachments: typing.Optional[MessageAttachments] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

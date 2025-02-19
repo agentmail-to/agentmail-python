@@ -4,8 +4,8 @@ from ...core.pydantic_utilities import UniversalBaseModel
 import typing
 from .inbox import Inbox
 import pydantic
-from ...types.limit import Limit
 from ...types.count import Count
+from ...types.limit import Limit
 from ...types.last_key import LastKey
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -16,9 +16,9 @@ class ListInboxesResponse(UniversalBaseModel):
     Inbox items. Ordered by `created_at` ascending.
     """
 
-    limit: Limit
     count: Count
-    last_key: LastKey
+    limit: typing.Optional[Limit] = None
+    last_key: typing.Optional[LastKey] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

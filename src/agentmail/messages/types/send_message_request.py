@@ -4,11 +4,11 @@ from ...core.pydantic_utilities import UniversalBaseModel
 from .send_message_to import SendMessageTo
 from .send_message_cc import SendMessageCc
 from .send_message_bcc import SendMessageBcc
+import typing
 from .message_subject import MessageSubject
 from .message_text import MessageText
 from .message_html import MessageHtml
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
-import typing
 import pydantic
 
 
@@ -16,9 +16,9 @@ class SendMessageRequest(UniversalBaseModel):
     to: SendMessageTo
     cc: SendMessageCc
     bcc: SendMessageBcc
-    subject: MessageSubject
-    text: MessageText
-    html: MessageHtml
+    subject: typing.Optional[MessageSubject] = None
+    text: typing.Optional[MessageText] = None
+    html: typing.Optional[MessageHtml] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

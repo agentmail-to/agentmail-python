@@ -5,7 +5,7 @@ from ..inboxes.types.inbox_id import InboxId
 import typing
 from ..types.received import Received
 from ..types.sent import Sent
-from ..types.query_limit import QueryLimit
+from ..types.limit import Limit
 from ..types.last_key import LastKey
 from ..core.request_options import RequestOptions
 from .types.list_threads_response import ListThreadsResponse
@@ -30,7 +30,7 @@ class ThreadsClient:
         *,
         received: typing.Optional[Received] = None,
         sent: typing.Optional[Sent] = None,
-        limit: typing.Optional[QueryLimit] = None,
+        limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
@@ -45,7 +45,7 @@ class ThreadsClient:
 
         sent : typing.Optional[Sent]
 
-        limit : typing.Optional[QueryLimit]
+        limit : typing.Optional[Limit]
 
         last_key : typing.Optional[LastKey]
 
@@ -171,7 +171,7 @@ class AsyncThreadsClient:
         *,
         received: typing.Optional[Received] = None,
         sent: typing.Optional[Sent] = None,
-        limit: typing.Optional[QueryLimit] = None,
+        limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
@@ -186,7 +186,7 @@ class AsyncThreadsClient:
 
         sent : typing.Optional[Sent]
 
-        limit : typing.Optional[QueryLimit]
+        limit : typing.Optional[Limit]
 
         last_key : typing.Optional[LastKey]
 

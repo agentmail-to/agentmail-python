@@ -34,7 +34,7 @@ client.inboxes.list()
 <dl>
 <dd>
 
-**limit:** `typing.Optional[QueryLimit]` 
+**limit:** `typing.Optional[Limit]` 
     
 </dd>
 </dl>
@@ -265,7 +265,7 @@ client.messages.list(
 <dl>
 <dd>
 
-**limit:** `typing.Optional[QueryLimit]` 
+**limit:** `typing.Optional[Limit]` 
     
 </dd>
 </dl>
@@ -427,7 +427,7 @@ client.messages.send(
 <dl>
 <dd>
 
-**subject:** `MessageSubject` 
+**subject:** `typing.Optional[MessageSubject]` 
     
 </dd>
 </dl>
@@ -435,7 +435,7 @@ client.messages.send(
 <dl>
 <dd>
 
-**text:** `MessageText` 
+**text:** `typing.Optional[MessageText]` 
     
 </dd>
 </dl>
@@ -443,7 +443,7 @@ client.messages.send(
 <dl>
 <dd>
 
-**html:** `MessageHtml` 
+**html:** `typing.Optional[MessageHtml]` 
     
 </dd>
 </dl>
@@ -532,23 +532,23 @@ client.messages.reply(
 <dl>
 <dd>
 
-**text:** `MessageText` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**html:** `MessageHtml` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **to:** `typing.Optional[SendMessageTo]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**text:** `typing.Optional[MessageText]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**html:** `typing.Optional[MessageHtml]` 
     
 </dd>
 </dl>
@@ -643,7 +643,7 @@ client.threads.list(
 <dl>
 <dd>
 
-**limit:** `typing.Optional[QueryLimit]` 
+**limit:** `typing.Optional[Limit]` 
     
 </dd>
 </dl>

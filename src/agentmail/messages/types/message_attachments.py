@@ -3,4 +3,4 @@
 import typing
 from .attachment import Attachment
 
-MessageAttachments = typing.Optional[typing.List[Attachment]]
+MessageAttachments = typing.List[Attachment]

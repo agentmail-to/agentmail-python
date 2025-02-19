@@ -6,9 +6,9 @@ from ...inboxes.types.inbox_id import InboxId
 import datetime as dt
 import pydantic
 from .thread_updated_at import ThreadUpdatedAt
+import typing
 from .thread_subject import ThreadSubject
 from .thread_participants import ThreadParticipants
-import typing
 from ...messages.types.message import Message
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -22,7 +22,7 @@ class Thread(UniversalBaseModel):
     """
 
     updated_at: ThreadUpdatedAt
-    subject: ThreadSubject
+    subject: typing.Optional[ThreadSubject] = None
     participants: ThreadParticipants
     messages: typing.List[Message] = pydantic.Field()
     """

@@ -15,8 +15,8 @@ class ReplyToMessageRequest(UniversalBaseModel):
     to: typing.Optional[SendMessageTo] = None
     cc: SendMessageCc
     bcc: SendMessageBcc
-    text: MessageText
-    html: MessageHtml
+    text: typing.Optional[MessageText] = None
+    html: typing.Optional[MessageHtml] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

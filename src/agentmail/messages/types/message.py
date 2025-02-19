@@ -36,14 +36,14 @@ class Message(UniversalBaseModel):
     Address to reply to. In format `username@domain.com` or `Display Name <username@domain.com>`.
     """
 
-    subject: MessageSubject
-    preview: MessagePreview
+    subject: typing.Optional[MessageSubject] = None
+    preview: typing.Optional[MessagePreview] = None
     to: MessageTo
-    cc: MessageCc
-    bcc: MessageBcc
-    text: MessageText
-    html: MessageHtml
-    attachments: MessageAttachments
+    cc: typing.Optional[MessageCc] = None
+    bcc: typing.Optional[MessageBcc] = None
+    text: typing.Optional[MessageText] = None
+    html: typing.Optional[MessageHtml] = None
+    attachments: typing.Optional[MessageAttachments] = None
     in_reply_to: typing.Optional[str] = pydantic.Field(default=None)
     """
     ID of message being replied to.

@@ -4,10 +4,10 @@ from ...core.pydantic_utilities import UniversalBaseModel
 from .thread_id import ThreadId
 from .thread_updated_at import ThreadUpdatedAt
 from .thread_participants import ThreadParticipants
+import typing
 from .thread_subject import ThreadSubject
 from .thread_preview import ThreadPreview
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
-import typing
 import pydantic
 
 
@@ -15,8 +15,8 @@ class ThreadItem(UniversalBaseModel):
     thread_id: ThreadId
     updated_at: ThreadUpdatedAt
     participants: ThreadParticipants
-    subject: ThreadSubject
-    preview: ThreadPreview
+    subject: typing.Optional[ThreadSubject] = None
+    preview: typing.Optional[ThreadPreview] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

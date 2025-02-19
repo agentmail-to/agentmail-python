@@ -4,12 +4,12 @@ from ...core.pydantic_utilities import UniversalBaseModel
 from .message_id import MessageId
 from .message_thread_id import MessageThreadId
 from .message_sent_at import MessageSentAt
+import typing
 import datetime as dt
 import pydantic
 import typing_extensions
 from .message_from import MessageFrom
 from ...core.serialization import FieldMetadata
-import typing
 from .message_subject import MessageSubject
 from .message_preview import MessagePreview
 from .message_to import MessageTo
@@ -25,7 +25,7 @@ class Message(UniversalBaseModel):
     message_id: MessageId
     thread_id: MessageThreadId
     sent_at: MessageSentAt
-    received_at: dt.datetime = pydantic.Field()
+    received_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Time at which message was received.
     """

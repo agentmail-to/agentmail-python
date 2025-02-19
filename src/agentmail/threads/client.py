@@ -68,7 +68,7 @@ class ThreadsClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads/",
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads",
             method="GET",
             params={
                 "received": received,
@@ -217,7 +217,7 @@ class AsyncThreadsClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads/",
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads",
             method="GET",
             params={
                 "received": received,

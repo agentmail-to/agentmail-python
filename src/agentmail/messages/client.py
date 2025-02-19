@@ -82,7 +82,7 @@ class MessagesClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/",
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages",
             method="GET",
             params={
                 "received": received,
@@ -274,7 +274,7 @@ class MessagesClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/",
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages",
             method="POST",
             json={
                 "to": convert_and_respect_annotation_metadata(object_=to, annotation=SendMessageTo, direction="write"),
@@ -477,7 +477,7 @@ class AsyncMessagesClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/",
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages",
             method="GET",
             params={
                 "received": received,
@@ -685,7 +685,7 @@ class AsyncMessagesClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/",
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages",
             method="POST",
             json={
                 "to": convert_and_respect_annotation_metadata(object_=to, annotation=SendMessageTo, direction="write"),

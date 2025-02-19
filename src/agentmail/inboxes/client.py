@@ -54,7 +54,7 @@ class InboxesClient:
         client.inboxes.list()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v0/inboxes/",
+            "v0/inboxes",
             method="GET",
             params={
                 "limit": limit,
@@ -168,7 +168,7 @@ class InboxesClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v0/inboxes/",
+            "v0/inboxes",
             method="POST",
             json={
                 "username": username,
@@ -242,7 +242,7 @@ class AsyncInboxesClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v0/inboxes/",
+            "v0/inboxes",
             method="GET",
             params={
                 "limit": limit,
@@ -372,7 +372,7 @@ class AsyncInboxesClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v0/inboxes/",
+            "v0/inboxes",
             method="POST",
             json={
                 "username": username,

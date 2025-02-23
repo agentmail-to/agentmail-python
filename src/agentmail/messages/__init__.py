@@ -3,7 +3,11 @@
 from .types import (
     Addresses,
     Attachment,
+    AttachmentContentType,
+    AttachmentFilename,
     AttachmentId,
+    AttachmentInline,
+    AttachmentSize,
     ListMessagesResponse,
     Message,
     MessageAttachments,
@@ -30,7 +34,11 @@ from .types import (
 __all__ = [
     "Addresses",
     "Attachment",
+    "AttachmentContentType",
+    "AttachmentFilename",
     "AttachmentId",
+    "AttachmentInline",
+    "AttachmentSize",
     "ListMessagesResponse",
     "Message",
     "MessageAttachments",

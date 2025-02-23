@@ -78,7 +78,8 @@ class MessagesClient:
             api_key="YOUR_API_KEY",
         )
         client.messages.list(
-            inbox_id="inbox_id",
+            inbox_id="yourinbox@agentmail.to",
+            limit=10,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -141,8 +142,8 @@ class MessagesClient:
             api_key="YOUR_API_KEY",
         )
         client.messages.get(
-            inbox_id="inbox_id",
-            message_id="message_id",
+            inbox_id="yourinbox@agentmail.to",
+            message_id="msg_123",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -269,8 +270,13 @@ class MessagesClient:
             api_key="YOUR_API_KEY",
         )
         client.messages.send(
-            inbox_id="inbox_id",
-            to="to",
+            inbox_id="yourinbox@agentmail.to",
+            to=["bob@example.com"],
+            cc=["charlie@example.com"],
+            bcc=["david@example.com"],
+            subject="Project Discussion",
+            text="Let's review the timeline for the project.",
+            html="<p>Let's review the timeline for the project.</p>",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -367,8 +373,12 @@ class MessagesClient:
             api_key="YOUR_API_KEY",
         )
         client.messages.reply(
-            inbox_id="inbox_id",
-            message_id="message_id",
+            inbox_id="yourinbox@agentmail.to",
+            message_id="msg_123",
+            text="Thanks for the update. Let's meet tomorrow at 2 PM.",
+            html="<p>Thanks for the update. Let's meet tomorrow at 2 PM.</p>",
+            cc=["charlie@example.com"],
+            bcc=["david@example.com"],
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -470,7 +480,8 @@ class AsyncMessagesClient:
 
         async def main() -> None:
             await client.messages.list(
-                inbox_id="inbox_id",
+                inbox_id="yourinbox@agentmail.to",
+                limit=10,
             )
 
 
@@ -541,8 +552,8 @@ class AsyncMessagesClient:
 
         async def main() -> None:
             await client.messages.get(
-                inbox_id="inbox_id",
-                message_id="message_id",
+                inbox_id="yourinbox@agentmail.to",
+                message_id="msg_123",
             )
 
 
@@ -677,8 +688,13 @@ class AsyncMessagesClient:
 
         async def main() -> None:
             await client.messages.send(
-                inbox_id="inbox_id",
-                to="to",
+                inbox_id="yourinbox@agentmail.to",
+                to=["bob@example.com"],
+                cc=["charlie@example.com"],
+                bcc=["david@example.com"],
+                subject="Project Discussion",
+                text="Let's review the timeline for the project.",
+                html="<p>Let's review the timeline for the project.</p>",
             )
 
 
@@ -783,8 +799,12 @@ class AsyncMessagesClient:
 
         async def main() -> None:
             await client.messages.reply(
-                inbox_id="inbox_id",
-                message_id="message_id",
+                inbox_id="yourinbox@agentmail.to",
+                message_id="msg_123",
+                text="Thanks for the update. Let's meet tomorrow at 2 PM.",
+                html="<p>Thanks for the update. Let's meet tomorrow at 2 PM.</p>",
+                cc=["charlie@example.com"],
+                bcc=["david@example.com"],
             )
 
 

@@ -3,8 +3,11 @@
 from .types import (
     ListThreadsResponse,
     Thread,
+    ThreadAttachment,
+    ThreadAttachments,
     ThreadId,
     ThreadItem,
+    ThreadMessageCount,
     ThreadParticipants,
     ThreadPreview,
     ThreadSubject,
@@ -14,8 +17,11 @@ from .types import (
 __all__ = [
     "ListThreadsResponse",
     "Thread",
+    "ThreadAttachment",
+    "ThreadAttachments",
     "ThreadId",
     "ThreadItem",
+    "ThreadMessageCount",
     "ThreadParticipants",
     "ThreadPreview",
     "ThreadSubject",

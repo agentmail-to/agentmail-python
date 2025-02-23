@@ -55,7 +55,10 @@ class InboxesClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.inboxes.list()
+        client.inboxes.list(
+            limit=10,
+            last_key="123e4567-e89b-12d3-a456-426614174000",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "v0/inboxes",
@@ -101,7 +104,7 @@ class InboxesClient:
             api_key="YOUR_API_KEY",
         )
         client.inboxes.get(
-            inbox_id="inbox_id",
+            inbox_id="yourinbox@agentmail.to",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -244,7 +247,10 @@ class AsyncInboxesClient:
 
 
         async def main() -> None:
-            await client.inboxes.list()
+            await client.inboxes.list(
+                limit=10,
+                last_key="123e4567-e89b-12d3-a456-426614174000",
+            )
 
 
         asyncio.run(main())
@@ -298,7 +304,7 @@ class AsyncInboxesClient:
 
         async def main() -> None:
             await client.inboxes.get(
-                inbox_id="inbox_id",
+                inbox_id="yourinbox@agentmail.to",
             )
 
 

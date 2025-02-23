@@ -11,6 +11,55 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ListMessagesResponse(UniversalBaseModel):
+    """
+    Examples
+    --------
+    import datetime
+
+    from agentmail.messages import Attachment, ListMessagesResponse, MessageItem
+
+    ListMessagesResponse(
+        messages=[
+            MessageItem(
+                message_id="msg_123",
+                thread_id="thread_123",
+                sent_at=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                from_="alice@example.com",
+                to=["bob@example.com"],
+                subject="Project Discussion",
+                preview="Let's review the timeline for the project.",
+                cc=["charlie@example.com"],
+                bcc=["david@example.com"],
+                attachments=[
+                    Attachment(
+                        attachment_id="att_123",
+                        filename="proposal.pdf",
+                        content_type="application/pdf",
+                        size=1024,
+                        inline=False,
+                    )
+                ],
+            ),
+            MessageItem(
+                message_id="msg_456",
+                thread_id="thread_123",
+                sent_at=datetime.datetime.fromisoformat(
+                    "2024-01-15 10:15:00+00:00",
+                ),
+                from_="bob@example.com",
+                to=["alice@example.com"],
+                subject="Re: Project Discussion",
+                preview="Sounds good, let's meet tomorrow.",
+            ),
+        ],
+        limit=10,
+        count=2,
+        last_key="msg_456#2024-01-15T10:15:00Z",
+    )
+    """
+
     messages: typing.List[MessageItem] = pydantic.Field()
     """
     Messages items. Ordered by `sent_at` descending.

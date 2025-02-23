@@ -11,6 +11,42 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ListThreadsResponse(UniversalBaseModel):
+    """
+    Examples
+    --------
+    import datetime
+
+    from agentmail.threads import ListThreadsResponse, ThreadItem
+
+    ListThreadsResponse(
+        threads=[
+            ThreadItem(
+                thread_id="thread_123",
+                updated_at=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                participants=["alice@example.com", "bob@example.com"],
+                message_count=3,
+                subject="Project Discussion",
+                preview="Let's review the timeline for...",
+            ),
+            ThreadItem(
+                thread_id="thread_456",
+                updated_at=datetime.datetime.fromisoformat(
+                    "2024-01-15 10:15:00+00:00",
+                ),
+                participants=["charlie@example.com", "david@example.com"],
+                message_count=1,
+                subject="Weekly Update",
+                preview="Here's what we accomplished...",
+            ),
+        ],
+        limit=10,
+        count=2,
+        last_key="thread_456#2024-01-15T10:15:00Z",
+    )
+    """
+
     threads: typing.List[ThreadItem] = pydantic.Field()
     """
     Thread items. Ordered by `updated_at` descending.

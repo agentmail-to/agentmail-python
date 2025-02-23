@@ -2,8 +2,11 @@
 
 from .list_threads_response import ListThreadsResponse
 from .thread import Thread
+from .thread_attachment import ThreadAttachment
+from .thread_attachments import ThreadAttachments
 from .thread_id import ThreadId
 from .thread_item import ThreadItem
+from .thread_message_count import ThreadMessageCount
 from .thread_participants import ThreadParticipants
 from .thread_preview import ThreadPreview
 from .thread_subject import ThreadSubject
@@ -12,8 +15,11 @@ from .thread_updated_at import ThreadUpdatedAt
 __all__ = [
     "ListThreadsResponse",
     "Thread",
+    "ThreadAttachment",
+    "ThreadAttachments",
     "ThreadId",
     "ThreadItem",
+    "ThreadMessageCount",
     "ThreadParticipants",
     "ThreadPreview",
     "ThreadSubject",

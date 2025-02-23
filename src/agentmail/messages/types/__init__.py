@@ -2,7 +2,11 @@
 
 from .addresses import Addresses
 from .attachment import Attachment
+from .attachment_content_type import AttachmentContentType
+from .attachment_filename import AttachmentFilename
 from .attachment_id import AttachmentId
+from .attachment_inline import AttachmentInline
+from .attachment_size import AttachmentSize
 from .list_messages_response import ListMessagesResponse
 from .message import Message
 from .message_attachments import MessageAttachments
@@ -28,7 +32,11 @@ from .send_message_to import SendMessageTo
 __all__ = [
     "Addresses",
     "Attachment",
+    "AttachmentContentType",
+    "AttachmentFilename",
     "AttachmentId",
+    "AttachmentInline",
+    "AttachmentSize",
     "ListMessagesResponse",
     "Message",
     "MessageAttachments",

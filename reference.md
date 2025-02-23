@@ -18,7 +18,10 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-client.inboxes.list()
+client.inboxes.list(
+    limit=10,
+    last_key="123e4567-e89b-12d3-a456-426614174000",
+)
 
 ```
 </dd>
@@ -81,7 +84,7 @@ client = AgentMail(
     api_key="YOUR_API_KEY",
 )
 client.inboxes.get(
-    inbox_id="inbox_id",
+    inbox_id="yourinbox@agentmail.to",
 )
 
 ```
@@ -224,7 +227,8 @@ client = AgentMail(
     api_key="YOUR_API_KEY",
 )
 client.messages.list(
-    inbox_id="inbox_id",
+    inbox_id="yourinbox@agentmail.to",
+    limit=10,
 )
 
 ```
@@ -312,8 +316,8 @@ client = AgentMail(
     api_key="YOUR_API_KEY",
 )
 client.messages.get(
-    inbox_id="inbox_id",
-    message_id="message_id",
+    inbox_id="yourinbox@agentmail.to",
+    message_id="msg_123",
 )
 
 ```
@@ -377,8 +381,13 @@ client = AgentMail(
     api_key="YOUR_API_KEY",
 )
 client.messages.send(
-    inbox_id="inbox_id",
-    to="to",
+    inbox_id="yourinbox@agentmail.to",
+    to=["bob@example.com"],
+    cc=["charlie@example.com"],
+    bcc=["david@example.com"],
+    subject="Project Discussion",
+    text="Let's review the timeline for the project.",
+    html="<p>Let's review the timeline for the project.</p>",
 )
 
 ```
@@ -482,8 +491,12 @@ client = AgentMail(
     api_key="YOUR_API_KEY",
 )
 client.messages.reply(
-    inbox_id="inbox_id",
-    message_id="message_id",
+    inbox_id="yourinbox@agentmail.to",
+    message_id="msg_123",
+    text="Thanks for the update. Let's meet tomorrow at 2 PM.",
+    html="<p>Thanks for the update. Let's meet tomorrow at 2 PM.</p>",
+    cc=["charlie@example.com"],
+    bcc=["david@example.com"],
 )
 
 ```
@@ -602,7 +615,8 @@ client = AgentMail(
     api_key="YOUR_API_KEY",
 )
 client.threads.list(
-    inbox_id="inbox_id",
+    inbox_id="yourinbox@agentmail.to",
+    limit=10,
 )
 
 ```
@@ -690,8 +704,8 @@ client = AgentMail(
     api_key="YOUR_API_KEY",
 )
 client.threads.get(
-    inbox_id="inbox_id",
-    thread_id="thread_id",
+    inbox_id="yourinbox@agentmail.to",
+    thread_id="thread_123",
 )
 
 ```

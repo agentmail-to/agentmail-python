@@ -22,6 +22,45 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Message(UniversalBaseModel):
+    """
+    Examples
+    --------
+    import datetime
+
+    from agentmail.messages import Attachment, Message
+
+    Message(
+        message_id="msg_123",
+        thread_id="thread_123",
+        sent_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        received_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        from_="alice@example.com",
+        reply_to="alice.work@example.com",
+        to=["bob@example.com"],
+        cc=["charlie@example.com"],
+        bcc=["david@example.com"],
+        subject="Project Discussion",
+        preview="Let's review the timeline for the project.",
+        text="Let's review the timeline for the project. How does tomorrow look?",
+        html="<p>Let's review the timeline for the project. How does tomorrow look?</p>",
+        attachments=[
+            Attachment(
+                attachment_id="att_123",
+                filename="proposal.pdf",
+                content_type="application/pdf",
+                size=1024,
+                inline=False,
+            )
+        ],
+        in_reply_to="msg_122",
+        references=["msg_121", "msg_122"],
+    )
+    """
+
     message_id: MessageId
     thread_id: MessageThreadId
     sent_at: MessageSentAt

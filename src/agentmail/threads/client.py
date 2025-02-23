@@ -64,7 +64,8 @@ class ThreadsClient:
             api_key="YOUR_API_KEY",
         )
         client.threads.list(
-            inbox_id="inbox_id",
+            inbox_id="yourinbox@agentmail.to",
+            limit=10,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -127,8 +128,8 @@ class ThreadsClient:
             api_key="YOUR_API_KEY",
         )
         client.threads.get(
-            inbox_id="inbox_id",
-            thread_id="thread_id",
+            inbox_id="yourinbox@agentmail.to",
+            thread_id="thread_123",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -210,7 +211,8 @@ class AsyncThreadsClient:
 
         async def main() -> None:
             await client.threads.list(
-                inbox_id="inbox_id",
+                inbox_id="yourinbox@agentmail.to",
+                limit=10,
             )
 
 
@@ -281,8 +283,8 @@ class AsyncThreadsClient:
 
         async def main() -> None:
             await client.threads.get(
-                inbox_id="inbox_id",
-                thread_id="thread_id",
+                inbox_id="yourinbox@agentmail.to",
+                thread_id="thread_123",
             )
 
 

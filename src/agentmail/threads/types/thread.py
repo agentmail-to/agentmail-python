@@ -6,14 +6,55 @@ from ...inboxes.types.inbox_id import InboxId
 import datetime as dt
 import pydantic
 from .thread_updated_at import ThreadUpdatedAt
-import typing
-from .thread_subject import ThreadSubject
 from .thread_participants import ThreadParticipants
+from .thread_message_count import ThreadMessageCount
+import typing
 from ...messages.types.message import Message
+from .thread_subject import ThreadSubject
+from .thread_preview import ThreadPreview
+from .thread_attachments import ThreadAttachments
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class Thread(UniversalBaseModel):
+    """
+    Examples
+    --------
+    import datetime
+
+    from agentmail.messages import Message
+    from agentmail.threads import Thread
+
+    Thread(
+        thread_id="thread_123",
+        inbox_id="yourinbox@agentmail.to",
+        created_at=datetime.datetime.fromisoformat(
+            "2024-01-15 09:30:00+00:00",
+        ),
+        updated_at=datetime.datetime.fromisoformat(
+            "2024-01-15 10:15:00+00:00",
+        ),
+        subject="Project Discussion",
+        participants=["alice@example.com", "bob@example.com"],
+        message_count=1,
+        messages=[
+            Message(
+                message_id="msg_123",
+                thread_id="thread_123",
+                sent_at=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                received_at=datetime.datetime.fromisoformat(
+                    "2024-01-15 09:30:00+00:00",
+                ),
+                from_="alice@example.com",
+                to=["bob@example.com"],
+                text="Let's review the timeline for the project.",
+            )
+        ],
+    )
+    """
+
     thread_id: ThreadId
     inbox_id: InboxId
     created_at: dt.datetime = pydantic.Field()
@@ -22,12 +63,16 @@ class Thread(UniversalBaseModel):
     """
 
     updated_at: ThreadUpdatedAt
-    subject: typing.Optional[ThreadSubject] = None
     participants: ThreadParticipants
+    message_count: ThreadMessageCount
     messages: typing.List[Message] = pydantic.Field()
     """
     Messages in thread. Ordered by `sent_at` ascending.
     """
+
+    subject: typing.Optional[ThreadSubject] = None
+    preview: typing.Optional[ThreadPreview] = None
+    attachments: typing.Optional[ThreadAttachments] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

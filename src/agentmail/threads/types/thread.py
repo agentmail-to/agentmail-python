@@ -7,11 +7,12 @@ import datetime as dt
 import pydantic
 from .thread_updated_at import ThreadUpdatedAt
 from .thread_participants import ThreadParticipants
-from .thread_message_count import ThreadMessageCount
+from .thread_recipients import ThreadRecipients
 import typing
-from ...messages.types.message import Message
 from .thread_subject import ThreadSubject
 from .thread_preview import ThreadPreview
+from .thread_message_count import ThreadMessageCount
+from ...messages.types.message import Message
 from .thread_attachments import ThreadAttachments
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
@@ -35,7 +36,8 @@ class Thread(UniversalBaseModel):
             "2024-01-15 10:15:00+00:00",
         ),
         subject="Project Discussion",
-        participants=["alice@example.com", "bob@example.com"],
+        participants=["alice@example.com"],
+        recipients=["bob@example.com"],
         message_count=1,
         messages=[
             Message(
@@ -64,14 +66,15 @@ class Thread(UniversalBaseModel):
 
     updated_at: ThreadUpdatedAt
     participants: ThreadParticipants
+    recipients: ThreadRecipients
+    subject: typing.Optional[ThreadSubject] = None
+    preview: typing.Optional[ThreadPreview] = None
     message_count: ThreadMessageCount
     messages: typing.List[Message] = pydantic.Field()
     """
     Messages in thread. Ordered by `sent_at` ascending.
     """
 
-    subject: typing.Optional[ThreadSubject] = None
-    preview: typing.Optional[ThreadPreview] = None
     attachments: typing.Optional[ThreadAttachments] = None
 
     if IS_PYDANTIC_V2:

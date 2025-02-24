@@ -46,6 +46,7 @@ from .threads import (
     ThreadMessageCount,
     ThreadParticipants,
     ThreadPreview,
+    ThreadRecipients,
     ThreadSubject,
     ThreadUpdatedAt,
 )
@@ -106,6 +107,7 @@ __all__ = [
     "ThreadMessageCount",
     "ThreadParticipants",
     "ThreadPreview",
+    "ThreadRecipients",
     "ThreadSubject",
     "ThreadUpdatedAt",
     "ValidationError",

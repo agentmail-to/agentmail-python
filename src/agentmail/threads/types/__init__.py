@@ -9,6 +9,7 @@ from .thread_item import ThreadItem
 from .thread_message_count import ThreadMessageCount
 from .thread_participants import ThreadParticipants
 from .thread_preview import ThreadPreview
+from .thread_recipients import ThreadRecipients
 from .thread_subject import ThreadSubject
 from .thread_updated_at import ThreadUpdatedAt
 
@@ -22,6 +23,7 @@ __all__ = [
     "ThreadMessageCount",
     "ThreadParticipants",
     "ThreadPreview",
+    "ThreadRecipients",
     "ThreadSubject",
     "ThreadUpdatedAt",
 ]

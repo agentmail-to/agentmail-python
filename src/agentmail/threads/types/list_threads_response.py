@@ -26,6 +26,7 @@ class ListThreadsResponse(UniversalBaseModel):
                     "2024-01-15 09:30:00+00:00",
                 ),
                 participants=["alice@example.com", "bob@example.com"],
+                recipients=["alice@example.com", "bob@example.com"],
                 message_count=3,
                 subject="Project Discussion",
                 preview="Let's review the timeline for...",
@@ -35,7 +36,8 @@ class ListThreadsResponse(UniversalBaseModel):
                 updated_at=datetime.datetime.fromisoformat(
                     "2024-01-15 10:15:00+00:00",
                 ),
-                participants=["charlie@example.com", "david@example.com"],
+                participants=["charlie@example.com"],
+                recipients=["david@example.com"],
                 message_count=1,
                 subject="Weekly Update",
                 preview="Here's what we accomplished...",

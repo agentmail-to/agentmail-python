@@ -4,26 +4,30 @@ from .list_threads_response import ListThreadsResponse
 from .thread import Thread
 from .thread_attachment import ThreadAttachment
 from .thread_attachments import ThreadAttachments
+from .thread_event_id import ThreadEventId
 from .thread_id import ThreadId
 from .thread_item import ThreadItem
+from .thread_labels import ThreadLabels
 from .thread_message_count import ThreadMessageCount
-from .thread_participants import ThreadParticipants
 from .thread_preview import ThreadPreview
 from .thread_recipients import ThreadRecipients
+from .thread_senders import ThreadSenders
 from .thread_subject import ThreadSubject
-from .thread_updated_at import ThreadUpdatedAt
+from .thread_timestamp import ThreadTimestamp
 
 __all__ = [
     "ListThreadsResponse",
     "Thread",
     "ThreadAttachment",
     "ThreadAttachments",
+    "ThreadEventId",
     "ThreadId",
     "ThreadItem",
+    "ThreadLabels",
     "ThreadMessageCount",
-    "ThreadParticipants",
     "ThreadPreview",
     "ThreadRecipients",
+    "ThreadSenders",
     "ThreadSubject",
-    "ThreadUpdatedAt",
+    "ThreadTimestamp",
 ]

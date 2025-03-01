@@ -23,7 +23,9 @@ class ListMessagesResponse(UniversalBaseModel):
             MessageItem(
                 message_id="msg_123",
                 thread_id="thread_123",
-                sent_at=datetime.datetime.fromisoformat(
+                event_id="event_123",
+                labels=["RECEIVED", "UNREAD"],
+                timestamp=datetime.datetime.fromisoformat(
                     "2024-01-15 09:30:00+00:00",
                 ),
                 from_="alice@example.com",
@@ -45,7 +47,9 @@ class ListMessagesResponse(UniversalBaseModel):
             MessageItem(
                 message_id="msg_456",
                 thread_id="thread_123",
-                sent_at=datetime.datetime.fromisoformat(
+                event_id="event_456",
+                labels=["SENT"],
+                timestamp=datetime.datetime.fromisoformat(
                     "2024-01-15 10:15:00+00:00",
                 ),
                 from_="bob@example.com",

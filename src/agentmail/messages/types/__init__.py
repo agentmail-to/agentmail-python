@@ -12,15 +12,19 @@ from .message import Message
 from .message_attachments import MessageAttachments
 from .message_bcc import MessageBcc
 from .message_cc import MessageCc
+from .message_event_id import MessageEventId
 from .message_from import MessageFrom
 from .message_html import MessageHtml
 from .message_id import MessageId
+from .message_in_reply_to import MessageInReplyTo
 from .message_item import MessageItem
+from .message_labels import MessageLabels
 from .message_preview import MessagePreview
-from .message_sent_at import MessageSentAt
+from .message_references import MessageReferences
+from .message_reply_to import MessageReplyTo
 from .message_subject import MessageSubject
 from .message_text import MessageText
-from .message_thread_id import MessageThreadId
+from .message_timestamp import MessageTimestamp
 from .message_to import MessageTo
 from .reply_to_message_request import ReplyToMessageRequest
 from .send_message_bcc import SendMessageBcc
@@ -42,15 +46,19 @@ __all__ = [
     "MessageAttachments",
     "MessageBcc",
     "MessageCc",
+    "MessageEventId",
     "MessageFrom",
     "MessageHtml",
     "MessageId",
+    "MessageInReplyTo",
     "MessageItem",
+    "MessageLabels",
     "MessagePreview",
-    "MessageSentAt",
+    "MessageReferences",
+    "MessageReplyTo",
     "MessageSubject",
     "MessageText",
-    "MessageThreadId",
+    "MessageTimestamp",
     "MessageTo",
     "ReplyToMessageRequest",
     "SendMessageBcc",

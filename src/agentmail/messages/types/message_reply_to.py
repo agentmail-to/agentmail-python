@@ -2,4 +2,4 @@
 
 import typing
 
-ThreadParticipants = typing.List[str]
+MessageReplyTo = typing.Optional[str]

@@ -2,4 +2,4 @@
 
 import datetime as dt
 
-ThreadUpdatedAt = dt.datetime
+MessageTimestamp = dt.datetime

@@ -22,10 +22,12 @@ class ListThreadsResponse(UniversalBaseModel):
         threads=[
             ThreadItem(
                 thread_id="thread_123",
-                updated_at=datetime.datetime.fromisoformat(
+                event_id="event_123",
+                labels=["RECEIVED", "UNREAD"],
+                timestamp=datetime.datetime.fromisoformat(
                     "2024-01-15 09:30:00+00:00",
                 ),
-                participants=["alice@example.com", "bob@example.com"],
+                senders=["alice@example.com", "bob@example.com"],
                 recipients=["alice@example.com", "bob@example.com"],
                 message_count=3,
                 subject="Project Discussion",
@@ -33,10 +35,12 @@ class ListThreadsResponse(UniversalBaseModel):
             ),
             ThreadItem(
                 thread_id="thread_456",
-                updated_at=datetime.datetime.fromisoformat(
+                event_id="event_456",
+                labels=["SENT"],
+                timestamp=datetime.datetime.fromisoformat(
                     "2024-01-15 10:15:00+00:00",
                 ),
-                participants=["charlie@example.com"],
+                senders=["charlie@example.com"],
                 recipients=["david@example.com"],
                 message_count=1,
                 subject="Weekly Update",

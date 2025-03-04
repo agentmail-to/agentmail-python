@@ -22,6 +22,7 @@ from .message_attachments import MessageAttachments
 from .message_in_reply_to import MessageInReplyTo
 from .message_references import MessageReferences
 from ...inboxes.types.inbox_id import InboxId
+from ...types.organization_id import OrganizationId
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
@@ -63,6 +64,7 @@ class Message(UniversalBaseModel):
         in_reply_to="msg_122",
         references=["msg_121", "msg_122"],
         inbox_id="yourinbox@agentmail.to",
+        organization_id="org_123",
     )
     """
 
@@ -84,6 +86,7 @@ class Message(UniversalBaseModel):
     in_reply_to: MessageInReplyTo
     references: MessageReferences
     inbox_id: InboxId
+    organization_id: OrganizationId
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

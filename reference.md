@@ -198,20 +198,6 @@ client.inboxes.create(
 <dl>
 <dd>
 
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List messages in inbox. If neither or both `received` and `sent` query parameters are set, all messages are returned.
-</dd>
-</dl>
-</dd>
-</dl>
-
 #### 🔌 Usage
 
 <dl>
@@ -585,20 +571,6 @@ client.messages.reply(
 <details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List threads in inbox. If neither or both `received` and `sent` query parameters are set, all threads are returned.
-</dd>
-</dl>
-</dd>
-</dl>
 
 #### 🔌 Usage
 

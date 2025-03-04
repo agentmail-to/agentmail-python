@@ -15,6 +15,7 @@ from .thread_attachments import ThreadAttachments
 from ...messages.types.message import Message
 import pydantic
 from ...inboxes.types.inbox_id import InboxId
+from ...types.organization_id import OrganizationId
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 
 
@@ -28,6 +29,7 @@ class Thread(UniversalBaseModel):
     from agentmail.threads import Thread
 
     Thread(
+        organization_id="org_123",
         inbox_id="yourinbox@agentmail.to",
         thread_id="thread_123",
         event_id="event_123",
@@ -53,6 +55,7 @@ class Thread(UniversalBaseModel):
                 to=["bob@example.com"],
                 text="Let's review the timeline for the project.",
                 inbox_id="yourinbox@agentmail.to",
+                organization_id="org_123",
             )
         ],
     )
@@ -74,6 +77,7 @@ class Thread(UniversalBaseModel):
     """
 
     inbox_id: InboxId
+    organization_id: OrganizationId
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

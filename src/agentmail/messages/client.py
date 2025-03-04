@@ -49,8 +49,6 @@ class MessagesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListMessagesResponse:
         """
-        List messages in inbox. If neither or both `received` and `sent` query parameters are set, all messages are returned.
-
         Parameters
         ----------
         inbox_id : InboxId
@@ -446,8 +444,6 @@ class AsyncMessagesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListMessagesResponse:
         """
-        List messages in inbox. If neither or both `received` and `sent` query parameters are set, all messages are returned.
-
         Parameters
         ----------
         inbox_id : InboxId

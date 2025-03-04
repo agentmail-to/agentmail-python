@@ -35,8 +35,6 @@ class ThreadsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
         """
-        List threads in inbox. If neither or both `received` and `sent` query parameters are set, all threads are returned.
-
         Parameters
         ----------
         inbox_id : InboxId
@@ -177,8 +175,6 @@ class AsyncThreadsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
         """
-        List threads in inbox. If neither or both `received` and `sent` query parameters are set, all threads are returned.
-
         Parameters
         ----------
         inbox_id : InboxId

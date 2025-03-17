@@ -406,7 +406,7 @@ client.messages.send(
 <dl>
 <dd>
 
-**cc:** `SendMessageCc` 
+**cc:** `typing.Optional[SendMessageCc]` 
     
 </dd>
 </dl>
@@ -414,7 +414,7 @@ client.messages.send(
 <dl>
 <dd>
 
-**bcc:** `SendMessageBcc` 
+**bcc:** `typing.Optional[SendMessageBcc]` 
     
 </dd>
 </dl>
@@ -515,23 +515,23 @@ client.messages.reply(
 <dl>
 <dd>
 
-**cc:** `SendMessageCc` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bcc:** `SendMessageBcc` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **to:** `typing.Optional[SendMessageTo]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cc:** `typing.Optional[SendMessageCc]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bcc:** `typing.Optional[SendMessageBcc]` 
     
 </dd>
 </dl>

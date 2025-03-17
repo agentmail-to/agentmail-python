@@ -229,8 +229,8 @@ class MessagesClient:
         inbox_id: InboxId,
         *,
         to: SendMessageTo,
-        cc: SendMessageCc,
-        bcc: SendMessageBcc,
+        cc: typing.Optional[SendMessageCc] = OMIT,
+        bcc: typing.Optional[SendMessageBcc] = OMIT,
         subject: typing.Optional[MessageSubject] = OMIT,
         text: typing.Optional[MessageText] = OMIT,
         html: typing.Optional[MessageHtml] = OMIT,
@@ -243,9 +243,9 @@ class MessagesClient:
 
         to : SendMessageTo
 
-        cc : SendMessageCc
+        cc : typing.Optional[SendMessageCc]
 
-        bcc : SendMessageBcc
+        bcc : typing.Optional[SendMessageBcc]
 
         subject : typing.Optional[MessageSubject]
 
@@ -332,9 +332,9 @@ class MessagesClient:
         inbox_id: InboxId,
         message_id: MessageId,
         *,
-        cc: SendMessageCc,
-        bcc: SendMessageBcc,
         to: typing.Optional[SendMessageTo] = OMIT,
+        cc: typing.Optional[SendMessageCc] = OMIT,
+        bcc: typing.Optional[SendMessageBcc] = OMIT,
         text: typing.Optional[MessageText] = OMIT,
         html: typing.Optional[MessageHtml] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -346,11 +346,11 @@ class MessagesClient:
 
         message_id : MessageId
 
-        cc : SendMessageCc
-
-        bcc : SendMessageBcc
-
         to : typing.Optional[SendMessageTo]
+
+        cc : typing.Optional[SendMessageCc]
+
+        bcc : typing.Optional[SendMessageBcc]
 
         text : typing.Optional[MessageText]
 
@@ -640,8 +640,8 @@ class AsyncMessagesClient:
         inbox_id: InboxId,
         *,
         to: SendMessageTo,
-        cc: SendMessageCc,
-        bcc: SendMessageBcc,
+        cc: typing.Optional[SendMessageCc] = OMIT,
+        bcc: typing.Optional[SendMessageBcc] = OMIT,
         subject: typing.Optional[MessageSubject] = OMIT,
         text: typing.Optional[MessageText] = OMIT,
         html: typing.Optional[MessageHtml] = OMIT,
@@ -654,9 +654,9 @@ class AsyncMessagesClient:
 
         to : SendMessageTo
 
-        cc : SendMessageCc
+        cc : typing.Optional[SendMessageCc]
 
-        bcc : SendMessageBcc
+        bcc : typing.Optional[SendMessageBcc]
 
         subject : typing.Optional[MessageSubject]
 
@@ -751,9 +751,9 @@ class AsyncMessagesClient:
         inbox_id: InboxId,
         message_id: MessageId,
         *,
-        cc: SendMessageCc,
-        bcc: SendMessageBcc,
         to: typing.Optional[SendMessageTo] = OMIT,
+        cc: typing.Optional[SendMessageCc] = OMIT,
+        bcc: typing.Optional[SendMessageBcc] = OMIT,
         text: typing.Optional[MessageText] = OMIT,
         html: typing.Optional[MessageHtml] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -765,11 +765,11 @@ class AsyncMessagesClient:
 
         message_id : MessageId
 
-        cc : SendMessageCc
-
-        bcc : SendMessageBcc
-
         to : typing.Optional[SendMessageTo]
+
+        cc : typing.Optional[SendMessageCc]
+
+        bcc : typing.Optional[SendMessageBcc]
 
         text : typing.Optional[MessageText]
 

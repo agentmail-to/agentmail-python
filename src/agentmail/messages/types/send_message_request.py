@@ -2,9 +2,9 @@
 
 from ...core.pydantic_utilities import UniversalBaseModel
 from .send_message_to import SendMessageTo
+import typing
 from .send_message_cc import SendMessageCc
 from .send_message_bcc import SendMessageBcc
-import typing
 from .message_subject import MessageSubject
 from .message_text import MessageText
 from .message_html import MessageHtml
@@ -14,8 +14,8 @@ import pydantic
 
 class SendMessageRequest(UniversalBaseModel):
     to: SendMessageTo
-    cc: SendMessageCc
-    bcc: SendMessageBcc
+    cc: typing.Optional[SendMessageCc] = None
+    bcc: typing.Optional[SendMessageBcc] = None
     subject: typing.Optional[MessageSubject] = None
     text: typing.Optional[MessageText] = None
     html: typing.Optional[MessageHtml] = None

@@ -13,8 +13,8 @@ import pydantic
 
 class ReplyToMessageRequest(UniversalBaseModel):
     to: typing.Optional[SendMessageTo] = None
-    cc: SendMessageCc
-    bcc: SendMessageBcc
+    cc: typing.Optional[SendMessageCc] = None
+    bcc: typing.Optional[SendMessageBcc] = None
     text: typing.Optional[MessageText] = None
     html: typing.Optional[MessageHtml] = None
 

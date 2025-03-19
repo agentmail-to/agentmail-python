@@ -2,4 +2,4 @@
 
 import typing
 
-MessageReferences = typing.Optional[typing.List[str]]
+MessageReferences = typing.List[str]

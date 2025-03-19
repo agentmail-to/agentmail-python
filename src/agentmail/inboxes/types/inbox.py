@@ -3,10 +3,10 @@
 from ...core.pydantic_utilities import UniversalBaseModel
 from .inbox_id import InboxId
 import pydantic
+import typing
 from .display_name import DisplayName
 import datetime as dt
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
-import typing
 
 
 class Inbox(UniversalBaseModel):
@@ -33,7 +33,7 @@ class Inbox(UniversalBaseModel):
     ID of organization that owns inbox.
     """
 
-    display_name: DisplayName
+    display_name: typing.Optional[DisplayName] = None
     created_at: dt.datetime = pydantic.Field()
     """
     Time at which inbox was created.

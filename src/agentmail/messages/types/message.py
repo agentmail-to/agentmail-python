@@ -9,8 +9,8 @@ from .message_timestamp import MessageTimestamp
 import typing_extensions
 from .message_from import MessageFrom
 from ...core.serialization import FieldMetadata
-from .message_reply_to import MessageReplyTo
 import typing
+from .message_reply_to import MessageReplyTo
 from .message_subject import MessageSubject
 from .message_preview import MessagePreview
 from .message_to import MessageTo
@@ -74,7 +74,7 @@ class Message(UniversalBaseModel):
     labels: MessageLabels
     timestamp: MessageTimestamp
     from_: typing_extensions.Annotated[MessageFrom, FieldMetadata(alias="from")]
-    reply_to: MessageReplyTo
+    reply_to: typing.Optional[MessageReplyTo] = None
     subject: typing.Optional[MessageSubject] = None
     preview: typing.Optional[MessagePreview] = None
     to: MessageTo
@@ -83,8 +83,8 @@ class Message(UniversalBaseModel):
     text: typing.Optional[MessageText] = None
     html: typing.Optional[MessageHtml] = None
     attachments: typing.Optional[MessageAttachments] = None
-    in_reply_to: MessageInReplyTo
-    references: MessageReferences
+    in_reply_to: typing.Optional[MessageInReplyTo] = None
+    references: typing.Optional[MessageReferences] = None
     inbox_id: InboxId
     organization_id: OrganizationId
 

@@ -116,7 +116,11 @@ class MessagesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get(
-        self, inbox_id: InboxId, message_id: MessageId, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        inbox_id: InboxId,
+        message_id: MessageId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Message:
         """
         Parameters
@@ -519,7 +523,11 @@ class AsyncMessagesClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get(
-        self, inbox_id: InboxId, message_id: MessageId, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        inbox_id: InboxId,
+        message_id: MessageId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Message:
         """
         Parameters

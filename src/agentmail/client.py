@@ -9,10 +9,12 @@ from .core.client_wrapper import SyncClientWrapper
 from .inboxes.client import InboxesClient
 from .threads.client import ThreadsClient
 from .messages.client import MessagesClient
+from .webhooks.client import WebhooksClient
 from .core.client_wrapper import AsyncClientWrapper
 from .inboxes.client import AsyncInboxesClient
 from .threads.client import AsyncThreadsClient
 from .messages.client import AsyncMessagesClient
+from .webhooks.client import AsyncWebhooksClient
 
 
 class AgentMail:
@@ -62,7 +64,9 @@ class AgentMail:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         if api_key is None:
             raise ApiError(
                 body="The client must be instantiated be either passing in api_key or setting AGENTMAIL_API_KEY"
@@ -80,6 +84,7 @@ class AgentMail:
         self.inboxes = InboxesClient(client_wrapper=self._client_wrapper)
         self.threads = ThreadsClient(client_wrapper=self._client_wrapper)
         self.messages = MessagesClient(client_wrapper=self._client_wrapper)
+        self.webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncAgentMail:
@@ -129,7 +134,9 @@ class AsyncAgentMail:
         follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
     ):
-        _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
+        _defaulted_timeout = (
+            timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
+        )
         if api_key is None:
             raise ApiError(
                 body="The client must be instantiated be either passing in api_key or setting AGENTMAIL_API_KEY"
@@ -147,6 +154,7 @@ class AsyncAgentMail:
         self.inboxes = AsyncInboxesClient(client_wrapper=self._client_wrapper)
         self.threads = AsyncThreadsClient(client_wrapper=self._client_wrapper)
         self.messages = AsyncMessagesClient(client_wrapper=self._client_wrapper)
+        self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: AgentMailEnvironment) -> str:

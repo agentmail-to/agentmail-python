@@ -12,7 +12,7 @@ from .types import (
     ValidationErrorResponse,
 )
 from .errors import IsTakenError, NotFoundError, ValidationError
-from . import inboxes, messages, threads
+from . import inboxes, messages, threads, webhooks
 from .client import AgentMail, AsyncAgentMail
 from .environment import AgentMailEnvironment
 from .inboxes import CreateInboxRequest, DisplayName, Inbox, InboxId, ListInboxesResponse
@@ -67,6 +67,22 @@ from .threads import (
     ThreadTimestamp,
 )
 from .version import __version__
+from .webhooks import (
+    CreateWebhookRequest,
+    EventId,
+    EventType,
+    Events,
+    Inboxes,
+    ListWebhooksResponse,
+    MessageReceivedPayload,
+    Payload,
+    SvixId,
+    SvixSignature,
+    SvixTimestamp,
+    Url,
+    Webhook,
+    WebhookId,
+)
 
 __all__ = [
     "Addresses",
@@ -81,17 +97,23 @@ __all__ = [
     "AttachmentSize",
     "Count",
     "CreateInboxRequest",
+    "CreateWebhookRequest",
     "DisplayName",
     "ErrorName",
     "ErrorResponse",
+    "EventId",
+    "EventType",
+    "Events",
     "Inbox",
     "InboxId",
+    "Inboxes",
     "IsTakenError",
     "LastKey",
     "Limit",
     "ListInboxesResponse",
     "ListMessagesResponse",
     "ListThreadsResponse",
+    "ListWebhooksResponse",
     "Message",
     "MessageAttachments",
     "MessageBcc",
@@ -104,6 +126,7 @@ __all__ = [
     "MessageItem",
     "MessageLabels",
     "MessagePreview",
+    "MessageReceivedPayload",
     "MessageReferences",
     "MessageReplyTo",
     "MessageSubject",
@@ -112,6 +135,7 @@ __all__ = [
     "MessageTo",
     "NotFoundError",
     "OrganizationId",
+    "Payload",
     "Received",
     "ReplyToMessageRequest",
     "SendMessageBcc",
@@ -120,6 +144,9 @@ __all__ = [
     "SendMessageResponse",
     "SendMessageTo",
     "Sent",
+    "SvixId",
+    "SvixSignature",
+    "SvixTimestamp",
     "Thread",
     "ThreadAttachment",
     "ThreadAttachments",
@@ -133,10 +160,14 @@ __all__ = [
     "ThreadSenders",
     "ThreadSubject",
     "ThreadTimestamp",
+    "Url",
     "ValidationError",
     "ValidationErrorResponse",
+    "Webhook",
+    "WebhookId",
     "__version__",
     "inboxes",
     "messages",
     "threads",
+    "webhooks",
 ]

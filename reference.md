@@ -239,22 +239,6 @@ client.messages.list(
 <dl>
 <dd>
 
-**received:** `typing.Optional[Received]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sent:** `typing.Optional[Sent]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **limit:** `typing.Optional[Limit]` 
     
 </dd>
@@ -264,6 +248,14 @@ client.messages.list(
 <dd>
 
 **last_key:** `typing.Optional[LastKey]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**labels:** `typing.Optional[Labels]` 
     
 </dd>
 </dl>
@@ -613,22 +605,6 @@ client.threads.list(
 <dl>
 <dd>
 
-**received:** `typing.Optional[Received]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**sent:** `typing.Optional[Sent]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **limit:** `typing.Optional[Limit]` 
     
 </dd>
@@ -638,6 +614,14 @@ client.threads.list(
 <dd>
 
 **last_key:** `typing.Optional[LastKey]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**labels:** `typing.Optional[Labels]` 
     
 </dd>
 </dl>

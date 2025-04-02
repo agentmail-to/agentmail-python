@@ -2,6 +2,7 @@
 
 from ...core.pydantic_utilities import UniversalBaseModel
 from .message_id import MessageId
+from ...threads.types.thread_id import ThreadId
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 import typing
 import pydantic
@@ -9,6 +10,7 @@ import pydantic
 
 class SendMessageResponse(UniversalBaseModel):
     message_id: MessageId
+    thread_id: ThreadId
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

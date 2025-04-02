@@ -3,10 +3,9 @@
 from ..core.client_wrapper import SyncClientWrapper
 from ..inboxes.types.inbox_id import InboxId
 import typing
-from ..types.received import Received
-from ..types.sent import Sent
 from ..types.limit import Limit
 from ..types.last_key import LastKey
+from ..types.labels import Labels
 from ..core.request_options import RequestOptions
 from .types.list_threads_response import ListThreadsResponse
 from ..core.jsonable_encoder import jsonable_encoder
@@ -28,10 +27,9 @@ class ThreadsClient:
         self,
         inbox_id: InboxId,
         *,
-        received: typing.Optional[Received] = None,
-        sent: typing.Optional[Sent] = None,
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
+        labels: typing.Optional[Labels] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
         """
@@ -39,13 +37,11 @@ class ThreadsClient:
         ----------
         inbox_id : InboxId
 
-        received : typing.Optional[Received]
-
-        sent : typing.Optional[Sent]
-
         limit : typing.Optional[Limit]
 
         last_key : typing.Optional[LastKey]
+
+        labels : typing.Optional[Labels]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -70,10 +66,9 @@ class ThreadsClient:
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads",
             method="GET",
             params={
-                "received": received,
-                "sent": sent,
                 "limit": limit,
                 "last_key": last_key,
+                "labels": labels,
             },
             request_options=request_options,
         )
@@ -172,10 +167,9 @@ class AsyncThreadsClient:
         self,
         inbox_id: InboxId,
         *,
-        received: typing.Optional[Received] = None,
-        sent: typing.Optional[Sent] = None,
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
+        labels: typing.Optional[Labels] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
         """
@@ -183,13 +177,11 @@ class AsyncThreadsClient:
         ----------
         inbox_id : InboxId
 
-        received : typing.Optional[Received]
-
-        sent : typing.Optional[Sent]
-
         limit : typing.Optional[Limit]
 
         last_key : typing.Optional[LastKey]
+
+        labels : typing.Optional[Labels]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -222,10 +214,9 @@ class AsyncThreadsClient:
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads",
             method="GET",
             params={
-                "received": received,
-                "sent": sent,
                 "limit": limit,
                 "last_key": last_key,
+                "labels": labels,
             },
             request_options=request_options,
         )

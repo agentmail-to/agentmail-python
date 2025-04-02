@@ -34,6 +34,7 @@ from .types import (
     SendMessageResponse,
     SendMessageTo,
 )
+from .errors import MessageRejectedError
 
 __all__ = [
     "Addresses",
@@ -57,6 +58,7 @@ __all__ = [
     "MessageLabels",
     "MessagePreview",
     "MessageReferences",
+    "MessageRejectedError",
     "MessageReplyTo",
     "MessageSubject",
     "MessageText",

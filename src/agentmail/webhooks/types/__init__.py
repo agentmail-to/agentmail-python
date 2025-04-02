@@ -7,7 +7,6 @@ from .events import Events
 from .inboxes import Inboxes
 from .list_webhooks_response import ListWebhooksResponse
 from .message_received_payload import MessageReceivedPayload
-from .payload import Payload
 from .svix_id import SvixId
 from .svix_signature import SvixSignature
 from .svix_timestamp import SvixTimestamp
@@ -23,7 +22,6 @@ __all__ = [
     "Inboxes",
     "ListWebhooksResponse",
     "MessageReceivedPayload",
-    "Payload",
     "SvixId",
     "SvixSignature",
     "SvixTimestamp",

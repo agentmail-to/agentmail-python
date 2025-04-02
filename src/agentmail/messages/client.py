@@ -3,10 +3,9 @@
 import typing
 from ..core.client_wrapper import SyncClientWrapper
 from ..inboxes.types.inbox_id import InboxId
-from ..types.received import Received
-from ..types.sent import Sent
 from ..types.limit import Limit
 from ..types.last_key import LastKey
+from ..types.labels import Labels
 from ..core.request_options import RequestOptions
 from .types.list_messages_response import ListMessagesResponse
 from ..core.jsonable_encoder import jsonable_encoder
@@ -28,6 +27,7 @@ from .types.send_message_response import SendMessageResponse
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..errors.validation_error import ValidationError
 from ..types.validation_error_response import ValidationErrorResponse
+from .errors.message_rejected_error import MessageRejectedError
 from ..core.client_wrapper import AsyncClientWrapper
 
 # this is used as the default value for optional parameters
@@ -42,10 +42,9 @@ class MessagesClient:
         self,
         inbox_id: InboxId,
         *,
-        received: typing.Optional[Received] = None,
-        sent: typing.Optional[Sent] = None,
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
+        labels: typing.Optional[Labels] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListMessagesResponse:
         """
@@ -53,13 +52,11 @@ class MessagesClient:
         ----------
         inbox_id : InboxId
 
-        received : typing.Optional[Received]
-
-        sent : typing.Optional[Sent]
-
         limit : typing.Optional[Limit]
 
         last_key : typing.Optional[LastKey]
+
+        labels : typing.Optional[Labels]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -84,10 +81,9 @@ class MessagesClient:
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages",
             method="GET",
             params={
-                "received": received,
-                "sent": sent,
                 "limit": limit,
                 "last_key": last_key,
+                "labels": labels,
             },
             request_options=request_options,
         )
@@ -326,6 +322,16 @@ class MessagesClient:
                         ),
                     )
                 )
+            if _response.status_code == 403:
+                raise MessageRejectedError(
+                    typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -427,6 +433,16 @@ class MessagesClient:
                         ),
                     )
                 )
+            if _response.status_code == 403:
+                raise MessageRejectedError(
+                    typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -441,10 +457,9 @@ class AsyncMessagesClient:
         self,
         inbox_id: InboxId,
         *,
-        received: typing.Optional[Received] = None,
-        sent: typing.Optional[Sent] = None,
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
+        labels: typing.Optional[Labels] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListMessagesResponse:
         """
@@ -452,13 +467,11 @@ class AsyncMessagesClient:
         ----------
         inbox_id : InboxId
 
-        received : typing.Optional[Received]
-
-        sent : typing.Optional[Sent]
-
         limit : typing.Optional[Limit]
 
         last_key : typing.Optional[LastKey]
+
+        labels : typing.Optional[Labels]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -491,10 +504,9 @@ class AsyncMessagesClient:
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages",
             method="GET",
             params={
-                "received": received,
-                "sent": sent,
                 "limit": limit,
                 "last_key": last_key,
+                "labels": labels,
             },
             request_options=request_options,
         )
@@ -749,6 +761,16 @@ class AsyncMessagesClient:
                         ),
                     )
                 )
+            if _response.status_code == 403:
+                raise MessageRejectedError(
+                    typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -854,6 +876,16 @@ class AsyncMessagesClient:
                         ValidationErrorResponse,
                         parse_obj_as(
                             type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    )
+                )
+            if _response.status_code == 403:
+                raise MessageRejectedError(
+                    typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     )

@@ -23,6 +23,7 @@ from .types.send_message_bcc import SendMessageBcc
 from .types.message_subject import MessageSubject
 from .types.message_text import MessageText
 from .types.message_html import MessageHtml
+from .types.send_message_attachments import SendMessageAttachments
 from .types.send_message_response import SendMessageResponse
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..errors.validation_error import ValidationError
@@ -234,6 +235,7 @@ class MessagesClient:
         subject: typing.Optional[MessageSubject] = OMIT,
         text: typing.Optional[MessageText] = OMIT,
         html: typing.Optional[MessageHtml] = OMIT,
+        attachments: typing.Optional[SendMessageAttachments] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
@@ -252,6 +254,8 @@ class MessagesClient:
         text : typing.Optional[MessageText]
 
         html : typing.Optional[MessageHtml]
+
+        attachments : typing.Optional[SendMessageAttachments]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -289,6 +293,11 @@ class MessagesClient:
                 "subject": subject,
                 "text": text,
                 "html": html,
+                "attachments": convert_and_respect_annotation_metadata(
+                    object_=attachments,
+                    annotation=SendMessageAttachments,
+                    direction="write",
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -347,6 +356,7 @@ class MessagesClient:
         bcc: typing.Optional[SendMessageBcc] = OMIT,
         text: typing.Optional[MessageText] = OMIT,
         html: typing.Optional[MessageHtml] = OMIT,
+        attachments: typing.Optional[SendMessageAttachments] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
@@ -365,6 +375,8 @@ class MessagesClient:
         text : typing.Optional[MessageText]
 
         html : typing.Optional[MessageHtml]
+
+        attachments : typing.Optional[SendMessageAttachments]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -400,6 +412,11 @@ class MessagesClient:
                 ),
                 "text": text,
                 "html": html,
+                "attachments": convert_and_respect_annotation_metadata(
+                    object_=attachments,
+                    annotation=SendMessageAttachments,
+                    direction="write",
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -665,6 +682,7 @@ class AsyncMessagesClient:
         subject: typing.Optional[MessageSubject] = OMIT,
         text: typing.Optional[MessageText] = OMIT,
         html: typing.Optional[MessageHtml] = OMIT,
+        attachments: typing.Optional[SendMessageAttachments] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
@@ -683,6 +701,8 @@ class AsyncMessagesClient:
         text : typing.Optional[MessageText]
 
         html : typing.Optional[MessageHtml]
+
+        attachments : typing.Optional[SendMessageAttachments]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -728,6 +748,11 @@ class AsyncMessagesClient:
                 "subject": subject,
                 "text": text,
                 "html": html,
+                "attachments": convert_and_respect_annotation_metadata(
+                    object_=attachments,
+                    annotation=SendMessageAttachments,
+                    direction="write",
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -786,6 +811,7 @@ class AsyncMessagesClient:
         bcc: typing.Optional[SendMessageBcc] = OMIT,
         text: typing.Optional[MessageText] = OMIT,
         html: typing.Optional[MessageHtml] = OMIT,
+        attachments: typing.Optional[SendMessageAttachments] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
@@ -804,6 +830,8 @@ class AsyncMessagesClient:
         text : typing.Optional[MessageText]
 
         html : typing.Optional[MessageHtml]
+
+        attachments : typing.Optional[SendMessageAttachments]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -847,6 +875,11 @@ class AsyncMessagesClient:
                 ),
                 "text": text,
                 "html": html,
+                "attachments": convert_and_respect_annotation_metadata(
+                    object_=attachments,
+                    annotation=SendMessageAttachments,
+                    direction="write",
+                ),
             },
             request_options=request_options,
             omit=OMIT,

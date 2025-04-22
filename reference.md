@@ -438,6 +438,14 @@ client.messages.send(
 <dl>
 <dd>
 
+**attachments:** `typing.Optional[SendMessageAttachments]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -540,6 +548,14 @@ client.messages.reply(
 <dd>
 
 **html:** `typing.Optional[MessageHtml]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**attachments:** `typing.Optional[SendMessageAttachments]` 
     
 </dd>
 </dl>

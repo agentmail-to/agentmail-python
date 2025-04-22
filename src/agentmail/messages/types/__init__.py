@@ -2,6 +2,7 @@
 
 from .addresses import Addresses
 from .attachment import Attachment
+from .attachment_content import AttachmentContent
 from .attachment_content_type import AttachmentContentType
 from .attachment_filename import AttachmentFilename
 from .attachment_id import AttachmentId
@@ -27,6 +28,8 @@ from .message_text import MessageText
 from .message_timestamp import MessageTimestamp
 from .message_to import MessageTo
 from .reply_to_message_request import ReplyToMessageRequest
+from .send_attachment import SendAttachment
+from .send_message_attachments import SendMessageAttachments
 from .send_message_bcc import SendMessageBcc
 from .send_message_cc import SendMessageCc
 from .send_message_request import SendMessageRequest
@@ -36,6 +39,7 @@ from .send_message_to import SendMessageTo
 __all__ = [
     "Addresses",
     "Attachment",
+    "AttachmentContent",
     "AttachmentContentType",
     "AttachmentFilename",
     "AttachmentId",
@@ -61,6 +65,8 @@ __all__ = [
     "MessageTimestamp",
     "MessageTo",
     "ReplyToMessageRequest",
+    "SendAttachment",
+    "SendMessageAttachments",
     "SendMessageBcc",
     "SendMessageCc",
     "SendMessageRequest",

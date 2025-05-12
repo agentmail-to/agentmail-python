@@ -14,14 +14,8 @@
 
 ```python
 from agentmail import AgentMail
-
-client = AgentMail(
-    api_key="YOUR_API_KEY",
-)
-client.inboxes.list(
-    limit=10,
-    last_key="123e4567-e89b-12d3-a456-426614174000",
-)
+client = AgentMail(api_key="YOUR_API_KEY", )
+client.inboxes.list(limit=10, last_key='123e4567-e89b-12d3-a456-426614174000', )
 
 ```
 </dd>
@@ -79,13 +73,8 @@ client.inboxes.list(
 
 ```python
 from agentmail import AgentMail
-
-client = AgentMail(
-    api_key="YOUR_API_KEY",
-)
-client.inboxes.get(
-    inbox_id="yourinbox@agentmail.to",
-)
+client = AgentMail(api_key="YOUR_API_KEY", )
+client.inboxes.get(inbox_id='yourinbox@agentmail.to', )
 
 ```
 </dd>
@@ -135,13 +124,8 @@ client.inboxes.get(
 
 ```python
 from agentmail import AgentMail
-
-client = AgentMail(
-    api_key="YOUR_API_KEY",
-)
-client.inboxes.create(
-    domain="yourdomain.com",
-)
+client = AgentMail(api_key="YOUR_API_KEY", )
+client.inboxes.create(domain='yourdomain.com', )
 
 ```
 </dd>
@@ -208,14 +192,8 @@ client.inboxes.create(
 
 ```python
 from agentmail import AgentMail
-
-client = AgentMail(
-    api_key="YOUR_API_KEY",
-)
-client.messages.list(
-    inbox_id="yourinbox@agentmail.to",
-    limit=10,
-)
+client = AgentMail(api_key="YOUR_API_KEY", )
+client.messages.list(inbox_id='yourinbox@agentmail.to', limit=10, )
 
 ```
 </dd>
@@ -289,14 +267,8 @@ client.messages.list(
 
 ```python
 from agentmail import AgentMail
-
-client = AgentMail(
-    api_key="YOUR_API_KEY",
-)
-client.messages.get(
-    inbox_id="yourinbox@agentmail.to",
-    message_id="msg_123",
-)
+client = AgentMail(api_key="YOUR_API_KEY", )
+client.messages.get(inbox_id='yourinbox@agentmail.to', message_id='msg_123', )
 
 ```
 </dd>
@@ -354,19 +326,8 @@ client.messages.get(
 
 ```python
 from agentmail import AgentMail
-
-client = AgentMail(
-    api_key="YOUR_API_KEY",
-)
-client.messages.send(
-    inbox_id="yourinbox@agentmail.to",
-    to=["bob@example.com"],
-    cc=["charlie@example.com"],
-    bcc=["david@example.com"],
-    subject="Project Discussion",
-    text="Let's review the timeline for the project.",
-    html="<p>Let's review the timeline for the project.</p>",
-)
+client = AgentMail(api_key="YOUR_API_KEY", )
+client.messages.send(inbox_id='yourinbox@agentmail.to', to=['bob@example.com'], cc=['charlie@example.com'], bcc=['david@example.com'], subject='Project Discussion', text="Let's review the timeline for the project.", html="<p>Let's review the timeline for the project.</p>", )
 
 ```
 </dd>
@@ -472,18 +433,8 @@ client.messages.send(
 
 ```python
 from agentmail import AgentMail
-
-client = AgentMail(
-    api_key="YOUR_API_KEY",
-)
-client.messages.reply(
-    inbox_id="yourinbox@agentmail.to",
-    message_id="msg_123",
-    text="Thanks for the update. Let's meet tomorrow at 2 PM.",
-    html="<p>Thanks for the update. Let's meet tomorrow at 2 PM.</p>",
-    cc=["charlie@example.com"],
-    bcc=["david@example.com"],
-)
+client = AgentMail(api_key="YOUR_API_KEY", )
+client.messages.reply(inbox_id='yourinbox@agentmail.to', message_id='msg_123', text="Thanks for the update. Let's meet tomorrow at 2 PM.", html="<p>Thanks for the update. Let's meet tomorrow at 2 PM.</p>", cc=['charlie@example.com'], bcc=['david@example.com'], )
 
 ```
 </dd>
@@ -590,14 +541,8 @@ client.messages.reply(
 
 ```python
 from agentmail import AgentMail
-
-client = AgentMail(
-    api_key="YOUR_API_KEY",
-)
-client.threads.list(
-    inbox_id="yourinbox@agentmail.to",
-    limit=10,
-)
+client = AgentMail(api_key="YOUR_API_KEY", )
+client.threads.list(inbox_id='yourinbox@agentmail.to', limit=10, )
 
 ```
 </dd>
@@ -671,14 +616,8 @@ client.threads.list(
 
 ```python
 from agentmail import AgentMail
-
-client = AgentMail(
-    api_key="YOUR_API_KEY",
-)
-client.threads.get(
-    inbox_id="yourinbox@agentmail.to",
-    thread_id="thread_123",
-)
+client = AgentMail(api_key="YOUR_API_KEY", )
+client.threads.get(inbox_id='yourinbox@agentmail.to', thread_id='thread_123', )
 
 ```
 </dd>
@@ -737,10 +676,7 @@ client.threads.get(
 
 ```python
 from agentmail import AgentMail
-
-client = AgentMail(
-    api_key="YOUR_API_KEY",
-)
+client = AgentMail(api_key="YOUR_API_KEY", )
 client.webhooks.list()
 
 ```
@@ -799,13 +735,8 @@ client.webhooks.list()
 
 ```python
 from agentmail import AgentMail
-
-client = AgentMail(
-    api_key="YOUR_API_KEY",
-)
-client.webhooks.get(
-    webhook_id="webhook_id",
-)
+client = AgentMail(api_key="YOUR_API_KEY", )
+client.webhooks.get(webhook_id='webhook_id', )
 
 ```
 </dd>
@@ -855,13 +786,8 @@ client.webhooks.get(
 
 ```python
 from agentmail import AgentMail
-
-client = AgentMail(
-    api_key="YOUR_API_KEY",
-)
-client.webhooks.create(
-    url="url",
-)
+client = AgentMail(api_key="YOUR_API_KEY", )
+client.webhooks.create(url='url', )
 
 ```
 </dd>
@@ -927,13 +853,8 @@ client.webhooks.create(
 
 ```python
 from agentmail import AgentMail
-
-client = AgentMail(
-    api_key="YOUR_API_KEY",
-)
-client.webhooks.delete(
-    webhook_id="webhook_id",
-)
+client = AgentMail(api_key="YOUR_API_KEY", )
+client.webhooks.delete(webhook_id='webhook_id', )
 
 ```
 </dd>

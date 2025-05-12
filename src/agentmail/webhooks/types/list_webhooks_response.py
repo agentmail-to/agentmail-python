@@ -11,14 +11,13 @@ from .webhook import Webhook
 
 
 class ListWebhooksResponse(UniversalBaseModel):
+    count: Count
+    limit: typing.Optional[Limit] = None
+    last_key: typing.Optional[LastKey] = None
     webhooks: typing.List[Webhook] = pydantic.Field()
     """
     Webhook items. Ordered by `created_at` ascending.
     """
-
-    count: Count
-    limit: typing.Optional[Limit] = None
-    last_key: typing.Optional[LastKey] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

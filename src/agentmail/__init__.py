@@ -4,8 +4,28 @@
 
 from .types import Count, ErrorName, ErrorResponse, Labels, LastKey, Limit, OrganizationId, ValidationErrorResponse
 from .errors import IsTakenError, NotFoundError, ValidationError
-from . import inboxes, messages, threads, webhooks
+from . import drafts, inboxes, messages, threads, webhooks
 from .client import AgentMail, AsyncAgentMail
+from .drafts import (
+    Draft,
+    DraftAttachments,
+    DraftBcc,
+    DraftCc,
+    DraftCreatedAt,
+    DraftEventId,
+    DraftHtml,
+    DraftId,
+    DraftInReplyTo,
+    DraftItem,
+    DraftLabels,
+    DraftPreview,
+    DraftReferences,
+    DraftSubject,
+    DraftText,
+    DraftTo,
+    DraftUpdatedAt,
+    ListDraftsResponse,
+)
 from .environment import AgentMailEnvironment
 from .inboxes import CreateInboxRequest, DisplayName, Inbox, InboxId, ListInboxesResponse
 from .messages import (
@@ -32,7 +52,6 @@ from .messages import (
     MessagePreview,
     MessageReferences,
     MessageRejectedError,
-    MessageReplyTo,
     MessageSubject,
     MessageText,
     MessageTimestamp,
@@ -95,6 +114,23 @@ __all__ = [
     "CreateInboxRequest",
     "CreateWebhookRequest",
     "DisplayName",
+    "Draft",
+    "DraftAttachments",
+    "DraftBcc",
+    "DraftCc",
+    "DraftCreatedAt",
+    "DraftEventId",
+    "DraftHtml",
+    "DraftId",
+    "DraftInReplyTo",
+    "DraftItem",
+    "DraftLabels",
+    "DraftPreview",
+    "DraftReferences",
+    "DraftSubject",
+    "DraftText",
+    "DraftTo",
+    "DraftUpdatedAt",
     "ErrorName",
     "ErrorResponse",
     "EventId",
@@ -107,6 +143,7 @@ __all__ = [
     "Labels",
     "LastKey",
     "Limit",
+    "ListDraftsResponse",
     "ListInboxesResponse",
     "ListMessagesResponse",
     "ListThreadsResponse",
@@ -126,7 +163,6 @@ __all__ = [
     "MessageReceivedPayload",
     "MessageReferences",
     "MessageRejectedError",
-    "MessageReplyTo",
     "MessageSubject",
     "MessageText",
     "MessageTimestamp",
@@ -163,6 +199,7 @@ __all__ = [
     "Webhook",
     "WebhookId",
     "__version__",
+    "drafts",
     "inboxes",
     "messages",
     "threads",

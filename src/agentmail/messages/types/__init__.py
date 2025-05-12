@@ -24,7 +24,6 @@ from .message_item import MessageItem
 from .message_labels import MessageLabels
 from .message_preview import MessagePreview
 from .message_references import MessageReferences
-from .message_reply_to import MessageReplyTo
 from .message_subject import MessageSubject
 from .message_text import MessageText
 from .message_timestamp import MessageTimestamp
@@ -61,7 +60,6 @@ __all__ = [
     "MessageLabels",
     "MessagePreview",
     "MessageReferences",
-    "MessageReplyTo",
     "MessageSubject",
     "MessageText",
     "MessageTimestamp",

@@ -6,6 +6,7 @@ import typing
 import httpx
 from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .drafts.client import AsyncDraftsClient, DraftsClient
 from .environment import AgentMailEnvironment
 from .inboxes.client import AsyncInboxesClient, InboxesClient
 from .messages.client import AsyncMessagesClient, MessagesClient
@@ -75,6 +76,7 @@ class AgentMail:
         self.inboxes = InboxesClient(client_wrapper=self._client_wrapper)
         self.threads = ThreadsClient(client_wrapper=self._client_wrapper)
         self.messages = MessagesClient(client_wrapper=self._client_wrapper)
+        self.drafts = DraftsClient(client_wrapper=self._client_wrapper)
         self.webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
 
 
@@ -140,6 +142,7 @@ class AsyncAgentMail:
         self.inboxes = AsyncInboxesClient(client_wrapper=self._client_wrapper)
         self.threads = AsyncThreadsClient(client_wrapper=self._client_wrapper)
         self.messages = AsyncMessagesClient(client_wrapper=self._client_wrapper)
+        self.drafts = AsyncDraftsClient(client_wrapper=self._client_wrapper)
         self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
 
 

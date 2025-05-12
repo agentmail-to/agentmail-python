@@ -21,14 +21,13 @@ class ListMessagesResponse(UniversalBaseModel):
     ListMessagesResponse(messages=[MessageItem(inbox_id='yourinbox@agentmail.to', thread_id='thread_123', message_id='msg_123', event_id='event_123', labels=['RECEIVED', 'UNREAD'], timestamp=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), from_='alice@example.com', to=['bob@example.com'], subject='Project Discussion', preview="Let's review the timeline for the project.", cc=['charlie@example.com'], bcc=['david@example.com'], attachments=[Attachment(attachment_id='att_123', filename='proposal.pdf', content_type='application/pdf', size=1024, inline=False, )], ), MessageItem(inbox_id='yourinbox@agentmail.to', thread_id='thread_123', message_id='msg_456', event_id='event_456', labels=['SENT'], timestamp=datetime.datetime.fromisoformat("2024-01-15 10:15:00+00:00", ), from_='bob@example.com', to=['alice@example.com'], subject='Re: Project Discussion', preview="Sounds good, let's meet tomorrow.", )], limit=10, count=2, last_key='msg_456#2024-01-15T10:15:00Z', )
     """
 
-    messages: typing.List[MessageItem] = pydantic.Field()
-    """
-    Messages items. Ordered by `sent_at` descending.
-    """
-
     count: Count
     limit: typing.Optional[Limit] = None
     last_key: typing.Optional[LastKey] = None
+    messages: typing.List[MessageItem] = pydantic.Field()
+    """
+    Message items. Ordered by `timestamp` descending.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

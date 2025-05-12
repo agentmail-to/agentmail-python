@@ -21,8 +21,9 @@ class ListMessagesResponse(UniversalBaseModel):
     ListMessagesResponse(
         messages=[
             MessageItem(
-                message_id="msg_123",
+                inbox_id="yourinbox@agentmail.to",
                 thread_id="thread_123",
+                message_id="msg_123",
                 event_id="event_123",
                 labels=["RECEIVED", "UNREAD"],
                 timestamp=datetime.datetime.fromisoformat(
@@ -45,8 +46,9 @@ class ListMessagesResponse(UniversalBaseModel):
                 ],
             ),
             MessageItem(
-                message_id="msg_456",
+                inbox_id="yourinbox@agentmail.to",
                 thread_id="thread_123",
+                message_id="msg_456",
                 event_id="event_456",
                 labels=["SENT"],
                 timestamp=datetime.datetime.fromisoformat(

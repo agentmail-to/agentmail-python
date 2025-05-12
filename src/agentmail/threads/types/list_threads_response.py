@@ -21,6 +21,7 @@ class ListThreadsResponse(UniversalBaseModel):
     ListThreadsResponse(
         threads=[
             ThreadItem(
+                inbox_id="yourinbox@agentmail.to",
                 thread_id="thread_123",
                 event_id="event_123",
                 labels=["RECEIVED", "UNREAD"],
@@ -34,6 +35,7 @@ class ListThreadsResponse(UniversalBaseModel):
                 preview="Let's review the timeline for...",
             ),
             ThreadItem(
+                inbox_id="yourinbox@agentmail.to",
                 thread_id="thread_456",
                 event_id="event_456",
                 labels=["SENT"],

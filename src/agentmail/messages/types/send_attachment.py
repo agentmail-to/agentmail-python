@@ -2,16 +2,16 @@
 
 from ...core.pydantic_utilities import UniversalBaseModel
 from .attachment_filename import AttachmentFilename
+import typing
 from .attachment_content_type import AttachmentContentType
 from .attachment_content import AttachmentContent
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
-import typing
 import pydantic
 
 
 class SendAttachment(UniversalBaseModel):
     filename: AttachmentFilename
-    content_type: AttachmentContentType
+    content_type: typing.Optional[AttachmentContentType] = None
     content: AttachmentContent
 
     if IS_PYDANTIC_V2:

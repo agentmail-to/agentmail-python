@@ -2,43 +2,47 @@
 
 import typing
 
-from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.request_options import RequestOptions
-from ..inboxes.drafts.types.draft import Draft
-from ..inboxes.drafts.types.draft_id import DraftId
-from ..inboxes.drafts.types.list_drafts_response import ListDraftsResponse
-from ..types.labels import Labels
-from ..types.last_key import LastKey
-from ..types.limit import Limit
-from .raw_client import AsyncRawDraftsClient, RawDraftsClient
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.request_options import RequestOptions
+from ...types.labels import Labels
+from ...types.last_key import LastKey
+from ...types.limit import Limit
+from ..types.inbox_id import InboxId
+from .raw_client import AsyncRawThreadsClient, RawThreadsClient
+from .types.list_threads_response import ListThreadsResponse
+from .types.thread import Thread
+from .types.thread_id import ThreadId
 
 
-class DraftsClient:
+class ThreadsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawDraftsClient(client_wrapper=client_wrapper)
+        self._raw_client = RawThreadsClient(client_wrapper=client_wrapper)
 
     @property
-    def with_raw_response(self) -> RawDraftsClient:
+    def with_raw_response(self) -> RawThreadsClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        RawDraftsClient
+        RawThreadsClient
         """
         return self._raw_client
 
     def list(
         self,
+        inbox_id: InboxId,
         *,
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
         labels: typing.Optional[Labels] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListDraftsResponse:
+    ) -> ListThreadsResponse:
         """
         Parameters
         ----------
+        inbox_id : InboxId
+
         limit : typing.Optional[Limit]
 
         last_key : typing.Optional[LastKey]
@@ -50,68 +54,75 @@ class DraftsClient:
 
         Returns
         -------
-        ListDraftsResponse
+        ListThreadsResponse
 
         Examples
         --------
         from agentmail import AgentMail
         client = AgentMail(api_key="YOUR_API_KEY", )
-        client.drafts.list()
+        client.inboxes.threads.list(inbox_id='inbox_id', )
         """
         _response = self._raw_client.list(
-            limit=limit, last_key=last_key, labels=labels, request_options=request_options
+            inbox_id, limit=limit, last_key=last_key, labels=labels, request_options=request_options
         )
         return _response.data
 
-    def get(self, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None) -> Draft:
+    def get(
+        self, inbox_id: InboxId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> Thread:
         """
         Parameters
         ----------
-        draft_id : DraftId
+        inbox_id : InboxId
+
+        thread_id : ThreadId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Draft
+        Thread
 
         Examples
         --------
         from agentmail import AgentMail
         client = AgentMail(api_key="YOUR_API_KEY", )
-        client.drafts.get(draft_id='draft_id', )
+        client.inboxes.threads.get(inbox_id='inbox_id', thread_id='thread_id', )
         """
-        _response = self._raw_client.get(draft_id, request_options=request_options)
+        _response = self._raw_client.get(inbox_id, thread_id, request_options=request_options)
         return _response.data
 
 
-class AsyncDraftsClient:
+class AsyncThreadsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawDraftsClient(client_wrapper=client_wrapper)
+        self._raw_client = AsyncRawThreadsClient(client_wrapper=client_wrapper)
 
     @property
-    def with_raw_response(self) -> AsyncRawDraftsClient:
+    def with_raw_response(self) -> AsyncRawThreadsClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        AsyncRawDraftsClient
+        AsyncRawThreadsClient
         """
         return self._raw_client
 
     async def list(
         self,
+        inbox_id: InboxId,
         *,
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
         labels: typing.Optional[Labels] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListDraftsResponse:
+    ) -> ListThreadsResponse:
         """
         Parameters
         ----------
+        inbox_id : InboxId
+
         limit : typing.Optional[Limit]
 
         last_key : typing.Optional[LastKey]
@@ -123,7 +134,7 @@ class AsyncDraftsClient:
 
         Returns
         -------
-        ListDraftsResponse
+        ListThreadsResponse
 
         Examples
         --------
@@ -131,26 +142,30 @@ class AsyncDraftsClient:
         import asyncio
         client = AsyncAgentMail(api_key="YOUR_API_KEY", )
         async def main() -> None:
-            await client.drafts.list()
+            await client.inboxes.threads.list(inbox_id='inbox_id', )
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
-            limit=limit, last_key=last_key, labels=labels, request_options=request_options
+            inbox_id, limit=limit, last_key=last_key, labels=labels, request_options=request_options
         )
         return _response.data
 
-    async def get(self, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None) -> Draft:
+    async def get(
+        self, inbox_id: InboxId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> Thread:
         """
         Parameters
         ----------
-        draft_id : DraftId
+        inbox_id : InboxId
+
+        thread_id : ThreadId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Draft
+        Thread
 
         Examples
         --------
@@ -158,8 +173,8 @@ class AsyncDraftsClient:
         import asyncio
         client = AsyncAgentMail(api_key="YOUR_API_KEY", )
         async def main() -> None:
-            await client.drafts.get(draft_id='draft_id', )
+            await client.inboxes.threads.get(inbox_id='inbox_id', thread_id='thread_id', )
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(draft_id, request_options=request_options)
+        _response = await self._raw_client.get(inbox_id, thread_id, request_options=request_options)
         return _response.data

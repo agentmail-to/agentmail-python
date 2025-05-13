@@ -3,37 +3,41 @@
 import typing
 from json.decoder import JSONDecodeError
 
-from ..core.api_error import ApiError
-from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pydantic_utilities import parse_obj_as
-from ..core.request_options import RequestOptions
-from ..errors.not_found_error import NotFoundError
-from ..inboxes.drafts.types.draft import Draft
-from ..inboxes.drafts.types.draft_id import DraftId
-from ..inboxes.drafts.types.list_drafts_response import ListDraftsResponse
-from ..types.error_response import ErrorResponse
-from ..types.labels import Labels
-from ..types.last_key import LastKey
-from ..types.limit import Limit
+from ...core.api_error import ApiError
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.http_response import AsyncHttpResponse, HttpResponse
+from ...core.jsonable_encoder import jsonable_encoder
+from ...core.pydantic_utilities import parse_obj_as
+from ...core.request_options import RequestOptions
+from ...errors.not_found_error import NotFoundError
+from ...types.error_response import ErrorResponse
+from ...types.labels import Labels
+from ...types.last_key import LastKey
+from ...types.limit import Limit
+from ..types.inbox_id import InboxId
+from .types.list_threads_response import ListThreadsResponse
+from .types.thread import Thread
+from .types.thread_id import ThreadId
 
 
-class RawDraftsClient:
+class RawThreadsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     def list(
         self,
+        inbox_id: InboxId,
         *,
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
         labels: typing.Optional[Labels] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[ListDraftsResponse]:
+    ) -> HttpResponse[ListThreadsResponse]:
         """
         Parameters
         ----------
+        inbox_id : InboxId
+
         limit : typing.Optional[Limit]
 
         last_key : typing.Optional[LastKey]
@@ -45,10 +49,10 @@ class RawDraftsClient:
 
         Returns
         -------
-        HttpResponse[ListDraftsResponse]
+        HttpResponse[ListThreadsResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v0/drafts",
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads",
             method="GET",
             params={
                 "limit": limit,
@@ -60,9 +64,9 @@ class RawDraftsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ListDraftsResponse,
+                    ListThreadsResponse,
                     parse_obj_as(
-                        type_=ListDraftsResponse,  # type: ignore
+                        type_=ListThreadsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -83,30 +87,34 @@ class RawDraftsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get(self, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Draft]:
+    def get(
+        self, inbox_id: InboxId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[Thread]:
         """
         Parameters
         ----------
-        draft_id : DraftId
+        inbox_id : InboxId
+
+        thread_id : ThreadId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[Draft]
+        HttpResponse[Thread]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/drafts/{jsonable_encoder(draft_id)}",
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads/{jsonable_encoder(thread_id)}",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    Draft,
+                    Thread,
                     parse_obj_as(
-                        type_=Draft,  # type: ignore
+                        type_=Thread,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -128,21 +136,24 @@ class RawDraftsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
-class AsyncRawDraftsClient:
+class AsyncRawThreadsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     async def list(
         self,
+        inbox_id: InboxId,
         *,
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
         labels: typing.Optional[Labels] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[ListDraftsResponse]:
+    ) -> AsyncHttpResponse[ListThreadsResponse]:
         """
         Parameters
         ----------
+        inbox_id : InboxId
+
         limit : typing.Optional[Limit]
 
         last_key : typing.Optional[LastKey]
@@ -154,10 +165,10 @@ class AsyncRawDraftsClient:
 
         Returns
         -------
-        AsyncHttpResponse[ListDraftsResponse]
+        AsyncHttpResponse[ListThreadsResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v0/drafts",
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads",
             method="GET",
             params={
                 "limit": limit,
@@ -169,9 +180,9 @@ class AsyncRawDraftsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ListDraftsResponse,
+                    ListThreadsResponse,
                     parse_obj_as(
-                        type_=ListDraftsResponse,  # type: ignore
+                        type_=ListThreadsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -193,31 +204,33 @@ class AsyncRawDraftsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[Draft]:
+        self, inbox_id: InboxId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[Thread]:
         """
         Parameters
         ----------
-        draft_id : DraftId
+        inbox_id : InboxId
+
+        thread_id : ThreadId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[Draft]
+        AsyncHttpResponse[Thread]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/drafts/{jsonable_encoder(draft_id)}",
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads/{jsonable_encoder(thread_id)}",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    Draft,
+                    Thread,
                     parse_obj_as(
-                        type_=Draft,  # type: ignore
+                        type_=Thread,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

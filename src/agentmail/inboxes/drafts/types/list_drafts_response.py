@@ -3,20 +3,20 @@
 import typing
 
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from ...types.count import Count
-from ...types.last_key import LastKey
-from ...types.limit import Limit
-from .inbox import Inbox
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....types.count import Count
+from ....types.last_key import LastKey
+from ....types.limit import Limit
+from .draft_item import DraftItem
 
 
-class ListInboxesResponse(UniversalBaseModel):
+class ListDraftsResponse(UniversalBaseModel):
     count: Count
     limit: typing.Optional[Limit] = None
     last_key: typing.Optional[LastKey] = None
-    inboxes: typing.List[Inbox] = pydantic.Field()
+    drafts: typing.List[DraftItem] = pydantic.Field()
     """
-    Ordered by `created_at` ascending.
+    Draft items. Ordered by `updated_at` descending.
     """
 
     if IS_PYDANTIC_V2:

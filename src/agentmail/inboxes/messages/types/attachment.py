@@ -3,16 +3,20 @@
 import typing
 
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .attachment_content import AttachmentContent
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .attachment_content_type import AttachmentContentType
 from .attachment_filename import AttachmentFilename
+from .attachment_id import AttachmentId
+from .attachment_inline import AttachmentInline
+from .attachment_size import AttachmentSize
 
 
-class SendAttachment(UniversalBaseModel):
+class Attachment(UniversalBaseModel):
+    attachment_id: AttachmentId
     filename: AttachmentFilename
-    content_type: typing.Optional[AttachmentContentType] = None
-    content: AttachmentContent
+    content_type: AttachmentContentType
+    size: AttachmentSize
+    inline: AttachmentInline
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

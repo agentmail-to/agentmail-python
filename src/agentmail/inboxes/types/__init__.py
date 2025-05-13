@@ -3,9 +3,8 @@
 # isort: skip_file
 
 from .create_inbox_request import CreateInboxRequest
-from .display_name import DisplayName
 from .inbox import Inbox
 from .inbox_id import InboxId
 from .list_inboxes_response import ListInboxesResponse
 
-__all__ = ["CreateInboxRequest", "DisplayName", "Inbox", "InboxId", "ListInboxesResponse"]
+__all__ = ["CreateInboxRequest", "Inbox", "InboxId", "ListInboxesResponse"]

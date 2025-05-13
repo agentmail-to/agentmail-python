@@ -3,9 +3,9 @@
 import typing
 
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from ...inboxes.types.inbox_id import InboxId
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ...messages.types.message import Message
+from ...types.inbox_id import InboxId
 from .thread_attachments import ThreadAttachments
 from .thread_event_id import ThreadEventId
 from .thread_id import ThreadId
@@ -19,15 +19,6 @@ from .thread_timestamp import ThreadTimestamp
 
 
 class Thread(UniversalBaseModel):
-    """
-    Examples
-    --------
-    from agentmail.threads import Thread
-    import datetime
-    from agentmail.messages import Message
-    Thread(inbox_id='yourinbox@agentmail.to', thread_id='thread_123', event_id='event_123', labels=['RECEIVED', 'UNREAD'], timestamp=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), senders=['alice@example.com'], recipients=['bob@example.com'], message_count=1, subject='Project Discussion', preview="Let's review the timeline for...", messages=[Message(message_id='msg_123', thread_id='thread_123', event_id='event_123', labels=['RECEIVED', 'UNREAD'], timestamp=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), from_='alice@example.com', to=['bob@example.com'], text="Let's review the timeline for the project.", inbox_id='yourinbox@agentmail.to', )], )
-    """
-
     inbox_id: InboxId
     thread_id: ThreadId
     event_id: ThreadEventId

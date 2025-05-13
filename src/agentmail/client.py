@@ -9,7 +9,6 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .drafts.client import AsyncDraftsClient, DraftsClient
 from .environment import AgentMailEnvironment
 from .inboxes.client import AsyncInboxesClient, InboxesClient
-from .messages.client import AsyncMessagesClient, MessagesClient
 from .threads.client import AsyncThreadsClient, ThreadsClient
 from .webhooks.client import AsyncWebhooksClient, WebhooksClient
 
@@ -74,9 +73,8 @@ class AgentMail:
             timeout=_defaulted_timeout,
         )
         self.inboxes = InboxesClient(client_wrapper=self._client_wrapper)
-        self.threads = ThreadsClient(client_wrapper=self._client_wrapper)
-        self.messages = MessagesClient(client_wrapper=self._client_wrapper)
         self.drafts = DraftsClient(client_wrapper=self._client_wrapper)
+        self.threads = ThreadsClient(client_wrapper=self._client_wrapper)
         self.webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
 
 
@@ -140,9 +138,8 @@ class AsyncAgentMail:
             timeout=_defaulted_timeout,
         )
         self.inboxes = AsyncInboxesClient(client_wrapper=self._client_wrapper)
-        self.threads = AsyncThreadsClient(client_wrapper=self._client_wrapper)
-        self.messages = AsyncMessagesClient(client_wrapper=self._client_wrapper)
         self.drafts = AsyncDraftsClient(client_wrapper=self._client_wrapper)
+        self.threads = AsyncThreadsClient(client_wrapper=self._client_wrapper)
         self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
 
 

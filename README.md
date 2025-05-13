@@ -22,7 +22,7 @@ Instantiate and use the client with the following:
 ```python
 from agentmail import AgentMail
 client = AgentMail(api_key="YOUR_API_KEY", )
-client.inboxes.create(domain='yourdomain.com', )
+client.inboxes.create()
 ```
 
 ## Async Client
@@ -34,7 +34,7 @@ from agentmail import AsyncAgentMail
 import asyncio
 client = AsyncAgentMail(api_key="YOUR_API_KEY", )
 async def main() -> None:
-    await client.inboxes.create(domain='yourdomain.com', )
+    await client.inboxes.create()
 asyncio.run(main())
 ```
 

@@ -6,8 +6,10 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.last_key import LastKey
 from ..types.limit import Limit
+from .drafts.client import AsyncDraftsClient, DraftsClient
+from .messages.client import AsyncMessagesClient, MessagesClient
 from .raw_client import AsyncRawInboxesClient, RawInboxesClient
-from .types.display_name import DisplayName
+from .threads.client import AsyncThreadsClient, ThreadsClient
 from .types.inbox import Inbox
 from .types.inbox_id import InboxId
 from .types.list_inboxes_response import ListInboxesResponse
@@ -19,6 +21,11 @@ OMIT = typing.cast(typing.Any, ...)
 class InboxesClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawInboxesClient(client_wrapper=client_wrapper)
+        self.threads = ThreadsClient(client_wrapper=client_wrapper)
+
+        self.messages = MessagesClient(client_wrapper=client_wrapper)
+
+        self.drafts = DraftsClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> RawInboxesClient:
@@ -56,7 +63,7 @@ class InboxesClient:
         --------
         from agentmail import AgentMail
         client = AgentMail(api_key="YOUR_API_KEY", )
-        client.inboxes.list(limit=10, last_key='123e4567-e89b-12d3-a456-426614174000', )
+        client.inboxes.list()
         """
         _response = self._raw_client.list(limit=limit, last_key=last_key, request_options=request_options)
         return _response.data
@@ -78,7 +85,7 @@ class InboxesClient:
         --------
         from agentmail import AgentMail
         client = AgentMail(api_key="YOUR_API_KEY", )
-        client.inboxes.get(inbox_id='yourinbox@agentmail.to', )
+        client.inboxes.get(inbox_id='inbox_id', )
         """
         _response = self._raw_client.get(inbox_id, request_options=request_options)
         return _response.data
@@ -88,7 +95,7 @@ class InboxesClient:
         *,
         username: typing.Optional[str] = OMIT,
         domain: typing.Optional[str] = OMIT,
-        display_name: typing.Optional[DisplayName] = OMIT,
+        display_name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Inbox:
         """
@@ -100,7 +107,8 @@ class InboxesClient:
         domain : typing.Optional[str]
             Domain of address. Must be verified domain. Defaults to `agentmail.to`.
 
-        display_name : typing.Optional[DisplayName]
+        display_name : typing.Optional[str]
+            Display name: `Display Name <username@domain.com>`. Defaults to `AgentMail`. Pass empty string to omit.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -113,7 +121,7 @@ class InboxesClient:
         --------
         from agentmail import AgentMail
         client = AgentMail(api_key="YOUR_API_KEY", )
-        client.inboxes.create(username='yourinbox', display_name='Your Inbox', )
+        client.inboxes.create()
         """
         _response = self._raw_client.create(
             username=username, domain=domain, display_name=display_name, request_options=request_options
@@ -124,6 +132,11 @@ class InboxesClient:
 class AsyncInboxesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawInboxesClient(client_wrapper=client_wrapper)
+        self.threads = AsyncThreadsClient(client_wrapper=client_wrapper)
+
+        self.messages = AsyncMessagesClient(client_wrapper=client_wrapper)
+
+        self.drafts = AsyncDraftsClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawInboxesClient:
@@ -163,7 +176,7 @@ class AsyncInboxesClient:
         import asyncio
         client = AsyncAgentMail(api_key="YOUR_API_KEY", )
         async def main() -> None:
-            await client.inboxes.list(limit=10, last_key='123e4567-e89b-12d3-a456-426614174000', )
+            await client.inboxes.list()
         asyncio.run(main())
         """
         _response = await self._raw_client.list(limit=limit, last_key=last_key, request_options=request_options)
@@ -188,7 +201,7 @@ class AsyncInboxesClient:
         import asyncio
         client = AsyncAgentMail(api_key="YOUR_API_KEY", )
         async def main() -> None:
-            await client.inboxes.get(inbox_id='yourinbox@agentmail.to', )
+            await client.inboxes.get(inbox_id='inbox_id', )
         asyncio.run(main())
         """
         _response = await self._raw_client.get(inbox_id, request_options=request_options)
@@ -199,7 +212,7 @@ class AsyncInboxesClient:
         *,
         username: typing.Optional[str] = OMIT,
         domain: typing.Optional[str] = OMIT,
-        display_name: typing.Optional[DisplayName] = OMIT,
+        display_name: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Inbox:
         """
@@ -211,7 +224,8 @@ class AsyncInboxesClient:
         domain : typing.Optional[str]
             Domain of address. Must be verified domain. Defaults to `agentmail.to`.
 
-        display_name : typing.Optional[DisplayName]
+        display_name : typing.Optional[str]
+            Display name: `Display Name <username@domain.com>`. Defaults to `AgentMail`. Pass empty string to omit.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -226,7 +240,7 @@ class AsyncInboxesClient:
         import asyncio
         client = AsyncAgentMail(api_key="YOUR_API_KEY", )
         async def main() -> None:
-            await client.inboxes.create(username='yourinbox', display_name='Your Inbox', )
+            await client.inboxes.create()
         asyncio.run(main())
         """
         _response = await self._raw_client.create(

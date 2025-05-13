@@ -2,8 +2,8 @@
 
 import typing
 
-from ...core.api_error import ApiError
-from ...types.error_response import ErrorResponse
+from ....core.api_error import ApiError
+from ....types.error_response import ErrorResponse
 
 
 class MessageRejectedError(ApiError):

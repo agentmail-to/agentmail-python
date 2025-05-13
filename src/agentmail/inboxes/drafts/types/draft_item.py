@@ -3,36 +3,25 @@
 import typing
 
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from ...inboxes.types.inbox_id import InboxId
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ...threads.types.thread_id import ThreadId
+from ...types.inbox_id import InboxId
 from .draft_attachments import DraftAttachments
 from .draft_bcc import DraftBcc
 from .draft_cc import DraftCc
 from .draft_created_at import DraftCreatedAt
 from .draft_event_id import DraftEventId
-from .draft_html import DraftHtml
 from .draft_id import DraftId
 from .draft_in_reply_to import DraftInReplyTo
 from .draft_labels import DraftLabels
 from .draft_preview import DraftPreview
 from .draft_references import DraftReferences
 from .draft_subject import DraftSubject
-from .draft_text import DraftText
 from .draft_to import DraftTo
 from .draft_updated_at import DraftUpdatedAt
 
 
-class Draft(UniversalBaseModel):
-    """
-    Examples
-    --------
-    from agentmail.drafts import Draft
-    import datetime
-    from agentmail.messages import Attachment
-    Draft(inbox_id='yourinbox@agentmail.to', thread_id='thread_123', draft_id='draft_123', event_id='event_123', labels=['RECEIVED', 'UNREAD'], updated_at=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), created_at=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), to=['bob@example.com'], cc=['charlie@example.com'], bcc=['david@example.com'], subject='Project Discussion', preview="Let's review the timeline for the project.", text="Let's review the timeline for the project. How does tomorrow look?", html="<p>Let's review the timeline for the project. How does tomorrow look?</p>", attachments=[Attachment(attachment_id='att_123', filename='proposal.pdf', content_type='application/pdf', size=1024, inline=False, )], in_reply_to='msg_122', references=['msg_121', 'msg_122'], )
-    """
-
+class DraftItem(UniversalBaseModel):
     inbox_id: InboxId
     thread_id: ThreadId
     draft_id: DraftId
@@ -45,8 +34,6 @@ class Draft(UniversalBaseModel):
     bcc: typing.Optional[DraftBcc] = None
     subject: typing.Optional[DraftSubject] = None
     preview: typing.Optional[DraftPreview] = None
-    text: typing.Optional[DraftText] = None
-    html: typing.Optional[DraftHtml] = None
     attachments: typing.Optional[DraftAttachments] = None
     in_reply_to: typing.Optional[DraftInReplyTo] = None
     references: typing.Optional[DraftReferences] = None

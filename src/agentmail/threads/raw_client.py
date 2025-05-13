@@ -10,14 +10,13 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..errors.not_found_error import NotFoundError
-from ..inboxes.types.inbox_id import InboxId
+from ..inboxes.threads.types.list_threads_response import ListThreadsResponse
+from ..inboxes.threads.types.thread import Thread
+from ..inboxes.threads.types.thread_id import ThreadId
 from ..types.error_response import ErrorResponse
 from ..types.labels import Labels
 from ..types.last_key import LastKey
 from ..types.limit import Limit
-from .types.list_threads_response import ListThreadsResponse
-from .types.thread import Thread
-from .types.thread_id import ThreadId
 
 
 class RawThreadsClient:
@@ -26,7 +25,6 @@ class RawThreadsClient:
 
     def list(
         self,
-        inbox_id: InboxId,
         *,
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
@@ -36,8 +34,6 @@ class RawThreadsClient:
         """
         Parameters
         ----------
-        inbox_id : InboxId
-
         limit : typing.Optional[Limit]
 
         last_key : typing.Optional[LastKey]
@@ -52,7 +48,7 @@ class RawThreadsClient:
         HttpResponse[ListThreadsResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads",
+            "v0/threads",
             method="GET",
             params={
                 "limit": limit,
@@ -88,13 +84,11 @@ class RawThreadsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
-        self, inbox_id: InboxId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
+        self, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Thread]:
         """
         Parameters
         ----------
-        inbox_id : InboxId
-
         thread_id : ThreadId
 
         request_options : typing.Optional[RequestOptions]
@@ -105,7 +99,7 @@ class RawThreadsClient:
         HttpResponse[Thread]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads/{jsonable_encoder(thread_id)}",
+            f"v0/threads/{jsonable_encoder(thread_id)}",
             method="GET",
             request_options=request_options,
         )
@@ -142,7 +136,6 @@ class AsyncRawThreadsClient:
 
     async def list(
         self,
-        inbox_id: InboxId,
         *,
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
@@ -152,8 +145,6 @@ class AsyncRawThreadsClient:
         """
         Parameters
         ----------
-        inbox_id : InboxId
-
         limit : typing.Optional[Limit]
 
         last_key : typing.Optional[LastKey]
@@ -168,7 +159,7 @@ class AsyncRawThreadsClient:
         AsyncHttpResponse[ListThreadsResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads",
+            "v0/threads",
             method="GET",
             params={
                 "limit": limit,
@@ -204,13 +195,11 @@ class AsyncRawThreadsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self, inbox_id: InboxId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
+        self, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Thread]:
         """
         Parameters
         ----------
-        inbox_id : InboxId
-
         thread_id : ThreadId
 
         request_options : typing.Optional[RequestOptions]
@@ -221,7 +210,7 @@ class AsyncRawThreadsClient:
         AsyncHttpResponse[Thread]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads/{jsonable_encoder(thread_id)}",
+            f"v0/threads/{jsonable_encoder(thread_id)}",
             method="GET",
             request_options=request_options,
         )

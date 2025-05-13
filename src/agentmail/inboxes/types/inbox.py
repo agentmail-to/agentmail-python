@@ -5,21 +5,16 @@ import typing
 
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .display_name import DisplayName
 from .inbox_id import InboxId
 
 
 class Inbox(UniversalBaseModel):
+    inbox_id: InboxId
+    display_name: str = pydantic.Field()
     """
-    Examples
-    --------
-    from agentmail.inboxes import Inbox
-    import datetime
-    Inbox(inbox_id='yourinbox@agentmail.to', display_name='Your Inbox', created_at=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00", ), )
+    Display name: `Display Name <username@domain.com>`.
     """
 
-    inbox_id: InboxId
-    display_name: typing.Optional[DisplayName] = None
     created_at: dt.datetime = pydantic.Field()
     """
     Time at which inbox was created.

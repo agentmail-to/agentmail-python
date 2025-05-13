@@ -4,14 +4,13 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..inboxes.types.inbox_id import InboxId
+from ..inboxes.threads.types.list_threads_response import ListThreadsResponse
+from ..inboxes.threads.types.thread import Thread
+from ..inboxes.threads.types.thread_id import ThreadId
 from ..types.labels import Labels
 from ..types.last_key import LastKey
 from ..types.limit import Limit
 from .raw_client import AsyncRawThreadsClient, RawThreadsClient
-from .types.list_threads_response import ListThreadsResponse
-from .types.thread import Thread
-from .types.thread_id import ThreadId
 
 
 class ThreadsClient:
@@ -31,7 +30,6 @@ class ThreadsClient:
 
     def list(
         self,
-        inbox_id: InboxId,
         *,
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
@@ -41,8 +39,6 @@ class ThreadsClient:
         """
         Parameters
         ----------
-        inbox_id : InboxId
-
         limit : typing.Optional[Limit]
 
         last_key : typing.Optional[LastKey]
@@ -60,21 +56,17 @@ class ThreadsClient:
         --------
         from agentmail import AgentMail
         client = AgentMail(api_key="YOUR_API_KEY", )
-        client.threads.list(inbox_id='yourinbox@agentmail.to', limit=10, )
+        client.threads.list()
         """
         _response = self._raw_client.list(
-            inbox_id, limit=limit, last_key=last_key, labels=labels, request_options=request_options
+            limit=limit, last_key=last_key, labels=labels, request_options=request_options
         )
         return _response.data
 
-    def get(
-        self, inbox_id: InboxId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> Thread:
+    def get(self, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None) -> Thread:
         """
         Parameters
         ----------
-        inbox_id : InboxId
-
         thread_id : ThreadId
 
         request_options : typing.Optional[RequestOptions]
@@ -88,9 +80,9 @@ class ThreadsClient:
         --------
         from agentmail import AgentMail
         client = AgentMail(api_key="YOUR_API_KEY", )
-        client.threads.get(inbox_id='yourinbox@agentmail.to', thread_id='thread_123', )
+        client.threads.get(thread_id='thread_id', )
         """
-        _response = self._raw_client.get(inbox_id, thread_id, request_options=request_options)
+        _response = self._raw_client.get(thread_id, request_options=request_options)
         return _response.data
 
 
@@ -111,7 +103,6 @@ class AsyncThreadsClient:
 
     async def list(
         self,
-        inbox_id: InboxId,
         *,
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
@@ -121,8 +112,6 @@ class AsyncThreadsClient:
         """
         Parameters
         ----------
-        inbox_id : InboxId
-
         limit : typing.Optional[Limit]
 
         last_key : typing.Optional[LastKey]
@@ -142,22 +131,18 @@ class AsyncThreadsClient:
         import asyncio
         client = AsyncAgentMail(api_key="YOUR_API_KEY", )
         async def main() -> None:
-            await client.threads.list(inbox_id='yourinbox@agentmail.to', limit=10, )
+            await client.threads.list()
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
-            inbox_id, limit=limit, last_key=last_key, labels=labels, request_options=request_options
+            limit=limit, last_key=last_key, labels=labels, request_options=request_options
         )
         return _response.data
 
-    async def get(
-        self, inbox_id: InboxId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> Thread:
+    async def get(self, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None) -> Thread:
         """
         Parameters
         ----------
-        inbox_id : InboxId
-
         thread_id : ThreadId
 
         request_options : typing.Optional[RequestOptions]
@@ -173,8 +158,8 @@ class AsyncThreadsClient:
         import asyncio
         client = AsyncAgentMail(api_key="YOUR_API_KEY", )
         async def main() -> None:
-            await client.threads.get(inbox_id='yourinbox@agentmail.to', thread_id='thread_123', )
+            await client.threads.get(thread_id='thread_id', )
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(inbox_id, thread_id, request_options=request_options)
+        _response = await self._raw_client.get(thread_id, request_options=request_options)
         return _response.data

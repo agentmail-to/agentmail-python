@@ -3,15 +3,20 @@
 import typing
 
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .attachment_content_type import AttachmentContentType
-from .attachment_filename import AttachmentFilename
-from .attachment_id import AttachmentId
-from .attachment_inline import AttachmentInline
-from .attachment_size import AttachmentSize
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...messages.types.attachment_content_type import AttachmentContentType
+from ...messages.types.attachment_filename import AttachmentFilename
+from ...messages.types.attachment_id import AttachmentId
+from ...messages.types.attachment_inline import AttachmentInline
+from ...messages.types.attachment_size import AttachmentSize
 
 
-class Attachment(UniversalBaseModel):
+class ThreadAttachment(UniversalBaseModel):
+    message_id: str = pydantic.Field()
+    """
+    Message ID of attachment.
+    """
+
     attachment_id: AttachmentId
     filename: AttachmentFilename
     content_type: AttachmentContentType

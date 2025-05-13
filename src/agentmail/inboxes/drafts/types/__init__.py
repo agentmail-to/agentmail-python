@@ -2,6 +2,7 @@
 
 # isort: skip_file
 
+from .create_draft_request import CreateDraftRequest
 from .draft import Draft
 from .draft_attachments import DraftAttachments
 from .draft_bcc import DraftBcc
@@ -22,6 +23,7 @@ from .draft_updated_at import DraftUpdatedAt
 from .list_drafts_response import ListDraftsResponse
 
 __all__ = [
+    "CreateDraftRequest",
     "Draft",
     "DraftAttachments",
     "DraftBcc",

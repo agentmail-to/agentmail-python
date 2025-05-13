@@ -1,139 +1,4 @@
 # Reference
-## Drafts
-<details><summary><code>client.drafts.<a href="src/agentmail/drafts/client.py">list</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.drafts.list(inbox_id='yourinbox@agentmail.to', limit=10, )
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**inbox_id:** `InboxId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**limit:** `typing.Optional[Limit]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**last_key:** `typing.Optional[LastKey]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**labels:** `typing.Optional[Labels]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.drafts.<a href="src/agentmail/drafts/client.py">get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.drafts.get(inbox_id='yourinbox@agentmail.to', draft_id='draft_123', )
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**inbox_id:** `InboxId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**draft_id:** `DraftId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## Inboxes
 <details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">list</a>(...)</code></summary>
 <dl>
@@ -150,7 +15,7 @@ client.drafts.get(inbox_id='yourinbox@agentmail.to', draft_id='draft_123', )
 ```python
 from agentmail import AgentMail
 client = AgentMail(api_key="YOUR_API_KEY", )
-client.inboxes.list(limit=10, last_key='123e4567-e89b-12d3-a456-426614174000', )
+client.inboxes.list()
 
 ```
 </dd>
@@ -209,7 +74,7 @@ client.inboxes.list(limit=10, last_key='123e4567-e89b-12d3-a456-426614174000', )
 ```python
 from agentmail import AgentMail
 client = AgentMail(api_key="YOUR_API_KEY", )
-client.inboxes.get(inbox_id='yourinbox@agentmail.to', )
+client.inboxes.get(inbox_id='inbox_id', )
 
 ```
 </dd>
@@ -260,7 +125,7 @@ client.inboxes.get(inbox_id='yourinbox@agentmail.to', )
 ```python
 from agentmail import AgentMail
 client = AgentMail(api_key="YOUR_API_KEY", )
-client.inboxes.create(domain='yourdomain.com', )
+client.inboxes.create()
 
 ```
 </dd>
@@ -292,7 +157,7 @@ client.inboxes.create(domain='yourdomain.com', )
 <dl>
 <dd>
 
-**display_name:** `typing.Optional[DisplayName]` 
+**display_name:** `typing.Optional[str]` — Display name: `Display Name <username@domain.com>`. Defaults to `AgentMail`. Pass empty string to omit.
     
 </dd>
 </dl>
@@ -312,8 +177,8 @@ client.inboxes.create(domain='yourdomain.com', )
 </dl>
 </details>
 
-## Messages
-<details><summary><code>client.messages.<a href="src/agentmail/messages/client.py">list</a>(...)</code></summary>
+## Drafts
+<details><summary><code>client.drafts.<a href="src/agentmail/drafts/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -328,7 +193,126 @@ client.inboxes.create(domain='yourdomain.com', )
 ```python
 from agentmail import AgentMail
 client = AgentMail(api_key="YOUR_API_KEY", )
-client.messages.list(inbox_id='yourinbox@agentmail.to', limit=10, )
+client.drafts.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[Limit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_key:** `typing.Optional[LastKey]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**labels:** `typing.Optional[Labels]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.drafts.<a href="src/agentmail/drafts/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+client = AgentMail(api_key="YOUR_API_KEY", )
+client.drafts.get(draft_id='draft_id', )
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**draft_id:** `DraftId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Inboxes Drafts
+<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+client = AgentMail(api_key="YOUR_API_KEY", )
+client.inboxes.drafts.list(inbox_id='inbox_id', )
 
 ```
 </dd>
@@ -388,7 +372,7 @@ client.messages.list(inbox_id='yourinbox@agentmail.to', limit=10, )
 </dl>
 </details>
 
-<details><summary><code>client.messages.<a href="src/agentmail/messages/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -403,7 +387,249 @@ client.messages.list(inbox_id='yourinbox@agentmail.to', limit=10, )
 ```python
 from agentmail import AgentMail
 client = AgentMail(api_key="YOUR_API_KEY", )
-client.messages.get(inbox_id='yourinbox@agentmail.to', message_id='msg_123', )
+client.inboxes.drafts.get(inbox_id='inbox_id', draft_id='draft_id', )
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**draft_id:** `DraftId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+client = AgentMail(api_key="YOUR_API_KEY", )
+client.inboxes.drafts.create(inbox_id='inbox_id', )
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**labels:** `typing.Optional[DraftLabels]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**to:** `typing.Optional[DraftTo]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cc:** `typing.Optional[DraftCc]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bcc:** `typing.Optional[DraftBcc]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**subject:** `typing.Optional[DraftSubject]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**text:** `typing.Optional[DraftText]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**html:** `typing.Optional[DraftHtml]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Inboxes Messages
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+client = AgentMail(api_key="YOUR_API_KEY", )
+client.inboxes.messages.list(inbox_id='inbox_id', )
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[Limit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_key:** `typing.Optional[LastKey]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**labels:** `typing.Optional[Labels]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+client = AgentMail(api_key="YOUR_API_KEY", )
+client.inboxes.messages.get(inbox_id='inbox_id', message_id='message_id', )
 
 ```
 </dd>
@@ -447,7 +673,7 @@ client.messages.get(inbox_id='yourinbox@agentmail.to', message_id='msg_123', )
 </dl>
 </details>
 
-<details><summary><code>client.messages.<a href="src/agentmail/messages/client.py">send</a>(...)</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">send</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -462,7 +688,7 @@ client.messages.get(inbox_id='yourinbox@agentmail.to', message_id='msg_123', )
 ```python
 from agentmail import AgentMail
 client = AgentMail(api_key="YOUR_API_KEY", )
-client.messages.send(inbox_id='yourinbox@agentmail.to', to=['bob@example.com'], cc=['charlie@example.com'], bcc=['david@example.com'], subject='Project Discussion', text="Let's review the timeline for the project.", html="<p>Let's review the timeline for the project.</p>", )
+client.inboxes.messages.send(inbox_id='inbox_id', to='to', )
 
 ```
 </dd>
@@ -554,7 +780,7 @@ client.messages.send(inbox_id='yourinbox@agentmail.to', to=['bob@example.com'], 
 </dl>
 </details>
 
-<details><summary><code>client.messages.<a href="src/agentmail/messages/client.py">reply</a>(...)</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">reply</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -569,7 +795,7 @@ client.messages.send(inbox_id='yourinbox@agentmail.to', to=['bob@example.com'], 
 ```python
 from agentmail import AgentMail
 client = AgentMail(api_key="YOUR_API_KEY", )
-client.messages.reply(inbox_id='yourinbox@agentmail.to', message_id='msg_123', text="Thanks for the update. Let's meet tomorrow at 2 PM.", html="<p>Thanks for the update. Let's meet tomorrow at 2 PM.</p>", cc=['charlie@example.com'], bcc=['david@example.com'], )
+client.inboxes.messages.reply(inbox_id='inbox_id', message_id='message_id', )
 
 ```
 </dd>
@@ -661,8 +887,8 @@ client.messages.reply(inbox_id='yourinbox@agentmail.to', message_id='msg_123', t
 </dl>
 </details>
 
-## Threads
-<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">list</a>(...)</code></summary>
+## Inboxes Threads
+<details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -677,7 +903,7 @@ client.messages.reply(inbox_id='yourinbox@agentmail.to', message_id='msg_123', t
 ```python
 from agentmail import AgentMail
 client = AgentMail(api_key="YOUR_API_KEY", )
-client.threads.list(inbox_id='yourinbox@agentmail.to', limit=10, )
+client.inboxes.threads.list(inbox_id='inbox_id', )
 
 ```
 </dd>
@@ -737,7 +963,7 @@ client.threads.list(inbox_id='yourinbox@agentmail.to', limit=10, )
 </dl>
 </details>
 
-<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -752,7 +978,7 @@ client.threads.list(inbox_id='yourinbox@agentmail.to', limit=10, )
 ```python
 from agentmail import AgentMail
 client = AgentMail(api_key="YOUR_API_KEY", )
-client.threads.get(inbox_id='yourinbox@agentmail.to', thread_id='thread_123', )
+client.inboxes.threads.get(inbox_id='inbox_id', thread_id='thread_id', )
 
 ```
 </dd>
@@ -772,6 +998,125 @@ client.threads.get(inbox_id='yourinbox@agentmail.to', thread_id='thread_123', )
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**thread_id:** `ThreadId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Threads
+<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+client = AgentMail(api_key="YOUR_API_KEY", )
+client.threads.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[Limit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**last_key:** `typing.Optional[LastKey]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**labels:** `typing.Optional[Labels]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+client = AgentMail(api_key="YOUR_API_KEY", )
+client.threads.get(thread_id='thread_id', )
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
 
 <dl>
 <dd>

@@ -2,12 +2,12 @@
 
 import typing
 
-from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.request_options import RequestOptions
-from ..inboxes.types.inbox_id import InboxId
-from ..types.labels import Labels
-from ..types.last_key import LastKey
-from ..types.limit import Limit
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.request_options import RequestOptions
+from ...types.labels import Labels
+from ...types.last_key import LastKey
+from ...types.limit import Limit
+from ..types.inbox_id import InboxId
 from .raw_client import AsyncRawMessagesClient, RawMessagesClient
 from .types.attachment_id import AttachmentId
 from .types.list_messages_response import ListMessagesResponse
@@ -72,7 +72,7 @@ class MessagesClient:
         --------
         from agentmail import AgentMail
         client = AgentMail(api_key="YOUR_API_KEY", )
-        client.messages.list(inbox_id='yourinbox@agentmail.to', limit=10, )
+        client.inboxes.messages.list(inbox_id='inbox_id', )
         """
         _response = self._raw_client.list(
             inbox_id, limit=limit, last_key=last_key, labels=labels, request_options=request_options
@@ -100,7 +100,7 @@ class MessagesClient:
         --------
         from agentmail import AgentMail
         client = AgentMail(api_key="YOUR_API_KEY", )
-        client.messages.get(inbox_id='yourinbox@agentmail.to', message_id='msg_123', )
+        client.inboxes.messages.get(inbox_id='inbox_id', message_id='message_id', )
         """
         _response = self._raw_client.get(inbox_id, message_id, request_options=request_options)
         return _response.data
@@ -175,7 +175,7 @@ class MessagesClient:
         --------
         from agentmail import AgentMail
         client = AgentMail(api_key="YOUR_API_KEY", )
-        client.messages.send(inbox_id='yourinbox@agentmail.to', to=['bob@example.com'], cc=['charlie@example.com'], bcc=['david@example.com'], subject='Project Discussion', text="Let's review the timeline for the project.", html="<p>Let's review the timeline for the project.</p>", )
+        client.inboxes.messages.send(inbox_id='inbox_id', to='to', )
         """
         _response = self._raw_client.send(
             inbox_id,
@@ -233,7 +233,7 @@ class MessagesClient:
         --------
         from agentmail import AgentMail
         client = AgentMail(api_key="YOUR_API_KEY", )
-        client.messages.reply(inbox_id='yourinbox@agentmail.to', message_id='msg_123', text="Thanks for the update. Let's meet tomorrow at 2 PM.", html="<p>Thanks for the update. Let's meet tomorrow at 2 PM.</p>", cc=['charlie@example.com'], bcc=['david@example.com'], )
+        client.inboxes.messages.reply(inbox_id='inbox_id', message_id='message_id', )
         """
         _response = self._raw_client.reply(
             inbox_id,
@@ -297,7 +297,7 @@ class AsyncMessagesClient:
         import asyncio
         client = AsyncAgentMail(api_key="YOUR_API_KEY", )
         async def main() -> None:
-            await client.messages.list(inbox_id='yourinbox@agentmail.to', limit=10, )
+            await client.inboxes.messages.list(inbox_id='inbox_id', )
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
@@ -328,7 +328,7 @@ class AsyncMessagesClient:
         import asyncio
         client = AsyncAgentMail(api_key="YOUR_API_KEY", )
         async def main() -> None:
-            await client.messages.get(inbox_id='yourinbox@agentmail.to', message_id='msg_123', )
+            await client.inboxes.messages.get(inbox_id='inbox_id', message_id='message_id', )
         asyncio.run(main())
         """
         _response = await self._raw_client.get(inbox_id, message_id, request_options=request_options)
@@ -409,7 +409,7 @@ class AsyncMessagesClient:
         import asyncio
         client = AsyncAgentMail(api_key="YOUR_API_KEY", )
         async def main() -> None:
-            await client.messages.send(inbox_id='yourinbox@agentmail.to', to=['bob@example.com'], cc=['charlie@example.com'], bcc=['david@example.com'], subject='Project Discussion', text="Let's review the timeline for the project.", html="<p>Let's review the timeline for the project.</p>", )
+            await client.inboxes.messages.send(inbox_id='inbox_id', to='to', )
         asyncio.run(main())
         """
         _response = await self._raw_client.send(
@@ -470,7 +470,7 @@ class AsyncMessagesClient:
         import asyncio
         client = AsyncAgentMail(api_key="YOUR_API_KEY", )
         async def main() -> None:
-            await client.messages.reply(inbox_id='yourinbox@agentmail.to', message_id='msg_123', text="Thanks for the update. Let's meet tomorrow at 2 PM.", html="<p>Thanks for the update. Let's meet tomorrow at 2 PM.</p>", cc=['charlie@example.com'], bcc=['david@example.com'], )
+            await client.inboxes.messages.reply(inbox_id='inbox_id', message_id='message_id', )
         asyncio.run(main())
         """
         _response = await self._raw_client.reply(

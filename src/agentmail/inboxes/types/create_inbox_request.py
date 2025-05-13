@@ -4,17 +4,9 @@ import typing
 
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .display_name import DisplayName
 
 
 class CreateInboxRequest(UniversalBaseModel):
-    """
-    Examples
-    --------
-    from agentmail.inboxes import CreateInboxRequest
-    CreateInboxRequest(username='yourinbox', display_name='Your Inbox', )
-    """
-
     username: typing.Optional[str] = pydantic.Field(default=None)
     """
     Username of address. Randomly generated if not specified.
@@ -25,7 +17,10 @@ class CreateInboxRequest(UniversalBaseModel):
     Domain of address. Must be verified domain. Defaults to `agentmail.to`.
     """
 
-    display_name: typing.Optional[DisplayName] = None
+    display_name: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Display name: `Display Name <username@domain.com>`. Defaults to `AgentMail`. Pass empty string to omit.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -4,26 +4,28 @@ import typing
 
 import pydantic
 import typing_extensions
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from ...core.serialization import FieldMetadata
-from ...inboxes.types.inbox_id import InboxId
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.serialization import FieldMetadata
 from ...threads.types.thread_id import ThreadId
+from ...types.inbox_id import InboxId
 from .message_attachments import MessageAttachments
 from .message_bcc import MessageBcc
 from .message_cc import MessageCc
 from .message_event_id import MessageEventId
 from .message_from import MessageFrom
+from .message_html import MessageHtml
 from .message_id import MessageId
 from .message_in_reply_to import MessageInReplyTo
 from .message_labels import MessageLabels
 from .message_preview import MessagePreview
 from .message_references import MessageReferences
 from .message_subject import MessageSubject
+from .message_text import MessageText
 from .message_timestamp import MessageTimestamp
 from .message_to import MessageTo
 
 
-class MessageItem(UniversalBaseModel):
+class Message(UniversalBaseModel):
     inbox_id: InboxId
     thread_id: ThreadId
     message_id: MessageId
@@ -36,6 +38,8 @@ class MessageItem(UniversalBaseModel):
     bcc: typing.Optional[MessageBcc] = None
     subject: typing.Optional[MessageSubject] = None
     preview: typing.Optional[MessagePreview] = None
+    text: typing.Optional[MessageText] = None
+    html: typing.Optional[MessageHtml] = None
     attachments: typing.Optional[MessageAttachments] = None
     in_reply_to: typing.Optional[MessageInReplyTo] = None
     references: typing.Optional[MessageReferences] = None

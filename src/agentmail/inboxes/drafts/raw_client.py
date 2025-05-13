@@ -3,99 +3,128 @@
 import typing
 from json.decoder import JSONDecodeError
 
-from ..core.api_error import ApiError
-from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pydantic_utilities import parse_obj_as
-from ..core.request_options import RequestOptions
-from ..errors.not_found_error import NotFoundError
-from ..errors.validation_error import ValidationError
-from ..types.error_response import ErrorResponse
-from ..types.last_key import LastKey
-from ..types.limit import Limit
-from ..types.validation_error_response import ValidationErrorResponse
-from .types.inbox import Inbox
-from .types.inbox_id import InboxId
-from .types.list_inboxes_response import ListInboxesResponse
+from ...core.api_error import ApiError
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.http_response import AsyncHttpResponse, HttpResponse
+from ...core.jsonable_encoder import jsonable_encoder
+from ...core.pydantic_utilities import parse_obj_as
+from ...core.request_options import RequestOptions
+from ...errors.not_found_error import NotFoundError
+from ...types.error_response import ErrorResponse
+from ...types.labels import Labels
+from ...types.last_key import LastKey
+from ...types.limit import Limit
+from ..types.inbox_id import InboxId
+from .types.draft import Draft
+from .types.draft_bcc import DraftBcc
+from .types.draft_cc import DraftCc
+from .types.draft_html import DraftHtml
+from .types.draft_id import DraftId
+from .types.draft_labels import DraftLabels
+from .types.draft_subject import DraftSubject
+from .types.draft_text import DraftText
+from .types.draft_to import DraftTo
+from .types.list_drafts_response import ListDraftsResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
 
-class RawInboxesClient:
+class RawDraftsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     def list(
         self,
+        inbox_id: InboxId,
         *,
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
+        labels: typing.Optional[Labels] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[ListInboxesResponse]:
+    ) -> HttpResponse[ListDraftsResponse]:
         """
         Parameters
         ----------
+        inbox_id : InboxId
+
         limit : typing.Optional[Limit]
 
         last_key : typing.Optional[LastKey]
+
+        labels : typing.Optional[Labels]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[ListInboxesResponse]
+        HttpResponse[ListDraftsResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v0/inboxes",
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/drafts",
             method="GET",
             params={
                 "limit": limit,
                 "last_key": last_key,
+                "labels": labels,
             },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ListInboxesResponse,
+                    ListDraftsResponse,
                     parse_obj_as(
-                        type_=ListInboxesResponse,  # type: ignore
+                        type_=ListDraftsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get(self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Inbox]:
+    def get(
+        self, inbox_id: InboxId, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[Draft]:
         """
         Parameters
         ----------
         inbox_id : InboxId
+
+        draft_id : DraftId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[Inbox]
+        HttpResponse[Draft]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}",
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/drafts/{jsonable_encoder(draft_id)}",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    Inbox,
+                    Draft,
                     parse_obj_as(
-                        type_=Inbox,  # type: ignore
+                        type_=Draft,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -118,38 +147,54 @@ class RawInboxesClient:
 
     def create(
         self,
+        inbox_id: InboxId,
         *,
-        username: typing.Optional[str] = OMIT,
-        domain: typing.Optional[str] = OMIT,
-        display_name: typing.Optional[str] = OMIT,
+        labels: typing.Optional[DraftLabels] = OMIT,
+        to: typing.Optional[DraftTo] = OMIT,
+        cc: typing.Optional[DraftCc] = OMIT,
+        bcc: typing.Optional[DraftBcc] = OMIT,
+        subject: typing.Optional[DraftSubject] = OMIT,
+        text: typing.Optional[DraftText] = OMIT,
+        html: typing.Optional[DraftHtml] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[Inbox]:
+    ) -> HttpResponse[Draft]:
         """
         Parameters
         ----------
-        username : typing.Optional[str]
-            Username of address. Randomly generated if not specified.
+        inbox_id : InboxId
 
-        domain : typing.Optional[str]
-            Domain of address. Must be verified domain. Defaults to `agentmail.to`.
+        labels : typing.Optional[DraftLabels]
 
-        display_name : typing.Optional[str]
-            Display name: `Display Name <username@domain.com>`. Defaults to `AgentMail`. Pass empty string to omit.
+        to : typing.Optional[DraftTo]
+
+        cc : typing.Optional[DraftCc]
+
+        bcc : typing.Optional[DraftBcc]
+
+        subject : typing.Optional[DraftSubject]
+
+        text : typing.Optional[DraftText]
+
+        html : typing.Optional[DraftHtml]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[Inbox]
+        HttpResponse[Draft]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v0/inboxes",
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/drafts",
             method="POST",
             json={
-                "username": username,
-                "domain": domain,
-                "display_name": display_name,
+                "labels": labels,
+                "to": to,
+                "cc": cc,
+                "bcc": bcc,
+                "subject": subject,
+                "text": text,
+                "html": html,
             },
             request_options=request_options,
             omit=OMIT,
@@ -157,20 +202,20 @@ class RawInboxesClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    Inbox,
+                    Draft,
                     parse_obj_as(
-                        type_=Inbox,  # type: ignore
+                        type_=Draft,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise ValidationError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ValidationErrorResponse,
+                        ErrorResponse,
                         parse_obj_as(
-                            type_=ValidationErrorResponse,  # type: ignore
+                            type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -181,81 +226,101 @@ class RawInboxesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
-class AsyncRawInboxesClient:
+class AsyncRawDraftsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     async def list(
         self,
+        inbox_id: InboxId,
         *,
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
+        labels: typing.Optional[Labels] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[ListInboxesResponse]:
+    ) -> AsyncHttpResponse[ListDraftsResponse]:
         """
         Parameters
         ----------
+        inbox_id : InboxId
+
         limit : typing.Optional[Limit]
 
         last_key : typing.Optional[LastKey]
+
+        labels : typing.Optional[Labels]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[ListInboxesResponse]
+        AsyncHttpResponse[ListDraftsResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v0/inboxes",
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/drafts",
             method="GET",
             params={
                 "limit": limit,
                 "last_key": last_key,
+                "labels": labels,
             },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ListInboxesResponse,
+                    ListDraftsResponse,
                     parse_obj_as(
-                        type_=ListInboxesResponse,  # type: ignore
+                        type_=ListDraftsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[Inbox]:
+        self, inbox_id: InboxId, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[Draft]:
         """
         Parameters
         ----------
         inbox_id : InboxId
+
+        draft_id : DraftId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[Inbox]
+        AsyncHttpResponse[Draft]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}",
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/drafts/{jsonable_encoder(draft_id)}",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    Inbox,
+                    Draft,
                     parse_obj_as(
-                        type_=Inbox,  # type: ignore
+                        type_=Draft,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -278,38 +343,54 @@ class AsyncRawInboxesClient:
 
     async def create(
         self,
+        inbox_id: InboxId,
         *,
-        username: typing.Optional[str] = OMIT,
-        domain: typing.Optional[str] = OMIT,
-        display_name: typing.Optional[str] = OMIT,
+        labels: typing.Optional[DraftLabels] = OMIT,
+        to: typing.Optional[DraftTo] = OMIT,
+        cc: typing.Optional[DraftCc] = OMIT,
+        bcc: typing.Optional[DraftBcc] = OMIT,
+        subject: typing.Optional[DraftSubject] = OMIT,
+        text: typing.Optional[DraftText] = OMIT,
+        html: typing.Optional[DraftHtml] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[Inbox]:
+    ) -> AsyncHttpResponse[Draft]:
         """
         Parameters
         ----------
-        username : typing.Optional[str]
-            Username of address. Randomly generated if not specified.
+        inbox_id : InboxId
 
-        domain : typing.Optional[str]
-            Domain of address. Must be verified domain. Defaults to `agentmail.to`.
+        labels : typing.Optional[DraftLabels]
 
-        display_name : typing.Optional[str]
-            Display name: `Display Name <username@domain.com>`. Defaults to `AgentMail`. Pass empty string to omit.
+        to : typing.Optional[DraftTo]
+
+        cc : typing.Optional[DraftCc]
+
+        bcc : typing.Optional[DraftBcc]
+
+        subject : typing.Optional[DraftSubject]
+
+        text : typing.Optional[DraftText]
+
+        html : typing.Optional[DraftHtml]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[Inbox]
+        AsyncHttpResponse[Draft]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v0/inboxes",
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/drafts",
             method="POST",
             json={
-                "username": username,
-                "domain": domain,
-                "display_name": display_name,
+                "labels": labels,
+                "to": to,
+                "cc": cc,
+                "bcc": bcc,
+                "subject": subject,
+                "text": text,
+                "html": html,
             },
             request_options=request_options,
             omit=OMIT,
@@ -317,20 +398,20 @@ class AsyncRawInboxesClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    Inbox,
+                    Draft,
                     parse_obj_as(
-                        type_=Inbox,  # type: ignore
+                        type_=Draft,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise ValidationError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ValidationErrorResponse,
+                        ErrorResponse,
                         parse_obj_as(
-                            type_=ValidationErrorResponse,  # type: ignore
+                            type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

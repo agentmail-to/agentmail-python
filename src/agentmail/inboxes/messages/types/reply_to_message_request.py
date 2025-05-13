@@ -3,9 +3,8 @@
 import typing
 
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .message_html import MessageHtml
-from .message_subject import MessageSubject
 from .message_text import MessageText
 from .send_message_attachments import SendMessageAttachments
 from .send_message_bcc import SendMessageBcc
@@ -13,11 +12,10 @@ from .send_message_cc import SendMessageCc
 from .send_message_to import SendMessageTo
 
 
-class SendMessageRequest(UniversalBaseModel):
-    to: SendMessageTo
+class ReplyToMessageRequest(UniversalBaseModel):
+    to: typing.Optional[SendMessageTo] = None
     cc: typing.Optional[SendMessageCc] = None
     bcc: typing.Optional[SendMessageBcc] = None
-    subject: typing.Optional[MessageSubject] = None
     text: typing.Optional[MessageText] = None
     html: typing.Optional[MessageHtml] = None
     attachments: typing.Optional[SendMessageAttachments] = None

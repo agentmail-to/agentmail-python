@@ -61,6 +61,7 @@ from .messages import (
     SendMessageRequest,
     SendMessageResponse,
     SendMessageTo,
+    UpdateMessageRequest,
 )
 from .threads import (
     ListThreadsResponse,
@@ -152,6 +153,7 @@ __all__ = [
     "ThreadSenders",
     "ThreadSubject",
     "ThreadTimestamp",
+    "UpdateMessageRequest",
     "drafts",
     "messages",
     "threads",

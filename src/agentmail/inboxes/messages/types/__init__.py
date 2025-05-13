@@ -36,6 +36,7 @@ from .send_message_cc import SendMessageCc
 from .send_message_request import SendMessageRequest
 from .send_message_response import SendMessageResponse
 from .send_message_to import SendMessageTo
+from .update_message_request import UpdateMessageRequest
 
 __all__ = [
     "Addresses",
@@ -72,4 +73,5 @@ __all__ = [
     "SendMessageRequest",
     "SendMessageResponse",
     "SendMessageTo",
+    "UpdateMessageRequest",
 ]

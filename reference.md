@@ -887,6 +887,81 @@ client.inboxes.messages.reply(inbox_id='inbox_id', message_id='message_id', )
 </dl>
 </details>
 
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+client = AgentMail(api_key="YOUR_API_KEY", )
+client.inboxes.messages.update(inbox_id='inbox_id', message_id='message_id', )
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**message_id:** `MessageId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**add_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to add to message.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**remove_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to remove from message.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inboxes Threads
 <details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">list</a>(...)</code></summary>
 <dl>

@@ -37,6 +37,7 @@ from .types import (
     SendMessageRequest,
     SendMessageResponse,
     SendMessageTo,
+    UpdateMessageRequest,
 )
 from .errors import MessageRejectedError
 
@@ -76,4 +77,5 @@ __all__ = [
     "SendMessageRequest",
     "SendMessageResponse",
     "SendMessageTo",
+    "UpdateMessageRequest",
 ]

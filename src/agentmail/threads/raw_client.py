@@ -13,6 +13,7 @@ from ..errors.not_found_error import NotFoundError
 from ..inboxes.threads.types.list_threads_response import ListThreadsResponse
 from ..inboxes.threads.types.thread import Thread
 from ..inboxes.threads.types.thread_id import ThreadId
+from ..types.ascending import Ascending
 from ..types.error_response import ErrorResponse
 from ..types.labels import Labels
 from ..types.last_key import LastKey
@@ -29,6 +30,7 @@ class RawThreadsClient:
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
         labels: typing.Optional[Labels] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListThreadsResponse]:
         """
@@ -39,6 +41,8 @@ class RawThreadsClient:
         last_key : typing.Optional[LastKey]
 
         labels : typing.Optional[Labels]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -54,6 +58,7 @@ class RawThreadsClient:
                 "limit": limit,
                 "last_key": last_key,
                 "labels": labels,
+                "ascending": ascending,
             },
             request_options=request_options,
         )
@@ -140,6 +145,7 @@ class AsyncRawThreadsClient:
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
         labels: typing.Optional[Labels] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListThreadsResponse]:
         """
@@ -150,6 +156,8 @@ class AsyncRawThreadsClient:
         last_key : typing.Optional[LastKey]
 
         labels : typing.Optional[Labels]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -165,6 +173,7 @@ class AsyncRawThreadsClient:
                 "limit": limit,
                 "last_key": last_key,
                 "labels": labels,
+                "ascending": ascending,
             },
             request_options=request_options,
         )

@@ -11,6 +11,7 @@ from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
 from ...errors.not_found_error import NotFoundError
 from ...errors.validation_error import ValidationError
+from ...types.ascending import Ascending
 from ...types.error_response import ErrorResponse
 from ...types.labels import Labels
 from ...types.last_key import LastKey
@@ -45,6 +46,7 @@ class RawDraftsClient:
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
         labels: typing.Optional[Labels] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListDraftsResponse]:
         """
@@ -57,6 +59,8 @@ class RawDraftsClient:
         last_key : typing.Optional[LastKey]
 
         labels : typing.Optional[Labels]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -72,6 +76,7 @@ class RawDraftsClient:
                 "limit": limit,
                 "last_key": last_key,
                 "labels": labels,
+                "ascending": ascending,
             },
             request_options=request_options,
         )
@@ -234,7 +239,8 @@ class RawDraftsClient:
         inbox_id: InboxId,
         draft_id: DraftId,
         *,
-        labels: typing.Optional[DraftLabels] = OMIT,
+        add_labels: typing.Optional[typing.Sequence[str]] = OMIT,
+        remove_labels: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SendMessageResponse]:
         """
@@ -244,7 +250,11 @@ class RawDraftsClient:
 
         draft_id : DraftId
 
-        labels : typing.Optional[DraftLabels]
+        add_labels : typing.Optional[typing.Sequence[str]]
+            Labels to add to message.
+
+        remove_labels : typing.Optional[typing.Sequence[str]]
+            Labels to remove from message.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -257,7 +267,8 @@ class RawDraftsClient:
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/drafts/{jsonable_encoder(draft_id)}/send",
             method="POST",
             json={
-                "labels": labels,
+                "add_labels": add_labels,
+                "remove_labels": remove_labels,
             },
             request_options=request_options,
             omit=OMIT,
@@ -322,6 +333,7 @@ class AsyncRawDraftsClient:
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
         labels: typing.Optional[Labels] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListDraftsResponse]:
         """
@@ -334,6 +346,8 @@ class AsyncRawDraftsClient:
         last_key : typing.Optional[LastKey]
 
         labels : typing.Optional[Labels]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -349,6 +363,7 @@ class AsyncRawDraftsClient:
                 "limit": limit,
                 "last_key": last_key,
                 "labels": labels,
+                "ascending": ascending,
             },
             request_options=request_options,
         )
@@ -511,7 +526,8 @@ class AsyncRawDraftsClient:
         inbox_id: InboxId,
         draft_id: DraftId,
         *,
-        labels: typing.Optional[DraftLabels] = OMIT,
+        add_labels: typing.Optional[typing.Sequence[str]] = OMIT,
+        remove_labels: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SendMessageResponse]:
         """
@@ -521,7 +537,11 @@ class AsyncRawDraftsClient:
 
         draft_id : DraftId
 
-        labels : typing.Optional[DraftLabels]
+        add_labels : typing.Optional[typing.Sequence[str]]
+            Labels to add to message.
+
+        remove_labels : typing.Optional[typing.Sequence[str]]
+            Labels to remove from message.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -534,7 +554,8 @@ class AsyncRawDraftsClient:
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/drafts/{jsonable_encoder(draft_id)}/send",
             method="POST",
             json={
-                "labels": labels,
+                "add_labels": add_labels,
+                "remove_labels": remove_labels,
             },
             request_options=request_options,
             omit=OMIT,

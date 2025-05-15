@@ -233,6 +233,14 @@ client.drafts.list()
 <dl>
 <dd>
 
+**ascending:** `typing.Optional[Ascending]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -353,6 +361,14 @@ client.inboxes.drafts.list(inbox_id='inbox_id', )
 <dd>
 
 **labels:** `typing.Optional[Labels]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ascending:** `typing.Optional[Ascending]` 
     
 </dd>
 </dl>
@@ -585,7 +601,15 @@ client.inboxes.drafts.send(inbox_id='inbox_id', draft_id='draft_id', )
 <dl>
 <dd>
 
-**labels:** `typing.Optional[DraftLabels]` 
+**add_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to add to message.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**remove_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to remove from message.
     
 </dd>
 </dl>
@@ -662,6 +686,14 @@ client.inboxes.messages.list(inbox_id='inbox_id', )
 <dd>
 
 **labels:** `typing.Optional[Labels]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ascending:** `typing.Optional[Ascending]` 
     
 </dd>
 </dl>
@@ -1101,6 +1133,14 @@ client.inboxes.threads.list(inbox_id='inbox_id', )
 <dl>
 <dd>
 
+**ascending:** `typing.Optional[Ascending]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -1221,6 +1261,14 @@ client.threads.list()
 <dd>
 
 **labels:** `typing.Optional[Labels]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ascending:** `typing.Optional[Ascending]` 
     
 </dd>
 </dl>

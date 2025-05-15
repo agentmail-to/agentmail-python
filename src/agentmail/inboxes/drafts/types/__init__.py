@@ -21,7 +21,6 @@ from .draft_text import DraftText
 from .draft_to import DraftTo
 from .draft_updated_at import DraftUpdatedAt
 from .list_drafts_response import ListDraftsResponse
-from .send_draft_request import SendDraftRequest
 
 __all__ = [
     "CreateDraftRequest",
@@ -43,5 +42,4 @@ __all__ = [
     "DraftTo",
     "DraftUpdatedAt",
     "ListDraftsResponse",
-    "SendDraftRequest",
 ]

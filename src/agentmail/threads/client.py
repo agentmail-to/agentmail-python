@@ -7,6 +7,7 @@ from ..core.request_options import RequestOptions
 from ..inboxes.threads.types.list_threads_response import ListThreadsResponse
 from ..inboxes.threads.types.thread import Thread
 from ..inboxes.threads.types.thread_id import ThreadId
+from ..types.ascending import Ascending
 from ..types.labels import Labels
 from ..types.last_key import LastKey
 from ..types.limit import Limit
@@ -34,6 +35,7 @@ class ThreadsClient:
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
         labels: typing.Optional[Labels] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
         """
@@ -44,6 +46,8 @@ class ThreadsClient:
         last_key : typing.Optional[LastKey]
 
         labels : typing.Optional[Labels]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -59,7 +63,7 @@ class ThreadsClient:
         client.threads.list()
         """
         _response = self._raw_client.list(
-            limit=limit, last_key=last_key, labels=labels, request_options=request_options
+            limit=limit, last_key=last_key, labels=labels, ascending=ascending, request_options=request_options
         )
         return _response.data
 
@@ -107,6 +111,7 @@ class AsyncThreadsClient:
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
         labels: typing.Optional[Labels] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
         """
@@ -117,6 +122,8 @@ class AsyncThreadsClient:
         last_key : typing.Optional[LastKey]
 
         labels : typing.Optional[Labels]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -135,7 +142,7 @@ class AsyncThreadsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
-            limit=limit, last_key=last_key, labels=labels, request_options=request_options
+            limit=limit, last_key=last_key, labels=labels, ascending=ascending, request_options=request_options
         )
         return _response.data
 

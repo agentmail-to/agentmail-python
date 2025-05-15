@@ -2,7 +2,17 @@
 
 # isort: skip_file
 
-from .types import Count, ErrorName, ErrorResponse, Labels, LastKey, Limit, OrganizationId, ValidationErrorResponse
+from .types import (
+    Ascending,
+    Count,
+    ErrorName,
+    ErrorResponse,
+    Labels,
+    LastKey,
+    Limit,
+    OrganizationId,
+    ValidationErrorResponse,
+)
 from .errors import IsTakenError, NotFoundError, ValidationError
 from . import drafts, inboxes, threads, webhooks
 from .client import AgentMail, AsyncAgentMail
@@ -27,6 +37,7 @@ from .webhooks import (
 __all__ = [
     "AgentMail",
     "AgentMailEnvironment",
+    "Ascending",
     "AsyncAgentMail",
     "Count",
     "CreateWebhookRequest",

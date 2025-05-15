@@ -24,7 +24,6 @@ from .drafts import (
     DraftTo,
     DraftUpdatedAt,
     ListDraftsResponse,
-    SendDraftRequest,
 )
 from .messages import (
     Addresses,
@@ -135,7 +134,6 @@ __all__ = [
     "MessageTo",
     "ReplyToMessageRequest",
     "SendAttachment",
-    "SendDraftRequest",
     "SendMessageAttachments",
     "SendMessageBcc",
     "SendMessageCc",

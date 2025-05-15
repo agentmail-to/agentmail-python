@@ -2,6 +2,7 @@
 
 # isort: skip_file
 
+from .ascending import Ascending
 from .count import Count
 from .error_name import ErrorName
 from .error_response import ErrorResponse
@@ -12,6 +13,7 @@ from .organization_id import OrganizationId
 from .validation_error_response import ValidationErrorResponse
 
 __all__ = [
+    "Ascending",
     "Count",
     "ErrorName",
     "ErrorResponse",

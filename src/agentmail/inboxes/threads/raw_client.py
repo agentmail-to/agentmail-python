@@ -10,6 +10,7 @@ from ...core.jsonable_encoder import jsonable_encoder
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
 from ...errors.not_found_error import NotFoundError
+from ...types.ascending import Ascending
 from ...types.error_response import ErrorResponse
 from ...types.labels import Labels
 from ...types.last_key import LastKey
@@ -31,6 +32,7 @@ class RawThreadsClient:
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
         labels: typing.Optional[Labels] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListThreadsResponse]:
         """
@@ -43,6 +45,8 @@ class RawThreadsClient:
         last_key : typing.Optional[LastKey]
 
         labels : typing.Optional[Labels]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -58,6 +62,7 @@ class RawThreadsClient:
                 "limit": limit,
                 "last_key": last_key,
                 "labels": labels,
+                "ascending": ascending,
             },
             request_options=request_options,
         )
@@ -147,6 +152,7 @@ class AsyncRawThreadsClient:
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
         labels: typing.Optional[Labels] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListThreadsResponse]:
         """
@@ -159,6 +165,8 @@ class AsyncRawThreadsClient:
         last_key : typing.Optional[LastKey]
 
         labels : typing.Optional[Labels]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -174,6 +182,7 @@ class AsyncRawThreadsClient:
                 "limit": limit,
                 "last_key": last_key,
                 "labels": labels,
+                "ascending": ascending,
             },
             request_options=request_options,
         )

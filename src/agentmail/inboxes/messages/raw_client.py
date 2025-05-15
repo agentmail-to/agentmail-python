@@ -13,6 +13,7 @@ from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...errors.not_found_error import NotFoundError
 from ...errors.validation_error import ValidationError
+from ...types.ascending import Ascending
 from ...types.error_response import ErrorResponse
 from ...types.labels import Labels
 from ...types.last_key import LastKey
@@ -49,6 +50,7 @@ class RawMessagesClient:
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
         labels: typing.Optional[Labels] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListMessagesResponse]:
         """
@@ -61,6 +63,8 @@ class RawMessagesClient:
         last_key : typing.Optional[LastKey]
 
         labels : typing.Optional[Labels]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -76,6 +80,7 @@ class RawMessagesClient:
                 "limit": limit,
                 "last_key": last_key,
                 "labels": labels,
+                "ascending": ascending,
             },
             request_options=request_options,
         )
@@ -515,6 +520,7 @@ class AsyncRawMessagesClient:
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
         labels: typing.Optional[Labels] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListMessagesResponse]:
         """
@@ -527,6 +533,8 @@ class AsyncRawMessagesClient:
         last_key : typing.Optional[LastKey]
 
         labels : typing.Optional[Labels]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -542,6 +550,7 @@ class AsyncRawMessagesClient:
                 "limit": limit,
                 "last_key": last_key,
                 "labels": labels,
+                "ascending": ascending,
             },
             request_options=request_options,
         )

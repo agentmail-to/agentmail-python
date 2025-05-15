@@ -4,6 +4,7 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...types.ascending import Ascending
 from ...types.labels import Labels
 from ...types.last_key import LastKey
 from ...types.limit import Limit
@@ -47,6 +48,7 @@ class DraftsClient:
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
         labels: typing.Optional[Labels] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListDraftsResponse:
         """
@@ -59,6 +61,8 @@ class DraftsClient:
         last_key : typing.Optional[LastKey]
 
         labels : typing.Optional[Labels]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -74,7 +78,12 @@ class DraftsClient:
         client.inboxes.drafts.list(inbox_id='inbox_id', )
         """
         _response = self._raw_client.list(
-            inbox_id, limit=limit, last_key=last_key, labels=labels, request_options=request_options
+            inbox_id,
+            limit=limit,
+            last_key=last_key,
+            labels=labels,
+            ascending=ascending,
+            request_options=request_options,
         )
         return _response.data
 
@@ -167,7 +176,8 @@ class DraftsClient:
         inbox_id: InboxId,
         draft_id: DraftId,
         *,
-        labels: typing.Optional[DraftLabels] = OMIT,
+        add_labels: typing.Optional[typing.Sequence[str]] = OMIT,
+        remove_labels: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
@@ -177,7 +187,11 @@ class DraftsClient:
 
         draft_id : DraftId
 
-        labels : typing.Optional[DraftLabels]
+        add_labels : typing.Optional[typing.Sequence[str]]
+            Labels to add to message.
+
+        remove_labels : typing.Optional[typing.Sequence[str]]
+            Labels to remove from message.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -192,7 +206,9 @@ class DraftsClient:
         client = AgentMail(api_key="YOUR_API_KEY", )
         client.inboxes.drafts.send(inbox_id='inbox_id', draft_id='draft_id', )
         """
-        _response = self._raw_client.send(inbox_id, draft_id, labels=labels, request_options=request_options)
+        _response = self._raw_client.send(
+            inbox_id, draft_id, add_labels=add_labels, remove_labels=remove_labels, request_options=request_options
+        )
         return _response.data
 
 
@@ -218,6 +234,7 @@ class AsyncDraftsClient:
         limit: typing.Optional[Limit] = None,
         last_key: typing.Optional[LastKey] = None,
         labels: typing.Optional[Labels] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListDraftsResponse:
         """
@@ -230,6 +247,8 @@ class AsyncDraftsClient:
         last_key : typing.Optional[LastKey]
 
         labels : typing.Optional[Labels]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -248,7 +267,12 @@ class AsyncDraftsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
-            inbox_id, limit=limit, last_key=last_key, labels=labels, request_options=request_options
+            inbox_id,
+            limit=limit,
+            last_key=last_key,
+            labels=labels,
+            ascending=ascending,
+            request_options=request_options,
         )
         return _response.data
 
@@ -347,7 +371,8 @@ class AsyncDraftsClient:
         inbox_id: InboxId,
         draft_id: DraftId,
         *,
-        labels: typing.Optional[DraftLabels] = OMIT,
+        add_labels: typing.Optional[typing.Sequence[str]] = OMIT,
+        remove_labels: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
@@ -357,7 +382,11 @@ class AsyncDraftsClient:
 
         draft_id : DraftId
 
-        labels : typing.Optional[DraftLabels]
+        add_labels : typing.Optional[typing.Sequence[str]]
+            Labels to add to message.
+
+        remove_labels : typing.Optional[typing.Sequence[str]]
+            Labels to remove from message.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -375,5 +404,7 @@ class AsyncDraftsClient:
             await client.inboxes.drafts.send(inbox_id='inbox_id', draft_id='draft_id', )
         asyncio.run(main())
         """
-        _response = await self._raw_client.send(inbox_id, draft_id, labels=labels, request_options=request_options)
+        _response = await self._raw_client.send(
+            inbox_id, draft_id, add_labels=add_labels, remove_labels=remove_labels, request_options=request_options
+        )
         return _response.data

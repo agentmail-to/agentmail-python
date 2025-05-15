@@ -10,10 +10,14 @@ from ...core.jsonable_encoder import jsonable_encoder
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
 from ...errors.not_found_error import NotFoundError
+from ...errors.validation_error import ValidationError
 from ...types.error_response import ErrorResponse
 from ...types.labels import Labels
 from ...types.last_key import LastKey
 from ...types.limit import Limit
+from ...types.validation_error_response import ValidationErrorResponse
+from ..messages.errors.message_rejected_error import MessageRejectedError
+from ..messages.types.send_message_response import SendMessageResponse
 from ..types.inbox_id import InboxId
 from .types.draft import Draft
 from .types.draft_bcc import DraftBcc
@@ -225,6 +229,87 @@ class RawDraftsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def send(
+        self,
+        inbox_id: InboxId,
+        draft_id: DraftId,
+        *,
+        labels: typing.Optional[DraftLabels] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[SendMessageResponse]:
+        """
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        draft_id : DraftId
+
+        labels : typing.Optional[DraftLabels]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[SendMessageResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/drafts/{jsonable_encoder(draft_id)}/send",
+            method="POST",
+            json={
+                "labels": labels,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    SendMessageResponse,
+                    parse_obj_as(
+                        type_=SendMessageResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        parse_obj_as(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise MessageRejectedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawDraftsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -407,6 +492,87 @@ class AsyncRawDraftsClient:
                 return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 404:
                 raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def send(
+        self,
+        inbox_id: InboxId,
+        draft_id: DraftId,
+        *,
+        labels: typing.Optional[DraftLabels] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[SendMessageResponse]:
+        """
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        draft_id : DraftId
+
+        labels : typing.Optional[DraftLabels]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[SendMessageResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/drafts/{jsonable_encoder(draft_id)}/send",
+            method="POST",
+            json={
+                "labels": labels,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    SendMessageResponse,
+                    parse_obj_as(
+                        type_=SendMessageResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        parse_obj_as(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise MessageRejectedError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,

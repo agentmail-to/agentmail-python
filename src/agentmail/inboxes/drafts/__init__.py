@@ -22,6 +22,7 @@ from .types import (
     DraftTo,
     DraftUpdatedAt,
     ListDraftsResponse,
+    SendDraftRequest,
 )
 
 __all__ = [
@@ -44,4 +45,5 @@ __all__ = [
     "DraftTo",
     "DraftUpdatedAt",
     "ListDraftsResponse",
+    "SendDraftRequest",
 ]

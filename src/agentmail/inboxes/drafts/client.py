@@ -7,6 +7,7 @@ from ...core.request_options import RequestOptions
 from ...types.labels import Labels
 from ...types.last_key import LastKey
 from ...types.limit import Limit
+from ..messages.types.send_message_response import SendMessageResponse
 from ..types.inbox_id import InboxId
 from .raw_client import AsyncRawDraftsClient, RawDraftsClient
 from .types.draft import Draft
@@ -161,6 +162,39 @@ class DraftsClient:
         )
         return _response.data
 
+    def send(
+        self,
+        inbox_id: InboxId,
+        draft_id: DraftId,
+        *,
+        labels: typing.Optional[DraftLabels] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SendMessageResponse:
+        """
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        draft_id : DraftId
+
+        labels : typing.Optional[DraftLabels]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SendMessageResponse
+
+        Examples
+        --------
+        from agentmail import AgentMail
+        client = AgentMail(api_key="YOUR_API_KEY", )
+        client.inboxes.drafts.send(inbox_id='inbox_id', draft_id='draft_id', )
+        """
+        _response = self._raw_client.send(inbox_id, draft_id, labels=labels, request_options=request_options)
+        return _response.data
+
 
 class AsyncDraftsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -306,4 +340,40 @@ class AsyncDraftsClient:
             html=html,
             request_options=request_options,
         )
+        return _response.data
+
+    async def send(
+        self,
+        inbox_id: InboxId,
+        draft_id: DraftId,
+        *,
+        labels: typing.Optional[DraftLabels] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SendMessageResponse:
+        """
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        draft_id : DraftId
+
+        labels : typing.Optional[DraftLabels]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SendMessageResponse
+
+        Examples
+        --------
+        from agentmail import AsyncAgentMail
+        import asyncio
+        client = AsyncAgentMail(api_key="YOUR_API_KEY", )
+        async def main() -> None:
+            await client.inboxes.drafts.send(inbox_id='inbox_id', draft_id='draft_id', )
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.send(inbox_id, draft_id, labels=labels, request_options=request_options)
         return _response.data

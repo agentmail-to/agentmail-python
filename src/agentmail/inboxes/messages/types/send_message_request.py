@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .message_html import MessageHtml
+from .message_labels import MessageLabels
 from .message_subject import MessageSubject
 from .message_text import MessageText
 from .send_message_attachments import SendMessageAttachments
@@ -14,7 +15,8 @@ from .send_message_to import SendMessageTo
 
 
 class SendMessageRequest(UniversalBaseModel):
-    to: SendMessageTo
+    labels: typing.Optional[MessageLabels] = None
+    to: typing.Optional[SendMessageTo] = None
     cc: typing.Optional[SendMessageCc] = None
     bcc: typing.Optional[SendMessageBcc] = None
     subject: typing.Optional[MessageSubject] = None

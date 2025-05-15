@@ -14,6 +14,7 @@ from .types.list_messages_response import ListMessagesResponse
 from .types.message import Message
 from .types.message_html import MessageHtml
 from .types.message_id import MessageId
+from .types.message_labels import MessageLabels
 from .types.message_subject import MessageSubject
 from .types.message_text import MessageText
 from .types.send_message_attachments import SendMessageAttachments
@@ -136,7 +137,8 @@ class MessagesClient:
         self,
         inbox_id: InboxId,
         *,
-        to: SendMessageTo,
+        labels: typing.Optional[MessageLabels] = OMIT,
+        to: typing.Optional[SendMessageTo] = OMIT,
         cc: typing.Optional[SendMessageCc] = OMIT,
         bcc: typing.Optional[SendMessageBcc] = OMIT,
         subject: typing.Optional[MessageSubject] = OMIT,
@@ -150,7 +152,9 @@ class MessagesClient:
         ----------
         inbox_id : InboxId
 
-        to : SendMessageTo
+        labels : typing.Optional[MessageLabels]
+
+        to : typing.Optional[SendMessageTo]
 
         cc : typing.Optional[SendMessageCc]
 
@@ -175,10 +179,11 @@ class MessagesClient:
         --------
         from agentmail import AgentMail
         client = AgentMail(api_key="YOUR_API_KEY", )
-        client.inboxes.messages.send(inbox_id='inbox_id', to='to', )
+        client.inboxes.messages.send(inbox_id='inbox_id', )
         """
         _response = self._raw_client.send(
             inbox_id,
+            labels=labels,
             to=to,
             cc=cc,
             bcc=bcc,
@@ -408,7 +413,8 @@ class AsyncMessagesClient:
         self,
         inbox_id: InboxId,
         *,
-        to: SendMessageTo,
+        labels: typing.Optional[MessageLabels] = OMIT,
+        to: typing.Optional[SendMessageTo] = OMIT,
         cc: typing.Optional[SendMessageCc] = OMIT,
         bcc: typing.Optional[SendMessageBcc] = OMIT,
         subject: typing.Optional[MessageSubject] = OMIT,
@@ -422,7 +428,9 @@ class AsyncMessagesClient:
         ----------
         inbox_id : InboxId
 
-        to : SendMessageTo
+        labels : typing.Optional[MessageLabels]
+
+        to : typing.Optional[SendMessageTo]
 
         cc : typing.Optional[SendMessageCc]
 
@@ -449,11 +457,12 @@ class AsyncMessagesClient:
         import asyncio
         client = AsyncAgentMail(api_key="YOUR_API_KEY", )
         async def main() -> None:
-            await client.inboxes.messages.send(inbox_id='inbox_id', to='to', )
+            await client.inboxes.messages.send(inbox_id='inbox_id', )
         asyncio.run(main())
         """
         _response = await self._raw_client.send(
             inbox_id,
+            labels=labels,
             to=to,
             cc=cc,
             bcc=bcc,

@@ -25,6 +25,7 @@ from .types.list_messages_response import ListMessagesResponse
 from .types.message import Message
 from .types.message_html import MessageHtml
 from .types.message_id import MessageId
+from .types.message_labels import MessageLabels
 from .types.message_subject import MessageSubject
 from .types.message_text import MessageText
 from .types.send_message_attachments import SendMessageAttachments
@@ -215,7 +216,8 @@ class RawMessagesClient:
         self,
         inbox_id: InboxId,
         *,
-        to: SendMessageTo,
+        labels: typing.Optional[MessageLabels] = OMIT,
+        to: typing.Optional[SendMessageTo] = OMIT,
         cc: typing.Optional[SendMessageCc] = OMIT,
         bcc: typing.Optional[SendMessageBcc] = OMIT,
         subject: typing.Optional[MessageSubject] = OMIT,
@@ -229,7 +231,9 @@ class RawMessagesClient:
         ----------
         inbox_id : InboxId
 
-        to : SendMessageTo
+        labels : typing.Optional[MessageLabels]
+
+        to : typing.Optional[SendMessageTo]
 
         cc : typing.Optional[SendMessageCc]
 
@@ -254,6 +258,7 @@ class RawMessagesClient:
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/send",
             method="POST",
             json={
+                "labels": labels,
                 "to": convert_and_respect_annotation_metadata(object_=to, annotation=SendMessageTo, direction="write"),
                 "cc": convert_and_respect_annotation_metadata(object_=cc, annotation=SendMessageCc, direction="write"),
                 "bcc": convert_and_respect_annotation_metadata(
@@ -678,7 +683,8 @@ class AsyncRawMessagesClient:
         self,
         inbox_id: InboxId,
         *,
-        to: SendMessageTo,
+        labels: typing.Optional[MessageLabels] = OMIT,
+        to: typing.Optional[SendMessageTo] = OMIT,
         cc: typing.Optional[SendMessageCc] = OMIT,
         bcc: typing.Optional[SendMessageBcc] = OMIT,
         subject: typing.Optional[MessageSubject] = OMIT,
@@ -692,7 +698,9 @@ class AsyncRawMessagesClient:
         ----------
         inbox_id : InboxId
 
-        to : SendMessageTo
+        labels : typing.Optional[MessageLabels]
+
+        to : typing.Optional[SendMessageTo]
 
         cc : typing.Optional[SendMessageCc]
 
@@ -717,6 +725,7 @@ class AsyncRawMessagesClient:
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/send",
             method="POST",
             json={
+                "labels": labels,
                 "to": convert_and_respect_annotation_metadata(object_=to, annotation=SendMessageTo, direction="write"),
                 "cc": convert_and_respect_annotation_metadata(object_=cc, annotation=SendMessageCc, direction="write"),
                 "bcc": convert_and_respect_annotation_metadata(

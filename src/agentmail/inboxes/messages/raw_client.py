@@ -332,6 +332,7 @@ class RawMessagesClient:
         inbox_id: InboxId,
         message_id: MessageId,
         *,
+        labels: typing.Optional[MessageLabels] = OMIT,
         to: typing.Optional[SendMessageTo] = OMIT,
         cc: typing.Optional[SendMessageCc] = OMIT,
         bcc: typing.Optional[SendMessageBcc] = OMIT,
@@ -346,6 +347,8 @@ class RawMessagesClient:
         inbox_id : InboxId
 
         message_id : MessageId
+
+        labels : typing.Optional[MessageLabels]
 
         to : typing.Optional[SendMessageTo]
 
@@ -370,6 +373,7 @@ class RawMessagesClient:
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}/reply",
             method="POST",
             json={
+                "labels": labels,
                 "to": convert_and_respect_annotation_metadata(object_=to, annotation=SendMessageTo, direction="write"),
                 "cc": convert_and_respect_annotation_metadata(object_=cc, annotation=SendMessageCc, direction="write"),
                 "bcc": convert_and_respect_annotation_metadata(
@@ -803,6 +807,7 @@ class AsyncRawMessagesClient:
         inbox_id: InboxId,
         message_id: MessageId,
         *,
+        labels: typing.Optional[MessageLabels] = OMIT,
         to: typing.Optional[SendMessageTo] = OMIT,
         cc: typing.Optional[SendMessageCc] = OMIT,
         bcc: typing.Optional[SendMessageBcc] = OMIT,
@@ -817,6 +822,8 @@ class AsyncRawMessagesClient:
         inbox_id : InboxId
 
         message_id : MessageId
+
+        labels : typing.Optional[MessageLabels]
 
         to : typing.Optional[SendMessageTo]
 
@@ -841,6 +848,7 @@ class AsyncRawMessagesClient:
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}/reply",
             method="POST",
             json={
+                "labels": labels,
                 "to": convert_and_respect_annotation_metadata(object_=to, annotation=SendMessageTo, direction="write"),
                 "cc": convert_and_respect_annotation_metadata(object_=cc, annotation=SendMessageCc, direction="write"),
                 "bcc": convert_and_respect_annotation_metadata(

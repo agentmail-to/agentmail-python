@@ -1473,7 +1473,7 @@ client.webhooks.get(webhook_id='webhook_id', )
 ```python
 from agentmail import AgentMail
 client = AgentMail(api_key="YOUR_API_KEY", )
-client.webhooks.create(url='url', )
+client.webhooks.create(url='url', events=["message.received", "message.received"], )
 
 ```
 </dd>
@@ -1497,7 +1497,7 @@ client.webhooks.create(url='url', )
 <dl>
 <dd>
 
-**events:** `typing.Optional[Events]` 
+**events:** `Events` 
     
 </dd>
 </dl>

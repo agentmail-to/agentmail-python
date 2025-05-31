@@ -125,7 +125,7 @@ class RawWebhooksClient:
         self,
         *,
         url: Url,
-        events: typing.Optional[Events] = OMIT,
+        events: Events,
         inboxes: typing.Optional[Inboxes] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Webhook]:
@@ -134,7 +134,7 @@ class RawWebhooksClient:
         ----------
         url : Url
 
-        events : typing.Optional[Events]
+        events : Events
 
         inboxes : typing.Optional[Inboxes]
 
@@ -321,7 +321,7 @@ class AsyncRawWebhooksClient:
         self,
         *,
         url: Url,
-        events: typing.Optional[Events] = OMIT,
+        events: Events,
         inboxes: typing.Optional[Inboxes] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Webhook]:
@@ -330,7 +330,7 @@ class AsyncRawWebhooksClient:
         ----------
         url : Url
 
-        events : typing.Optional[Events]
+        events : Events
 
         inboxes : typing.Optional[Inboxes]
 

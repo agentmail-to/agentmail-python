@@ -89,7 +89,7 @@ class WebhooksClient:
         self,
         *,
         url: Url,
-        events: typing.Optional[Events] = OMIT,
+        events: Events,
         inboxes: typing.Optional[Inboxes] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Webhook:
@@ -98,7 +98,7 @@ class WebhooksClient:
         ----------
         url : Url
 
-        events : typing.Optional[Events]
+        events : Events
 
         inboxes : typing.Optional[Inboxes]
 
@@ -113,7 +113,7 @@ class WebhooksClient:
         --------
         from agentmail import AgentMail
         client = AgentMail(api_key="YOUR_API_KEY", )
-        client.webhooks.create(url='url', )
+        client.webhooks.create(url='url', events=["message.received", "message.received"], )
         """
         _response = self._raw_client.create(url=url, events=events, inboxes=inboxes, request_options=request_options)
         return _response.data
@@ -218,7 +218,7 @@ class AsyncWebhooksClient:
         self,
         *,
         url: Url,
-        events: typing.Optional[Events] = OMIT,
+        events: Events,
         inboxes: typing.Optional[Inboxes] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Webhook:
@@ -227,7 +227,7 @@ class AsyncWebhooksClient:
         ----------
         url : Url
 
-        events : typing.Optional[Events]
+        events : Events
 
         inboxes : typing.Optional[Inboxes]
 
@@ -244,7 +244,7 @@ class AsyncWebhooksClient:
         import asyncio
         client = AsyncAgentMail(api_key="YOUR_API_KEY", )
         async def main() -> None:
-            await client.webhooks.create(url='url', )
+            await client.webhooks.create(url='url', events=["message.received", "message.received"], )
         asyncio.run(main())
         """
         _response = await self._raw_client.create(

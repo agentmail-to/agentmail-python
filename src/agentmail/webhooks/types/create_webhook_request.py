@@ -11,7 +11,7 @@ from .url import Url
 
 class CreateWebhookRequest(UniversalBaseModel):
     url: Url
-    events: typing.Optional[Events] = None
+    events: Events
     inboxes: typing.Optional[Inboxes] = None
 
     if IS_PYDANTIC_V2:

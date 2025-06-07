@@ -4,25 +4,25 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...messages.types.attachment_id import AttachmentId
+from ...messages.types.list_messages_response import ListMessagesResponse
+from ...messages.types.message import Message
+from ...messages.types.message_html import MessageHtml
+from ...messages.types.message_id import MessageId
+from ...messages.types.message_labels import MessageLabels
+from ...messages.types.message_subject import MessageSubject
+from ...messages.types.message_text import MessageText
+from ...messages.types.send_message_attachments import SendMessageAttachments
+from ...messages.types.send_message_bcc import SendMessageBcc
+from ...messages.types.send_message_cc import SendMessageCc
+from ...messages.types.send_message_response import SendMessageResponse
+from ...messages.types.send_message_to import SendMessageTo
 from ...types.ascending import Ascending
 from ...types.labels import Labels
 from ...types.last_key import LastKey
 from ...types.limit import Limit
 from ..types.inbox_id import InboxId
 from .raw_client import AsyncRawMessagesClient, RawMessagesClient
-from .types.attachment_id import AttachmentId
-from .types.list_messages_response import ListMessagesResponse
-from .types.message import Message
-from .types.message_html import MessageHtml
-from .types.message_id import MessageId
-from .types.message_labels import MessageLabels
-from .types.message_subject import MessageSubject
-from .types.message_text import MessageText
-from .types.send_message_attachments import SendMessageAttachments
-from .types.send_message_bcc import SendMessageBcc
-from .types.send_message_cc import SendMessageCc
-from .types.send_message_response import SendMessageResponse
-from .types.send_message_to import SendMessageTo
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)

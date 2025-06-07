@@ -3,20 +3,20 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from ....types.count import Count
-from ....types.last_key import LastKey
-from ....types.limit import Limit
-from .thread_item import ThreadItem
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...types.count import Count
+from ...types.last_key import LastKey
+from ...types.limit import Limit
+from .message_item import MessageItem
 
 
-class ListThreadsResponse(UniversalBaseModel):
+class ListMessagesResponse(UniversalBaseModel):
     count: Count
     limit: typing.Optional[Limit] = None
     last_key: typing.Optional[LastKey] = None
-    threads: typing.List[ThreadItem] = pydantic.Field()
+    messages: typing.List[MessageItem] = pydantic.Field()
     """
-    Thread items. Ordered by `timestamp` descending.
+    Message items. Ordered by `timestamp` descending.
     """
 
     if IS_PYDANTIC_V2:

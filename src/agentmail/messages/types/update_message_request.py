@@ -3,14 +3,19 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from ...threads.types.thread_id import ThreadId
-from .message_id import MessageId
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
-class SendMessageResponse(UniversalBaseModel):
-    message_id: MessageId
-    thread_id: ThreadId
+class UpdateMessageRequest(UniversalBaseModel):
+    add_labels: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Labels to add to message.
+    """
+
+    remove_labels: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    """
+    Labels to remove from message.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

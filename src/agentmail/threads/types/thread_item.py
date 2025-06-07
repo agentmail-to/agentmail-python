@@ -3,8 +3,8 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from ...types.inbox_id import InboxId
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...inboxes.types.inbox_id import InboxId
 from .thread_attachments import ThreadAttachments
 from .thread_event_id import ThreadEventId
 from .thread_id import ThreadId

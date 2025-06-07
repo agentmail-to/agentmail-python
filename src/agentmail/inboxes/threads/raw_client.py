@@ -10,15 +10,15 @@ from ...core.jsonable_encoder import jsonable_encoder
 from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
 from ...errors.not_found_error import NotFoundError
+from ...threads.types.list_threads_response import ListThreadsResponse
+from ...threads.types.thread import Thread
+from ...threads.types.thread_id import ThreadId
 from ...types.ascending import Ascending
 from ...types.error_response import ErrorResponse
 from ...types.labels import Labels
 from ...types.last_key import LastKey
 from ...types.limit import Limit
 from ..types.inbox_id import InboxId
-from .types.list_threads_response import ListThreadsResponse
-from .types.thread import Thread
-from .types.thread_id import ThreadId
 
 
 class RawThreadsClient:

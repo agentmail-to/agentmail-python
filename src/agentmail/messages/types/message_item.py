@@ -4,10 +4,10 @@ import typing
 
 import pydantic
 import typing_extensions
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from ....core.serialization import FieldMetadata
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.serialization import FieldMetadata
+from ...inboxes.types.inbox_id import InboxId
 from ...threads.types.thread_id import ThreadId
-from ...types.inbox_id import InboxId
 from .message_attachments import MessageAttachments
 from .message_bcc import MessageBcc
 from .message_cc import MessageCc

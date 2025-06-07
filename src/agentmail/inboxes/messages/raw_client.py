@@ -13,6 +13,20 @@ from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...errors.not_found_error import NotFoundError
 from ...errors.validation_error import ValidationError
+from ...messages.errors.message_rejected_error import MessageRejectedError
+from ...messages.types.attachment_id import AttachmentId
+from ...messages.types.list_messages_response import ListMessagesResponse
+from ...messages.types.message import Message
+from ...messages.types.message_html import MessageHtml
+from ...messages.types.message_id import MessageId
+from ...messages.types.message_labels import MessageLabels
+from ...messages.types.message_subject import MessageSubject
+from ...messages.types.message_text import MessageText
+from ...messages.types.send_message_attachments import SendMessageAttachments
+from ...messages.types.send_message_bcc import SendMessageBcc
+from ...messages.types.send_message_cc import SendMessageCc
+from ...messages.types.send_message_response import SendMessageResponse
+from ...messages.types.send_message_to import SendMessageTo
 from ...types.ascending import Ascending
 from ...types.error_response import ErrorResponse
 from ...types.labels import Labels
@@ -20,20 +34,6 @@ from ...types.last_key import LastKey
 from ...types.limit import Limit
 from ...types.validation_error_response import ValidationErrorResponse
 from ..types.inbox_id import InboxId
-from .errors.message_rejected_error import MessageRejectedError
-from .types.attachment_id import AttachmentId
-from .types.list_messages_response import ListMessagesResponse
-from .types.message import Message
-from .types.message_html import MessageHtml
-from .types.message_id import MessageId
-from .types.message_labels import MessageLabels
-from .types.message_subject import MessageSubject
-from .types.message_text import MessageText
-from .types.send_message_attachments import SendMessageAttachments
-from .types.send_message_bcc import SendMessageBcc
-from .types.send_message_cc import SendMessageCc
-from .types.send_message_response import SendMessageResponse
-from .types.send_message_to import SendMessageTo
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)

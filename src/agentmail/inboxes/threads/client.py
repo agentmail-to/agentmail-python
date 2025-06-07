@@ -4,15 +4,15 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...threads.types.list_threads_response import ListThreadsResponse
+from ...threads.types.thread import Thread
+from ...threads.types.thread_id import ThreadId
 from ...types.ascending import Ascending
 from ...types.labels import Labels
 from ...types.last_key import LastKey
 from ...types.limit import Limit
 from ..types.inbox_id import InboxId
 from .raw_client import AsyncRawThreadsClient, RawThreadsClient
-from .types.list_threads_response import ListThreadsResponse
-from .types.thread import Thread
-from .types.thread_id import ThreadId
 
 
 class ThreadsClient:

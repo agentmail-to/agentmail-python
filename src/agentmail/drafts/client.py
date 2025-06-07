@@ -4,14 +4,14 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..inboxes.drafts.types.draft import Draft
-from ..inboxes.drafts.types.draft_id import DraftId
-from ..inboxes.drafts.types.list_drafts_response import ListDraftsResponse
 from ..types.ascending import Ascending
 from ..types.labels import Labels
 from ..types.last_key import LastKey
 from ..types.limit import Limit
 from .raw_client import AsyncRawDraftsClient, RawDraftsClient
+from .types.draft import Draft
+from .types.draft_id import DraftId
+from .types.list_drafts_response import ListDraftsResponse
 
 
 class DraftsClient:

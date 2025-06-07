@@ -4,23 +4,23 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...drafts.types.draft import Draft
+from ...drafts.types.draft_bcc import DraftBcc
+from ...drafts.types.draft_cc import DraftCc
+from ...drafts.types.draft_html import DraftHtml
+from ...drafts.types.draft_id import DraftId
+from ...drafts.types.draft_labels import DraftLabels
+from ...drafts.types.draft_subject import DraftSubject
+from ...drafts.types.draft_text import DraftText
+from ...drafts.types.draft_to import DraftTo
+from ...drafts.types.list_drafts_response import ListDraftsResponse
+from ...messages.types.send_message_response import SendMessageResponse
 from ...types.ascending import Ascending
 from ...types.labels import Labels
 from ...types.last_key import LastKey
 from ...types.limit import Limit
-from ..messages.types.send_message_response import SendMessageResponse
 from ..types.inbox_id import InboxId
 from .raw_client import AsyncRawDraftsClient, RawDraftsClient
-from .types.draft import Draft
-from .types.draft_bcc import DraftBcc
-from .types.draft_cc import DraftCc
-from .types.draft_html import DraftHtml
-from .types.draft_id import DraftId
-from .types.draft_labels import DraftLabels
-from .types.draft_subject import DraftSubject
-from .types.draft_text import DraftText
-from .types.draft_to import DraftTo
-from .types.list_drafts_response import ListDraftsResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)

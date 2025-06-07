@@ -2,36 +2,3 @@
 
 # isort: skip_file
 
-from .types import (
-    ListThreadsResponse,
-    Thread,
-    ThreadAttachment,
-    ThreadAttachments,
-    ThreadEventId,
-    ThreadId,
-    ThreadItem,
-    ThreadLabels,
-    ThreadMessageCount,
-    ThreadPreview,
-    ThreadRecipients,
-    ThreadSenders,
-    ThreadSubject,
-    ThreadTimestamp,
-)
-
-__all__ = [
-    "ListThreadsResponse",
-    "Thread",
-    "ThreadAttachment",
-    "ThreadAttachments",
-    "ThreadEventId",
-    "ThreadId",
-    "ThreadItem",
-    "ThreadLabels",
-    "ThreadMessageCount",
-    "ThreadPreview",
-    "ThreadRecipients",
-    "ThreadSenders",
-    "ThreadSubject",
-    "ThreadTimestamp",
-]

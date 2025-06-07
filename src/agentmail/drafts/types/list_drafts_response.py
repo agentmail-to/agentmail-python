@@ -3,10 +3,10 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from ....types.count import Count
-from ....types.last_key import LastKey
-from ....types.limit import Limit
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...types.count import Count
+from ...types.last_key import LastKey
+from ...types.limit import Limit
 from .draft_item import DraftItem
 
 

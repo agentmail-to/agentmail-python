@@ -10,14 +10,14 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
 from ..errors.not_found_error import NotFoundError
-from ..inboxes.drafts.types.draft import Draft
-from ..inboxes.drafts.types.draft_id import DraftId
-from ..inboxes.drafts.types.list_drafts_response import ListDraftsResponse
 from ..types.ascending import Ascending
 from ..types.error_response import ErrorResponse
 from ..types.labels import Labels
 from ..types.last_key import LastKey
 from ..types.limit import Limit
+from .types.draft import Draft
+from .types.draft_id import DraftId
+from .types.list_drafts_response import ListDraftsResponse
 
 
 class RawDraftsClient:

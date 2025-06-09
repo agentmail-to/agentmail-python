@@ -12,8 +12,8 @@ from ..core.request_options import RequestOptions
 from ..errors.not_found_error import NotFoundError
 from ..errors.validation_error import ValidationError
 from ..types.error_response import ErrorResponse
-from ..types.last_key import LastKey
 from ..types.limit import Limit
+from ..types.page_token import PageToken
 from ..types.validation_error_response import ValidationErrorResponse
 from .types.inbox import Inbox
 from .types.inbox_id import InboxId
@@ -31,7 +31,7 @@ class RawInboxesClient:
         self,
         *,
         limit: typing.Optional[Limit] = None,
-        last_key: typing.Optional[LastKey] = None,
+        page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListInboxesResponse]:
         """
@@ -39,7 +39,7 @@ class RawInboxesClient:
         ----------
         limit : typing.Optional[Limit]
 
-        last_key : typing.Optional[LastKey]
+        page_token : typing.Optional[PageToken]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -53,7 +53,7 @@ class RawInboxesClient:
             method="GET",
             params={
                 "limit": limit,
-                "last_key": last_key,
+                "page_token": page_token,
             },
             request_options=request_options,
         )
@@ -189,7 +189,7 @@ class AsyncRawInboxesClient:
         self,
         *,
         limit: typing.Optional[Limit] = None,
-        last_key: typing.Optional[LastKey] = None,
+        page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListInboxesResponse]:
         """
@@ -197,7 +197,7 @@ class AsyncRawInboxesClient:
         ----------
         limit : typing.Optional[Limit]
 
-        last_key : typing.Optional[LastKey]
+        page_token : typing.Optional[PageToken]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -211,7 +211,7 @@ class AsyncRawInboxesClient:
             method="GET",
             params={
                 "limit": limit,
-                "last_key": last_key,
+                "page_token": page_token,
             },
             request_options=request_options,
         )

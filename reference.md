@@ -39,7 +39,7 @@ client.inboxes.list()
 <dl>
 <dd>
 
-**last_key:** `typing.Optional[LastKey]` 
+**page_token:** `typing.Optional[PageToken]` 
     
 </dd>
 </dl>
@@ -217,7 +217,7 @@ client.drafts.list()
 <dl>
 <dd>
 
-**last_key:** `typing.Optional[LastKey]` 
+**page_token:** `typing.Optional[PageToken]` 
     
 </dd>
 </dl>
@@ -352,7 +352,7 @@ client.inboxes.drafts.list(inbox_id='inbox_id', )
 <dl>
 <dd>
 
-**last_key:** `typing.Optional[LastKey]` 
+**page_token:** `typing.Optional[PageToken]` 
     
 </dd>
 </dl>
@@ -677,7 +677,7 @@ client.inboxes.messages.list(inbox_id='inbox_id', )
 <dl>
 <dd>
 
-**last_key:** `typing.Optional[LastKey]` 
+**page_token:** `typing.Optional[PageToken]` 
     
 </dd>
 </dl>
@@ -1125,7 +1125,7 @@ client.inboxes.threads.list(inbox_id='inbox_id', )
 <dl>
 <dd>
 
-**last_key:** `typing.Optional[LastKey]` 
+**page_token:** `typing.Optional[PageToken]` 
     
 </dd>
 </dl>
@@ -1260,7 +1260,7 @@ client.threads.list()
 <dl>
 <dd>
 
-**last_key:** `typing.Optional[LastKey]` 
+**page_token:** `typing.Optional[PageToken]` 
     
 </dd>
 </dl>
@@ -1387,7 +1387,7 @@ client.webhooks.list()
 <dl>
 <dd>
 
-**last_key:** `typing.Optional[LastKey]` 
+**page_token:** `typing.Optional[PageToken]` 
     
 </dd>
 </dl>

@@ -8,9 +8,9 @@ from .types import (
     ErrorName,
     ErrorResponse,
     Labels,
-    LastKey,
     Limit,
     OrganizationId,
+    PageToken,
     ValidationErrorResponse,
 )
 from .errors import IsTakenError, NotFoundError, ValidationError
@@ -150,7 +150,6 @@ __all__ = [
     "Inboxes",
     "IsTakenError",
     "Labels",
-    "LastKey",
     "Limit",
     "ListDraftsResponse",
     "ListMessagesResponse",
@@ -177,6 +176,7 @@ __all__ = [
     "MessageTo",
     "NotFoundError",
     "OrganizationId",
+    "PageToken",
     "ReplyToMessageRequest",
     "SendAttachment",
     "SendMessageAttachments",

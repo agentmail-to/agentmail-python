@@ -6,8 +6,8 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.ascending import Ascending
 from ..types.labels import Labels
-from ..types.last_key import LastKey
 from ..types.limit import Limit
+from ..types.page_token import PageToken
 from .raw_client import AsyncRawThreadsClient, RawThreadsClient
 from .types.list_threads_response import ListThreadsResponse
 from .types.thread import Thread
@@ -33,7 +33,7 @@ class ThreadsClient:
         self,
         *,
         limit: typing.Optional[Limit] = None,
-        last_key: typing.Optional[LastKey] = None,
+        page_token: typing.Optional[PageToken] = None,
         labels: typing.Optional[Labels] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -43,7 +43,7 @@ class ThreadsClient:
         ----------
         limit : typing.Optional[Limit]
 
-        last_key : typing.Optional[LastKey]
+        page_token : typing.Optional[PageToken]
 
         labels : typing.Optional[Labels]
 
@@ -63,7 +63,7 @@ class ThreadsClient:
         client.threads.list()
         """
         _response = self._raw_client.list(
-            limit=limit, last_key=last_key, labels=labels, ascending=ascending, request_options=request_options
+            limit=limit, page_token=page_token, labels=labels, ascending=ascending, request_options=request_options
         )
         return _response.data
 
@@ -109,7 +109,7 @@ class AsyncThreadsClient:
         self,
         *,
         limit: typing.Optional[Limit] = None,
-        last_key: typing.Optional[LastKey] = None,
+        page_token: typing.Optional[PageToken] = None,
         labels: typing.Optional[Labels] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -119,7 +119,7 @@ class AsyncThreadsClient:
         ----------
         limit : typing.Optional[Limit]
 
-        last_key : typing.Optional[LastKey]
+        page_token : typing.Optional[PageToken]
 
         labels : typing.Optional[Labels]
 
@@ -142,7 +142,7 @@ class AsyncThreadsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
-            limit=limit, last_key=last_key, labels=labels, ascending=ascending, request_options=request_options
+            limit=limit, page_token=page_token, labels=labels, ascending=ascending, request_options=request_options
         )
         return _response.data
 

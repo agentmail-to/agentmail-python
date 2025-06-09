@@ -4,8 +4,8 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.last_key import LastKey
 from ..types.limit import Limit
+from ..types.page_token import PageToken
 from .raw_client import AsyncRawWebhooksClient, RawWebhooksClient
 from .types.events import Events
 from .types.inboxes import Inboxes
@@ -37,7 +37,7 @@ class WebhooksClient:
         self,
         *,
         limit: typing.Optional[Limit] = None,
-        last_key: typing.Optional[LastKey] = None,
+        page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListWebhooksResponse:
         """
@@ -45,7 +45,7 @@ class WebhooksClient:
         ----------
         limit : typing.Optional[Limit]
 
-        last_key : typing.Optional[LastKey]
+        page_token : typing.Optional[PageToken]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -60,7 +60,7 @@ class WebhooksClient:
         client = AgentMail(api_key="YOUR_API_KEY", )
         client.webhooks.list()
         """
-        _response = self._raw_client.list(limit=limit, last_key=last_key, request_options=request_options)
+        _response = self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
         return _response.data
 
     def get(self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None) -> Webhook:
@@ -160,7 +160,7 @@ class AsyncWebhooksClient:
         self,
         *,
         limit: typing.Optional[Limit] = None,
-        last_key: typing.Optional[LastKey] = None,
+        page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListWebhooksResponse:
         """
@@ -168,7 +168,7 @@ class AsyncWebhooksClient:
         ----------
         limit : typing.Optional[Limit]
 
-        last_key : typing.Optional[LastKey]
+        page_token : typing.Optional[PageToken]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -186,7 +186,7 @@ class AsyncWebhooksClient:
             await client.webhooks.list()
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(limit=limit, last_key=last_key, request_options=request_options)
+        _response = await self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
         return _response.data
 
     async def get(self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None) -> Webhook:

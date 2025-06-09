@@ -9,8 +9,8 @@ from ...threads.types.thread import Thread
 from ...threads.types.thread_id import ThreadId
 from ...types.ascending import Ascending
 from ...types.labels import Labels
-from ...types.last_key import LastKey
 from ...types.limit import Limit
+from ...types.page_token import PageToken
 from ..types.inbox_id import InboxId
 from .raw_client import AsyncRawThreadsClient, RawThreadsClient
 
@@ -35,7 +35,7 @@ class ThreadsClient:
         inbox_id: InboxId,
         *,
         limit: typing.Optional[Limit] = None,
-        last_key: typing.Optional[LastKey] = None,
+        page_token: typing.Optional[PageToken] = None,
         labels: typing.Optional[Labels] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -47,7 +47,7 @@ class ThreadsClient:
 
         limit : typing.Optional[Limit]
 
-        last_key : typing.Optional[LastKey]
+        page_token : typing.Optional[PageToken]
 
         labels : typing.Optional[Labels]
 
@@ -69,7 +69,7 @@ class ThreadsClient:
         _response = self._raw_client.list(
             inbox_id,
             limit=limit,
-            last_key=last_key,
+            page_token=page_token,
             labels=labels,
             ascending=ascending,
             request_options=request_options,
@@ -123,7 +123,7 @@ class AsyncThreadsClient:
         inbox_id: InboxId,
         *,
         limit: typing.Optional[Limit] = None,
-        last_key: typing.Optional[LastKey] = None,
+        page_token: typing.Optional[PageToken] = None,
         labels: typing.Optional[Labels] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -135,7 +135,7 @@ class AsyncThreadsClient:
 
         limit : typing.Optional[Limit]
 
-        last_key : typing.Optional[LastKey]
+        page_token : typing.Optional[PageToken]
 
         labels : typing.Optional[Labels]
 
@@ -160,7 +160,7 @@ class AsyncThreadsClient:
         _response = await self._raw_client.list(
             inbox_id,
             limit=limit,
-            last_key=last_key,
+            page_token=page_token,
             labels=labels,
             ascending=ascending,
             request_options=request_options,

@@ -26,8 +26,8 @@ from ...messages.types.send_message_response import SendMessageResponse
 from ...types.ascending import Ascending
 from ...types.error_response import ErrorResponse
 from ...types.labels import Labels
-from ...types.last_key import LastKey
 from ...types.limit import Limit
+from ...types.page_token import PageToken
 from ...types.validation_error_response import ValidationErrorResponse
 from ..types.inbox_id import InboxId
 
@@ -44,7 +44,7 @@ class RawDraftsClient:
         inbox_id: InboxId,
         *,
         limit: typing.Optional[Limit] = None,
-        last_key: typing.Optional[LastKey] = None,
+        page_token: typing.Optional[PageToken] = None,
         labels: typing.Optional[Labels] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -56,7 +56,7 @@ class RawDraftsClient:
 
         limit : typing.Optional[Limit]
 
-        last_key : typing.Optional[LastKey]
+        page_token : typing.Optional[PageToken]
 
         labels : typing.Optional[Labels]
 
@@ -74,7 +74,7 @@ class RawDraftsClient:
             method="GET",
             params={
                 "limit": limit,
-                "last_key": last_key,
+                "page_token": page_token,
                 "labels": labels,
                 "ascending": ascending,
             },
@@ -331,7 +331,7 @@ class AsyncRawDraftsClient:
         inbox_id: InboxId,
         *,
         limit: typing.Optional[Limit] = None,
-        last_key: typing.Optional[LastKey] = None,
+        page_token: typing.Optional[PageToken] = None,
         labels: typing.Optional[Labels] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -343,7 +343,7 @@ class AsyncRawDraftsClient:
 
         limit : typing.Optional[Limit]
 
-        last_key : typing.Optional[LastKey]
+        page_token : typing.Optional[PageToken]
 
         labels : typing.Optional[Labels]
 
@@ -361,7 +361,7 @@ class AsyncRawDraftsClient:
             method="GET",
             params={
                 "limit": limit,
-                "last_key": last_key,
+                "page_token": page_token,
                 "labels": labels,
                 "ascending": ascending,
             },

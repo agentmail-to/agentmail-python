@@ -12,8 +12,8 @@ from ..core.request_options import RequestOptions
 from ..errors.not_found_error import NotFoundError
 from ..errors.validation_error import ValidationError
 from ..types.error_response import ErrorResponse
-from ..types.last_key import LastKey
 from ..types.limit import Limit
+from ..types.page_token import PageToken
 from ..types.validation_error_response import ValidationErrorResponse
 from .types.events import Events
 from .types.inboxes import Inboxes
@@ -34,7 +34,7 @@ class RawWebhooksClient:
         self,
         *,
         limit: typing.Optional[Limit] = None,
-        last_key: typing.Optional[LastKey] = None,
+        page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListWebhooksResponse]:
         """
@@ -42,7 +42,7 @@ class RawWebhooksClient:
         ----------
         limit : typing.Optional[Limit]
 
-        last_key : typing.Optional[LastKey]
+        page_token : typing.Optional[PageToken]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -56,7 +56,7 @@ class RawWebhooksClient:
             method="GET",
             params={
                 "limit": limit,
-                "last_key": last_key,
+                "page_token": page_token,
             },
             request_options=request_options,
         )
@@ -230,7 +230,7 @@ class AsyncRawWebhooksClient:
         self,
         *,
         limit: typing.Optional[Limit] = None,
-        last_key: typing.Optional[LastKey] = None,
+        page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListWebhooksResponse]:
         """
@@ -238,7 +238,7 @@ class AsyncRawWebhooksClient:
         ----------
         limit : typing.Optional[Limit]
 
-        last_key : typing.Optional[LastKey]
+        page_token : typing.Optional[PageToken]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -252,7 +252,7 @@ class AsyncRawWebhooksClient:
             method="GET",
             params={
                 "limit": limit,
-                "last_key": last_key,
+                "page_token": page_token,
             },
             request_options=request_options,
         )

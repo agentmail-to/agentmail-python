@@ -7,9 +7,9 @@ from .count import Count
 from .error_name import ErrorName
 from .error_response import ErrorResponse
 from .labels import Labels
-from .last_key import LastKey
 from .limit import Limit
 from .organization_id import OrganizationId
+from .page_token import PageToken
 from .validation_error_response import ValidationErrorResponse
 
 __all__ = [
@@ -18,8 +18,8 @@ __all__ = [
     "ErrorName",
     "ErrorResponse",
     "Labels",
-    "LastKey",
     "Limit",
     "OrganizationId",
+    "PageToken",
     "ValidationErrorResponse",
 ]

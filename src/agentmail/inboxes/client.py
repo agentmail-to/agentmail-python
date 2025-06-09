@@ -4,8 +4,8 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
-from ..types.last_key import LastKey
 from ..types.limit import Limit
+from ..types.page_token import PageToken
 from .drafts.client import AsyncDraftsClient, DraftsClient
 from .messages.client import AsyncMessagesClient, MessagesClient
 from .raw_client import AsyncRawInboxesClient, RawInboxesClient
@@ -42,7 +42,7 @@ class InboxesClient:
         self,
         *,
         limit: typing.Optional[Limit] = None,
-        last_key: typing.Optional[LastKey] = None,
+        page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListInboxesResponse:
         """
@@ -50,7 +50,7 @@ class InboxesClient:
         ----------
         limit : typing.Optional[Limit]
 
-        last_key : typing.Optional[LastKey]
+        page_token : typing.Optional[PageToken]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -65,7 +65,7 @@ class InboxesClient:
         client = AgentMail(api_key="YOUR_API_KEY", )
         client.inboxes.list()
         """
-        _response = self._raw_client.list(limit=limit, last_key=last_key, request_options=request_options)
+        _response = self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
         return _response.data
 
     def get(self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None) -> Inbox:
@@ -153,7 +153,7 @@ class AsyncInboxesClient:
         self,
         *,
         limit: typing.Optional[Limit] = None,
-        last_key: typing.Optional[LastKey] = None,
+        page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListInboxesResponse:
         """
@@ -161,7 +161,7 @@ class AsyncInboxesClient:
         ----------
         limit : typing.Optional[Limit]
 
-        last_key : typing.Optional[LastKey]
+        page_token : typing.Optional[PageToken]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -179,7 +179,7 @@ class AsyncInboxesClient:
             await client.inboxes.list()
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(limit=limit, last_key=last_key, request_options=request_options)
+        _response = await self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
         return _response.data
 
     async def get(self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None) -> Inbox:

@@ -19,8 +19,8 @@ from ...messages.types.send_message_response import SendMessageResponse
 from ...messages.types.send_message_to import SendMessageTo
 from ...types.ascending import Ascending
 from ...types.labels import Labels
-from ...types.last_key import LastKey
 from ...types.limit import Limit
+from ...types.page_token import PageToken
 from ..types.inbox_id import InboxId
 from .raw_client import AsyncRawMessagesClient, RawMessagesClient
 
@@ -48,7 +48,7 @@ class MessagesClient:
         inbox_id: InboxId,
         *,
         limit: typing.Optional[Limit] = None,
-        last_key: typing.Optional[LastKey] = None,
+        page_token: typing.Optional[PageToken] = None,
         labels: typing.Optional[Labels] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -60,7 +60,7 @@ class MessagesClient:
 
         limit : typing.Optional[Limit]
 
-        last_key : typing.Optional[LastKey]
+        page_token : typing.Optional[PageToken]
 
         labels : typing.Optional[Labels]
 
@@ -82,7 +82,7 @@ class MessagesClient:
         _response = self._raw_client.list(
             inbox_id,
             limit=limit,
-            last_key=last_key,
+            page_token=page_token,
             labels=labels,
             ascending=ascending,
             request_options=request_options,
@@ -327,7 +327,7 @@ class AsyncMessagesClient:
         inbox_id: InboxId,
         *,
         limit: typing.Optional[Limit] = None,
-        last_key: typing.Optional[LastKey] = None,
+        page_token: typing.Optional[PageToken] = None,
         labels: typing.Optional[Labels] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -339,7 +339,7 @@ class AsyncMessagesClient:
 
         limit : typing.Optional[Limit]
 
-        last_key : typing.Optional[LastKey]
+        page_token : typing.Optional[PageToken]
 
         labels : typing.Optional[Labels]
 
@@ -364,7 +364,7 @@ class AsyncMessagesClient:
         _response = await self._raw_client.list(
             inbox_id,
             limit=limit,
-            last_key=last_key,
+            page_token=page_token,
             labels=labels,
             ascending=ascending,
             request_options=request_options,

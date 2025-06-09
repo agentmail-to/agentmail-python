@@ -5,15 +5,15 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ...types.count import Count
-from ...types.last_key import LastKey
 from ...types.limit import Limit
+from ...types.page_token import PageToken
 from .webhook import Webhook
 
 
 class ListWebhooksResponse(UniversalBaseModel):
     count: Count
     limit: typing.Optional[Limit] = None
-    last_key: typing.Optional[LastKey] = None
+    next_page_token: typing.Optional[PageToken] = None
     webhooks: typing.List[Webhook] = pydantic.Field()
     """
     Webhook items. Ordered by `created_at` ascending.

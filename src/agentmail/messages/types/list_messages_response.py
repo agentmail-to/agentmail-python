@@ -5,15 +5,15 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ...types.count import Count
-from ...types.last_key import LastKey
 from ...types.limit import Limit
+from ...types.page_token import PageToken
 from .message_item import MessageItem
 
 
 class ListMessagesResponse(UniversalBaseModel):
     count: Count
     limit: typing.Optional[Limit] = None
-    last_key: typing.Optional[LastKey] = None
+    next_page_token: typing.Optional[PageToken] = None
     messages: typing.List[MessageItem] = pydantic.Field()
     """
     Message items. Ordered by `timestamp` descending.

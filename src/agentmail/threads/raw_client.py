@@ -13,8 +13,8 @@ from ..errors.not_found_error import NotFoundError
 from ..types.ascending import Ascending
 from ..types.error_response import ErrorResponse
 from ..types.labels import Labels
-from ..types.last_key import LastKey
 from ..types.limit import Limit
+from ..types.page_token import PageToken
 from .types.list_threads_response import ListThreadsResponse
 from .types.thread import Thread
 from .types.thread_id import ThreadId
@@ -28,7 +28,7 @@ class RawThreadsClient:
         self,
         *,
         limit: typing.Optional[Limit] = None,
-        last_key: typing.Optional[LastKey] = None,
+        page_token: typing.Optional[PageToken] = None,
         labels: typing.Optional[Labels] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -38,7 +38,7 @@ class RawThreadsClient:
         ----------
         limit : typing.Optional[Limit]
 
-        last_key : typing.Optional[LastKey]
+        page_token : typing.Optional[PageToken]
 
         labels : typing.Optional[Labels]
 
@@ -56,7 +56,7 @@ class RawThreadsClient:
             method="GET",
             params={
                 "limit": limit,
-                "last_key": last_key,
+                "page_token": page_token,
                 "labels": labels,
                 "ascending": ascending,
             },
@@ -143,7 +143,7 @@ class AsyncRawThreadsClient:
         self,
         *,
         limit: typing.Optional[Limit] = None,
-        last_key: typing.Optional[LastKey] = None,
+        page_token: typing.Optional[PageToken] = None,
         labels: typing.Optional[Labels] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -153,7 +153,7 @@ class AsyncRawThreadsClient:
         ----------
         limit : typing.Optional[Limit]
 
-        last_key : typing.Optional[LastKey]
+        page_token : typing.Optional[PageToken]
 
         labels : typing.Optional[Labels]
 
@@ -171,7 +171,7 @@ class AsyncRawThreadsClient:
             method="GET",
             params={
                 "limit": limit,
-                "last_key": last_key,
+                "page_token": page_token,
                 "labels": labels,
                 "ascending": ascending,
             },

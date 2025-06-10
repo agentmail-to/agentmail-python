@@ -5,8 +5,8 @@
 from .create_webhook_request import CreateWebhookRequest
 from .event_id import EventId
 from .event_type import EventType
-from .events import Events
-from .inboxes import Inboxes
+from .event_types import EventTypes
+from .inbox_ids import InboxIds
 from .list_webhooks_response import ListWebhooksResponse
 from .message_received_payload import MessageReceivedPayload
 from .svix_id import SvixId
@@ -20,8 +20,8 @@ __all__ = [
     "CreateWebhookRequest",
     "EventId",
     "EventType",
-    "Events",
-    "Inboxes",
+    "EventTypes",
+    "InboxIds",
     "ListWebhooksResponse",
     "MessageReceivedPayload",
     "SvixId",

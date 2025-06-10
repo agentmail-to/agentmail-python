@@ -2,4 +2,6 @@
 
 import typing
 
-Inboxes = typing.List[str]
+from .event_type import EventType
+
+EventTypes = typing.List[EventType]

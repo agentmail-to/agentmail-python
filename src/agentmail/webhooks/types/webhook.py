@@ -5,8 +5,8 @@ import typing
 
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .events import Events
-from .inboxes import Inboxes
+from .event_types import EventTypes
+from .inbox_ids import InboxIds
 from .url import Url
 from .webhook_id import WebhookId
 
@@ -14,11 +14,21 @@ from .webhook_id import WebhookId
 class Webhook(UniversalBaseModel):
     webhook_id: WebhookId
     url: Url
-    events: typing.Optional[Events] = None
-    inboxes: typing.Optional[Inboxes] = None
+    event_types: typing.Optional[EventTypes] = None
+    inbox_ids: typing.Optional[InboxIds] = None
     secret: str = pydantic.Field()
     """
     Secret for webhook signature verification.
+    """
+
+    enabled: bool = pydantic.Field()
+    """
+    Whether the webhook is enabled.
+    """
+
+    updated_at: dt.datetime = pydantic.Field()
+    """
+    Time at which webhook was last updated.
     """
 
     created_at: dt.datetime = pydantic.Field()

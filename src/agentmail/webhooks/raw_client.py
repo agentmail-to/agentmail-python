@@ -15,8 +15,8 @@ from ..types.error_response import ErrorResponse
 from ..types.limit import Limit
 from ..types.page_token import PageToken
 from ..types.validation_error_response import ValidationErrorResponse
-from .types.events import Events
-from .types.inboxes import Inboxes
+from .types.event_types import EventTypes
+from .types.inbox_ids import InboxIds
 from .types.list_webhooks_response import ListWebhooksResponse
 from .types.url import Url
 from .types.webhook import Webhook
@@ -125,8 +125,8 @@ class RawWebhooksClient:
         self,
         *,
         url: Url,
-        events: Events,
-        inboxes: typing.Optional[Inboxes] = OMIT,
+        event_types: EventTypes,
+        inbox_ids: typing.Optional[InboxIds] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Webhook]:
         """
@@ -134,9 +134,9 @@ class RawWebhooksClient:
         ----------
         url : Url
 
-        events : Events
+        event_types : EventTypes
 
-        inboxes : typing.Optional[Inboxes]
+        inbox_ids : typing.Optional[InboxIds]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -150,8 +150,8 @@ class RawWebhooksClient:
             method="POST",
             json={
                 "url": url,
-                "events": events,
-                "inboxes": inboxes,
+                "event_types": event_types,
+                "inbox_ids": inbox_ids,
             },
             request_options=request_options,
             omit=OMIT,
@@ -321,8 +321,8 @@ class AsyncRawWebhooksClient:
         self,
         *,
         url: Url,
-        events: Events,
-        inboxes: typing.Optional[Inboxes] = OMIT,
+        event_types: EventTypes,
+        inbox_ids: typing.Optional[InboxIds] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Webhook]:
         """
@@ -330,9 +330,9 @@ class AsyncRawWebhooksClient:
         ----------
         url : Url
 
-        events : Events
+        event_types : EventTypes
 
-        inboxes : typing.Optional[Inboxes]
+        inbox_ids : typing.Optional[InboxIds]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -346,8 +346,8 @@ class AsyncRawWebhooksClient:
             method="POST",
             json={
                 "url": url,
-                "events": events,
-                "inboxes": inboxes,
+                "event_types": event_types,
+                "inbox_ids": inbox_ids,
             },
             request_options=request_options,
             omit=OMIT,

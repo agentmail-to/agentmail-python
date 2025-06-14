@@ -16,7 +16,7 @@ class ListThreadsResponse(UniversalBaseModel):
     next_page_token: typing.Optional[PageToken] = None
     threads: typing.List[ThreadItem] = pydantic.Field()
     """
-    Thread items. Ordered by `timestamp` descending.
+    Ordered by `timestamp` descending.
     """
 
     if IS_PYDANTIC_V2:

@@ -7,14 +7,14 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ...types.count import Count
 from ...types.limit import Limit
 from ...types.page_token import PageToken
-from .inbox import Inbox
+from .context import Context
 
 
-class ListInboxesResponse(UniversalBaseModel):
+class ListContextsResponse(UniversalBaseModel):
     count: Count
     limit: typing.Optional[Limit] = None
     next_page_token: typing.Optional[PageToken] = None
-    inboxes: typing.List[Inbox] = pydantic.Field()
+    contexts: typing.List[Context] = pydantic.Field()
     """
     Ordered by `created_at` descending.
     """

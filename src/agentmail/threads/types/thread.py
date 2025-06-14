@@ -32,7 +32,7 @@ class Thread(UniversalBaseModel):
     attachments: typing.Optional[ThreadAttachments] = None
     messages: typing.List[Message] = pydantic.Field()
     """
-    Messages in thread. Ordered by `sent_at` ascending.
+    Messages in thread. Ordered by `timestamp` ascending.
     """
 
     if IS_PYDANTIC_V2:

@@ -16,7 +16,7 @@ class ListDraftsResponse(UniversalBaseModel):
     next_page_token: typing.Optional[PageToken] = None
     drafts: typing.List[DraftItem] = pydantic.Field()
     """
-    Draft items. Ordered by `updated_at` descending.
+    Ordered by `updated_at` descending.
     """
 
     if IS_PYDANTIC_V2:

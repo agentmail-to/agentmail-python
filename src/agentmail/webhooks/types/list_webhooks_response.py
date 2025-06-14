@@ -16,7 +16,7 @@ class ListWebhooksResponse(UniversalBaseModel):
     next_page_token: typing.Optional[PageToken] = None
     webhooks: typing.List[Webhook] = pydantic.Field()
     """
-    Webhook items. Ordered by `created_at` ascending.
+    Ordered by `created_at` descending.
     """
 
     if IS_PYDANTIC_V2:

@@ -5,24 +5,27 @@ import typing
 
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from .inbox_id import InboxId
+from .context_data import ContextData
+from .context_id import ContextId
+from .context_is_event import ContextIsEvent
+from .context_metadata import ContextMetadata
+from .context_type import ContextType
 
 
-class Inbox(UniversalBaseModel):
-    inbox_id: InboxId
-    display_name: str = pydantic.Field()
-    """
-    Display name: `Display Name <username@domain.com>`.
-    """
-
+class Context(UniversalBaseModel):
+    context_id: ContextId
+    type: ContextType
+    data: ContextData
+    metadata: typing.Optional[ContextMetadata] = None
+    is_event: ContextIsEvent
     updated_at: dt.datetime = pydantic.Field()
     """
-    Time at which inbox was last updated.
+    Time at which context was last updated.
     """
 
     created_at: dt.datetime = pydantic.Field()
     """
-    Time at which inbox was created.
+    Time at which context was created.
     """
 
     if IS_PYDANTIC_V2:

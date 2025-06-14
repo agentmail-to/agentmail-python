@@ -4,20 +4,17 @@ import typing
 
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
-from ...types.count import Count
-from ...types.limit import Limit
-from ...types.page_token import PageToken
-from .inbox import Inbox
+from .context_data import ContextData
+from .context_is_event import ContextIsEvent
+from .context_metadata import ContextMetadata
+from .context_type import ContextType
 
 
-class ListInboxesResponse(UniversalBaseModel):
-    count: Count
-    limit: typing.Optional[Limit] = None
-    next_page_token: typing.Optional[PageToken] = None
-    inboxes: typing.List[Inbox] = pydantic.Field()
-    """
-    Ordered by `created_at` descending.
-    """
+class CreateContextRequest(UniversalBaseModel):
+    type: ContextType
+    data: ContextData
+    metadata: typing.Optional[ContextMetadata] = None
+    is_event: ContextIsEvent
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

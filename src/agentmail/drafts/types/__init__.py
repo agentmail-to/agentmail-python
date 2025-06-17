@@ -7,15 +7,11 @@ from .draft import Draft
 from .draft_attachments import DraftAttachments
 from .draft_bcc import DraftBcc
 from .draft_cc import DraftCc
-from .draft_created_at import DraftCreatedAt
-from .draft_event_id import DraftEventId
 from .draft_html import DraftHtml
 from .draft_id import DraftId
-from .draft_in_reply_to import DraftInReplyTo
 from .draft_item import DraftItem
 from .draft_labels import DraftLabels
 from .draft_preview import DraftPreview
-from .draft_references import DraftReferences
 from .draft_subject import DraftSubject
 from .draft_text import DraftText
 from .draft_to import DraftTo
@@ -28,15 +24,11 @@ __all__ = [
     "DraftAttachments",
     "DraftBcc",
     "DraftCc",
-    "DraftCreatedAt",
-    "DraftEventId",
     "DraftHtml",
     "DraftId",
-    "DraftInReplyTo",
     "DraftItem",
     "DraftLabels",
     "DraftPreview",
-    "DraftReferences",
     "DraftSubject",
     "DraftText",
     "DraftTo",

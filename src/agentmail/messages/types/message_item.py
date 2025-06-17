@@ -11,13 +11,10 @@ from ...threads.types.thread_id import ThreadId
 from .message_attachments import MessageAttachments
 from .message_bcc import MessageBcc
 from .message_cc import MessageCc
-from .message_event_id import MessageEventId
 from .message_from import MessageFrom
 from .message_id import MessageId
-from .message_in_reply_to import MessageInReplyTo
 from .message_labels import MessageLabels
 from .message_preview import MessagePreview
-from .message_references import MessageReferences
 from .message_subject import MessageSubject
 from .message_timestamp import MessageTimestamp
 from .message_to import MessageTo
@@ -27,7 +24,6 @@ class MessageItem(UniversalBaseModel):
     inbox_id: InboxId
     thread_id: ThreadId
     message_id: MessageId
-    event_id: MessageEventId
     labels: MessageLabels
     timestamp: MessageTimestamp
     from_: typing_extensions.Annotated[MessageFrom, FieldMetadata(alias="from")]
@@ -37,8 +33,6 @@ class MessageItem(UniversalBaseModel):
     subject: typing.Optional[MessageSubject] = None
     preview: typing.Optional[MessagePreview] = None
     attachments: typing.Optional[MessageAttachments] = None
-    in_reply_to: typing.Optional[MessageInReplyTo] = None
-    references: typing.Optional[MessageReferences] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

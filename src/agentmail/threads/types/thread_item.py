@@ -6,7 +6,6 @@ import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ...inboxes.types.inbox_id import InboxId
 from .thread_attachments import ThreadAttachments
-from .thread_event_id import ThreadEventId
 from .thread_id import ThreadId
 from .thread_labels import ThreadLabels
 from .thread_message_count import ThreadMessageCount
@@ -20,15 +19,14 @@ from .thread_timestamp import ThreadTimestamp
 class ThreadItem(UniversalBaseModel):
     inbox_id: InboxId
     thread_id: ThreadId
-    event_id: ThreadEventId
     labels: ThreadLabels
     timestamp: ThreadTimestamp
     senders: ThreadSenders
     recipients: ThreadRecipients
-    message_count: ThreadMessageCount
     subject: typing.Optional[ThreadSubject] = None
     preview: typing.Optional[ThreadPreview] = None
     attachments: typing.Optional[ThreadAttachments] = None
+    message_count: ThreadMessageCount
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

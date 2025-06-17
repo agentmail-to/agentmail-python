@@ -10,7 +10,7 @@ from .attachment_filename import AttachmentFilename
 
 
 class SendAttachment(UniversalBaseModel):
-    filename: AttachmentFilename
+    filename: typing.Optional[AttachmentFilename] = None
     content_type: typing.Optional[AttachmentContentType] = None
     content: AttachmentContent
 

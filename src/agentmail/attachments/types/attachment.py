@@ -13,8 +13,8 @@ from .attachment_size import AttachmentSize
 
 class Attachment(UniversalBaseModel):
     attachment_id: AttachmentId
-    filename: AttachmentFilename
-    content_type: AttachmentContentType
+    filename: typing.Optional[AttachmentFilename] = None
+    content_type: typing.Optional[AttachmentContentType] = None
     size: AttachmentSize
     inline: AttachmentInline
 

@@ -5,7 +5,6 @@
 from .types import (
     ListThreadsResponse,
     Thread,
-    ThreadAttachment,
     ThreadAttachments,
     ThreadEventId,
     ThreadId,
@@ -22,7 +21,6 @@ from .types import (
 __all__ = [
     "ListThreadsResponse",
     "Thread",
-    "ThreadAttachment",
     "ThreadAttachments",
     "ThreadEventId",
     "ThreadId",

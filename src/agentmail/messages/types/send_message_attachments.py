@@ -2,6 +2,6 @@
 
 import typing
 
-from .send_attachment import SendAttachment
+from ...attachments.types.send_attachment import SendAttachment
 
 SendMessageAttachments = typing.List[SendAttachment]

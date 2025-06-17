@@ -2,6 +2,6 @@
 
 import typing
 
-from .thread_attachment import ThreadAttachment
+from ...attachments.types.attachment import Attachment
 
-ThreadAttachments = typing.List[ThreadAttachment]
+ThreadAttachments = typing.List[Attachment]

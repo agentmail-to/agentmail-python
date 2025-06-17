@@ -4,7 +4,6 @@
 
 from .list_threads_response import ListThreadsResponse
 from .thread import Thread
-from .thread_attachment import ThreadAttachment
 from .thread_attachments import ThreadAttachments
 from .thread_event_id import ThreadEventId
 from .thread_id import ThreadId
@@ -20,7 +19,6 @@ from .thread_timestamp import ThreadTimestamp
 __all__ = [
     "ListThreadsResponse",
     "Thread",
-    "ThreadAttachment",
     "ThreadAttachments",
     "ThreadEventId",
     "ThreadId",

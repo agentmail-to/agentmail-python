@@ -2,6 +2,7 @@
 
 import typing
 
+from ..attachments.types.attachment_id import AttachmentId
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.ascending import Ascending
@@ -89,6 +90,30 @@ class ThreadsClient:
         _response = self._raw_client.get(thread_id, request_options=request_options)
         return _response.data
 
+    def get_attachment(
+        self,
+        thread_id: ThreadId,
+        attachment_id: AttachmentId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.Iterator[bytes]:
+        """
+        Parameters
+        ----------
+        thread_id : ThreadId
+
+        attachment_id : AttachmentId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.Iterator[bytes]
+        """
+        with self._raw_client.get_attachment(thread_id, attachment_id, request_options=request_options) as r:
+            yield from r.data
+
 
 class AsyncThreadsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -170,3 +195,28 @@ class AsyncThreadsClient:
         """
         _response = await self._raw_client.get(thread_id, request_options=request_options)
         return _response.data
+
+    async def get_attachment(
+        self,
+        thread_id: ThreadId,
+        attachment_id: AttachmentId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> typing.AsyncIterator[bytes]:
+        """
+        Parameters
+        ----------
+        thread_id : ThreadId
+
+        attachment_id : AttachmentId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.AsyncIterator[bytes]
+        """
+        async with self._raw_client.get_attachment(thread_id, attachment_id, request_options=request_options) as r:
+            async for data in r.data:
+                yield data

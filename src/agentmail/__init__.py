@@ -14,7 +14,17 @@ from .types import (
     ValidationErrorResponse,
 )
 from .errors import IsTakenError, NotFoundError, ValidationError
-from . import contexts, drafts, inboxes, messages, threads, webhooks
+from . import attachments, contexts, drafts, inboxes, messages, threads, webhooks
+from .attachments import (
+    Attachment,
+    AttachmentContent,
+    AttachmentContentType,
+    AttachmentFilename,
+    AttachmentId,
+    AttachmentInline,
+    AttachmentSize,
+    SendAttachment,
+)
 from .client import AgentMail, AsyncAgentMail
 from .contexts import (
     Context,
@@ -50,13 +60,6 @@ from .drafts import (
 from .environment import AgentMailEnvironment
 from .messages import (
     Addresses,
-    Attachment,
-    AttachmentContent,
-    AttachmentContentType,
-    AttachmentFilename,
-    AttachmentId,
-    AttachmentInline,
-    AttachmentSize,
     ListMessagesResponse,
     Message,
     MessageAttachments,
@@ -77,7 +80,6 @@ from .messages import (
     MessageTimestamp,
     MessageTo,
     ReplyToMessageRequest,
-    SendAttachment,
     SendMessageAttachments,
     SendMessageBcc,
     SendMessageCc,
@@ -89,7 +91,6 @@ from .messages import (
 from .threads import (
     ListThreadsResponse,
     Thread,
-    ThreadAttachment,
     ThreadAttachments,
     ThreadEventId,
     ThreadId,
@@ -207,7 +208,6 @@ __all__ = [
     "SvixSignature",
     "SvixTimestamp",
     "Thread",
-    "ThreadAttachment",
     "ThreadAttachments",
     "ThreadEventId",
     "ThreadId",
@@ -226,6 +226,7 @@ __all__ = [
     "Webhook",
     "WebhookId",
     "__version__",
+    "attachments",
     "contexts",
     "drafts",
     "inboxes",

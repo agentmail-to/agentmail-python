@@ -4,13 +4,6 @@
 
 from .types import (
     Addresses,
-    Attachment,
-    AttachmentContent,
-    AttachmentContentType,
-    AttachmentFilename,
-    AttachmentId,
-    AttachmentInline,
-    AttachmentSize,
     ListMessagesResponse,
     Message,
     MessageAttachments,
@@ -30,7 +23,6 @@ from .types import (
     MessageTimestamp,
     MessageTo,
     ReplyToMessageRequest,
-    SendAttachment,
     SendMessageAttachments,
     SendMessageBcc,
     SendMessageCc,
@@ -43,13 +35,6 @@ from .errors import MessageRejectedError
 
 __all__ = [
     "Addresses",
-    "Attachment",
-    "AttachmentContent",
-    "AttachmentContentType",
-    "AttachmentFilename",
-    "AttachmentId",
-    "AttachmentInline",
-    "AttachmentSize",
     "ListMessagesResponse",
     "Message",
     "MessageAttachments",
@@ -70,7 +55,6 @@ __all__ = [
     "MessageTimestamp",
     "MessageTo",
     "ReplyToMessageRequest",
-    "SendAttachment",
     "SendMessageAttachments",
     "SendMessageBcc",
     "SendMessageCc",

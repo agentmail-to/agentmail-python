@@ -4,6 +4,7 @@ import contextlib
 import typing
 from json.decoder import JSONDecodeError
 
+from ...attachments.types.attachment_id import AttachmentId
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
@@ -14,7 +15,6 @@ from ...core.serialization import convert_and_respect_annotation_metadata
 from ...errors.not_found_error import NotFoundError
 from ...errors.validation_error import ValidationError
 from ...messages.errors.message_rejected_error import MessageRejectedError
-from ...messages.types.attachment_id import AttachmentId
 from ...messages.types.list_messages_response import ListMessagesResponse
 from ...messages.types.message import Message
 from ...messages.types.message_html import MessageHtml

@@ -2,9 +2,9 @@
 
 import typing
 
+from ...attachments.types.attachment_id import AttachmentId
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...messages.types.attachment_id import AttachmentId
 from ...messages.types.list_messages_response import ListMessagesResponse
 from ...messages.types.message import Message
 from ...messages.types.message_html import MessageHtml

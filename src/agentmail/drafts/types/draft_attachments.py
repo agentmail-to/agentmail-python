@@ -2,6 +2,6 @@
 
 import typing
 
-from ...messages.types.attachment import Attachment
+from ...attachments.types.attachment import Attachment
 
 DraftAttachments = typing.List[Attachment]

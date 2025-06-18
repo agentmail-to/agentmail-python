@@ -4,7 +4,8 @@ import datetime as dt
 import typing
 
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+from ...core.unchecked_base_model import UncheckedBaseModel
 from ...inboxes.types.inbox_id import InboxId
 from ...threads.types.thread_id import ThreadId
 from .draft_attachments import DraftAttachments
@@ -20,7 +21,7 @@ from .draft_to import DraftTo
 from .draft_updated_at import DraftUpdatedAt
 
 
-class Draft(UniversalBaseModel):
+class Draft(UncheckedBaseModel):
     inbox_id: InboxId
     thread_id: ThreadId
     draft_id: DraftId

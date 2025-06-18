@@ -3,7 +3,8 @@
 import typing
 
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+from ...core.unchecked_base_model import UncheckedBaseModel
 from .attachment_content_type import AttachmentContentType
 from .attachment_filename import AttachmentFilename
 from .attachment_id import AttachmentId
@@ -11,7 +12,7 @@ from .attachment_inline import AttachmentInline
 from .attachment_size import AttachmentSize
 
 
-class Attachment(UniversalBaseModel):
+class Attachment(UncheckedBaseModel):
     attachment_id: AttachmentId
     filename: typing.Optional[AttachmentFilename] = None
     content_type: typing.Optional[AttachmentContentType] = None

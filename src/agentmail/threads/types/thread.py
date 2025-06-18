@@ -4,7 +4,8 @@ import datetime as dt
 import typing
 
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+from ...core.unchecked_base_model import UncheckedBaseModel
 from ...inboxes.types.inbox_id import InboxId
 from ...messages.types.message import Message
 from .thread_attachments import ThreadAttachments
@@ -18,7 +19,7 @@ from .thread_subject import ThreadSubject
 from .thread_timestamp import ThreadTimestamp
 
 
-class Thread(UniversalBaseModel):
+class Thread(UncheckedBaseModel):
     inbox_id: InboxId
     thread_id: ThreadId
     labels: ThreadLabels

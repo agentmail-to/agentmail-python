@@ -4,14 +4,15 @@ import datetime as dt
 import typing
 
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+from ...core.unchecked_base_model import UncheckedBaseModel
 from .event_types import EventTypes
 from .inbox_ids import InboxIds
 from .url import Url
 from .webhook_id import WebhookId
 
 
-class Webhook(UniversalBaseModel):
+class Webhook(UncheckedBaseModel):
     webhook_id: WebhookId
     url: Url
     event_types: typing.Optional[EventTypes] = None

@@ -9,9 +9,9 @@ from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.jsonable_encoder import jsonable_encoder
-from ...core.pydantic_utilities import parse_obj_as
 from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
+from ...core.unchecked_base_model import construct_type
 from ...errors.not_found_error import NotFoundError
 from ...errors.validation_error import ValidationError
 from ...messages.errors.message_rejected_error import MessageRejectedError
@@ -88,7 +88,7 @@ class RawMessagesClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     ListMessagesResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=ListMessagesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -99,7 +99,7 @@ class RawMessagesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -136,7 +136,7 @@ class RawMessagesClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     Message,
-                    parse_obj_as(
+                    construct_type(
                         type_=Message,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -147,7 +147,7 @@ class RawMessagesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -202,7 +202,7 @@ class RawMessagesClient:
                             headers=dict(_response.headers),
                             body=typing.cast(
                                 ErrorResponse,
-                                parse_obj_as(
+                                construct_type(
                                     type_=ErrorResponse,  # type: ignore
                                     object_=_response.json(),
                                 ),
@@ -283,7 +283,7 @@ class RawMessagesClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     SendMessageResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=SendMessageResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -294,7 +294,7 @@ class RawMessagesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ValidationErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ValidationErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -305,7 +305,7 @@ class RawMessagesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -316,7 +316,7 @@ class RawMessagesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -392,7 +392,7 @@ class RawMessagesClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     SendMessageResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=SendMessageResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -403,7 +403,7 @@ class RawMessagesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ValidationErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ValidationErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -414,7 +414,7 @@ class RawMessagesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -425,7 +425,7 @@ class RawMessagesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -479,7 +479,7 @@ class RawMessagesClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     Message,
-                    parse_obj_as(
+                    construct_type(
                         type_=Message,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -490,7 +490,7 @@ class RawMessagesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ValidationErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ValidationErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -501,7 +501,7 @@ class RawMessagesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -562,7 +562,7 @@ class AsyncRawMessagesClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     ListMessagesResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=ListMessagesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -573,7 +573,7 @@ class AsyncRawMessagesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -610,7 +610,7 @@ class AsyncRawMessagesClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     Message,
-                    parse_obj_as(
+                    construct_type(
                         type_=Message,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -621,7 +621,7 @@ class AsyncRawMessagesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -677,7 +677,7 @@ class AsyncRawMessagesClient:
                             headers=dict(_response.headers),
                             body=typing.cast(
                                 ErrorResponse,
-                                parse_obj_as(
+                                construct_type(
                                     type_=ErrorResponse,  # type: ignore
                                     object_=_response.json(),
                                 ),
@@ -758,7 +758,7 @@ class AsyncRawMessagesClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     SendMessageResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=SendMessageResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -769,7 +769,7 @@ class AsyncRawMessagesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ValidationErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ValidationErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -780,7 +780,7 @@ class AsyncRawMessagesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -791,7 +791,7 @@ class AsyncRawMessagesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -867,7 +867,7 @@ class AsyncRawMessagesClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     SendMessageResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=SendMessageResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -878,7 +878,7 @@ class AsyncRawMessagesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ValidationErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ValidationErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -889,7 +889,7 @@ class AsyncRawMessagesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -900,7 +900,7 @@ class AsyncRawMessagesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -954,7 +954,7 @@ class AsyncRawMessagesClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     Message,
-                    parse_obj_as(
+                    construct_type(
                         type_=Message,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -965,7 +965,7 @@ class AsyncRawMessagesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ValidationErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ValidationErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -976,7 +976,7 @@ class AsyncRawMessagesClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),

@@ -3,14 +3,15 @@
 import typing
 
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+from ...core.unchecked_base_model import UncheckedBaseModel
 from ...types.count import Count
 from ...types.limit import Limit
 from ...types.page_token import PageToken
 from .message_item import MessageItem
 
 
-class ListMessagesResponse(UniversalBaseModel):
+class ListMessagesResponse(UncheckedBaseModel):
     count: Count
     limit: typing.Optional[Limit] = None
     next_page_token: typing.Optional[PageToken] = None

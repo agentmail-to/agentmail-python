@@ -4,8 +4,9 @@ import typing
 
 import pydantic
 import typing_extensions
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.serialization import FieldMetadata
+from ...core.unchecked_base_model import UncheckedBaseModel
 from ...inboxes.types.inbox_id import InboxId
 from ...threads.types.thread_id import ThreadId
 from .message_attachments import MessageAttachments
@@ -20,7 +21,7 @@ from .message_timestamp import MessageTimestamp
 from .message_to import MessageTo
 
 
-class MessageItem(UniversalBaseModel):
+class MessageItem(UncheckedBaseModel):
     inbox_id: InboxId
     thread_id: ThreadId
     message_id: MessageId

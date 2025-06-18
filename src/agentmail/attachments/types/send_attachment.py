@@ -3,13 +3,14 @@
 import typing
 
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+from ...core.unchecked_base_model import UncheckedBaseModel
 from .attachment_content import AttachmentContent
 from .attachment_content_type import AttachmentContentType
 from .attachment_filename import AttachmentFilename
 
 
-class SendAttachment(UniversalBaseModel):
+class SendAttachment(UncheckedBaseModel):
     filename: typing.Optional[AttachmentFilename] = None
     content_type: typing.Optional[AttachmentContentType] = None
     content: AttachmentContent

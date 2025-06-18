@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ..core.pydantic_utilities import IS_PYDANTIC_V2
+from ..core.unchecked_base_model import UncheckedBaseModel
 from .error_name import ErrorName
 
 
-class ValidationErrorResponse(UniversalBaseModel):
+class ValidationErrorResponse(UncheckedBaseModel):
     name: ErrorName
     errors: typing.Optional[typing.Any] = pydantic.Field(default=None)
     """

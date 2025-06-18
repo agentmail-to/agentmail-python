@@ -3,7 +3,8 @@
 import typing
 
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+from ...core.unchecked_base_model import UncheckedBaseModel
 from .draft_bcc import DraftBcc
 from .draft_cc import DraftCc
 from .draft_html import DraftHtml
@@ -13,7 +14,7 @@ from .draft_text import DraftText
 from .draft_to import DraftTo
 
 
-class CreateDraftRequest(UniversalBaseModel):
+class CreateDraftRequest(UncheckedBaseModel):
     labels: typing.Optional[DraftLabels] = None
     to: typing.Optional[DraftTo] = None
     cc: typing.Optional[DraftCc] = None

@@ -3,12 +3,13 @@
 import typing
 
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+from ...core.unchecked_base_model import UncheckedBaseModel
 from ...threads.types.thread_id import ThreadId
 from .message_id import MessageId
 
 
-class SendMessageResponse(UniversalBaseModel):
+class SendMessageResponse(UncheckedBaseModel):
     message_id: MessageId
     thread_id: ThreadId
 

@@ -4,7 +4,8 @@ import datetime as dt
 import typing
 
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+from ...core.unchecked_base_model import UncheckedBaseModel
 from .context_data import ContextData
 from .context_id import ContextId
 from .context_is_event import ContextIsEvent
@@ -12,7 +13,7 @@ from .context_metadata import ContextMetadata
 from .context_type import ContextType
 
 
-class Context(UniversalBaseModel):
+class Context(UncheckedBaseModel):
     context_id: ContextId
     type: ContextType
     data: ContextData

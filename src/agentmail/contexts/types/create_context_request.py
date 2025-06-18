@@ -3,14 +3,15 @@
 import typing
 
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+from ...core.unchecked_base_model import UncheckedBaseModel
 from .context_data import ContextData
 from .context_is_event import ContextIsEvent
 from .context_metadata import ContextMetadata
 from .context_type import ContextType
 
 
-class CreateContextRequest(UniversalBaseModel):
+class CreateContextRequest(UncheckedBaseModel):
     type: ContextType
     data: ContextData
     metadata: typing.Optional[ContextMetadata] = None

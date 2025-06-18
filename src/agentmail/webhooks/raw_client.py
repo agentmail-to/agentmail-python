@@ -7,8 +7,8 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
+from ..core.unchecked_base_model import construct_type
 from ..errors.not_found_error import NotFoundError
 from ..errors.validation_error import ValidationError
 from ..types.error_response import ErrorResponse
@@ -64,7 +64,7 @@ class RawWebhooksClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     ListWebhooksResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=ListWebhooksResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -99,7 +99,7 @@ class RawWebhooksClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     Webhook,
-                    parse_obj_as(
+                    construct_type(
                         type_=Webhook,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -110,7 +110,7 @@ class RawWebhooksClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -160,7 +160,7 @@ class RawWebhooksClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     Webhook,
-                    parse_obj_as(
+                    construct_type(
                         type_=Webhook,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -171,7 +171,7 @@ class RawWebhooksClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ValidationErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ValidationErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -210,7 +210,7 @@ class RawWebhooksClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -260,7 +260,7 @@ class AsyncRawWebhooksClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     ListWebhooksResponse,
-                    parse_obj_as(
+                    construct_type(
                         type_=ListWebhooksResponse,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -295,7 +295,7 @@ class AsyncRawWebhooksClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     Webhook,
-                    parse_obj_as(
+                    construct_type(
                         type_=Webhook,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -306,7 +306,7 @@ class AsyncRawWebhooksClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -356,7 +356,7 @@ class AsyncRawWebhooksClient:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
                     Webhook,
-                    parse_obj_as(
+                    construct_type(
                         type_=Webhook,  # type: ignore
                         object_=_response.json(),
                     ),
@@ -367,7 +367,7 @@ class AsyncRawWebhooksClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ValidationErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ValidationErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
@@ -406,7 +406,7 @@ class AsyncRawWebhooksClient:
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
-                        parse_obj_as(
+                        construct_type(
                             type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),

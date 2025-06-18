@@ -3,7 +3,8 @@
 import typing
 
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+from ...core.unchecked_base_model import UncheckedBaseModel
 from .message_html import MessageHtml
 from .message_labels import MessageLabels
 from .message_subject import MessageSubject
@@ -14,7 +15,7 @@ from .send_message_cc import SendMessageCc
 from .send_message_to import SendMessageTo
 
 
-class SendMessageRequest(UniversalBaseModel):
+class SendMessageRequest(UncheckedBaseModel):
     labels: typing.Optional[MessageLabels] = None
     to: typing.Optional[SendMessageTo] = None
     cc: typing.Optional[SendMessageCc] = None

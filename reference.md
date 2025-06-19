@@ -1057,6 +1057,14 @@ client.inboxes.messages.send(inbox_id='inbox_id', )
 <dl>
 <dd>
 
+**reply_to:** `typing.Optional[SendMessageReplyTo]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **to:** `typing.Optional[SendMessageTo]` 
     
 </dd>
@@ -1173,6 +1181,14 @@ client.inboxes.messages.reply(inbox_id='inbox_id', message_id='message_id', )
 <dd>
 
 **labels:** `typing.Optional[MessageLabels]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reply_to:** `typing.Optional[SendMessageReplyTo]` 
     
 </dd>
 </dl>

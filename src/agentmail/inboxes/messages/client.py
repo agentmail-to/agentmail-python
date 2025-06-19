@@ -15,6 +15,7 @@ from ...messages.types.message_text import MessageText
 from ...messages.types.send_message_attachments import SendMessageAttachments
 from ...messages.types.send_message_bcc import SendMessageBcc
 from ...messages.types.send_message_cc import SendMessageCc
+from ...messages.types.send_message_reply_to import SendMessageReplyTo
 from ...messages.types.send_message_response import SendMessageResponse
 from ...messages.types.send_message_to import SendMessageTo
 from ...types.ascending import Ascending
@@ -147,6 +148,7 @@ class MessagesClient:
         inbox_id: InboxId,
         *,
         labels: typing.Optional[MessageLabels] = OMIT,
+        reply_to: typing.Optional[SendMessageReplyTo] = OMIT,
         to: typing.Optional[SendMessageTo] = OMIT,
         cc: typing.Optional[SendMessageCc] = OMIT,
         bcc: typing.Optional[SendMessageBcc] = OMIT,
@@ -162,6 +164,8 @@ class MessagesClient:
         inbox_id : InboxId
 
         labels : typing.Optional[MessageLabels]
+
+        reply_to : typing.Optional[SendMessageReplyTo]
 
         to : typing.Optional[SendMessageTo]
 
@@ -193,6 +197,7 @@ class MessagesClient:
         _response = self._raw_client.send(
             inbox_id,
             labels=labels,
+            reply_to=reply_to,
             to=to,
             cc=cc,
             bcc=bcc,
@@ -210,6 +215,7 @@ class MessagesClient:
         message_id: MessageId,
         *,
         labels: typing.Optional[MessageLabels] = OMIT,
+        reply_to: typing.Optional[SendMessageReplyTo] = OMIT,
         to: typing.Optional[SendMessageTo] = OMIT,
         cc: typing.Optional[SendMessageCc] = OMIT,
         bcc: typing.Optional[SendMessageBcc] = OMIT,
@@ -226,6 +232,8 @@ class MessagesClient:
         message_id : MessageId
 
         labels : typing.Optional[MessageLabels]
+
+        reply_to : typing.Optional[SendMessageReplyTo]
 
         to : typing.Optional[SendMessageTo]
 
@@ -256,6 +264,7 @@ class MessagesClient:
             inbox_id,
             message_id,
             labels=labels,
+            reply_to=reply_to,
             to=to,
             cc=cc,
             bcc=bcc,
@@ -435,6 +444,7 @@ class AsyncMessagesClient:
         inbox_id: InboxId,
         *,
         labels: typing.Optional[MessageLabels] = OMIT,
+        reply_to: typing.Optional[SendMessageReplyTo] = OMIT,
         to: typing.Optional[SendMessageTo] = OMIT,
         cc: typing.Optional[SendMessageCc] = OMIT,
         bcc: typing.Optional[SendMessageBcc] = OMIT,
@@ -450,6 +460,8 @@ class AsyncMessagesClient:
         inbox_id : InboxId
 
         labels : typing.Optional[MessageLabels]
+
+        reply_to : typing.Optional[SendMessageReplyTo]
 
         to : typing.Optional[SendMessageTo]
 
@@ -484,6 +496,7 @@ class AsyncMessagesClient:
         _response = await self._raw_client.send(
             inbox_id,
             labels=labels,
+            reply_to=reply_to,
             to=to,
             cc=cc,
             bcc=bcc,
@@ -501,6 +514,7 @@ class AsyncMessagesClient:
         message_id: MessageId,
         *,
         labels: typing.Optional[MessageLabels] = OMIT,
+        reply_to: typing.Optional[SendMessageReplyTo] = OMIT,
         to: typing.Optional[SendMessageTo] = OMIT,
         cc: typing.Optional[SendMessageCc] = OMIT,
         bcc: typing.Optional[SendMessageBcc] = OMIT,
@@ -517,6 +531,8 @@ class AsyncMessagesClient:
         message_id : MessageId
 
         labels : typing.Optional[MessageLabels]
+
+        reply_to : typing.Optional[SendMessageReplyTo]
 
         to : typing.Optional[SendMessageTo]
 
@@ -550,6 +566,7 @@ class AsyncMessagesClient:
             inbox_id,
             message_id,
             labels=labels,
+            reply_to=reply_to,
             to=to,
             cc=cc,
             bcc=bcc,

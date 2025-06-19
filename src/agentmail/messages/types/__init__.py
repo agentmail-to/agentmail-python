@@ -22,6 +22,7 @@ from .reply_to_message_request import ReplyToMessageRequest
 from .send_message_attachments import SendMessageAttachments
 from .send_message_bcc import SendMessageBcc
 from .send_message_cc import SendMessageCc
+from .send_message_reply_to import SendMessageReplyTo
 from .send_message_request import SendMessageRequest
 from .send_message_response import SendMessageResponse
 from .send_message_to import SendMessageTo
@@ -48,6 +49,7 @@ __all__ = [
     "SendMessageAttachments",
     "SendMessageBcc",
     "SendMessageCc",
+    "SendMessageReplyTo",
     "SendMessageRequest",
     "SendMessageResponse",
     "SendMessageTo",

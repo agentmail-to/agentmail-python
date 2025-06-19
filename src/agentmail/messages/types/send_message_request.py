@@ -12,11 +12,13 @@ from .message_text import MessageText
 from .send_message_attachments import SendMessageAttachments
 from .send_message_bcc import SendMessageBcc
 from .send_message_cc import SendMessageCc
+from .send_message_reply_to import SendMessageReplyTo
 from .send_message_to import SendMessageTo
 
 
 class SendMessageRequest(UncheckedBaseModel):
     labels: typing.Optional[MessageLabels] = None
+    reply_to: typing.Optional[SendMessageReplyTo] = None
     to: typing.Optional[SendMessageTo] = None
     cc: typing.Optional[SendMessageCc] = None
     bcc: typing.Optional[SendMessageBcc] = None

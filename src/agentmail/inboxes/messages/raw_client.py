@@ -25,6 +25,7 @@ from ...messages.types.message_text import MessageText
 from ...messages.types.send_message_attachments import SendMessageAttachments
 from ...messages.types.send_message_bcc import SendMessageBcc
 from ...messages.types.send_message_cc import SendMessageCc
+from ...messages.types.send_message_reply_to import SendMessageReplyTo
 from ...messages.types.send_message_response import SendMessageResponse
 from ...messages.types.send_message_to import SendMessageTo
 from ...types.ascending import Ascending
@@ -222,6 +223,7 @@ class RawMessagesClient:
         inbox_id: InboxId,
         *,
         labels: typing.Optional[MessageLabels] = OMIT,
+        reply_to: typing.Optional[SendMessageReplyTo] = OMIT,
         to: typing.Optional[SendMessageTo] = OMIT,
         cc: typing.Optional[SendMessageCc] = OMIT,
         bcc: typing.Optional[SendMessageBcc] = OMIT,
@@ -237,6 +239,8 @@ class RawMessagesClient:
         inbox_id : InboxId
 
         labels : typing.Optional[MessageLabels]
+
+        reply_to : typing.Optional[SendMessageReplyTo]
 
         to : typing.Optional[SendMessageTo]
 
@@ -264,6 +268,9 @@ class RawMessagesClient:
             method="POST",
             json={
                 "labels": labels,
+                "reply_to": convert_and_respect_annotation_metadata(
+                    object_=reply_to, annotation=SendMessageReplyTo, direction="write"
+                ),
                 "to": convert_and_respect_annotation_metadata(object_=to, annotation=SendMessageTo, direction="write"),
                 "cc": convert_and_respect_annotation_metadata(object_=cc, annotation=SendMessageCc, direction="write"),
                 "bcc": convert_and_respect_annotation_metadata(
@@ -333,6 +340,7 @@ class RawMessagesClient:
         message_id: MessageId,
         *,
         labels: typing.Optional[MessageLabels] = OMIT,
+        reply_to: typing.Optional[SendMessageReplyTo] = OMIT,
         to: typing.Optional[SendMessageTo] = OMIT,
         cc: typing.Optional[SendMessageCc] = OMIT,
         bcc: typing.Optional[SendMessageBcc] = OMIT,
@@ -349,6 +357,8 @@ class RawMessagesClient:
         message_id : MessageId
 
         labels : typing.Optional[MessageLabels]
+
+        reply_to : typing.Optional[SendMessageReplyTo]
 
         to : typing.Optional[SendMessageTo]
 
@@ -374,6 +384,9 @@ class RawMessagesClient:
             method="POST",
             json={
                 "labels": labels,
+                "reply_to": convert_and_respect_annotation_metadata(
+                    object_=reply_to, annotation=SendMessageReplyTo, direction="write"
+                ),
                 "to": convert_and_respect_annotation_metadata(object_=to, annotation=SendMessageTo, direction="write"),
                 "cc": convert_and_respect_annotation_metadata(object_=cc, annotation=SendMessageCc, direction="write"),
                 "bcc": convert_and_respect_annotation_metadata(
@@ -697,6 +710,7 @@ class AsyncRawMessagesClient:
         inbox_id: InboxId,
         *,
         labels: typing.Optional[MessageLabels] = OMIT,
+        reply_to: typing.Optional[SendMessageReplyTo] = OMIT,
         to: typing.Optional[SendMessageTo] = OMIT,
         cc: typing.Optional[SendMessageCc] = OMIT,
         bcc: typing.Optional[SendMessageBcc] = OMIT,
@@ -712,6 +726,8 @@ class AsyncRawMessagesClient:
         inbox_id : InboxId
 
         labels : typing.Optional[MessageLabels]
+
+        reply_to : typing.Optional[SendMessageReplyTo]
 
         to : typing.Optional[SendMessageTo]
 
@@ -739,6 +755,9 @@ class AsyncRawMessagesClient:
             method="POST",
             json={
                 "labels": labels,
+                "reply_to": convert_and_respect_annotation_metadata(
+                    object_=reply_to, annotation=SendMessageReplyTo, direction="write"
+                ),
                 "to": convert_and_respect_annotation_metadata(object_=to, annotation=SendMessageTo, direction="write"),
                 "cc": convert_and_respect_annotation_metadata(object_=cc, annotation=SendMessageCc, direction="write"),
                 "bcc": convert_and_respect_annotation_metadata(
@@ -808,6 +827,7 @@ class AsyncRawMessagesClient:
         message_id: MessageId,
         *,
         labels: typing.Optional[MessageLabels] = OMIT,
+        reply_to: typing.Optional[SendMessageReplyTo] = OMIT,
         to: typing.Optional[SendMessageTo] = OMIT,
         cc: typing.Optional[SendMessageCc] = OMIT,
         bcc: typing.Optional[SendMessageBcc] = OMIT,
@@ -824,6 +844,8 @@ class AsyncRawMessagesClient:
         message_id : MessageId
 
         labels : typing.Optional[MessageLabels]
+
+        reply_to : typing.Optional[SendMessageReplyTo]
 
         to : typing.Optional[SendMessageTo]
 
@@ -849,6 +871,9 @@ class AsyncRawMessagesClient:
             method="POST",
             json={
                 "labels": labels,
+                "reply_to": convert_and_respect_annotation_metadata(
+                    object_=reply_to, annotation=SendMessageReplyTo, direction="write"
+                ),
                 "to": convert_and_respect_annotation_metadata(object_=to, annotation=SendMessageTo, direction="write"),
                 "cc": convert_and_respect_annotation_metadata(object_=cc, annotation=SendMessageCc, direction="write"),
                 "bcc": convert_and_respect_annotation_metadata(

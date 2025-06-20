@@ -14,7 +14,10 @@
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
 client.inboxes.list()
 
 ```
@@ -73,8 +76,13 @@ client.inboxes.list()
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.inboxes.get(inbox_id='inbox_id', )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.inboxes.get(
+    inbox_id="inbox_id",
+)
 
 ```
 </dd>
@@ -124,7 +132,10 @@ client.inboxes.get(inbox_id='inbox_id', )
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
 client.inboxes.create()
 
 ```
@@ -192,7 +203,10 @@ client.inboxes.create()
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
 client.contexts.list()
 
 ```
@@ -251,8 +265,13 @@ client.contexts.list()
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.contexts.get(context_id='context_id', )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.contexts.get(
+    context_id="context_id",
+)
 
 ```
 </dd>
@@ -302,9 +321,15 @@ client.contexts.get(context_id='context_id', )
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.contexts.create(type='type', data={'data': {'key': 'value'}
-}, is_event=True, )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.contexts.create(
+    type="type",
+    data={"data": {"key": "value"}},
+    is_event=True,
+)
 
 ```
 </dd>
@@ -378,8 +403,13 @@ client.contexts.create(type='type', data={'data': {'key': 'value'}
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.contexts.delete(context_id='context_id', )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.contexts.delete(
+    context_id="context_id",
+)
 
 ```
 </dd>
@@ -430,7 +460,10 @@ client.contexts.delete(context_id='context_id', )
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
 client.drafts.list()
 
 ```
@@ -505,8 +538,13 @@ client.drafts.list()
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.drafts.get(draft_id='draft_id', )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.drafts.get(
+    draft_id="draft_id",
+)
 
 ```
 </dd>
@@ -557,8 +595,13 @@ client.drafts.get(draft_id='draft_id', )
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.inboxes.drafts.list(inbox_id='inbox_id', )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.inboxes.drafts.list(
+    inbox_id="inbox_id",
+)
 
 ```
 </dd>
@@ -640,8 +683,14 @@ client.inboxes.drafts.list(inbox_id='inbox_id', )
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.inboxes.drafts.get(inbox_id='inbox_id', draft_id='draft_id', )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.inboxes.drafts.get(
+    inbox_id="inbox_id",
+    draft_id="draft_id",
+)
 
 ```
 </dd>
@@ -699,8 +748,13 @@ client.inboxes.drafts.get(inbox_id='inbox_id', draft_id='draft_id', )
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.inboxes.drafts.create(inbox_id='inbox_id', )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.inboxes.drafts.create(
+    inbox_id="inbox_id",
+)
 
 ```
 </dd>
@@ -806,8 +860,14 @@ client.inboxes.drafts.create(inbox_id='inbox_id', )
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.inboxes.drafts.send(inbox_id='inbox_id', draft_id='draft_id', )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.inboxes.drafts.send(
+    inbox_id="inbox_id",
+    draft_id="draft_id",
+)
 
 ```
 </dd>
@@ -882,8 +942,13 @@ client.inboxes.drafts.send(inbox_id='inbox_id', draft_id='draft_id', )
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.inboxes.messages.list(inbox_id='inbox_id', )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.inboxes.messages.list(
+    inbox_id="inbox_id",
+)
 
 ```
 </dd>
@@ -965,8 +1030,14 @@ client.inboxes.messages.list(inbox_id='inbox_id', )
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.inboxes.messages.get(inbox_id='inbox_id', message_id='message_id', )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.inboxes.messages.get(
+    inbox_id="inbox_id",
+    message_id="message_id",
+)
 
 ```
 </dd>
@@ -1024,8 +1095,13 @@ client.inboxes.messages.get(inbox_id='inbox_id', message_id='message_id', )
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.inboxes.messages.send(inbox_id='inbox_id', )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.inboxes.messages.send(
+    inbox_id="inbox_id",
+)
 
 ```
 </dd>
@@ -1147,8 +1223,14 @@ client.inboxes.messages.send(inbox_id='inbox_id', )
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.inboxes.messages.reply(inbox_id='inbox_id', message_id='message_id', )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.inboxes.messages.reply(
+    inbox_id="inbox_id",
+    message_id="message_id",
+)
 
 ```
 </dd>
@@ -1270,8 +1352,14 @@ client.inboxes.messages.reply(inbox_id='inbox_id', message_id='message_id', )
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.inboxes.messages.update(inbox_id='inbox_id', message_id='message_id', )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.inboxes.messages.update(
+    inbox_id="inbox_id",
+    message_id="message_id",
+)
 
 ```
 </dd>
@@ -1346,8 +1434,13 @@ client.inboxes.messages.update(inbox_id='inbox_id', message_id='message_id', )
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.inboxes.threads.list(inbox_id='inbox_id', )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.inboxes.threads.list(
+    inbox_id="inbox_id",
+)
 
 ```
 </dd>
@@ -1429,8 +1522,14 @@ client.inboxes.threads.list(inbox_id='inbox_id', )
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.inboxes.threads.get(inbox_id='inbox_id', thread_id='thread_id', )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.inboxes.threads.get(
+    inbox_id="inbox_id",
+    thread_id="thread_id",
+)
 
 ```
 </dd>
@@ -1489,7 +1588,10 @@ client.inboxes.threads.get(inbox_id='inbox_id', thread_id='thread_id', )
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
 client.threads.list()
 
 ```
@@ -1564,8 +1666,13 @@ client.threads.list()
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.threads.get(thread_id='thread_id', )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.threads.get(
+    thread_id="thread_id",
+)
 
 ```
 </dd>
@@ -1616,7 +1723,10 @@ client.threads.get(thread_id='thread_id', )
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
 client.webhooks.list()
 
 ```
@@ -1675,8 +1785,13 @@ client.webhooks.list()
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.webhooks.get(webhook_id='webhook_id', )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.webhooks.get(
+    webhook_id="webhook_id",
+)
 
 ```
 </dd>
@@ -1726,8 +1841,14 @@ client.webhooks.get(webhook_id='webhook_id', )
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.webhooks.create(url='url', event_types=["message.received", "message.received"], )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.webhooks.create(
+    url="url",
+    event_types=["message.received", "message.received"],
+)
 
 ```
 </dd>
@@ -1793,8 +1914,13 @@ client.webhooks.create(url='url', event_types=["message.received", "message.rece
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.webhooks.delete(webhook_id='webhook_id', )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.webhooks.delete(
+    webhook_id="webhook_id",
+)
 
 ```
 </dd>

@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
+from .client_id import ClientId
 from .event_types import EventTypes
 from .inbox_ids import InboxIds
 from .url import Url
@@ -14,6 +15,7 @@ class CreateWebhookRequest(UncheckedBaseModel):
     url: Url
     event_types: EventTypes
     inbox_ids: typing.Optional[InboxIds] = None
+    client_id: typing.Optional[ClientId] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

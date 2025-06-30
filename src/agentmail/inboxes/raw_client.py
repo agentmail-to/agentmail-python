@@ -15,6 +15,7 @@ from ..types.error_response import ErrorResponse
 from ..types.limit import Limit
 from ..types.page_token import PageToken
 from ..types.validation_error_response import ValidationErrorResponse
+from .types.client_id import ClientId
 from .types.inbox import Inbox
 from .types.inbox_id import InboxId
 from .types.list_inboxes_response import ListInboxesResponse
@@ -122,6 +123,7 @@ class RawInboxesClient:
         username: typing.Optional[str] = OMIT,
         domain: typing.Optional[str] = OMIT,
         display_name: typing.Optional[str] = OMIT,
+        client_id: typing.Optional[ClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Inbox]:
         """
@@ -135,6 +137,8 @@ class RawInboxesClient:
 
         display_name : typing.Optional[str]
             Display name: `Display Name <username@domain.com>`. Defaults to `AgentMail`. Pass empty string to omit.
+
+        client_id : typing.Optional[ClientId]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -150,6 +154,7 @@ class RawInboxesClient:
                 "username": username,
                 "domain": domain,
                 "display_name": display_name,
+                "client_id": client_id,
             },
             request_options=request_options,
             omit=OMIT,
@@ -282,6 +287,7 @@ class AsyncRawInboxesClient:
         username: typing.Optional[str] = OMIT,
         domain: typing.Optional[str] = OMIT,
         display_name: typing.Optional[str] = OMIT,
+        client_id: typing.Optional[ClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Inbox]:
         """
@@ -295,6 +301,8 @@ class AsyncRawInboxesClient:
 
         display_name : typing.Optional[str]
             Display name: `Display Name <username@domain.com>`. Defaults to `AgentMail`. Pass empty string to omit.
+
+        client_id : typing.Optional[ClientId]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -310,6 +318,7 @@ class AsyncRawInboxesClient:
                 "username": username,
                 "domain": domain,
                 "display_name": display_name,
+                "client_id": client_id,
             },
             request_options=request_options,
             omit=OMIT,

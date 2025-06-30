@@ -9,6 +9,7 @@ from .draft_bcc import DraftBcc
 from .draft_cc import DraftCc
 from .draft_html import DraftHtml
 from .draft_labels import DraftLabels
+from .draft_reply_to import DraftReplyTo
 from .draft_subject import DraftSubject
 from .draft_text import DraftText
 from .draft_to import DraftTo
@@ -16,6 +17,7 @@ from .draft_to import DraftTo
 
 class CreateDraftRequest(UncheckedBaseModel):
     labels: typing.Optional[DraftLabels] = None
+    reply_to: typing.Optional[DraftReplyTo] = None
     to: typing.Optional[DraftTo] = None
     cc: typing.Optional[DraftCc] = None
     bcc: typing.Optional[DraftBcc] = None

@@ -15,6 +15,7 @@ from ..types.error_response import ErrorResponse
 from ..types.limit import Limit
 from ..types.page_token import PageToken
 from ..types.validation_error_response import ValidationErrorResponse
+from .types.client_id import ClientId
 from .types.event_types import EventTypes
 from .types.inbox_ids import InboxIds
 from .types.list_webhooks_response import ListWebhooksResponse
@@ -127,6 +128,7 @@ class RawWebhooksClient:
         url: Url,
         event_types: EventTypes,
         inbox_ids: typing.Optional[InboxIds] = OMIT,
+        client_id: typing.Optional[ClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Webhook]:
         """
@@ -137,6 +139,8 @@ class RawWebhooksClient:
         event_types : EventTypes
 
         inbox_ids : typing.Optional[InboxIds]
+
+        client_id : typing.Optional[ClientId]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -152,6 +156,7 @@ class RawWebhooksClient:
                 "url": url,
                 "event_types": event_types,
                 "inbox_ids": inbox_ids,
+                "client_id": client_id,
             },
             request_options=request_options,
             omit=OMIT,
@@ -323,6 +328,7 @@ class AsyncRawWebhooksClient:
         url: Url,
         event_types: EventTypes,
         inbox_ids: typing.Optional[InboxIds] = OMIT,
+        client_id: typing.Optional[ClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Webhook]:
         """
@@ -333,6 +339,8 @@ class AsyncRawWebhooksClient:
         event_types : EventTypes
 
         inbox_ids : typing.Optional[InboxIds]
+
+        client_id : typing.Optional[ClientId]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -348,6 +356,7 @@ class AsyncRawWebhooksClient:
                 "url": url,
                 "event_types": event_types,
                 "inbox_ids": inbox_ids,
+                "client_id": client_id,
             },
             request_options=request_options,
             omit=OMIT,

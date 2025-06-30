@@ -2,9 +2,10 @@
 
 # isort: skip_file
 
+from .client_id import ClientId
 from .create_inbox_request import CreateInboxRequest
 from .inbox import Inbox
 from .inbox_id import InboxId
 from .list_inboxes_response import ListInboxesResponse
 
-__all__ = ["CreateInboxRequest", "Inbox", "InboxId", "ListInboxesResponse"]
+__all__ = ["ClientId", "CreateInboxRequest", "Inbox", "InboxId", "ListInboxesResponse"]

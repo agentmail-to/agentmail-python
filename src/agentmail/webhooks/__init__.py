@@ -3,6 +3,7 @@
 # isort: skip_file
 
 from .types import (
+    ClientId,
     CreateWebhookRequest,
     EventId,
     EventType,
@@ -19,6 +20,7 @@ from .types import (
 )
 
 __all__ = [
+    "ClientId",
     "CreateWebhookRequest",
     "EventId",
     "EventType",

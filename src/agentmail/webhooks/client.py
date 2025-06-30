@@ -7,6 +7,7 @@ from ..core.request_options import RequestOptions
 from ..types.limit import Limit
 from ..types.page_token import PageToken
 from .raw_client import AsyncRawWebhooksClient, RawWebhooksClient
+from .types.client_id import ClientId
 from .types.event_types import EventTypes
 from .types.inbox_ids import InboxIds
 from .types.list_webhooks_response import ListWebhooksResponse
@@ -91,6 +92,7 @@ class WebhooksClient:
         url: Url,
         event_types: EventTypes,
         inbox_ids: typing.Optional[InboxIds] = OMIT,
+        client_id: typing.Optional[ClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Webhook:
         """
@@ -101,6 +103,8 @@ class WebhooksClient:
         event_types : EventTypes
 
         inbox_ids : typing.Optional[InboxIds]
+
+        client_id : typing.Optional[ClientId]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -116,7 +120,7 @@ class WebhooksClient:
         client.webhooks.create(url='url', event_types=["message.received", "message.received"], )
         """
         _response = self._raw_client.create(
-            url=url, event_types=event_types, inbox_ids=inbox_ids, request_options=request_options
+            url=url, event_types=event_types, inbox_ids=inbox_ids, client_id=client_id, request_options=request_options
         )
         return _response.data
 
@@ -222,6 +226,7 @@ class AsyncWebhooksClient:
         url: Url,
         event_types: EventTypes,
         inbox_ids: typing.Optional[InboxIds] = OMIT,
+        client_id: typing.Optional[ClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Webhook:
         """
@@ -232,6 +237,8 @@ class AsyncWebhooksClient:
         event_types : EventTypes
 
         inbox_ids : typing.Optional[InboxIds]
+
+        client_id : typing.Optional[ClientId]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -250,7 +257,7 @@ class AsyncWebhooksClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
-            url=url, event_types=event_types, inbox_ids=inbox_ids, request_options=request_options
+            url=url, event_types=event_types, inbox_ids=inbox_ids, client_id=client_id, request_options=request_options
         )
         return _response.data
 

@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
+from .client_id import ClientId
 
 
 class CreateInboxRequest(UncheckedBaseModel):
@@ -22,6 +23,8 @@ class CreateInboxRequest(UncheckedBaseModel):
     """
     Display name: `Display Name <username@domain.com>`. Defaults to `AgentMail`. Pass empty string to omit.
     """
+
+    client_id: typing.Optional[ClientId] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

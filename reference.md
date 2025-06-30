@@ -165,6 +165,14 @@ client.inboxes.create()
 <dl>
 <dd>
 
+**client_id:** `typing.Optional[ClientId]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -725,6 +733,14 @@ client.inboxes.drafts.create(inbox_id='inbox_id', )
 <dd>
 
 **labels:** `typing.Optional[DraftLabels]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reply_to:** `typing.Optional[DraftReplyTo]` 
     
 </dd>
 </dl>
@@ -1760,6 +1776,14 @@ client.webhooks.create(url='url', event_types=["message.received", "message.rece
 <dd>
 
 **inbox_ids:** `typing.Optional[InboxIds]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_id:** `typing.Optional[ClientId]` 
     
 </dd>
 </dl>

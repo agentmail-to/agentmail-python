@@ -47,6 +47,7 @@ from .drafts import (
     DraftItem,
     DraftLabels,
     DraftPreview,
+    DraftReplyTo,
     DraftSubject,
     DraftText,
     DraftTo,
@@ -98,6 +99,7 @@ from .threads import (
 )
 from .version import __version__
 from .webhooks import (
+    ClientId,
     CreateWebhookRequest,
     EventId,
     EventType,
@@ -126,6 +128,7 @@ __all__ = [
     "AttachmentId",
     "AttachmentInline",
     "AttachmentSize",
+    "ClientId",
     "Context",
     "ContextData",
     "ContextId",
@@ -145,6 +148,7 @@ __all__ = [
     "DraftItem",
     "DraftLabels",
     "DraftPreview",
+    "DraftReplyTo",
     "DraftSubject",
     "DraftText",
     "DraftTo",

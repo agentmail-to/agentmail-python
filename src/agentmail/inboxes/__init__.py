@@ -2,7 +2,7 @@
 
 # isort: skip_file
 
-from .types import CreateInboxRequest, Inbox, InboxId, ListInboxesResponse
+from .types import ClientId, CreateInboxRequest, Inbox, InboxId, ListInboxesResponse
 from . import drafts, messages, threads
 
-__all__ = ["CreateInboxRequest", "Inbox", "InboxId", "ListInboxesResponse", "drafts", "messages", "threads"]
+__all__ = ["ClientId", "CreateInboxRequest", "Inbox", "InboxId", "ListInboxesResponse", "drafts", "messages", "threads"]

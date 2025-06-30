@@ -10,6 +10,7 @@ from .drafts.client import AsyncDraftsClient, DraftsClient
 from .messages.client import AsyncMessagesClient, MessagesClient
 from .raw_client import AsyncRawInboxesClient, RawInboxesClient
 from .threads.client import AsyncThreadsClient, ThreadsClient
+from .types.client_id import ClientId
 from .types.inbox import Inbox
 from .types.inbox_id import InboxId
 from .types.list_inboxes_response import ListInboxesResponse
@@ -96,6 +97,7 @@ class InboxesClient:
         username: typing.Optional[str] = OMIT,
         domain: typing.Optional[str] = OMIT,
         display_name: typing.Optional[str] = OMIT,
+        client_id: typing.Optional[ClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Inbox:
         """
@@ -109,6 +111,8 @@ class InboxesClient:
 
         display_name : typing.Optional[str]
             Display name: `Display Name <username@domain.com>`. Defaults to `AgentMail`. Pass empty string to omit.
+
+        client_id : typing.Optional[ClientId]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -124,7 +128,11 @@ class InboxesClient:
         client.inboxes.create()
         """
         _response = self._raw_client.create(
-            username=username, domain=domain, display_name=display_name, request_options=request_options
+            username=username,
+            domain=domain,
+            display_name=display_name,
+            client_id=client_id,
+            request_options=request_options,
         )
         return _response.data
 
@@ -213,6 +221,7 @@ class AsyncInboxesClient:
         username: typing.Optional[str] = OMIT,
         domain: typing.Optional[str] = OMIT,
         display_name: typing.Optional[str] = OMIT,
+        client_id: typing.Optional[ClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Inbox:
         """
@@ -226,6 +235,8 @@ class AsyncInboxesClient:
 
         display_name : typing.Optional[str]
             Display name: `Display Name <username@domain.com>`. Defaults to `AgentMail`. Pass empty string to omit.
+
+        client_id : typing.Optional[ClientId]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -244,6 +255,10 @@ class AsyncInboxesClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
-            username=username, domain=domain, display_name=display_name, request_options=request_options
+            username=username,
+            domain=domain,
+            display_name=display_name,
+            client_id=client_id,
+            request_options=request_options,
         )
         return _response.data

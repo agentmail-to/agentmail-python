@@ -15,6 +15,7 @@ from .draft_html import DraftHtml
 from .draft_id import DraftId
 from .draft_labels import DraftLabels
 from .draft_preview import DraftPreview
+from .draft_reply_to import DraftReplyTo
 from .draft_subject import DraftSubject
 from .draft_text import DraftText
 from .draft_to import DraftTo
@@ -26,11 +27,7 @@ class Draft(UncheckedBaseModel):
     thread_id: ThreadId
     draft_id: DraftId
     labels: DraftLabels
-    reply_to: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
-    """
-    Addresses of reply-to recipient. In format `username@domain.com` or `Display Name <username@domain.com>`.
-    """
-
+    reply_to: typing.Optional[DraftReplyTo] = None
     to: typing.Optional[DraftTo] = None
     cc: typing.Optional[DraftCc] = None
     bcc: typing.Optional[DraftBcc] = None

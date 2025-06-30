@@ -33,7 +33,7 @@ class Message(UncheckedBaseModel):
     from_: typing_extensions.Annotated[MessageFrom, FieldMetadata(alias="from")]
     reply_to: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
-    Addresses of reply-to recipient. In format `username@domain.com` or `Display Name <username@domain.com>`.
+    Reply-to addresses. In format `username@domain.com` or `Display Name <username@domain.com>`.
     """
 
     to: MessageTo

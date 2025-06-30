@@ -2,6 +2,7 @@
 
 # isort: skip_file
 
+from .client_id import ClientId
 from .create_webhook_request import CreateWebhookRequest
 from .event_id import EventId
 from .event_type import EventType
@@ -17,6 +18,7 @@ from .webhook import Webhook
 from .webhook_id import WebhookId
 
 __all__ = [
+    "ClientId",
     "CreateWebhookRequest",
     "EventId",
     "EventType",

@@ -10,6 +10,7 @@ from ...drafts.types.draft_cc import DraftCc
 from ...drafts.types.draft_html import DraftHtml
 from ...drafts.types.draft_id import DraftId
 from ...drafts.types.draft_labels import DraftLabels
+from ...drafts.types.draft_reply_to import DraftReplyTo
 from ...drafts.types.draft_subject import DraftSubject
 from ...drafts.types.draft_text import DraftText
 from ...drafts.types.draft_to import DraftTo
@@ -118,6 +119,7 @@ class DraftsClient:
         inbox_id: InboxId,
         *,
         labels: typing.Optional[DraftLabels] = OMIT,
+        reply_to: typing.Optional[DraftReplyTo] = OMIT,
         to: typing.Optional[DraftTo] = OMIT,
         cc: typing.Optional[DraftCc] = OMIT,
         bcc: typing.Optional[DraftBcc] = OMIT,
@@ -132,6 +134,8 @@ class DraftsClient:
         inbox_id : InboxId
 
         labels : typing.Optional[DraftLabels]
+
+        reply_to : typing.Optional[DraftReplyTo]
 
         to : typing.Optional[DraftTo]
 
@@ -161,6 +165,7 @@ class DraftsClient:
         _response = self._raw_client.create(
             inbox_id,
             labels=labels,
+            reply_to=reply_to,
             to=to,
             cc=cc,
             bcc=bcc,
@@ -310,6 +315,7 @@ class AsyncDraftsClient:
         inbox_id: InboxId,
         *,
         labels: typing.Optional[DraftLabels] = OMIT,
+        reply_to: typing.Optional[DraftReplyTo] = OMIT,
         to: typing.Optional[DraftTo] = OMIT,
         cc: typing.Optional[DraftCc] = OMIT,
         bcc: typing.Optional[DraftBcc] = OMIT,
@@ -324,6 +330,8 @@ class AsyncDraftsClient:
         inbox_id : InboxId
 
         labels : typing.Optional[DraftLabels]
+
+        reply_to : typing.Optional[DraftReplyTo]
 
         to : typing.Optional[DraftTo]
 
@@ -356,6 +364,7 @@ class AsyncDraftsClient:
         _response = await self._raw_client.create(
             inbox_id,
             labels=labels,
+            reply_to=reply_to,
             to=to,
             cc=cc,
             bcc=bcc,

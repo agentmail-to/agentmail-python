@@ -15,6 +15,7 @@ from ...drafts.types.draft_cc import DraftCc
 from ...drafts.types.draft_html import DraftHtml
 from ...drafts.types.draft_id import DraftId
 from ...drafts.types.draft_labels import DraftLabels
+from ...drafts.types.draft_reply_to import DraftReplyTo
 from ...drafts.types.draft_subject import DraftSubject
 from ...drafts.types.draft_text import DraftText
 from ...drafts.types.draft_to import DraftTo
@@ -159,6 +160,7 @@ class RawDraftsClient:
         inbox_id: InboxId,
         *,
         labels: typing.Optional[DraftLabels] = OMIT,
+        reply_to: typing.Optional[DraftReplyTo] = OMIT,
         to: typing.Optional[DraftTo] = OMIT,
         cc: typing.Optional[DraftCc] = OMIT,
         bcc: typing.Optional[DraftBcc] = OMIT,
@@ -173,6 +175,8 @@ class RawDraftsClient:
         inbox_id : InboxId
 
         labels : typing.Optional[DraftLabels]
+
+        reply_to : typing.Optional[DraftReplyTo]
 
         to : typing.Optional[DraftTo]
 
@@ -198,6 +202,7 @@ class RawDraftsClient:
             method="POST",
             json={
                 "labels": labels,
+                "reply_to": reply_to,
                 "to": to,
                 "cc": cc,
                 "bcc": bcc,
@@ -446,6 +451,7 @@ class AsyncRawDraftsClient:
         inbox_id: InboxId,
         *,
         labels: typing.Optional[DraftLabels] = OMIT,
+        reply_to: typing.Optional[DraftReplyTo] = OMIT,
         to: typing.Optional[DraftTo] = OMIT,
         cc: typing.Optional[DraftCc] = OMIT,
         bcc: typing.Optional[DraftBcc] = OMIT,
@@ -460,6 +466,8 @@ class AsyncRawDraftsClient:
         inbox_id : InboxId
 
         labels : typing.Optional[DraftLabels]
+
+        reply_to : typing.Optional[DraftReplyTo]
 
         to : typing.Optional[DraftTo]
 
@@ -485,6 +493,7 @@ class AsyncRawDraftsClient:
             method="POST",
             json={
                 "labels": labels,
+                "reply_to": reply_to,
                 "to": to,
                 "cc": cc,
                 "bcc": bcc,

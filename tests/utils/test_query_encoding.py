@@ -3,6 +3,9 @@
 
 from agentmail.core.query_encoder import encode_query
 
+def test_query_encoding_simple_list() -> None:
+    assert encode_query({"hello": ["world", "today"]}) == [("hello", '["world", "today"]')]
+
 
 def test_query_encoding_deep_objects() -> None:
     assert encode_query({"hello world": "hello world"}) == [("hello world", "hello world")]

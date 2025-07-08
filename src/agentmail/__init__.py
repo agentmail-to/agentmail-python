@@ -14,7 +14,7 @@ from .types import (
     ValidationErrorResponse,
 )
 from .errors import IsTakenError, NotFoundError, ValidationError
-from . import attachments, contexts, drafts, inboxes, messages, threads, webhooks
+from . import attachments, contexts, credentials, drafts, inboxes, messages, threads, webhooks
 from .attachments import (
     Attachment,
     AttachmentContent,
@@ -35,6 +35,15 @@ from .contexts import (
     ContextType,
     CreateContextRequest,
     ListContextsResponse,
+)
+from .credentials import (
+    CreateCredentialResponse,
+    CreatedAt,
+    Credential,
+    CredentialId,
+    ListCredentialsResponse,
+    SmtpUsername,
+    UpdatedAt,
 )
 from .drafts import (
     CreateDraftRequest,
@@ -137,8 +146,12 @@ __all__ = [
     "ContextType",
     "Count",
     "CreateContextRequest",
+    "CreateCredentialResponse",
     "CreateDraftRequest",
     "CreateWebhookRequest",
+    "CreatedAt",
+    "Credential",
+    "CredentialId",
     "Draft",
     "DraftAttachments",
     "DraftBcc",
@@ -163,6 +176,7 @@ __all__ = [
     "Labels",
     "Limit",
     "ListContextsResponse",
+    "ListCredentialsResponse",
     "ListDraftsResponse",
     "ListMessagesResponse",
     "ListThreadsResponse",
@@ -195,6 +209,7 @@ __all__ = [
     "SendMessageRequest",
     "SendMessageResponse",
     "SendMessageTo",
+    "SmtpUsername",
     "SvixId",
     "SvixSignature",
     "SvixTimestamp",
@@ -210,6 +225,7 @@ __all__ = [
     "ThreadSubject",
     "ThreadTimestamp",
     "UpdateMessageRequest",
+    "UpdatedAt",
     "Url",
     "ValidationError",
     "ValidationErrorResponse",
@@ -218,6 +234,7 @@ __all__ = [
     "__version__",
     "attachments",
     "contexts",
+    "credentials",
     "drafts",
     "inboxes",
     "messages",

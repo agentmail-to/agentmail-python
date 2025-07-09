@@ -423,8 +423,8 @@ client.contexts.delete(context_id='context_id', )
 </dl>
 </details>
 
-## Credentials
-<details><summary><code>client.credentials.<a href="src/agentmail/credentials/client.py">list</a>(...)</code></summary>
+## Domains
+<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -439,7 +439,7 @@ client.contexts.delete(context_id='context_id', )
 ```python
 from agentmail import AgentMail
 client = AgentMail(api_key="YOUR_API_KEY", )
-client.credentials.list()
+client.domains.list()
 
 ```
 </dd>
@@ -483,7 +483,7 @@ client.credentials.list()
 </dl>
 </details>
 
-<details><summary><code>client.credentials.<a href="src/agentmail/credentials/client.py">get</a>(...)</code></summary>
+<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -498,7 +498,7 @@ client.credentials.list()
 ```python
 from agentmail import AgentMail
 client = AgentMail(api_key="YOUR_API_KEY", )
-client.credentials.get(credential_id='credential_id', )
+client.domains.get(domain=' your-domain.com', )
 
 ```
 </dd>
@@ -514,7 +514,7 @@ client.credentials.get(credential_id='credential_id', )
 <dl>
 <dd>
 
-**credential_id:** `CredentialId` 
+**domain:** `DomainId` 
     
 </dd>
 </dl>
@@ -534,7 +534,7 @@ client.credentials.get(credential_id='credential_id', )
 </dl>
 </details>
 
-<details><summary><code>client.credentials.<a href="src/agentmail/credentials/client.py">create</a>()</code></summary>
+<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">create</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -549,7 +549,7 @@ client.credentials.get(credential_id='credential_id', )
 ```python
 from agentmail import AgentMail
 client = AgentMail(api_key="YOUR_API_KEY", )
-client.credentials.create()
+client.domains.create(domain='your-domain.com', )
 
 ```
 </dd>
@@ -561,6 +561,22 @@ client.credentials.create()
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**domain:** `DomainName` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**feedback_enabled:** `typing.Optional[bool]` — Whether to forward bounce and complaint notifications to your domain.
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -577,7 +593,7 @@ client.credentials.create()
 </dl>
 </details>
 
-<details><summary><code>client.credentials.<a href="src/agentmail/credentials/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -592,7 +608,7 @@ client.credentials.create()
 ```python
 from agentmail import AgentMail
 client = AgentMail(api_key="YOUR_API_KEY", )
-client.credentials.delete(credential_id='credential_id', )
+client.domains.delete(domain='dom_12345', )
 
 ```
 </dd>
@@ -608,7 +624,7 @@ client.credentials.delete(credential_id='credential_id', )
 <dl>
 <dd>
 
-**credential_id:** `CredentialId` 
+**domain:** `DomainId` 
     
 </dd>
 </dl>

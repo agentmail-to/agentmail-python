@@ -6,25 +6,29 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.limit import Limit
 from ..types.page_token import PageToken
-from .raw_client import AsyncRawCredentialsClient, RawCredentialsClient
-from .types.create_credential_response import CreateCredentialResponse
-from .types.credential import Credential
-from .types.credential_id import CredentialId
-from .types.list_credentials_response import ListCredentialsResponse
+from .raw_client import AsyncRawDomainsClient, RawDomainsClient
+from .types.create_domain_response import CreateDomainResponse
+from .types.domain import Domain
+from .types.domain_id import DomainId
+from .types.domain_name import DomainName
+from .types.list_domains_response import ListDomainsResponse
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
-class CredentialsClient:
+class DomainsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawCredentialsClient(client_wrapper=client_wrapper)
+        self._raw_client = RawDomainsClient(client_wrapper=client_wrapper)
 
     @property
-    def with_raw_response(self) -> RawCredentialsClient:
+    def with_raw_response(self) -> RawDomainsClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        RawCredentialsClient
+        RawDomainsClient
         """
         return self._raw_client
 
@@ -34,7 +38,7 @@ class CredentialsClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListCredentialsResponse:
+    ) -> ListDomainsResponse:
         """
         Parameters
         ----------
@@ -47,66 +51,77 @@ class CredentialsClient:
 
         Returns
         -------
-        ListCredentialsResponse
+        ListDomainsResponse
 
         Examples
         --------
         from agentmail import AgentMail
         client = AgentMail(api_key="YOUR_API_KEY", )
-        client.credentials.list()
+        client.domains.list()
         """
         _response = self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
         return _response.data
 
-    def get(
-        self, credential_id: CredentialId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> Credential:
+    def get(self, domain: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> Domain:
         """
         Parameters
         ----------
-        credential_id : CredentialId
+        domain : DomainId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Credential
+        Domain
 
         Examples
         --------
         from agentmail import AgentMail
         client = AgentMail(api_key="YOUR_API_KEY", )
-        client.credentials.get(credential_id='credential_id', )
+        client.domains.get(domain=' your-domain.com', )
         """
-        _response = self._raw_client.get(credential_id, request_options=request_options)
+        _response = self._raw_client.get(domain, request_options=request_options)
         return _response.data
 
-    def create(self, *, request_options: typing.Optional[RequestOptions] = None) -> CreateCredentialResponse:
+    def create(
+        self,
+        *,
+        domain: DomainName,
+        feedback_enabled: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CreateDomainResponse:
         """
         Parameters
         ----------
+        domain : DomainName
+
+        feedback_enabled : typing.Optional[bool]
+            Whether to forward bounce and complaint notifications to your domain.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        CreateCredentialResponse
+        CreateDomainResponse
 
         Examples
         --------
         from agentmail import AgentMail
         client = AgentMail(api_key="YOUR_API_KEY", )
-        client.credentials.create()
+        client.domains.create(domain='your-domain.com', )
         """
-        _response = self._raw_client.create(request_options=request_options)
+        _response = self._raw_client.create(
+            domain=domain, feedback_enabled=feedback_enabled, request_options=request_options
+        )
         return _response.data
 
-    def delete(self, credential_id: CredentialId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(self, domain: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
-        credential_id : CredentialId
+        domain : DomainId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -119,24 +134,24 @@ class CredentialsClient:
         --------
         from agentmail import AgentMail
         client = AgentMail(api_key="YOUR_API_KEY", )
-        client.credentials.delete(credential_id='credential_id', )
+        client.domains.delete(domain='dom_12345', )
         """
-        _response = self._raw_client.delete(credential_id, request_options=request_options)
+        _response = self._raw_client.delete(domain, request_options=request_options)
         return _response.data
 
 
-class AsyncCredentialsClient:
+class AsyncDomainsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawCredentialsClient(client_wrapper=client_wrapper)
+        self._raw_client = AsyncRawDomainsClient(client_wrapper=client_wrapper)
 
     @property
-    def with_raw_response(self) -> AsyncRawCredentialsClient:
+    def with_raw_response(self) -> AsyncRawDomainsClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        AsyncRawCredentialsClient
+        AsyncRawDomainsClient
         """
         return self._raw_client
 
@@ -146,7 +161,7 @@ class AsyncCredentialsClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListCredentialsResponse:
+    ) -> ListDomainsResponse:
         """
         Parameters
         ----------
@@ -159,7 +174,7 @@ class AsyncCredentialsClient:
 
         Returns
         -------
-        ListCredentialsResponse
+        ListDomainsResponse
 
         Examples
         --------
@@ -167,26 +182,24 @@ class AsyncCredentialsClient:
         import asyncio
         client = AsyncAgentMail(api_key="YOUR_API_KEY", )
         async def main() -> None:
-            await client.credentials.list()
+            await client.domains.list()
         asyncio.run(main())
         """
         _response = await self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
         return _response.data
 
-    async def get(
-        self, credential_id: CredentialId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> Credential:
+    async def get(self, domain: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> Domain:
         """
         Parameters
         ----------
-        credential_id : CredentialId
+        domain : DomainId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Credential
+        Domain
 
         Examples
         --------
@@ -194,22 +207,33 @@ class AsyncCredentialsClient:
         import asyncio
         client = AsyncAgentMail(api_key="YOUR_API_KEY", )
         async def main() -> None:
-            await client.credentials.get(credential_id='credential_id', )
+            await client.domains.get(domain=' your-domain.com', )
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(credential_id, request_options=request_options)
+        _response = await self._raw_client.get(domain, request_options=request_options)
         return _response.data
 
-    async def create(self, *, request_options: typing.Optional[RequestOptions] = None) -> CreateCredentialResponse:
+    async def create(
+        self,
+        *,
+        domain: DomainName,
+        feedback_enabled: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> CreateDomainResponse:
         """
         Parameters
         ----------
+        domain : DomainName
+
+        feedback_enabled : typing.Optional[bool]
+            Whether to forward bounce and complaint notifications to your domain.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        CreateCredentialResponse
+        CreateDomainResponse
 
         Examples
         --------
@@ -217,19 +241,19 @@ class AsyncCredentialsClient:
         import asyncio
         client = AsyncAgentMail(api_key="YOUR_API_KEY", )
         async def main() -> None:
-            await client.credentials.create()
+            await client.domains.create(domain='your-domain.com', )
         asyncio.run(main())
         """
-        _response = await self._raw_client.create(request_options=request_options)
+        _response = await self._raw_client.create(
+            domain=domain, feedback_enabled=feedback_enabled, request_options=request_options
+        )
         return _response.data
 
-    async def delete(
-        self, credential_id: CredentialId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> None:
+    async def delete(self, domain: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
-        credential_id : CredentialId
+        domain : DomainId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -244,8 +268,8 @@ class AsyncCredentialsClient:
         import asyncio
         client = AsyncAgentMail(api_key="YOUR_API_KEY", )
         async def main() -> None:
-            await client.credentials.delete(credential_id='credential_id', )
+            await client.domains.delete(domain='dom_12345', )
         asyncio.run(main())
         """
-        _response = await self._raw_client.delete(credential_id, request_options=request_options)
+        _response = await self._raw_client.delete(domain, request_options=request_options)
         return _response.data

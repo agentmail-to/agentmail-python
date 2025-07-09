@@ -7,7 +7,7 @@ import httpx
 from .contexts.client import AsyncContextsClient, ContextsClient
 from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .credentials.client import AsyncCredentialsClient, CredentialsClient
+from .domains.client import AsyncDomainsClient, DomainsClient
 from .drafts.client import AsyncDraftsClient, DraftsClient
 from .environment import AgentMailEnvironment
 from .inboxes.client import AsyncInboxesClient, InboxesClient
@@ -76,7 +76,7 @@ class AgentMail:
         )
         self.inboxes = InboxesClient(client_wrapper=self._client_wrapper)
         self.contexts = ContextsClient(client_wrapper=self._client_wrapper)
-        self.credentials = CredentialsClient(client_wrapper=self._client_wrapper)
+        self.domains = DomainsClient(client_wrapper=self._client_wrapper)
         self.drafts = DraftsClient(client_wrapper=self._client_wrapper)
         self.threads = ThreadsClient(client_wrapper=self._client_wrapper)
         self.webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
@@ -143,7 +143,7 @@ class AsyncAgentMail:
         )
         self.inboxes = AsyncInboxesClient(client_wrapper=self._client_wrapper)
         self.contexts = AsyncContextsClient(client_wrapper=self._client_wrapper)
-        self.credentials = AsyncCredentialsClient(client_wrapper=self._client_wrapper)
+        self.domains = AsyncDomainsClient(client_wrapper=self._client_wrapper)
         self.drafts = AsyncDraftsClient(client_wrapper=self._client_wrapper)
         self.threads = AsyncThreadsClient(client_wrapper=self._client_wrapper)
         self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)

@@ -15,13 +15,17 @@ from ..types.error_response import ErrorResponse
 from ..types.limit import Limit
 from ..types.page_token import PageToken
 from ..types.validation_error_response import ValidationErrorResponse
-from .types.create_credential_response import CreateCredentialResponse
-from .types.credential import Credential
-from .types.credential_id import CredentialId
-from .types.list_credentials_response import ListCredentialsResponse
+from .types.create_domain_response import CreateDomainResponse
+from .types.domain import Domain
+from .types.domain_id import DomainId
+from .types.domain_name import DomainName
+from .types.list_domains_response import ListDomainsResponse
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
-class RawCredentialsClient:
+class RawDomainsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
@@ -31,7 +35,7 @@ class RawCredentialsClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[ListCredentialsResponse]:
+    ) -> HttpResponse[ListDomainsResponse]:
         """
         Parameters
         ----------
@@ -44,10 +48,10 @@ class RawCredentialsClient:
 
         Returns
         -------
-        HttpResponse[ListCredentialsResponse]
+        HttpResponse[ListDomainsResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v0/credentials",
+            "v0/domains",
             method="GET",
             params={
                 "limit": limit,
@@ -58,9 +62,9 @@ class RawCredentialsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ListCredentialsResponse,
+                    ListDomainsResponse,
                     construct_type(
-                        type_=ListCredentialsResponse,  # type: ignore
+                        type_=ListDomainsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -70,32 +74,30 @@ class RawCredentialsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get(
-        self, credential_id: CredentialId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[Credential]:
+    def get(self, domain: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Domain]:
         """
         Parameters
         ----------
-        credential_id : CredentialId
+        domain : DomainId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[Credential]
+        HttpResponse[Domain]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/credentials/{jsonable_encoder(credential_id)}",
+            f"v0/domains/{jsonable_encoder(domain)}",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    Credential,
+                    Domain,
                     construct_type(
-                        type_=Credential,  # type: ignore
+                        type_=Domain,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -117,29 +119,43 @@ class RawCredentialsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[CreateCredentialResponse]:
+        self,
+        *,
+        domain: DomainName,
+        feedback_enabled: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[CreateDomainResponse]:
         """
         Parameters
         ----------
+        domain : DomainName
+
+        feedback_enabled : typing.Optional[bool]
+            Whether to forward bounce and complaint notifications to your domain.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[CreateCredentialResponse]
+        HttpResponse[CreateDomainResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v0/credentials",
+            "v0/domains",
             method="POST",
+            json={
+                "domain": domain,
+                "feedback_enabled": feedback_enabled,
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    CreateCredentialResponse,
+                    CreateDomainResponse,
                     construct_type(
-                        type_=CreateCredentialResponse,  # type: ignore
+                        type_=CreateDomainResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -161,12 +177,12 @@ class RawCredentialsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
-        self, credential_id: CredentialId, *, request_options: typing.Optional[RequestOptions] = None
+        self, domain: DomainId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
         Parameters
         ----------
-        credential_id : CredentialId
+        domain : DomainId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -176,7 +192,7 @@ class RawCredentialsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/credentials/{jsonable_encoder(credential_id)}",
+            f"v0/domains/{jsonable_encoder(domain)}",
             method="DELETE",
             request_options=request_options,
         )
@@ -200,7 +216,7 @@ class RawCredentialsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
-class AsyncRawCredentialsClient:
+class AsyncRawDomainsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
@@ -210,7 +226,7 @@ class AsyncRawCredentialsClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[ListCredentialsResponse]:
+    ) -> AsyncHttpResponse[ListDomainsResponse]:
         """
         Parameters
         ----------
@@ -223,10 +239,10 @@ class AsyncRawCredentialsClient:
 
         Returns
         -------
-        AsyncHttpResponse[ListCredentialsResponse]
+        AsyncHttpResponse[ListDomainsResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v0/credentials",
+            "v0/domains",
             method="GET",
             params={
                 "limit": limit,
@@ -237,9 +253,9 @@ class AsyncRawCredentialsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ListCredentialsResponse,
+                    ListDomainsResponse,
                     construct_type(
-                        type_=ListCredentialsResponse,  # type: ignore
+                        type_=ListDomainsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -250,31 +266,31 @@ class AsyncRawCredentialsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self, credential_id: CredentialId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[Credential]:
+        self, domain: DomainId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[Domain]:
         """
         Parameters
         ----------
-        credential_id : CredentialId
+        domain : DomainId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[Credential]
+        AsyncHttpResponse[Domain]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/credentials/{jsonable_encoder(credential_id)}",
+            f"v0/domains/{jsonable_encoder(domain)}",
             method="GET",
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    Credential,
+                    Domain,
                     construct_type(
-                        type_=Credential,  # type: ignore
+                        type_=Domain,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -296,29 +312,43 @@ class AsyncRawCredentialsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
-        self, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[CreateCredentialResponse]:
+        self,
+        *,
+        domain: DomainName,
+        feedback_enabled: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[CreateDomainResponse]:
         """
         Parameters
         ----------
+        domain : DomainName
+
+        feedback_enabled : typing.Optional[bool]
+            Whether to forward bounce and complaint notifications to your domain.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[CreateCredentialResponse]
+        AsyncHttpResponse[CreateDomainResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v0/credentials",
+            "v0/domains",
             method="POST",
+            json={
+                "domain": domain,
+                "feedback_enabled": feedback_enabled,
+            },
             request_options=request_options,
+            omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    CreateCredentialResponse,
+                    CreateDomainResponse,
                     construct_type(
-                        type_=CreateCredentialResponse,  # type: ignore
+                        type_=CreateDomainResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -340,12 +370,12 @@ class AsyncRawCredentialsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
-        self, credential_id: CredentialId, *, request_options: typing.Optional[RequestOptions] = None
+        self, domain: DomainId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
         Parameters
         ----------
-        credential_id : CredentialId
+        domain : DomainId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -355,7 +385,7 @@ class AsyncRawCredentialsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/credentials/{jsonable_encoder(credential_id)}",
+            f"v0/domains/{jsonable_encoder(domain)}",
             method="DELETE",
             request_options=request_options,
         )

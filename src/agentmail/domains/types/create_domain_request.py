@@ -5,17 +5,15 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
-from .created_at import CreatedAt
-from .credential_id import CredentialId
-from .smtp_username import SmtpUsername
-from .updated_at import UpdatedAt
+from .domain_name import DomainName
 
 
-class Credential(UncheckedBaseModel):
-    credential_id: CredentialId
-    smtp_username: SmtpUsername
-    updated_at: UpdatedAt
-    created_at: CreatedAt
+class CreateDomainRequest(UncheckedBaseModel):
+    domain: DomainName
+    feedback_enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether to forward bounce and complaint notifications to your domain.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

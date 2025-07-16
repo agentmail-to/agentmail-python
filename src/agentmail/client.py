@@ -4,7 +4,6 @@ import os
 import typing
 
 import httpx
-from .contexts.client import AsyncContextsClient, ContextsClient
 from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .domains.client import AsyncDomainsClient, DomainsClient
@@ -75,7 +74,6 @@ class AgentMail:
             timeout=_defaulted_timeout,
         )
         self.inboxes = InboxesClient(client_wrapper=self._client_wrapper)
-        self.contexts = ContextsClient(client_wrapper=self._client_wrapper)
         self.domains = DomainsClient(client_wrapper=self._client_wrapper)
         self.drafts = DraftsClient(client_wrapper=self._client_wrapper)
         self.threads = ThreadsClient(client_wrapper=self._client_wrapper)
@@ -142,7 +140,6 @@ class AsyncAgentMail:
             timeout=_defaulted_timeout,
         )
         self.inboxes = AsyncInboxesClient(client_wrapper=self._client_wrapper)
-        self.contexts = AsyncContextsClient(client_wrapper=self._client_wrapper)
         self.domains = AsyncDomainsClient(client_wrapper=self._client_wrapper)
         self.drafts = AsyncDraftsClient(client_wrapper=self._client_wrapper)
         self.threads = AsyncThreadsClient(client_wrapper=self._client_wrapper)

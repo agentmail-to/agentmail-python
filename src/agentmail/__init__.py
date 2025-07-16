@@ -14,7 +14,7 @@ from .types import (
     ValidationErrorResponse,
 )
 from .errors import IsTakenError, NotFoundError, ValidationError
-from . import attachments, contexts, domains, drafts, inboxes, messages, threads, webhooks
+from . import attachments, domains, drafts, inboxes, messages, threads, webhooks
 from .attachments import (
     Attachment,
     AttachmentContent,
@@ -26,16 +26,6 @@ from .attachments import (
     SendAttachment,
 )
 from .client import AgentMail, AsyncAgentMail
-from .contexts import (
-    Context,
-    ContextData,
-    ContextId,
-    ContextIsEvent,
-    ContextMetadata,
-    ContextType,
-    CreateContextRequest,
-    ListContextsResponse,
-)
 from .domains import (
     CreateDomainRequest,
     CreateDomainResponse,
@@ -142,14 +132,7 @@ __all__ = [
     "AttachmentInline",
     "AttachmentSize",
     "ClientId",
-    "Context",
-    "ContextData",
-    "ContextId",
-    "ContextIsEvent",
-    "ContextMetadata",
-    "ContextType",
     "Count",
-    "CreateContextRequest",
     "CreateDomainRequest",
     "CreateDomainResponse",
     "CreateDraftRequest",
@@ -181,7 +164,6 @@ __all__ = [
     "IsTakenError",
     "Labels",
     "Limit",
-    "ListContextsResponse",
     "ListDomainsResponse",
     "ListDraftsResponse",
     "ListMessagesResponse",
@@ -241,7 +223,6 @@ __all__ = [
     "WebhookId",
     "__version__",
     "attachments",
-    "contexts",
     "domains",
     "drafts",
     "inboxes",

@@ -52,6 +52,7 @@ class RawDomainsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v0/domains",
+            base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
                 "limit": limit,
@@ -89,6 +90,7 @@ class RawDomainsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v0/domains/{jsonable_encoder(domain)}",
+            base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
         )
@@ -142,6 +144,7 @@ class RawDomainsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v0/domains",
+            base_url=self._client_wrapper.get_environment().http,
             method="POST",
             json={
                 "domain": domain,
@@ -193,6 +196,7 @@ class RawDomainsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v0/domains/{jsonable_encoder(domain)}",
+            base_url=self._client_wrapper.get_environment().http,
             method="DELETE",
             request_options=request_options,
         )
@@ -243,6 +247,7 @@ class AsyncRawDomainsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v0/domains",
+            base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
                 "limit": limit,
@@ -282,6 +287,7 @@ class AsyncRawDomainsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v0/domains/{jsonable_encoder(domain)}",
+            base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
         )
@@ -335,6 +341,7 @@ class AsyncRawDomainsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v0/domains",
+            base_url=self._client_wrapper.get_environment().http,
             method="POST",
             json={
                 "domain": domain,
@@ -386,6 +393,7 @@ class AsyncRawDomainsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v0/domains/{jsonable_encoder(domain)}",
+            base_url=self._client_wrapper.get_environment().http,
             method="DELETE",
             request_options=request_options,
         )

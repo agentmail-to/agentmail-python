@@ -14,7 +14,7 @@ from .types import (
     ValidationErrorResponse,
 )
 from .errors import IsTakenError, NotFoundError, ValidationError
-from . import attachments, domains, drafts, inboxes, messages, threads, webhooks
+from . import attachments, domains, drafts, inboxes, messages, threads, webhooks, websockets
 from .attachments import (
     Attachment,
     AttachmentContent,
@@ -101,22 +101,7 @@ from .threads import (
     ThreadTimestamp,
 )
 from .version import __version__
-from .webhooks import (
-    ClientId,
-    CreateWebhookRequest,
-    EventId,
-    EventType,
-    EventTypes,
-    InboxIds,
-    ListWebhooksResponse,
-    MessageReceivedPayload,
-    SvixId,
-    SvixSignature,
-    SvixTimestamp,
-    Url,
-    Webhook,
-    WebhookId,
-)
+from .websockets import EventId, MessageReceived, Subscribe, Subscribed
 
 __all__ = [
     "Addresses",
@@ -131,12 +116,10 @@ __all__ = [
     "AttachmentId",
     "AttachmentInline",
     "AttachmentSize",
-    "ClientId",
     "Count",
     "CreateDomainRequest",
     "CreateDomainResponse",
     "CreateDraftRequest",
-    "CreateWebhookRequest",
     "Domain",
     "DomainId",
     "DomainName",
@@ -158,9 +141,6 @@ __all__ = [
     "ErrorName",
     "ErrorResponse",
     "EventId",
-    "EventType",
-    "EventTypes",
-    "InboxIds",
     "IsTakenError",
     "Labels",
     "Limit",
@@ -168,7 +148,6 @@ __all__ = [
     "ListDraftsResponse",
     "ListMessagesResponse",
     "ListThreadsResponse",
-    "ListWebhooksResponse",
     "Message",
     "MessageAttachments",
     "MessageBcc",
@@ -179,7 +158,7 @@ __all__ = [
     "MessageItem",
     "MessageLabels",
     "MessagePreview",
-    "MessageReceivedPayload",
+    "MessageReceived",
     "MessageRejectedError",
     "MessageSubject",
     "MessageText",
@@ -199,9 +178,8 @@ __all__ = [
     "SendMessageRequest",
     "SendMessageResponse",
     "SendMessageTo",
-    "SvixId",
-    "SvixSignature",
-    "SvixTimestamp",
+    "Subscribe",
+    "Subscribed",
     "Thread",
     "ThreadAttachments",
     "ThreadId",
@@ -214,13 +192,10 @@ __all__ = [
     "ThreadSubject",
     "ThreadTimestamp",
     "UpdateMessageRequest",
-    "Url",
     "ValidationError",
     "ValidationErrorResponse",
     "VerificationRecord",
     "VerificationStatus",
-    "Webhook",
-    "WebhookId",
     "__version__",
     "attachments",
     "domains",
@@ -229,4 +204,5 @@ __all__ = [
     "messages",
     "threads",
     "webhooks",
+    "websockets",
 ]

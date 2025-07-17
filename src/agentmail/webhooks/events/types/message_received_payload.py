@@ -3,11 +3,11 @@
 import typing
 
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
-from ...core.unchecked_base_model import UncheckedBaseModel
-from ...messages.types.message import Message
+from ....core.pydantic_utilities import IS_PYDANTIC_V2
+from ....core.unchecked_base_model import UncheckedBaseModel
+from ....messages.types.message import Message
+from ...types.event_type import EventType
 from .event_id import EventId
-from .event_type import EventType
 
 
 class MessageReceivedPayload(UncheckedBaseModel):

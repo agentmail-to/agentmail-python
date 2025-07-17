@@ -20,9 +20,6 @@ class AgentMail:
 
     Parameters
     ----------
-    base_url : typing.Optional[str]
-        The base url to use for requests from the client.
-
     environment : AgentMailEnvironment
         The environment to use for requests from the client. from .environment import AgentMailEnvironment
 
@@ -49,7 +46,6 @@ class AgentMail:
     def __init__(
         self,
         *,
-        base_url: typing.Optional[str] = None,
         environment: AgentMailEnvironment = AgentMailEnvironment.PRODUCTION,
         api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("AGENTMAIL_API_KEY"),
         timeout: typing.Optional[float] = None,
@@ -64,7 +60,7 @@ class AgentMail:
                 body="The client must be instantiated be either passing in api_key or setting AGENTMAIL_API_KEY"
             )
         self._client_wrapper = SyncClientWrapper(
-            base_url=_get_base_url(base_url=base_url, environment=environment),
+            environment=environment,
             api_key=api_key,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -74,10 +70,10 @@ class AgentMail:
             timeout=_defaulted_timeout,
         )
         self.inboxes = InboxesClient(client_wrapper=self._client_wrapper)
+        self.webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
         self.domains = DomainsClient(client_wrapper=self._client_wrapper)
         self.drafts = DraftsClient(client_wrapper=self._client_wrapper)
         self.threads = ThreadsClient(client_wrapper=self._client_wrapper)
-        self.webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncAgentMail:
@@ -86,9 +82,6 @@ class AsyncAgentMail:
 
     Parameters
     ----------
-    base_url : typing.Optional[str]
-        The base url to use for requests from the client.
-
     environment : AgentMailEnvironment
         The environment to use for requests from the client. from .environment import AgentMailEnvironment
 
@@ -115,7 +108,6 @@ class AsyncAgentMail:
     def __init__(
         self,
         *,
-        base_url: typing.Optional[str] = None,
         environment: AgentMailEnvironment = AgentMailEnvironment.PRODUCTION,
         api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("AGENTMAIL_API_KEY"),
         timeout: typing.Optional[float] = None,
@@ -130,7 +122,7 @@ class AsyncAgentMail:
                 body="The client must be instantiated be either passing in api_key or setting AGENTMAIL_API_KEY"
             )
         self._client_wrapper = AsyncClientWrapper(
-            base_url=_get_base_url(base_url=base_url, environment=environment),
+            environment=environment,
             api_key=api_key,
             httpx_client=httpx_client
             if httpx_client is not None
@@ -140,16 +132,7 @@ class AsyncAgentMail:
             timeout=_defaulted_timeout,
         )
         self.inboxes = AsyncInboxesClient(client_wrapper=self._client_wrapper)
+        self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
         self.domains = AsyncDomainsClient(client_wrapper=self._client_wrapper)
         self.drafts = AsyncDraftsClient(client_wrapper=self._client_wrapper)
         self.threads = AsyncThreadsClient(client_wrapper=self._client_wrapper)
-        self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
-
-
-def _get_base_url(*, base_url: typing.Optional[str] = None, environment: AgentMailEnvironment) -> str:
-    if base_url is not None:
-        return base_url
-    elif environment is not None:
-        return environment.value
-    else:
-        raise Exception("Please pass in either base_url or environment to construct the client")

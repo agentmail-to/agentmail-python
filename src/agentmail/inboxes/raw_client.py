@@ -51,6 +51,7 @@ class RawInboxesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v0/inboxes",
+            base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
                 "limit": limit,
@@ -88,6 +89,7 @@ class RawInboxesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v0/inboxes/{jsonable_encoder(inbox_id)}",
+            base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
         )
@@ -149,6 +151,7 @@ class RawInboxesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v0/inboxes",
+            base_url=self._client_wrapper.get_environment().http,
             method="POST",
             json={
                 "username": username,
@@ -213,6 +216,7 @@ class AsyncRawInboxesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v0/inboxes",
+            base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
                 "limit": limit,
@@ -252,6 +256,7 @@ class AsyncRawInboxesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v0/inboxes/{jsonable_encoder(inbox_id)}",
+            base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
         )
@@ -313,6 +318,7 @@ class AsyncRawInboxesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v0/inboxes",
+            base_url=self._client_wrapper.get_environment().http,
             method="POST",
             json={
                 "username": username,

@@ -3,6 +3,7 @@
 import typing
 
 import httpx
+from ..environment import AgentMailEnvironment
 from .http_client import AsyncHttpClient, HttpClient
 
 
@@ -11,19 +12,19 @@ class BaseClientWrapper:
         self,
         *,
         api_key: typing.Union[str, typing.Callable[[], str]],
-        base_url: str,
+        environment: AgentMailEnvironment,
         timeout: typing.Optional[float] = None,
     ):
         self._api_key = api_key
-        self._base_url = base_url
+        self._environment = environment
         self._timeout = timeout
 
     def get_headers(self) -> typing.Dict[str, str]:
         headers: typing.Dict[str, str] = {
-            "User-Agent": "agentmail/0.0.41",
+            "User-Agent": "agentmail/0.0.42",
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "agentmail",
-            "X-Fern-SDK-Version": "0.0.41",
+            "X-Fern-SDK-Version": "0.0.42",
         }
         headers["Authorization"] = f"Bearer {self._get_api_key()}"
         return headers
@@ -34,8 +35,8 @@ class BaseClientWrapper:
         else:
             return self._api_key()
 
-    def get_base_url(self) -> str:
-        return self._base_url
+    def get_environment(self) -> AgentMailEnvironment:
+        return self._environment
 
     def get_timeout(self) -> typing.Optional[float]:
         return self._timeout
@@ -46,16 +47,13 @@ class SyncClientWrapper(BaseClientWrapper):
         self,
         *,
         api_key: typing.Union[str, typing.Callable[[], str]],
-        base_url: str,
+        environment: AgentMailEnvironment,
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.Client,
     ):
-        super().__init__(api_key=api_key, base_url=base_url, timeout=timeout)
+        super().__init__(api_key=api_key, environment=environment, timeout=timeout)
         self.httpx_client = HttpClient(
-            httpx_client=httpx_client,
-            base_headers=self.get_headers,
-            base_timeout=self.get_timeout,
-            base_url=self.get_base_url,
+            httpx_client=httpx_client, base_headers=self.get_headers, base_timeout=self.get_timeout
         )
 
 
@@ -64,14 +62,11 @@ class AsyncClientWrapper(BaseClientWrapper):
         self,
         *,
         api_key: typing.Union[str, typing.Callable[[], str]],
-        base_url: str,
+        environment: AgentMailEnvironment,
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(api_key=api_key, base_url=base_url, timeout=timeout)
+        super().__init__(api_key=api_key, environment=environment, timeout=timeout)
         self.httpx_client = AsyncHttpClient(
-            httpx_client=httpx_client,
-            base_headers=self.get_headers,
-            base_timeout=self.get_timeout,
-            base_url=self.get_base_url,
+            httpx_client=httpx_client, base_headers=self.get_headers, base_timeout=self.get_timeout
         )

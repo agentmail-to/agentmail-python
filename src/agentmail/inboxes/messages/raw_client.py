@@ -76,6 +76,7 @@ class RawMessagesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages",
+            base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
                 "limit": limit,
@@ -130,6 +131,7 @@ class RawMessagesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}",
+            base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
         )
@@ -186,6 +188,7 @@ class RawMessagesClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}/attachments/{jsonable_encoder(attachment_id)}",
+            base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -265,6 +268,7 @@ class RawMessagesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/send",
+            base_url=self._client_wrapper.get_environment().http,
             method="POST",
             json={
                 "labels": labels,
@@ -381,6 +385,7 @@ class RawMessagesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}/reply",
+            base_url=self._client_wrapper.get_environment().http,
             method="POST",
             json={
                 "labels": labels,
@@ -480,6 +485,7 @@ class RawMessagesClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}",
+            base_url=self._client_wrapper.get_environment().http,
             method="PATCH",
             json={
                 "add_labels": add_labels,
@@ -562,6 +568,7 @@ class AsyncRawMessagesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages",
+            base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
                 "limit": limit,
@@ -616,6 +623,7 @@ class AsyncRawMessagesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}",
+            base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
         )
@@ -672,6 +680,7 @@ class AsyncRawMessagesClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}/attachments/{jsonable_encoder(attachment_id)}",
+            base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -752,6 +761,7 @@ class AsyncRawMessagesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/send",
+            base_url=self._client_wrapper.get_environment().http,
             method="POST",
             json={
                 "labels": labels,
@@ -868,6 +878,7 @@ class AsyncRawMessagesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}/reply",
+            base_url=self._client_wrapper.get_environment().http,
             method="POST",
             json={
                 "labels": labels,
@@ -967,6 +978,7 @@ class AsyncRawMessagesClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}",
+            base_url=self._client_wrapper.get_environment().http,
             method="PATCH",
             json={
                 "add_labels": add_labels,

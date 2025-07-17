@@ -185,6 +185,243 @@ client.inboxes.create()
 </dl>
 </details>
 
+## Webhooks
+<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+client = AgentMail(api_key="YOUR_API_KEY", )
+client.webhooks.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[Limit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+client = AgentMail(api_key="YOUR_API_KEY", )
+client.webhooks.get(webhook_id='webhook_id', )
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**webhook_id:** `WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">create</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+client = AgentMail(api_key="YOUR_API_KEY", )
+client.webhooks.create(url='url', event_types=["message.received", "message.received"], )
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**url:** `Url` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**event_types:** `EventTypes` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**inbox_ids:** `typing.Optional[InboxIds]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client_id:** `typing.Optional[ClientId]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+client = AgentMail(api_key="YOUR_API_KEY", )
+client.webhooks.delete(webhook_id='webhook_id', )
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**webhook_id:** `WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Domains
 <details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">list</a>(...)</code></summary>
 <dl>
@@ -1581,243 +1818,6 @@ client.threads.get(thread_id='thread_id', )
 <dd>
 
 **thread_id:** `ThreadId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Webhooks
-<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">list</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.webhooks.list()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**limit:** `typing.Optional[Limit]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page_token:** `typing.Optional[PageToken]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">get</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.webhooks.get(webhook_id='webhook_id', )
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**webhook_id:** `WebhookId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">create</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.webhooks.create(url='url', event_types=["message.received", "message.received"], )
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**url:** `Url` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**event_types:** `EventTypes` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**inbox_ids:** `typing.Optional[InboxIds]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[ClientId]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">delete</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
-client.webhooks.delete(webhook_id='webhook_id', )
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**webhook_id:** `WebhookId` 
     
 </dd>
 </dl>

@@ -53,6 +53,7 @@ class RawDraftsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v0/drafts",
+            base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
                 "limit": limit,
@@ -103,6 +104,7 @@ class RawDraftsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v0/drafts/{jsonable_encoder(draft_id)}",
+            base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
         )
@@ -166,6 +168,7 @@ class AsyncRawDraftsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v0/drafts",
+            base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
                 "limit": limit,
@@ -218,6 +221,7 @@ class AsyncRawDraftsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v0/drafts/{jsonable_encoder(draft_id)}",
+            base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
         )

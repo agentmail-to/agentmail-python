@@ -55,6 +55,7 @@ class RawThreadsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "v0/threads",
+            base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
                 "limit": limit,
@@ -107,6 +108,7 @@ class RawThreadsClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v0/threads/{jsonable_encoder(thread_id)}",
+            base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
         )
@@ -160,6 +162,7 @@ class RawThreadsClient:
         """
         with self._client_wrapper.httpx_client.stream(
             f"v0/threads/{jsonable_encoder(thread_id)}/attachments/{jsonable_encoder(attachment_id)}",
+            base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
         ) as _response:
@@ -226,6 +229,7 @@ class AsyncRawThreadsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v0/threads",
+            base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
                 "limit": limit,
@@ -278,6 +282,7 @@ class AsyncRawThreadsClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v0/threads/{jsonable_encoder(thread_id)}",
+            base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
         )
@@ -331,6 +336,7 @@ class AsyncRawThreadsClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             f"v0/threads/{jsonable_encoder(thread_id)}/attachments/{jsonable_encoder(attachment_id)}",
+            base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
         ) as _response:

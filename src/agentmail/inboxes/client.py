@@ -63,7 +63,10 @@ class InboxesClient:
         Examples
         --------
         from agentmail import AgentMail
-        client = AgentMail(api_key="YOUR_API_KEY", )
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
         client.inboxes.list()
         """
         _response = self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
@@ -85,8 +88,13 @@ class InboxesClient:
         Examples
         --------
         from agentmail import AgentMail
-        client = AgentMail(api_key="YOUR_API_KEY", )
-        client.inboxes.get(inbox_id='inbox_id', )
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.inboxes.get(
+            inbox_id="inbox_id",
+        )
         """
         _response = self._raw_client.get(inbox_id, request_options=request_options)
         return _response.data
@@ -124,7 +132,10 @@ class InboxesClient:
         Examples
         --------
         from agentmail import AgentMail
-        client = AgentMail(api_key="YOUR_API_KEY", )
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
         client.inboxes.create()
         """
         _response = self._raw_client.create(
@@ -180,11 +191,19 @@ class AsyncInboxesClient:
 
         Examples
         --------
-        from agentmail import AsyncAgentMail
         import asyncio
-        client = AsyncAgentMail(api_key="YOUR_API_KEY", )
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
         async def main() -> None:
             await client.inboxes.list()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
@@ -205,11 +224,21 @@ class AsyncInboxesClient:
 
         Examples
         --------
-        from agentmail import AsyncAgentMail
         import asyncio
-        client = AsyncAgentMail(api_key="YOUR_API_KEY", )
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
         async def main() -> None:
-            await client.inboxes.get(inbox_id='inbox_id', )
+            await client.inboxes.get(
+                inbox_id="inbox_id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(inbox_id, request_options=request_options)
@@ -247,11 +276,19 @@ class AsyncInboxesClient:
 
         Examples
         --------
-        from agentmail import AsyncAgentMail
         import asyncio
-        client = AsyncAgentMail(api_key="YOUR_API_KEY", )
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
         async def main() -> None:
             await client.inboxes.create()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create(

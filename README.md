@@ -21,7 +21,10 @@ Instantiate and use the client with the following:
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(api_key="YOUR_API_KEY", )
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
 client.inboxes.create()
 ```
 
@@ -30,11 +33,19 @@ client.inboxes.create()
 The SDK also exports an `async` client so that you can make non-blocking calls to our API.
 
 ```python
-from agentmail import AsyncAgentMail
 import asyncio
-client = AsyncAgentMail(api_key="YOUR_API_KEY", )
+
+from agentmail import AsyncAgentMail
+
+client = AsyncAgentMail(
+    api_key="YOUR_API_KEY",
+)
+
+
 async def main() -> None:
     await client.inboxes.create()
+
+
 asyncio.run(main())
 ```
 
@@ -45,6 +56,7 @@ will be thrown.
 
 ```python
 from agentmail.core.api_error import ApiError
+
 try:
     client.inboxes.create(...)
 except ApiError as e:
@@ -61,7 +73,10 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 
 ```python
 from agentmail import AgentMail
-client = AgentMail(..., )
+
+client = AgentMail(
+    ...,
+)
 response = client.inboxes.with_raw_response.create(...)
 print(response.headers)  # access the response headers
 print(response.data)  # access the underlying object
@@ -94,7 +109,12 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 ```python
 
 from agentmail import AgentMail
-client = AgentMail(..., timeout=20.0, )
+
+client = AgentMail(
+    ...,
+    timeout=20.0,
+)
+
 
 # Override timeout for a specific method
 client.inboxes.create(..., request_options={
@@ -108,9 +128,17 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 
 ```python
-from agentmail import AgentMail
 import httpx
-client = AgentMail(..., httpx_client=httpx.Client(proxies="http://my.test.proxy.example.com", transport=httpx.HTTPTransport(local_address="0.0.0.0"), ))```
+from agentmail import AgentMail
+
+client = AgentMail(
+    ...,
+    httpx_client=httpx.Client(
+        proxies="http://my.test.proxy.example.com",
+        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+    ),
+)
+```
 
 ## Contributing
 
@@ -121,3 +149,59 @@ a proof of concept, but know that we will not be able to merge it as-is. We sugg
 an issue first to discuss with us!
 
 On the other hand, contributions to the README are always very welcome!
+## Websockets
+
+The SDK supports both sync and async websocket connections for real-time, low-latency communication. Sockets can be created using the `connect` method, which returns a context manager. 
+You can either iterate through the returned `SocketClient` to process messages as they arrive, or attach handlers to respond to specific events.
+
+```python
+
+# Connect to the websocket (Sync)
+import threading
+
+from agentmail import AgentMail
+
+client = AgentMail(...)
+
+with client.websockets.connect(...) as socket:
+    # Iterate over the messages as they arrive
+    for message in socket
+        print(message)
+
+    # Or, attach handlers to specific events
+    socket.on(EventType.OPEN, lambda _: print("open"))
+    socket.on(EventType.MESSAGE, lambda message: print("received message", message))
+    socket.on(EventType.CLOSE, lambda _: print("close"))
+    socket.on(EventType.ERROR, lambda error: print("error", error))
+
+
+    # Start the listening loop in a background thread
+    listener_thread = threading.Thread(target=socket.start_listening, daemon=True)
+    listener_thread.start()
+```
+
+```python
+
+# Connect to the websocket (Async)
+import asyncio
+
+from agentmail import AsyncAgentMail
+
+client = AsyncAgentMail(...)
+
+async with client.websockets.connect(...) as socket:
+    # Iterate over the messages as they arrive
+    async for message in socket
+        print(message)
+
+    # Or, attach handlers to specific events
+    socket.on(EventType.OPEN, lambda _: print("open"))
+    socket.on(EventType.MESSAGE, lambda message: print("received message", message))
+    socket.on(EventType.CLOSE, lambda _: print("close"))
+    socket.on(EventType.ERROR, lambda error: print("error", error))
+
+
+    # Start listening for events in an asyncio task
+    listen_task = asyncio.create_task(socket.start_listening())
+```
+

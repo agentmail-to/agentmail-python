@@ -60,7 +60,10 @@ class ThreadsClient:
         Examples
         --------
         from agentmail import AgentMail
-        client = AgentMail(api_key="YOUR_API_KEY", )
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
         client.threads.list()
         """
         _response = self._raw_client.list(
@@ -84,8 +87,13 @@ class ThreadsClient:
         Examples
         --------
         from agentmail import AgentMail
-        client = AgentMail(api_key="YOUR_API_KEY", )
-        client.threads.get(thread_id='thread_id', )
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.threads.get(
+            thread_id="thread_id",
+        )
         """
         _response = self._raw_client.get(thread_id, request_options=request_options)
         return _response.data
@@ -159,11 +167,19 @@ class AsyncThreadsClient:
 
         Examples
         --------
-        from agentmail import AsyncAgentMail
         import asyncio
-        client = AsyncAgentMail(api_key="YOUR_API_KEY", )
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
         async def main() -> None:
             await client.threads.list()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
@@ -186,11 +202,21 @@ class AsyncThreadsClient:
 
         Examples
         --------
-        from agentmail import AsyncAgentMail
         import asyncio
-        client = AsyncAgentMail(api_key="YOUR_API_KEY", )
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
         async def main() -> None:
-            await client.threads.get(thread_id='thread_id', )
+            await client.threads.get(
+                thread_id="thread_id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(thread_id, request_options=request_options)
@@ -218,5 +244,5 @@ class AsyncThreadsClient:
         typing.AsyncIterator[bytes]
         """
         async with self._raw_client.get_attachment(thread_id, attachment_id, request_options=request_options) as r:
-            async for data in r.data:
-                yield data
+            async for _chunk in r.data:
+                yield _chunk

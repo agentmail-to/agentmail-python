@@ -56,7 +56,10 @@ class DomainsClient:
         Examples
         --------
         from agentmail import AgentMail
-        client = AgentMail(api_key="YOUR_API_KEY", )
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
         client.domains.list()
         """
         _response = self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
@@ -78,8 +81,13 @@ class DomainsClient:
         Examples
         --------
         from agentmail import AgentMail
-        client = AgentMail(api_key="YOUR_API_KEY", )
-        client.domains.get(domain=' your-domain.com', )
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.domains.get(
+            domain=" your-domain.com",
+        )
         """
         _response = self._raw_client.get(domain, request_options=request_options)
         return _response.data
@@ -109,8 +117,13 @@ class DomainsClient:
         Examples
         --------
         from agentmail import AgentMail
-        client = AgentMail(api_key="YOUR_API_KEY", )
-        client.domains.create(domain='your-domain.com', )
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.domains.create(
+            domain="your-domain.com",
+        )
         """
         _response = self._raw_client.create(
             domain=domain, feedback_enabled=feedback_enabled, request_options=request_options
@@ -133,8 +146,13 @@ class DomainsClient:
         Examples
         --------
         from agentmail import AgentMail
-        client = AgentMail(api_key="YOUR_API_KEY", )
-        client.domains.delete(domain='dom_12345', )
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.domains.delete(
+            domain="dom_12345",
+        )
         """
         _response = self._raw_client.delete(domain, request_options=request_options)
         return _response.data
@@ -178,11 +196,19 @@ class AsyncDomainsClient:
 
         Examples
         --------
-        from agentmail import AsyncAgentMail
         import asyncio
-        client = AsyncAgentMail(api_key="YOUR_API_KEY", )
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
         async def main() -> None:
             await client.domains.list()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
@@ -203,11 +229,21 @@ class AsyncDomainsClient:
 
         Examples
         --------
-        from agentmail import AsyncAgentMail
         import asyncio
-        client = AsyncAgentMail(api_key="YOUR_API_KEY", )
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
         async def main() -> None:
-            await client.domains.get(domain=' your-domain.com', )
+            await client.domains.get(
+                domain=" your-domain.com",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(domain, request_options=request_options)
@@ -237,11 +273,21 @@ class AsyncDomainsClient:
 
         Examples
         --------
-        from agentmail import AsyncAgentMail
         import asyncio
-        client = AsyncAgentMail(api_key="YOUR_API_KEY", )
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
         async def main() -> None:
-            await client.domains.create(domain='your-domain.com', )
+            await client.domains.create(
+                domain="your-domain.com",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
@@ -264,11 +310,21 @@ class AsyncDomainsClient:
 
         Examples
         --------
-        from agentmail import AsyncAgentMail
         import asyncio
-        client = AsyncAgentMail(api_key="YOUR_API_KEY", )
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
         async def main() -> None:
-            await client.domains.delete(domain='dom_12345', )
+            await client.domains.delete(
+                domain="dom_12345",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(domain, request_options=request_options)

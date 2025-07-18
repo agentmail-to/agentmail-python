@@ -64,8 +64,13 @@ class ThreadsClient:
         Examples
         --------
         from agentmail import AgentMail
-        client = AgentMail(api_key="YOUR_API_KEY", )
-        client.inboxes.threads.list(inbox_id='inbox_id', )
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.inboxes.threads.list(
+            inbox_id="inbox_id",
+        )
         """
         _response = self._raw_client.list(
             inbox_id,
@@ -97,8 +102,14 @@ class ThreadsClient:
         Examples
         --------
         from agentmail import AgentMail
-        client = AgentMail(api_key="YOUR_API_KEY", )
-        client.inboxes.threads.get(inbox_id='inbox_id', thread_id='thread_id', )
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.inboxes.threads.get(
+            inbox_id="inbox_id",
+            thread_id="thread_id",
+        )
         """
         _response = self._raw_client.get(inbox_id, thread_id, request_options=request_options)
         return _response.data
@@ -178,11 +189,21 @@ class AsyncThreadsClient:
 
         Examples
         --------
-        from agentmail import AsyncAgentMail
         import asyncio
-        client = AsyncAgentMail(api_key="YOUR_API_KEY", )
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
         async def main() -> None:
-            await client.inboxes.threads.list(inbox_id='inbox_id', )
+            await client.inboxes.threads.list(
+                inbox_id="inbox_id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
@@ -214,11 +235,22 @@ class AsyncThreadsClient:
 
         Examples
         --------
-        from agentmail import AsyncAgentMail
         import asyncio
-        client = AsyncAgentMail(api_key="YOUR_API_KEY", )
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
         async def main() -> None:
-            await client.inboxes.threads.get(inbox_id='inbox_id', thread_id='thread_id', )
+            await client.inboxes.threads.get(
+                inbox_id="inbox_id",
+                thread_id="thread_id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(inbox_id, thread_id, request_options=request_options)
@@ -251,5 +283,5 @@ class AsyncThreadsClient:
         async with self._raw_client.get_attachment(
             inbox_id, thread_id, attachment_id, request_options=request_options
         ) as r:
-            async for data in r.data:
-                yield data
+            async for _chunk in r.data:
+                yield _chunk

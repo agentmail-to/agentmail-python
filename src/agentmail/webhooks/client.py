@@ -58,7 +58,10 @@ class WebhooksClient:
         Examples
         --------
         from agentmail import AgentMail
-        client = AgentMail(api_key="YOUR_API_KEY", )
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
         client.webhooks.list()
         """
         _response = self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
@@ -80,8 +83,13 @@ class WebhooksClient:
         Examples
         --------
         from agentmail import AgentMail
-        client = AgentMail(api_key="YOUR_API_KEY", )
-        client.webhooks.get(webhook_id='webhook_id', )
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.webhooks.get(
+            webhook_id="webhook_id",
+        )
         """
         _response = self._raw_client.get(webhook_id, request_options=request_options)
         return _response.data
@@ -116,8 +124,14 @@ class WebhooksClient:
         Examples
         --------
         from agentmail import AgentMail
-        client = AgentMail(api_key="YOUR_API_KEY", )
-        client.webhooks.create(url='url', event_types=["message.received", "message.received"], )
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.webhooks.create(
+            url="url",
+            event_types=["message.received", "message.received"],
+        )
         """
         _response = self._raw_client.create(
             url=url, event_types=event_types, inbox_ids=inbox_ids, client_id=client_id, request_options=request_options
@@ -140,8 +154,13 @@ class WebhooksClient:
         Examples
         --------
         from agentmail import AgentMail
-        client = AgentMail(api_key="YOUR_API_KEY", )
-        client.webhooks.delete(webhook_id='webhook_id', )
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.webhooks.delete(
+            webhook_id="webhook_id",
+        )
         """
         _response = self._raw_client.delete(webhook_id, request_options=request_options)
         return _response.data
@@ -185,11 +204,19 @@ class AsyncWebhooksClient:
 
         Examples
         --------
-        from agentmail import AsyncAgentMail
         import asyncio
-        client = AsyncAgentMail(api_key="YOUR_API_KEY", )
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
         async def main() -> None:
             await client.webhooks.list()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
@@ -210,11 +237,21 @@ class AsyncWebhooksClient:
 
         Examples
         --------
-        from agentmail import AsyncAgentMail
         import asyncio
-        client = AsyncAgentMail(api_key="YOUR_API_KEY", )
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
         async def main() -> None:
-            await client.webhooks.get(webhook_id='webhook_id', )
+            await client.webhooks.get(
+                webhook_id="webhook_id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(webhook_id, request_options=request_options)
@@ -249,11 +286,22 @@ class AsyncWebhooksClient:
 
         Examples
         --------
-        from agentmail import AsyncAgentMail
         import asyncio
-        client = AsyncAgentMail(api_key="YOUR_API_KEY", )
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
         async def main() -> None:
-            await client.webhooks.create(url='url', event_types=["message.received", "message.received"], )
+            await client.webhooks.create(
+                url="url",
+                event_types=["message.received", "message.received"],
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
@@ -276,11 +324,21 @@ class AsyncWebhooksClient:
 
         Examples
         --------
-        from agentmail import AsyncAgentMail
         import asyncio
-        client = AsyncAgentMail(api_key="YOUR_API_KEY", )
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
         async def main() -> None:
-            await client.webhooks.delete(webhook_id='webhook_id', )
+            await client.webhooks.delete(
+                webhook_id="webhook_id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(webhook_id, request_options=request_options)

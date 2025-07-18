@@ -59,7 +59,10 @@ class DraftsClient:
         Examples
         --------
         from agentmail import AgentMail
-        client = AgentMail(api_key="YOUR_API_KEY", )
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
         client.drafts.list()
         """
         _response = self._raw_client.list(
@@ -83,8 +86,13 @@ class DraftsClient:
         Examples
         --------
         from agentmail import AgentMail
-        client = AgentMail(api_key="YOUR_API_KEY", )
-        client.drafts.get(draft_id='draft_id', )
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.drafts.get(
+            draft_id="draft_id",
+        )
         """
         _response = self._raw_client.get(draft_id, request_options=request_options)
         return _response.data
@@ -134,11 +142,19 @@ class AsyncDraftsClient:
 
         Examples
         --------
-        from agentmail import AsyncAgentMail
         import asyncio
-        client = AsyncAgentMail(api_key="YOUR_API_KEY", )
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
         async def main() -> None:
             await client.drafts.list()
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
@@ -161,11 +177,21 @@ class AsyncDraftsClient:
 
         Examples
         --------
-        from agentmail import AsyncAgentMail
         import asyncio
-        client = AsyncAgentMail(api_key="YOUR_API_KEY", )
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
         async def main() -> None:
-            await client.drafts.get(draft_id='draft_id', )
+            await client.drafts.get(
+                draft_id="draft_id",
+            )
+
+
         asyncio.run(main())
         """
         _response = await self._raw_client.get(draft_id, request_options=request_options)

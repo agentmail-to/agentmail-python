@@ -154,6 +154,26 @@ class MessagesClient:
         with self._raw_client.get_attachment(inbox_id, message_id, attachment_id, request_options=request_options) as r:
             yield from r.data
 
+    def get_raw_message(
+        self, inbox_id: InboxId, message_id: MessageId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Iterator[bytes]:
+        """
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_id : MessageId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.Iterator[bytes]
+        """
+        with self._raw_client.get_raw_message(inbox_id, message_id, request_options=request_options) as r:
+            yield from r.data
+
     def send(
         self,
         inbox_id: InboxId,
@@ -485,6 +505,27 @@ class AsyncMessagesClient:
         async with self._raw_client.get_attachment(
             inbox_id, message_id, attachment_id, request_options=request_options
         ) as r:
+            async for _chunk in r.data:
+                yield _chunk
+
+    async def get_raw_message(
+        self, inbox_id: InboxId, message_id: MessageId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.AsyncIterator[bytes]:
+        """
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_id : MessageId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.AsyncIterator[bytes]
+        """
+        async with self._raw_client.get_raw_message(inbox_id, message_id, request_options=request_options) as r:
             async for _chunk in r.data:
                 yield _chunk
 

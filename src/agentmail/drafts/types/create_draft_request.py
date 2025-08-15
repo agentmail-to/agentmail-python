@@ -10,7 +10,6 @@ from .draft_cc import DraftCc
 from .draft_html import DraftHtml
 from .draft_labels import DraftLabels
 from .draft_reply_to import DraftReplyTo
-from .draft_send_at import DraftSendAt
 from .draft_subject import DraftSubject
 from .draft_text import DraftText
 from .draft_to import DraftTo
@@ -25,7 +24,6 @@ class CreateDraftRequest(UncheckedBaseModel):
     subject: typing.Optional[DraftSubject] = None
     text: typing.Optional[DraftText] = None
     html: typing.Optional[DraftHtml] = None
-    send_at: typing.Optional[DraftSendAt] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

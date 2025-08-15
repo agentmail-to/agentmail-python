@@ -13,8 +13,6 @@ from .draft_cc import DraftCc
 from .draft_id import DraftId
 from .draft_labels import DraftLabels
 from .draft_preview import DraftPreview
-from .draft_send_at import DraftSendAt
-from .draft_send_status import DraftSendStatus
 from .draft_subject import DraftSubject
 from .draft_to import DraftTo
 from .draft_updated_at import DraftUpdatedAt
@@ -31,8 +29,6 @@ class DraftItem(UncheckedBaseModel):
     subject: typing.Optional[DraftSubject] = None
     preview: typing.Optional[DraftPreview] = None
     attachments: typing.Optional[DraftAttachments] = None
-    send_status: typing.Optional[DraftSendStatus] = None
-    send_at: typing.Optional[DraftSendAt] = None
     updated_at: DraftUpdatedAt
 
     if IS_PYDANTIC_V2:

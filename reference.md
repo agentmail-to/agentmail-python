@@ -1088,14 +1088,6 @@ client.inboxes.drafts.create(
 <dl>
 <dd>
 
-**send_at:** `typing.Optional[DraftSendAt]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>

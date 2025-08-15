@@ -10,6 +10,7 @@ from .domains.client import AsyncDomainsClient, DomainsClient
 from .drafts.client import AsyncDraftsClient, DraftsClient
 from .environment import AgentMailEnvironment
 from .inboxes.client import AsyncInboxesClient, InboxesClient
+from .metrics.client import AsyncMetricsClient, MetricsClient
 from .threads.client import AsyncThreadsClient, ThreadsClient
 from .webhooks.client import AsyncWebhooksClient, WebhooksClient
 from .websockets.client import AsyncWebsocketsClient, WebsocketsClient
@@ -84,6 +85,7 @@ class AgentMail:
         self.webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
         self.domains = DomainsClient(client_wrapper=self._client_wrapper)
         self.drafts = DraftsClient(client_wrapper=self._client_wrapper)
+        self.metrics = MetricsClient(client_wrapper=self._client_wrapper)
         self.threads = ThreadsClient(client_wrapper=self._client_wrapper)
         self.websockets = WebsocketsClient(client_wrapper=self._client_wrapper)
 
@@ -157,5 +159,6 @@ class AsyncAgentMail:
         self.webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
         self.domains = AsyncDomainsClient(client_wrapper=self._client_wrapper)
         self.drafts = AsyncDraftsClient(client_wrapper=self._client_wrapper)
+        self.metrics = AsyncMetricsClient(client_wrapper=self._client_wrapper)
         self.threads = AsyncThreadsClient(client_wrapper=self._client_wrapper)
         self.websockets = AsyncWebsocketsClient(client_wrapper=self._client_wrapper)

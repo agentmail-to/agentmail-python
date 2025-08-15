@@ -222,7 +222,7 @@ class RawMessagesClient:
             yield _stream()
 
     @contextlib.contextmanager
-    def get_raw_message(
+    def get_raw(
         self, inbox_id: InboxId, message_id: MessageId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
@@ -768,7 +768,7 @@ class AsyncRawMessagesClient:
             yield await _stream()
 
     @contextlib.asynccontextmanager
-    async def get_raw_message(
+    async def get_raw(
         self, inbox_id: InboxId, message_id: MessageId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """

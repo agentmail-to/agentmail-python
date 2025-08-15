@@ -14,7 +14,7 @@ from .types import (
     ValidationErrorResponse,
 )
 from .errors import IsTakenError, NotFoundError, ValidationError
-from . import attachments, domains, drafts, inboxes, messages, threads, webhooks, websockets
+from . import attachments, domains, drafts, inboxes, messages, metrics, threads, webhooks, websockets
 from .attachments import (
     Attachment,
     AttachmentContent,
@@ -51,6 +51,8 @@ from .drafts import (
     DraftLabels,
     DraftPreview,
     DraftReplyTo,
+    DraftSendAt,
+    DraftSendStatus,
     DraftSubject,
     DraftText,
     DraftTo,
@@ -85,6 +87,15 @@ from .messages import (
     SendMessageResponse,
     SendMessageTo,
     UpdateMessageRequest,
+)
+from .metrics import (
+    ListMetricsResponse,
+    MessageMetrics,
+    MetricEndTimestamp,
+    MetricEventType,
+    MetricEventTypes,
+    MetricStartTimestamp,
+    MetricTimestamp,
 )
 from .threads import (
     ListThreadsResponse,
@@ -134,6 +145,8 @@ __all__ = [
     "DraftLabels",
     "DraftPreview",
     "DraftReplyTo",
+    "DraftSendAt",
+    "DraftSendStatus",
     "DraftSubject",
     "DraftText",
     "DraftTo",
@@ -147,6 +160,7 @@ __all__ = [
     "ListDomainsResponse",
     "ListDraftsResponse",
     "ListMessagesResponse",
+    "ListMetricsResponse",
     "ListThreadsResponse",
     "Message",
     "MessageAttachments",
@@ -157,6 +171,7 @@ __all__ = [
     "MessageId",
     "MessageItem",
     "MessageLabels",
+    "MessageMetrics",
     "MessagePreview",
     "MessageReceived",
     "MessageRejectedError",
@@ -164,6 +179,11 @@ __all__ = [
     "MessageText",
     "MessageTimestamp",
     "MessageTo",
+    "MetricEndTimestamp",
+    "MetricEventType",
+    "MetricEventTypes",
+    "MetricStartTimestamp",
+    "MetricTimestamp",
     "NotFoundError",
     "OrganizationId",
     "PageToken",
@@ -202,6 +222,7 @@ __all__ = [
     "drafts",
     "inboxes",
     "messages",
+    "metrics",
     "threads",
     "webhooks",
     "websockets",

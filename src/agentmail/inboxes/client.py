@@ -8,6 +8,7 @@ from ..types.limit import Limit
 from ..types.page_token import PageToken
 from .drafts.client import AsyncDraftsClient, DraftsClient
 from .messages.client import AsyncMessagesClient, MessagesClient
+from .metrics.client import AsyncMetricsClient, MetricsClient
 from .raw_client import AsyncRawInboxesClient, RawInboxesClient
 from .threads.client import AsyncThreadsClient, ThreadsClient
 from .types.client_id import ClientId
@@ -27,6 +28,8 @@ class InboxesClient:
         self.messages = MessagesClient(client_wrapper=client_wrapper)
 
         self.drafts = DraftsClient(client_wrapper=client_wrapper)
+
+        self.metrics = MetricsClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> RawInboxesClient:
@@ -156,6 +159,8 @@ class AsyncInboxesClient:
         self.messages = AsyncMessagesClient(client_wrapper=client_wrapper)
 
         self.drafts = AsyncDraftsClient(client_wrapper=client_wrapper)
+
+        self.metrics = AsyncMetricsClient(client_wrapper=client_wrapper)
 
     @property
     def with_raw_response(self) -> AsyncRawInboxesClient:

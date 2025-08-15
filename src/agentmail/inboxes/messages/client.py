@@ -154,7 +154,7 @@ class MessagesClient:
         with self._raw_client.get_attachment(inbox_id, message_id, attachment_id, request_options=request_options) as r:
             yield from r.data
 
-    def get_raw_message(
+    def get_raw(
         self, inbox_id: InboxId, message_id: MessageId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Iterator[bytes]:
         """
@@ -171,7 +171,7 @@ class MessagesClient:
         -------
         typing.Iterator[bytes]
         """
-        with self._raw_client.get_raw_message(inbox_id, message_id, request_options=request_options) as r:
+        with self._raw_client.get_raw(inbox_id, message_id, request_options=request_options) as r:
             yield from r.data
 
     def send(
@@ -508,7 +508,7 @@ class AsyncMessagesClient:
             async for _chunk in r.data:
                 yield _chunk
 
-    async def get_raw_message(
+    async def get_raw(
         self, inbox_id: InboxId, message_id: MessageId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.AsyncIterator[bytes]:
         """
@@ -525,7 +525,7 @@ class AsyncMessagesClient:
         -------
         typing.AsyncIterator[bytes]
         """
-        async with self._raw_client.get_raw_message(inbox_id, message_id, request_options=request_options) as r:
+        async with self._raw_client.get_raw(inbox_id, message_id, request_options=request_options) as r:
             async for _chunk in r.data:
                 yield _chunk
 

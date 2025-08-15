@@ -1088,6 +1088,14 @@ client.inboxes.drafts.create(
 <dl>
 <dd>
 
+**send_at:** `typing.Optional[DraftSendAt]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -1673,6 +1681,95 @@ client.inboxes.messages.update(
 </dl>
 </details>
 
+## Inboxes Metrics
+<details><summary><code>client.inboxes.metrics.<a href="src/agentmail/inboxes/metrics/client.py">get</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+import datetime
+
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.inboxes.metrics.get(
+    inbox_id="inbox_id",
+    start_timestamp=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    end_timestamp=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start_timestamp:** `MetricStartTimestamp` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end_timestamp:** `MetricEndTimestamp` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**event_types:** `typing.Optional[MetricEventTypes]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inboxes Threads
 <details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">list</a>(...)</code></summary>
 <dl>
@@ -1808,6 +1905,86 @@ client.inboxes.threads.get(
 <dd>
 
 **thread_id:** `ThreadId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Metrics
+<details><summary><code>client.metrics.<a href="src/agentmail/metrics/client.py">list</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+import datetime
+
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.metrics.list(
+    start_timestamp=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+    end_timestamp=datetime.datetime.fromisoformat(
+        "2024-01-15 09:30:00+00:00",
+    ),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**start_timestamp:** `MetricStartTimestamp` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end_timestamp:** `MetricEndTimestamp` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**event_types:** `typing.Optional[MetricEventTypes]` 
     
 </dd>
 </dl>

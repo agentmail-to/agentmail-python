@@ -16,6 +16,7 @@ from ...drafts.types.draft_html import DraftHtml
 from ...drafts.types.draft_id import DraftId
 from ...drafts.types.draft_labels import DraftLabels
 from ...drafts.types.draft_reply_to import DraftReplyTo
+from ...drafts.types.draft_send_at import DraftSendAt
 from ...drafts.types.draft_subject import DraftSubject
 from ...drafts.types.draft_text import DraftText
 from ...drafts.types.draft_to import DraftTo
@@ -169,6 +170,7 @@ class RawDraftsClient:
         subject: typing.Optional[DraftSubject] = OMIT,
         text: typing.Optional[DraftText] = OMIT,
         html: typing.Optional[DraftHtml] = OMIT,
+        send_at: typing.Optional[DraftSendAt] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Draft]:
         """
@@ -192,6 +194,8 @@ class RawDraftsClient:
 
         html : typing.Optional[DraftHtml]
 
+        send_at : typing.Optional[DraftSendAt]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -212,6 +216,7 @@ class RawDraftsClient:
                 "subject": subject,
                 "text": text,
                 "html": html,
+                "send_at": send_at,
             },
             request_options=request_options,
             omit=OMIT,
@@ -464,6 +469,7 @@ class AsyncRawDraftsClient:
         subject: typing.Optional[DraftSubject] = OMIT,
         text: typing.Optional[DraftText] = OMIT,
         html: typing.Optional[DraftHtml] = OMIT,
+        send_at: typing.Optional[DraftSendAt] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Draft]:
         """
@@ -487,6 +493,8 @@ class AsyncRawDraftsClient:
 
         html : typing.Optional[DraftHtml]
 
+        send_at : typing.Optional[DraftSendAt]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -507,6 +515,7 @@ class AsyncRawDraftsClient:
                 "subject": subject,
                 "text": text,
                 "html": html,
+                "send_at": send_at,
             },
             request_options=request_options,
             omit=OMIT,

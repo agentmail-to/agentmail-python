@@ -27,7 +27,7 @@ class AsyncWebsocketsSocketClient(EventEmitterMixin):
 
     async def __aiter__(self):
         async for message in self._websocket:
-            yield parse_obj_as(WebsocketsSocketClientResponse, message)  # type: ignore
+            yield parse_obj_as(WebsocketsSocketClientResponse, json.loads(message))  # type: ignore
 
     async def start_listening(self):
         """
@@ -87,7 +87,7 @@ class WebsocketsSocketClient(EventEmitterMixin):
 
     def __iter__(self):
         for message in self._websocket:
-            yield parse_obj_as(WebsocketsSocketClientResponse, message)  # type: ignore
+            yield parse_obj_as(WebsocketsSocketClientResponse, json.loads(message))  # type: ignore
 
     def start_listening(self):
         """

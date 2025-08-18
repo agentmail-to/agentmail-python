@@ -11,6 +11,7 @@ from ...drafts.types.draft_html import DraftHtml
 from ...drafts.types.draft_id import DraftId
 from ...drafts.types.draft_labels import DraftLabels
 from ...drafts.types.draft_reply_to import DraftReplyTo
+from ...drafts.types.draft_send_at import DraftSendAt
 from ...drafts.types.draft_subject import DraftSubject
 from ...drafts.types.draft_text import DraftText
 from ...drafts.types.draft_to import DraftTo
@@ -137,6 +138,7 @@ class DraftsClient:
         subject: typing.Optional[DraftSubject] = OMIT,
         text: typing.Optional[DraftText] = OMIT,
         html: typing.Optional[DraftHtml] = OMIT,
+        send_at: typing.Optional[DraftSendAt] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Draft:
         """
@@ -159,6 +161,8 @@ class DraftsClient:
         text : typing.Optional[DraftText]
 
         html : typing.Optional[DraftHtml]
+
+        send_at : typing.Optional[DraftSendAt]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -188,6 +192,7 @@ class DraftsClient:
             subject=subject,
             text=text,
             html=html,
+            send_at=send_at,
             request_options=request_options,
         )
         return _response.data
@@ -236,6 +241,38 @@ class DraftsClient:
         _response = self._raw_client.send(
             inbox_id, draft_id, add_labels=add_labels, remove_labels=remove_labels, request_options=request_options
         )
+        return _response.data
+
+    def delete(
+        self, inbox_id: InboxId, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        draft_id : DraftId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.inboxes.drafts.delete(
+            inbox_id="inbox_id",
+            draft_id="draft_id",
+        )
+        """
+        _response = self._raw_client.delete(inbox_id, draft_id, request_options=request_options)
         return _response.data
 
 
@@ -365,6 +402,7 @@ class AsyncDraftsClient:
         subject: typing.Optional[DraftSubject] = OMIT,
         text: typing.Optional[DraftText] = OMIT,
         html: typing.Optional[DraftHtml] = OMIT,
+        send_at: typing.Optional[DraftSendAt] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Draft:
         """
@@ -387,6 +425,8 @@ class AsyncDraftsClient:
         text : typing.Optional[DraftText]
 
         html : typing.Optional[DraftHtml]
+
+        send_at : typing.Optional[DraftSendAt]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -424,6 +464,7 @@ class AsyncDraftsClient:
             subject=subject,
             text=text,
             html=html,
+            send_at=send_at,
             request_options=request_options,
         )
         return _response.data
@@ -480,4 +521,44 @@ class AsyncDraftsClient:
         _response = await self._raw_client.send(
             inbox_id, draft_id, add_labels=add_labels, remove_labels=remove_labels, request_options=request_options
         )
+        return _response.data
+
+    async def delete(
+        self, inbox_id: InboxId, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        draft_id : DraftId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.inboxes.drafts.delete(
+                inbox_id="inbox_id",
+                draft_id="draft_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete(inbox_id, draft_id, request_options=request_options)
         return _response.data

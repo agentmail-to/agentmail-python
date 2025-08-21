@@ -2,10 +2,24 @@
 
 # isort: skip_file
 
+from .bounce import Bounce
 from .event_id import EventId
+from .message_bounced_payload import MessageBouncedPayload
 from .message_received_payload import MessageReceivedPayload
+from .recipient import Recipient
 from .svix_id import SvixId
 from .svix_signature import SvixSignature
 from .svix_timestamp import SvixTimestamp
+from .timestamp import Timestamp
 
-__all__ = ["EventId", "MessageReceivedPayload", "SvixId", "SvixSignature", "SvixTimestamp"]
+__all__ = [
+    "Bounce",
+    "EventId",
+    "MessageBouncedPayload",
+    "MessageReceivedPayload",
+    "Recipient",
+    "SvixId",
+    "SvixSignature",
+    "SvixTimestamp",
+    "Timestamp",
+]

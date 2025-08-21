@@ -14,9 +14,20 @@ from .types import (
     WebhookId,
 )
 from . import events
-from .events import EventId, MessageReceivedPayload, SvixId, SvixSignature, SvixTimestamp
+from .events import (
+    Bounce,
+    EventId,
+    MessageBouncedPayload,
+    MessageReceivedPayload,
+    Recipient,
+    SvixId,
+    SvixSignature,
+    SvixTimestamp,
+    Timestamp,
+)
 
 __all__ = [
+    "Bounce",
     "ClientId",
     "CreateWebhookRequest",
     "EventId",
@@ -24,10 +35,13 @@ __all__ = [
     "EventTypes",
     "InboxIds",
     "ListWebhooksResponse",
+    "MessageBouncedPayload",
     "MessageReceivedPayload",
+    "Recipient",
     "SvixId",
     "SvixSignature",
     "SvixTimestamp",
+    "Timestamp",
     "Url",
     "Webhook",
     "WebhookId",

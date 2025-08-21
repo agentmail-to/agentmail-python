@@ -2,6 +2,26 @@
 
 # isort: skip_file
 
-from .types import EventId, MessageReceivedPayload, SvixId, SvixSignature, SvixTimestamp
+from .types import (
+    Bounce,
+    EventId,
+    MessageBouncedPayload,
+    MessageReceivedPayload,
+    Recipient,
+    SvixId,
+    SvixSignature,
+    SvixTimestamp,
+    Timestamp,
+)
 
-__all__ = ["EventId", "MessageReceivedPayload", "SvixId", "SvixSignature", "SvixTimestamp"]
+__all__ = [
+    "Bounce",
+    "EventId",
+    "MessageBouncedPayload",
+    "MessageReceivedPayload",
+    "Recipient",
+    "SvixId",
+    "SvixSignature",
+    "SvixTimestamp",
+    "Timestamp",
+]

@@ -3,8 +3,10 @@
 # isort: skip_file
 
 from .bounce import Bounce
+from .complaint import Complaint
 from .event_id import EventId
 from .message_bounced_payload import MessageBouncedPayload
+from .message_complained_payload import MessageComplainedPayload
 from .message_received_payload import MessageReceivedPayload
 from .recipient import Recipient
 from .svix_id import SvixId
@@ -14,8 +16,10 @@ from .timestamp import Timestamp
 
 __all__ = [
     "Bounce",
+    "Complaint",
     "EventId",
     "MessageBouncedPayload",
+    "MessageComplainedPayload",
     "MessageReceivedPayload",
     "Recipient",
     "SvixId",

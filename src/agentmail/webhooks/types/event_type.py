@@ -2,4 +2,4 @@
 
 import typing
 
-EventType = typing.Union[typing.Literal["message.received", "message.bounced"], typing.Any]
+EventType = typing.Union[typing.Literal["message.received", "message.bounced", "message.complained"], typing.Any]

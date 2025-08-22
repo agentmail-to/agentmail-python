@@ -16,8 +16,10 @@ from .types import (
 from . import events
 from .events import (
     Bounce,
+    Complaint,
     EventId,
     MessageBouncedPayload,
+    MessageComplainedPayload,
     MessageReceivedPayload,
     Recipient,
     SvixId,
@@ -29,6 +31,7 @@ from .events import (
 __all__ = [
     "Bounce",
     "ClientId",
+    "Complaint",
     "CreateWebhookRequest",
     "EventId",
     "EventType",
@@ -36,6 +39,7 @@ __all__ = [
     "InboxIds",
     "ListWebhooksResponse",
     "MessageBouncedPayload",
+    "MessageComplainedPayload",
     "MessageReceivedPayload",
     "Recipient",
     "SvixId",

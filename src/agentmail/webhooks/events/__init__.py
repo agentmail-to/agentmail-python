@@ -4,8 +4,10 @@
 
 from .types import (
     Bounce,
+    Complaint,
     EventId,
     MessageBouncedPayload,
+    MessageComplainedPayload,
     MessageReceivedPayload,
     Recipient,
     SvixId,
@@ -16,8 +18,10 @@ from .types import (
 
 __all__ = [
     "Bounce",
+    "Complaint",
     "EventId",
     "MessageBouncedPayload",
+    "MessageComplainedPayload",
     "MessageReceivedPayload",
     "Recipient",
     "SvixId",

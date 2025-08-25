@@ -17,7 +17,9 @@ from ...drafts.types.draft_text import DraftText
 from ...drafts.types.draft_to import DraftTo
 from ...drafts.types.list_drafts_response import ListDraftsResponse
 from ...messages.types.send_message_response import SendMessageResponse
+from ...types.after import After
 from ...types.ascending import Ascending
+from ...types.before import Before
 from ...types.labels import Labels
 from ...types.limit import Limit
 from ...types.page_token import PageToken
@@ -50,6 +52,8 @@ class DraftsClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         labels: typing.Optional[Labels] = None,
+        before: typing.Optional[Before] = None,
+        after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListDraftsResponse:
@@ -63,6 +67,10 @@ class DraftsClient:
         page_token : typing.Optional[PageToken]
 
         labels : typing.Optional[Labels]
+
+        before : typing.Optional[Before]
+
+        after : typing.Optional[After]
 
         ascending : typing.Optional[Ascending]
 
@@ -89,6 +97,8 @@ class DraftsClient:
             limit=limit,
             page_token=page_token,
             labels=labels,
+            before=before,
+            after=after,
             ascending=ascending,
             request_options=request_options,
         )
@@ -298,6 +308,8 @@ class AsyncDraftsClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         labels: typing.Optional[Labels] = None,
+        before: typing.Optional[Before] = None,
+        after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListDraftsResponse:
@@ -311,6 +323,10 @@ class AsyncDraftsClient:
         page_token : typing.Optional[PageToken]
 
         labels : typing.Optional[Labels]
+
+        before : typing.Optional[Before]
+
+        after : typing.Optional[After]
 
         ascending : typing.Optional[Ascending]
 
@@ -345,6 +361,8 @@ class AsyncDraftsClient:
             limit=limit,
             page_token=page_token,
             labels=labels,
+            before=before,
+            after=after,
             ascending=ascending,
             request_options=request_options,
         )

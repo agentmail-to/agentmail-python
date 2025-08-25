@@ -3,7 +3,9 @@
 # isort: skip_file
 
 from .types import (
+    After,
     Ascending,
+    Before,
     Count,
     ErrorName,
     ErrorResponse,
@@ -116,6 +118,7 @@ from .websockets import EventId, MessageReceived, Subscribe, Subscribed
 
 __all__ = [
     "Addresses",
+    "After",
     "AgentMail",
     "AgentMailEnvironment",
     "Ascending",
@@ -127,6 +130,7 @@ __all__ = [
     "AttachmentId",
     "AttachmentInline",
     "AttachmentSize",
+    "Before",
     "Count",
     "CreateDomainRequest",
     "CreateDomainResponse",

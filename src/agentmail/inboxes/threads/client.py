@@ -8,7 +8,9 @@ from ...core.request_options import RequestOptions
 from ...threads.types.list_threads_response import ListThreadsResponse
 from ...threads.types.thread import Thread
 from ...threads.types.thread_id import ThreadId
+from ...types.after import After
 from ...types.ascending import Ascending
+from ...types.before import Before
 from ...types.labels import Labels
 from ...types.limit import Limit
 from ...types.page_token import PageToken
@@ -38,6 +40,8 @@ class ThreadsClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         labels: typing.Optional[Labels] = None,
+        before: typing.Optional[Before] = None,
+        after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
@@ -51,6 +55,10 @@ class ThreadsClient:
         page_token : typing.Optional[PageToken]
 
         labels : typing.Optional[Labels]
+
+        before : typing.Optional[Before]
+
+        after : typing.Optional[After]
 
         ascending : typing.Optional[Ascending]
 
@@ -77,6 +85,8 @@ class ThreadsClient:
             limit=limit,
             page_token=page_token,
             labels=labels,
+            before=before,
+            after=after,
             ascending=ascending,
             request_options=request_options,
         )
@@ -164,6 +174,8 @@ class AsyncThreadsClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         labels: typing.Optional[Labels] = None,
+        before: typing.Optional[Before] = None,
+        after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
@@ -177,6 +189,10 @@ class AsyncThreadsClient:
         page_token : typing.Optional[PageToken]
 
         labels : typing.Optional[Labels]
+
+        before : typing.Optional[Before]
+
+        after : typing.Optional[After]
 
         ascending : typing.Optional[Ascending]
 
@@ -211,6 +227,8 @@ class AsyncThreadsClient:
             limit=limit,
             page_token=page_token,
             labels=labels,
+            before=before,
+            after=after,
             ascending=ascending,
             request_options=request_options,
         )

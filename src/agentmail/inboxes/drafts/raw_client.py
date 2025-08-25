@@ -5,6 +5,7 @@ from json.decoder import JSONDecodeError
 
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.datetime_utils import serialize_datetime
 from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.request_options import RequestOptions
@@ -25,7 +26,9 @@ from ...errors.not_found_error import NotFoundError
 from ...errors.validation_error import ValidationError
 from ...messages.errors.message_rejected_error import MessageRejectedError
 from ...messages.types.send_message_response import SendMessageResponse
+from ...types.after import After
 from ...types.ascending import Ascending
+from ...types.before import Before
 from ...types.error_response import ErrorResponse
 from ...types.labels import Labels
 from ...types.limit import Limit
@@ -48,6 +51,8 @@ class RawDraftsClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         labels: typing.Optional[Labels] = None,
+        before: typing.Optional[Before] = None,
+        after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListDraftsResponse]:
@@ -61,6 +66,10 @@ class RawDraftsClient:
         page_token : typing.Optional[PageToken]
 
         labels : typing.Optional[Labels]
+
+        before : typing.Optional[Before]
+
+        after : typing.Optional[After]
 
         ascending : typing.Optional[Ascending]
 
@@ -79,6 +88,8 @@ class RawDraftsClient:
                 "limit": limit,
                 "page_token": page_token,
                 "labels": labels,
+                "before": serialize_datetime(before) if before is not None else None,
+                "after": serialize_datetime(after) if after is not None else None,
                 "ascending": ascending,
             },
             request_options=request_options,
@@ -389,6 +400,8 @@ class AsyncRawDraftsClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         labels: typing.Optional[Labels] = None,
+        before: typing.Optional[Before] = None,
+        after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListDraftsResponse]:
@@ -402,6 +415,10 @@ class AsyncRawDraftsClient:
         page_token : typing.Optional[PageToken]
 
         labels : typing.Optional[Labels]
+
+        before : typing.Optional[Before]
+
+        after : typing.Optional[After]
 
         ascending : typing.Optional[Ascending]
 
@@ -420,6 +437,8 @@ class AsyncRawDraftsClient:
                 "limit": limit,
                 "page_token": page_token,
                 "labels": labels,
+                "before": serialize_datetime(before) if before is not None else None,
+                "after": serialize_datetime(after) if after is not None else None,
                 "ascending": ascending,
             },
             request_options=request_options,

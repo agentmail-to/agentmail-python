@@ -5,7 +5,9 @@ import typing
 from ..attachments.types.attachment_id import AttachmentId
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.after import After
 from ..types.ascending import Ascending
+from ..types.before import Before
 from ..types.labels import Labels
 from ..types.limit import Limit
 from ..types.page_token import PageToken
@@ -36,6 +38,8 @@ class ThreadsClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         labels: typing.Optional[Labels] = None,
+        before: typing.Optional[Before] = None,
+        after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
@@ -47,6 +51,10 @@ class ThreadsClient:
         page_token : typing.Optional[PageToken]
 
         labels : typing.Optional[Labels]
+
+        before : typing.Optional[Before]
+
+        after : typing.Optional[After]
 
         ascending : typing.Optional[Ascending]
 
@@ -67,7 +75,13 @@ class ThreadsClient:
         client.threads.list()
         """
         _response = self._raw_client.list(
-            limit=limit, page_token=page_token, labels=labels, ascending=ascending, request_options=request_options
+            limit=limit,
+            page_token=page_token,
+            labels=labels,
+            before=before,
+            after=after,
+            ascending=ascending,
+            request_options=request_options,
         )
         return _response.data
 
@@ -144,6 +158,8 @@ class AsyncThreadsClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         labels: typing.Optional[Labels] = None,
+        before: typing.Optional[Before] = None,
+        after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
@@ -155,6 +171,10 @@ class AsyncThreadsClient:
         page_token : typing.Optional[PageToken]
 
         labels : typing.Optional[Labels]
+
+        before : typing.Optional[Before]
+
+        after : typing.Optional[After]
 
         ascending : typing.Optional[Ascending]
 
@@ -183,7 +203,13 @@ class AsyncThreadsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
-            limit=limit, page_token=page_token, labels=labels, ascending=ascending, request_options=request_options
+            limit=limit,
+            page_token=page_token,
+            labels=labels,
+            before=before,
+            after=after,
+            ascending=ascending,
+            request_options=request_options,
         )
         return _response.data
 

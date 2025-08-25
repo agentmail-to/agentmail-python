@@ -18,7 +18,9 @@ from ...messages.types.send_message_cc import SendMessageCc
 from ...messages.types.send_message_reply_to import SendMessageReplyTo
 from ...messages.types.send_message_response import SendMessageResponse
 from ...messages.types.send_message_to import SendMessageTo
+from ...types.after import After
 from ...types.ascending import Ascending
+from ...types.before import Before
 from ...types.labels import Labels
 from ...types.limit import Limit
 from ...types.page_token import PageToken
@@ -51,6 +53,8 @@ class MessagesClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         labels: typing.Optional[Labels] = None,
+        before: typing.Optional[Before] = None,
+        after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListMessagesResponse:
@@ -64,6 +68,10 @@ class MessagesClient:
         page_token : typing.Optional[PageToken]
 
         labels : typing.Optional[Labels]
+
+        before : typing.Optional[Before]
+
+        after : typing.Optional[After]
 
         ascending : typing.Optional[Ascending]
 
@@ -90,6 +98,8 @@ class MessagesClient:
             limit=limit,
             page_token=page_token,
             labels=labels,
+            before=before,
+            after=after,
             ascending=ascending,
             request_options=request_options,
         )
@@ -386,6 +396,8 @@ class AsyncMessagesClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         labels: typing.Optional[Labels] = None,
+        before: typing.Optional[Before] = None,
+        after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListMessagesResponse:
@@ -399,6 +411,10 @@ class AsyncMessagesClient:
         page_token : typing.Optional[PageToken]
 
         labels : typing.Optional[Labels]
+
+        before : typing.Optional[Before]
+
+        after : typing.Optional[After]
 
         ascending : typing.Optional[Ascending]
 
@@ -433,6 +449,8 @@ class AsyncMessagesClient:
             limit=limit,
             page_token=page_token,
             labels=labels,
+            before=before,
+            after=after,
             ascending=ascending,
             request_options=request_options,
         )

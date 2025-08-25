@@ -750,6 +750,22 @@ client.drafts.list()
 <dl>
 <dd>
 
+**before:** `typing.Optional[Before]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**after:** `typing.Optional[After]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **ascending:** `typing.Optional[Ascending]` 
     
 </dd>
@@ -888,6 +904,22 @@ client.inboxes.drafts.list(
 <dd>
 
 **labels:** `typing.Optional[Labels]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**before:** `typing.Optional[Before]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**after:** `typing.Optional[After]` 
     
 </dd>
 </dl>
@@ -1316,6 +1348,22 @@ client.inboxes.messages.list(
 <dd>
 
 **labels:** `typing.Optional[Labels]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**before:** `typing.Optional[Before]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**after:** `typing.Optional[After]` 
     
 </dd>
 </dl>
@@ -1904,6 +1952,22 @@ client.inboxes.threads.list(
 <dl>
 <dd>
 
+**before:** `typing.Optional[Before]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**after:** `typing.Optional[After]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **ascending:** `typing.Optional[Ascending]` 
     
 </dd>
@@ -2121,6 +2185,22 @@ client.threads.list()
 <dd>
 
 **labels:** `typing.Optional[Labels]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**before:** `typing.Optional[Before]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**after:** `typing.Optional[After]` 
     
 </dd>
 </dl>

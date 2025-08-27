@@ -16,7 +16,7 @@ from .types import (
     ValidationErrorResponse,
 )
 from .errors import IsTakenError, NotFoundError, ValidationError
-from . import attachments, domains, drafts, inboxes, messages, metrics, threads, webhooks, websockets
+from . import attachments, domains, drafts, events, inboxes, messages, metrics, threads, webhooks, websockets
 from .attachments import (
     Attachment,
     AttachmentContent,
@@ -62,6 +62,22 @@ from .drafts import (
     ListDraftsResponse,
 )
 from .environment import AgentMailEnvironment
+from .events import (
+    Bounce,
+    Complaint,
+    Delivery,
+    EventId,
+    MessageBouncedEvent,
+    MessageComplainedEvent,
+    MessageDeliveredEvent,
+    MessageReceivedEvent,
+    MessageRejectedEvent,
+    MessageSentEvent,
+    Recipient,
+    Reject,
+    Send,
+    Timestamp,
+)
 from .messages import (
     Addresses,
     ListMessagesResponse,
@@ -114,7 +130,7 @@ from .threads import (
     ThreadTimestamp,
 )
 from .version import __version__
-from .websockets import EventId, MessageReceived, Subscribe, Subscribed
+from .websockets import Subscribe, Subscribed
 
 __all__ = [
     "Addresses",
@@ -131,10 +147,13 @@ __all__ = [
     "AttachmentInline",
     "AttachmentSize",
     "Before",
+    "Bounce",
+    "Complaint",
     "Count",
     "CreateDomainRequest",
     "CreateDomainResponse",
     "CreateDraftRequest",
+    "Delivery",
     "Domain",
     "DomainId",
     "DomainName",
@@ -169,7 +188,10 @@ __all__ = [
     "Message",
     "MessageAttachments",
     "MessageBcc",
+    "MessageBouncedEvent",
     "MessageCc",
+    "MessageComplainedEvent",
+    "MessageDeliveredEvent",
     "MessageFrom",
     "MessageHtml",
     "MessageId",
@@ -177,8 +199,10 @@ __all__ = [
     "MessageLabels",
     "MessageMetrics",
     "MessagePreview",
-    "MessageReceived",
+    "MessageReceivedEvent",
     "MessageRejectedError",
+    "MessageRejectedEvent",
+    "MessageSentEvent",
     "MessageSubject",
     "MessageText",
     "MessageTimestamp",
@@ -191,9 +215,12 @@ __all__ = [
     "NotFoundError",
     "OrganizationId",
     "PageToken",
+    "Recipient",
     "RecordStatus",
     "RecordType",
+    "Reject",
     "ReplyToMessageRequest",
+    "Send",
     "SendAttachment",
     "SendMessageAttachments",
     "SendMessageBcc",
@@ -215,6 +242,7 @@ __all__ = [
     "ThreadSenders",
     "ThreadSubject",
     "ThreadTimestamp",
+    "Timestamp",
     "UpdateMessageRequest",
     "ValidationError",
     "ValidationErrorResponse",
@@ -224,6 +252,7 @@ __all__ = [
     "attachments",
     "domains",
     "drafts",
+    "events",
     "inboxes",
     "messages",
     "metrics",

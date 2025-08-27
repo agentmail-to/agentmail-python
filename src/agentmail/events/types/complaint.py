@@ -3,20 +3,30 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
-from ....core.unchecked_base_model import UncheckedBaseModel
-from ....inboxes.types.inbox_id import InboxId
-from ....messages.types.message_id import MessageId
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+from ...core.unchecked_base_model import UncheckedBaseModel
+from ...inboxes.types.inbox_id import InboxId
+from ...messages.types.message_id import MessageId
 from .timestamp import Timestamp
 
 
-class Send(UncheckedBaseModel):
+class Complaint(UncheckedBaseModel):
     inbox_id: InboxId
     message_id: MessageId
     timestamp: Timestamp
+    type: str = pydantic.Field()
+    """
+    Complaint type.
+    """
+
+    sub_type: str = pydantic.Field()
+    """
+    Complaint sub-type.
+    """
+
     recipients: typing.List[str] = pydantic.Field()
     """
-    Sent recipients.
+    Complained recipients.
     """
 
     if IS_PYDANTIC_V2:

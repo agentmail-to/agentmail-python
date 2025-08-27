@@ -8,7 +8,12 @@ import websockets
 import websockets.sync.connection as websockets_sync_connection
 from ..core.events import EventEmitterMixin, EventType
 from ..core.pydantic_utilities import parse_obj_as
-from .types.message_received import MessageReceived
+from ..events.types.message_bounced_event import MessageBouncedEvent
+from ..events.types.message_complained_event import MessageComplainedEvent
+from ..events.types.message_delivered_event import MessageDeliveredEvent
+from ..events.types.message_received_event import MessageReceivedEvent
+from ..events.types.message_rejected_event import MessageRejectedEvent
+from ..events.types.message_sent_event import MessageSentEvent
 from .types.subscribe import Subscribe
 from .types.subscribed import Subscribed
 
@@ -17,7 +22,15 @@ try:
 except ImportError:
     from websockets import WebSocketClientProtocol  # type: ignore
 
-WebsocketsSocketClientResponse = typing.Union[Subscribed, MessageReceived]
+WebsocketsSocketClientResponse = typing.Union[
+    Subscribed,
+    MessageReceivedEvent,
+    MessageSentEvent,
+    MessageDeliveredEvent,
+    MessageBouncedEvent,
+    MessageComplainedEvent,
+    MessageRejectedEvent,
+]
 
 
 class AsyncWebsocketsSocketClient(EventEmitterMixin):

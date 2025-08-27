@@ -3,17 +3,17 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
-from ....core.unchecked_base_model import UncheckedBaseModel
-from ...types.event_type import EventType
-from .delivery import Delivery
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+from ...core.unchecked_base_model import UncheckedBaseModel
+from ...messages.types.message import Message
 from .event_id import EventId
 
 
-class MessageDeliveredPayload(UncheckedBaseModel):
-    event_type: EventType
+class MessageReceivedEvent(UncheckedBaseModel):
+    type: typing.Literal["event"] = "event"
+    event_type: typing.Literal["message.received"] = "message.received"
     event_id: EventId
-    delivery: Delivery
+    message: Message
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

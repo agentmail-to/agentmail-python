@@ -3,15 +3,15 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
-from ....core.unchecked_base_model import UncheckedBaseModel
-from ...types.event_type import EventType
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+from ...core.unchecked_base_model import UncheckedBaseModel
 from .complaint import Complaint
 from .event_id import EventId
 
 
-class MessageComplainedPayload(UncheckedBaseModel):
-    event_type: EventType
+class MessageComplainedEvent(UncheckedBaseModel):
+    type: typing.Literal["event"] = "event"
+    event_type: typing.Literal["message.complained"] = "message.complained"
     event_id: EventId
     complaint: Complaint
 

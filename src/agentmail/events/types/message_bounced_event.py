@@ -3,17 +3,17 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
-from ....core.unchecked_base_model import UncheckedBaseModel
-from ...types.event_type import EventType
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+from ...core.unchecked_base_model import UncheckedBaseModel
+from .bounce import Bounce
 from .event_id import EventId
-from .reject import Reject
 
 
-class MessageRejectedPayload(UncheckedBaseModel):
-    event_type: EventType
+class MessageBouncedEvent(UncheckedBaseModel):
+    type: typing.Literal["event"] = "event"
+    event_type: typing.Literal["message.bounced"] = "message.bounced"
     event_id: EventId
-    reject: Reject
+    bounce: Bounce
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

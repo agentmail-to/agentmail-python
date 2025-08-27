@@ -3,30 +3,31 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
-from ....core.unchecked_base_model import UncheckedBaseModel
-from ....inboxes.types.inbox_id import InboxId
-from ....messages.types.message_id import MessageId
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+from ...core.unchecked_base_model import UncheckedBaseModel
+from ...inboxes.types.inbox_id import InboxId
+from ...messages.types.message_id import MessageId
+from .recipient import Recipient
 from .timestamp import Timestamp
 
 
-class Complaint(UncheckedBaseModel):
+class Bounce(UncheckedBaseModel):
     inbox_id: InboxId
     message_id: MessageId
     timestamp: Timestamp
     type: str = pydantic.Field()
     """
-    Complaint type.
+    Bounce type.
     """
 
     sub_type: str = pydantic.Field()
     """
-    Complaint sub-type.
+    Bounce sub-type.
     """
 
-    recipients: typing.List[str] = pydantic.Field()
+    recipients: typing.List[Recipient] = pydantic.Field()
     """
-    Complained recipients.
+    Bounced recipients.
     """
 
     if IS_PYDANTIC_V2:

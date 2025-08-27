@@ -3,31 +3,20 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
-from ....core.unchecked_base_model import UncheckedBaseModel
-from ....inboxes.types.inbox_id import InboxId
-from ....messages.types.message_id import MessageId
-from .recipient import Recipient
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+from ...core.unchecked_base_model import UncheckedBaseModel
+from ...inboxes.types.inbox_id import InboxId
+from ...messages.types.message_id import MessageId
 from .timestamp import Timestamp
 
 
-class Bounce(UncheckedBaseModel):
+class Send(UncheckedBaseModel):
     inbox_id: InboxId
     message_id: MessageId
     timestamp: Timestamp
-    type: str = pydantic.Field()
+    recipients: typing.List[str] = pydantic.Field()
     """
-    Bounce type.
-    """
-
-    sub_type: str = pydantic.Field()
-    """
-    Bounce sub-type.
-    """
-
-    recipients: typing.List[Recipient] = pydantic.Field()
-    """
-    Bounced recipients.
+    Sent recipients.
     """
 
     if IS_PYDANTIC_V2:

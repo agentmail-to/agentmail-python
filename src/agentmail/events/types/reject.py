@@ -3,10 +3,10 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
-from ....core.unchecked_base_model import UncheckedBaseModel
-from ....inboxes.types.inbox_id import InboxId
-from ....messages.types.message_id import MessageId
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+from ...core.unchecked_base_model import UncheckedBaseModel
+from ...inboxes.types.inbox_id import InboxId
+from ...messages.types.message_id import MessageId
 from .timestamp import Timestamp
 
 

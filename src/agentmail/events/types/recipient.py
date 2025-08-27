@@ -3,17 +3,20 @@
 import typing
 
 import pydantic
-from ....core.pydantic_utilities import IS_PYDANTIC_V2
-from ....core.unchecked_base_model import UncheckedBaseModel
-from ...types.event_type import EventType
-from .bounce import Bounce
-from .event_id import EventId
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+from ...core.unchecked_base_model import UncheckedBaseModel
 
 
-class MessageBouncedPayload(UncheckedBaseModel):
-    event_type: EventType
-    event_id: EventId
-    bounce: Bounce
+class Recipient(UncheckedBaseModel):
+    address: str = pydantic.Field()
+    """
+    Recipient address.
+    """
+
+    status: str = pydantic.Field()
+    """
+    Recipient status.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

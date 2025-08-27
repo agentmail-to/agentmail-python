@@ -5,15 +5,19 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
-from ...messages.types.message import Message
-from .event_id import EventId
+from ...inboxes.types.inbox_id import InboxId
+from ...messages.types.message_id import MessageId
+from .timestamp import Timestamp
 
 
-class MessageReceived(UncheckedBaseModel):
-    type: typing.Literal["event"] = "event"
-    event_type: typing.Literal["message.received"] = "message.received"
-    event_id: EventId
-    message: Message
+class Delivery(UncheckedBaseModel):
+    inbox_id: InboxId
+    message_id: MessageId
+    timestamp: Timestamp
+    recipients: typing.List[str] = pydantic.Field()
+    """
+    Delivered recipients.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

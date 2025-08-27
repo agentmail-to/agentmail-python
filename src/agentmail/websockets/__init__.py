@@ -2,6 +2,6 @@
 
 # isort: skip_file
 
-from .types import EventId, MessageReceived, Subscribe, Subscribed
+from .types import Subscribe, Subscribed
 
-__all__ = ["EventId", "MessageReceived", "Subscribe", "Subscribed"]
+__all__ = ["Subscribe", "Subscribed"]

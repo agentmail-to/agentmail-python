@@ -9,6 +9,7 @@ from ...drafts.types.draft_bcc import DraftBcc
 from ...drafts.types.draft_cc import DraftCc
 from ...drafts.types.draft_html import DraftHtml
 from ...drafts.types.draft_id import DraftId
+from ...drafts.types.draft_in_reply_to import DraftInReplyTo
 from ...drafts.types.draft_labels import DraftLabels
 from ...drafts.types.draft_reply_to import DraftReplyTo
 from ...drafts.types.draft_send_at import DraftSendAt
@@ -148,6 +149,7 @@ class DraftsClient:
         subject: typing.Optional[DraftSubject] = OMIT,
         text: typing.Optional[DraftText] = OMIT,
         html: typing.Optional[DraftHtml] = OMIT,
+        in_reply_to: typing.Optional[DraftInReplyTo] = OMIT,
         send_at: typing.Optional[DraftSendAt] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Draft:
@@ -171,6 +173,8 @@ class DraftsClient:
         text : typing.Optional[DraftText]
 
         html : typing.Optional[DraftHtml]
+
+        in_reply_to : typing.Optional[DraftInReplyTo]
 
         send_at : typing.Optional[DraftSendAt]
 
@@ -202,6 +206,7 @@ class DraftsClient:
             subject=subject,
             text=text,
             html=html,
+            in_reply_to=in_reply_to,
             send_at=send_at,
             request_options=request_options,
         )
@@ -420,6 +425,7 @@ class AsyncDraftsClient:
         subject: typing.Optional[DraftSubject] = OMIT,
         text: typing.Optional[DraftText] = OMIT,
         html: typing.Optional[DraftHtml] = OMIT,
+        in_reply_to: typing.Optional[DraftInReplyTo] = OMIT,
         send_at: typing.Optional[DraftSendAt] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Draft:
@@ -443,6 +449,8 @@ class AsyncDraftsClient:
         text : typing.Optional[DraftText]
 
         html : typing.Optional[DraftHtml]
+
+        in_reply_to : typing.Optional[DraftInReplyTo]
 
         send_at : typing.Optional[DraftSendAt]
 
@@ -482,6 +490,7 @@ class AsyncDraftsClient:
             subject=subject,
             text=text,
             html=html,
+            in_reply_to=in_reply_to,
             send_at=send_at,
             request_options=request_options,
         )

@@ -8,6 +8,7 @@ from ...core.unchecked_base_model import UncheckedBaseModel
 from .draft_bcc import DraftBcc
 from .draft_cc import DraftCc
 from .draft_html import DraftHtml
+from .draft_in_reply_to import DraftInReplyTo
 from .draft_labels import DraftLabels
 from .draft_reply_to import DraftReplyTo
 from .draft_send_at import DraftSendAt
@@ -25,6 +26,7 @@ class CreateDraftRequest(UncheckedBaseModel):
     subject: typing.Optional[DraftSubject] = None
     text: typing.Optional[DraftText] = None
     html: typing.Optional[DraftHtml] = None
+    in_reply_to: typing.Optional[DraftInReplyTo] = None
     send_at: typing.Optional[DraftSendAt] = None
 
     if IS_PYDANTIC_V2:

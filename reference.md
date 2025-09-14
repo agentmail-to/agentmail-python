@@ -1120,6 +1120,14 @@ client.inboxes.drafts.create(
 <dl>
 <dd>
 
+**in_reply_to:** `typing.Optional[DraftInReplyTo]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **send_at:** `typing.Optional[DraftSendAt]` 
     
 </dd>

@@ -9,6 +9,7 @@ from .draft_bcc import DraftBcc
 from .draft_cc import DraftCc
 from .draft_html import DraftHtml
 from .draft_id import DraftId
+from .draft_in_reply_to import DraftInReplyTo
 from .draft_item import DraftItem
 from .draft_labels import DraftLabels
 from .draft_preview import DraftPreview
@@ -29,6 +30,7 @@ __all__ = [
     "DraftCc",
     "DraftHtml",
     "DraftId",
+    "DraftInReplyTo",
     "DraftItem",
     "DraftLabels",
     "DraftPreview",

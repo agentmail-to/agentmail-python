@@ -13,6 +13,7 @@ from .draft_bcc import DraftBcc
 from .draft_cc import DraftCc
 from .draft_html import DraftHtml
 from .draft_id import DraftId
+from .draft_in_reply_to import DraftInReplyTo
 from .draft_labels import DraftLabels
 from .draft_preview import DraftPreview
 from .draft_reply_to import DraftReplyTo
@@ -38,11 +39,7 @@ class Draft(UncheckedBaseModel):
     text: typing.Optional[DraftText] = None
     html: typing.Optional[DraftHtml] = None
     attachments: typing.Optional[DraftAttachments] = None
-    in_reply_to: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    ID of message being replied to.
-    """
-
+    in_reply_to: typing.Optional[DraftInReplyTo] = None
     references: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     IDs of previous messages in thread.

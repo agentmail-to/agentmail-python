@@ -7,14 +7,20 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from ...inboxes.types.inbox_id import InboxId
 from .thread_attachments import ThreadAttachments
+from .thread_created_at import ThreadCreatedAt
 from .thread_id import ThreadId
 from .thread_labels import ThreadLabels
+from .thread_last_message_id import ThreadLastMessageId
 from .thread_message_count import ThreadMessageCount
 from .thread_preview import ThreadPreview
+from .thread_received_timestamp import ThreadReceivedTimestamp
 from .thread_recipients import ThreadRecipients
 from .thread_senders import ThreadSenders
+from .thread_sent_timestamp import ThreadSentTimestamp
+from .thread_size import ThreadSize
 from .thread_subject import ThreadSubject
 from .thread_timestamp import ThreadTimestamp
+from .thread_updated_at import ThreadUpdatedAt
 
 
 class ThreadItem(UncheckedBaseModel):
@@ -22,12 +28,18 @@ class ThreadItem(UncheckedBaseModel):
     thread_id: ThreadId
     labels: ThreadLabels
     timestamp: ThreadTimestamp
+    received_timestamp: ThreadReceivedTimestamp
+    sent_timestamp: ThreadSentTimestamp
     senders: ThreadSenders
     recipients: ThreadRecipients
     subject: typing.Optional[ThreadSubject] = None
     preview: typing.Optional[ThreadPreview] = None
     attachments: typing.Optional[ThreadAttachments] = None
+    last_message_id: ThreadLastMessageId
     message_count: ThreadMessageCount
+    size: ThreadSize
+    updated_at: ThreadUpdatedAt
+    created_at: ThreadCreatedAt
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

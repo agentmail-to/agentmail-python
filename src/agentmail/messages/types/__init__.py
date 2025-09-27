@@ -8,16 +8,22 @@ from .message import Message
 from .message_attachments import MessageAttachments
 from .message_bcc import MessageBcc
 from .message_cc import MessageCc
+from .message_created_at import MessageCreatedAt
 from .message_from import MessageFrom
 from .message_html import MessageHtml
 from .message_id import MessageId
+from .message_in_reply_to import MessageInReplyTo
 from .message_item import MessageItem
 from .message_labels import MessageLabels
 from .message_preview import MessagePreview
+from .message_references import MessageReferences
+from .message_reply_to import MessageReplyTo
+from .message_size import MessageSize
 from .message_subject import MessageSubject
 from .message_text import MessageText
 from .message_timestamp import MessageTimestamp
 from .message_to import MessageTo
+from .message_updated_at import MessageUpdatedAt
 from .reply_to_message_request import ReplyToMessageRequest
 from .send_message_attachments import SendMessageAttachments
 from .send_message_bcc import SendMessageBcc
@@ -35,16 +41,22 @@ __all__ = [
     "MessageAttachments",
     "MessageBcc",
     "MessageCc",
+    "MessageCreatedAt",
     "MessageFrom",
     "MessageHtml",
     "MessageId",
+    "MessageInReplyTo",
     "MessageItem",
     "MessageLabels",
     "MessagePreview",
+    "MessageReferences",
+    "MessageReplyTo",
+    "MessageSize",
     "MessageSubject",
     "MessageText",
     "MessageTimestamp",
     "MessageTo",
+    "MessageUpdatedAt",
     "ReplyToMessageRequest",
     "SendMessageAttachments",
     "SendMessageBcc",

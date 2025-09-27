@@ -5,27 +5,39 @@
 from .list_threads_response import ListThreadsResponse
 from .thread import Thread
 from .thread_attachments import ThreadAttachments
+from .thread_created_at import ThreadCreatedAt
 from .thread_id import ThreadId
 from .thread_item import ThreadItem
 from .thread_labels import ThreadLabels
+from .thread_last_message_id import ThreadLastMessageId
 from .thread_message_count import ThreadMessageCount
 from .thread_preview import ThreadPreview
+from .thread_received_timestamp import ThreadReceivedTimestamp
 from .thread_recipients import ThreadRecipients
 from .thread_senders import ThreadSenders
+from .thread_sent_timestamp import ThreadSentTimestamp
+from .thread_size import ThreadSize
 from .thread_subject import ThreadSubject
 from .thread_timestamp import ThreadTimestamp
+from .thread_updated_at import ThreadUpdatedAt
 
 __all__ = [
     "ListThreadsResponse",
     "Thread",
     "ThreadAttachments",
+    "ThreadCreatedAt",
     "ThreadId",
     "ThreadItem",
     "ThreadLabels",
+    "ThreadLastMessageId",
     "ThreadMessageCount",
     "ThreadPreview",
+    "ThreadReceivedTimestamp",
     "ThreadRecipients",
     "ThreadSenders",
+    "ThreadSentTimestamp",
+    "ThreadSize",
     "ThreadSubject",
     "ThreadTimestamp",
+    "ThreadUpdatedAt",
 ]

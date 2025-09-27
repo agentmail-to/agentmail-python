@@ -148,6 +148,33 @@ class ThreadsClient:
         with self._raw_client.get_attachment(thread_id, attachment_id, request_options=request_options) as r:
             yield from r.data
 
+    def delete(self, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Parameters
+        ----------
+        thread_id : ThreadId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.threads.delete(
+            thread_id="thread_id",
+        )
+        """
+        _response = self._raw_client.delete(thread_id, request_options=request_options)
+        return _response.data
+
 
 class AsyncThreadsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -304,3 +331,38 @@ class AsyncThreadsClient:
         async with self._raw_client.get_attachment(thread_id, attachment_id, request_options=request_options) as r:
             async for _chunk in r.data:
                 yield _chunk
+
+    async def delete(self, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Parameters
+        ----------
+        thread_id : ThreadId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.threads.delete(
+                thread_id="thread_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete(thread_id, request_options=request_options)
+        return _response.data

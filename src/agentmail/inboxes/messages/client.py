@@ -160,19 +160,6 @@ class MessagesClient:
         Returns
         -------
         typing.Iterator[bytes]
-
-        Examples
-        --------
-        from agentmail import AgentMail
-
-        client = AgentMail(
-            api_key="YOUR_API_KEY",
-        )
-        client.inboxes.messages.get_attachment(
-            inbox_id="inbox_id",
-            message_id="message_id",
-            attachment_id="attachment_id",
-        )
         """
         with self._raw_client.get_attachment(inbox_id, message_id, attachment_id, request_options=request_options) as r:
             yield from r.data
@@ -193,18 +180,6 @@ class MessagesClient:
         Returns
         -------
         typing.Iterator[bytes]
-
-        Examples
-        --------
-        from agentmail import AgentMail
-
-        client = AgentMail(
-            api_key="YOUR_API_KEY",
-        )
-        client.inboxes.messages.get_raw(
-            inbox_id="inbox_id",
-            message_id="message_id",
-        )
         """
         with self._raw_client.get_raw(inbox_id, message_id, request_options=request_options) as r:
             yield from r.data
@@ -544,27 +519,6 @@ class AsyncMessagesClient:
         Returns
         -------
         typing.AsyncIterator[bytes]
-
-        Examples
-        --------
-        import asyncio
-
-        from agentmail import AsyncAgentMail
-
-        client = AsyncAgentMail(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.inboxes.messages.get_attachment(
-                inbox_id="inbox_id",
-                message_id="message_id",
-                attachment_id="attachment_id",
-            )
-
-
-        asyncio.run(main())
         """
         async with self._raw_client.get_attachment(
             inbox_id, message_id, attachment_id, request_options=request_options
@@ -588,26 +542,6 @@ class AsyncMessagesClient:
         Returns
         -------
         typing.AsyncIterator[bytes]
-
-        Examples
-        --------
-        import asyncio
-
-        from agentmail import AsyncAgentMail
-
-        client = AsyncAgentMail(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.inboxes.messages.get_raw(
-                inbox_id="inbox_id",
-                message_id="message_id",
-            )
-
-
-        asyncio.run(main())
         """
         async with self._raw_client.get_raw(inbox_id, message_id, request_options=request_options) as r:
             async for _chunk in r.data:

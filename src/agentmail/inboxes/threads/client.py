@@ -147,19 +147,6 @@ class ThreadsClient:
         Returns
         -------
         typing.Iterator[bytes]
-
-        Examples
-        --------
-        from agentmail import AgentMail
-
-        client = AgentMail(
-            api_key="YOUR_API_KEY",
-        )
-        client.inboxes.threads.get_attachment(
-            inbox_id="inbox_id",
-            thread_id="thread_id",
-            attachment_id="attachment_id",
-        )
         """
         with self._raw_client.get_attachment(inbox_id, thread_id, attachment_id, request_options=request_options) as r:
             yield from r.data
@@ -342,27 +329,6 @@ class AsyncThreadsClient:
         Returns
         -------
         typing.AsyncIterator[bytes]
-
-        Examples
-        --------
-        import asyncio
-
-        from agentmail import AsyncAgentMail
-
-        client = AsyncAgentMail(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.inboxes.threads.get_attachment(
-                inbox_id="inbox_id",
-                thread_id="thread_id",
-                attachment_id="attachment_id",
-            )
-
-
-        asyncio.run(main())
         """
         async with self._raw_client.get_attachment(
             inbox_id, thread_id, attachment_id, request_options=request_options

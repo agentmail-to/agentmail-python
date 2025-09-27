@@ -2,37 +2,96 @@
 
 # isort: skip_file
 
-from .addresses import Addresses
-from .list_messages_response import ListMessagesResponse
-from .message import Message
-from .message_attachments import MessageAttachments
-from .message_bcc import MessageBcc
-from .message_cc import MessageCc
-from .message_created_at import MessageCreatedAt
-from .message_from import MessageFrom
-from .message_html import MessageHtml
-from .message_id import MessageId
-from .message_in_reply_to import MessageInReplyTo
-from .message_item import MessageItem
-from .message_labels import MessageLabels
-from .message_preview import MessagePreview
-from .message_references import MessageReferences
-from .message_reply_to import MessageReplyTo
-from .message_size import MessageSize
-from .message_subject import MessageSubject
-from .message_text import MessageText
-from .message_timestamp import MessageTimestamp
-from .message_to import MessageTo
-from .message_updated_at import MessageUpdatedAt
-from .reply_to_message_request import ReplyToMessageRequest
-from .send_message_attachments import SendMessageAttachments
-from .send_message_bcc import SendMessageBcc
-from .send_message_cc import SendMessageCc
-from .send_message_reply_to import SendMessageReplyTo
-from .send_message_request import SendMessageRequest
-from .send_message_response import SendMessageResponse
-from .send_message_to import SendMessageTo
-from .update_message_request import UpdateMessageRequest
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .addresses import Addresses
+    from .list_messages_response import ListMessagesResponse
+    from .message import Message
+    from .message_attachments import MessageAttachments
+    from .message_bcc import MessageBcc
+    from .message_cc import MessageCc
+    from .message_created_at import MessageCreatedAt
+    from .message_from import MessageFrom
+    from .message_html import MessageHtml
+    from .message_id import MessageId
+    from .message_in_reply_to import MessageInReplyTo
+    from .message_item import MessageItem
+    from .message_labels import MessageLabels
+    from .message_preview import MessagePreview
+    from .message_references import MessageReferences
+    from .message_reply_to import MessageReplyTo
+    from .message_size import MessageSize
+    from .message_subject import MessageSubject
+    from .message_text import MessageText
+    from .message_timestamp import MessageTimestamp
+    from .message_to import MessageTo
+    from .message_updated_at import MessageUpdatedAt
+    from .reply_to_message_request import ReplyToMessageRequest
+    from .send_message_attachments import SendMessageAttachments
+    from .send_message_bcc import SendMessageBcc
+    from .send_message_cc import SendMessageCc
+    from .send_message_reply_to import SendMessageReplyTo
+    from .send_message_request import SendMessageRequest
+    from .send_message_response import SendMessageResponse
+    from .send_message_to import SendMessageTo
+    from .update_message_request import UpdateMessageRequest
+_dynamic_imports: typing.Dict[str, str] = {
+    "Addresses": ".addresses",
+    "ListMessagesResponse": ".list_messages_response",
+    "Message": ".message",
+    "MessageAttachments": ".message_attachments",
+    "MessageBcc": ".message_bcc",
+    "MessageCc": ".message_cc",
+    "MessageCreatedAt": ".message_created_at",
+    "MessageFrom": ".message_from",
+    "MessageHtml": ".message_html",
+    "MessageId": ".message_id",
+    "MessageInReplyTo": ".message_in_reply_to",
+    "MessageItem": ".message_item",
+    "MessageLabels": ".message_labels",
+    "MessagePreview": ".message_preview",
+    "MessageReferences": ".message_references",
+    "MessageReplyTo": ".message_reply_to",
+    "MessageSize": ".message_size",
+    "MessageSubject": ".message_subject",
+    "MessageText": ".message_text",
+    "MessageTimestamp": ".message_timestamp",
+    "MessageTo": ".message_to",
+    "MessageUpdatedAt": ".message_updated_at",
+    "ReplyToMessageRequest": ".reply_to_message_request",
+    "SendMessageAttachments": ".send_message_attachments",
+    "SendMessageBcc": ".send_message_bcc",
+    "SendMessageCc": ".send_message_cc",
+    "SendMessageReplyTo": ".send_message_reply_to",
+    "SendMessageRequest": ".send_message_request",
+    "SendMessageResponse": ".send_message_response",
+    "SendMessageTo": ".send_message_to",
+    "UpdateMessageRequest": ".update_message_request",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        if module_name == f".{attr_name}":
+            return module
+        else:
+            return getattr(module, attr_name)
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "Addresses",

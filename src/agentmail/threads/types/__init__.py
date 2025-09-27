@@ -2,24 +2,70 @@
 
 # isort: skip_file
 
-from .list_threads_response import ListThreadsResponse
-from .thread import Thread
-from .thread_attachments import ThreadAttachments
-from .thread_created_at import ThreadCreatedAt
-from .thread_id import ThreadId
-from .thread_item import ThreadItem
-from .thread_labels import ThreadLabels
-from .thread_last_message_id import ThreadLastMessageId
-from .thread_message_count import ThreadMessageCount
-from .thread_preview import ThreadPreview
-from .thread_received_timestamp import ThreadReceivedTimestamp
-from .thread_recipients import ThreadRecipients
-from .thread_senders import ThreadSenders
-from .thread_sent_timestamp import ThreadSentTimestamp
-from .thread_size import ThreadSize
-from .thread_subject import ThreadSubject
-from .thread_timestamp import ThreadTimestamp
-from .thread_updated_at import ThreadUpdatedAt
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .list_threads_response import ListThreadsResponse
+    from .thread import Thread
+    from .thread_attachments import ThreadAttachments
+    from .thread_created_at import ThreadCreatedAt
+    from .thread_id import ThreadId
+    from .thread_item import ThreadItem
+    from .thread_labels import ThreadLabels
+    from .thread_last_message_id import ThreadLastMessageId
+    from .thread_message_count import ThreadMessageCount
+    from .thread_preview import ThreadPreview
+    from .thread_received_timestamp import ThreadReceivedTimestamp
+    from .thread_recipients import ThreadRecipients
+    from .thread_senders import ThreadSenders
+    from .thread_sent_timestamp import ThreadSentTimestamp
+    from .thread_size import ThreadSize
+    from .thread_subject import ThreadSubject
+    from .thread_timestamp import ThreadTimestamp
+    from .thread_updated_at import ThreadUpdatedAt
+_dynamic_imports: typing.Dict[str, str] = {
+    "ListThreadsResponse": ".list_threads_response",
+    "Thread": ".thread",
+    "ThreadAttachments": ".thread_attachments",
+    "ThreadCreatedAt": ".thread_created_at",
+    "ThreadId": ".thread_id",
+    "ThreadItem": ".thread_item",
+    "ThreadLabels": ".thread_labels",
+    "ThreadLastMessageId": ".thread_last_message_id",
+    "ThreadMessageCount": ".thread_message_count",
+    "ThreadPreview": ".thread_preview",
+    "ThreadReceivedTimestamp": ".thread_received_timestamp",
+    "ThreadRecipients": ".thread_recipients",
+    "ThreadSenders": ".thread_senders",
+    "ThreadSentTimestamp": ".thread_sent_timestamp",
+    "ThreadSize": ".thread_size",
+    "ThreadSubject": ".thread_subject",
+    "ThreadTimestamp": ".thread_timestamp",
+    "ThreadUpdatedAt": ".thread_updated_at",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        if module_name == f".{attr_name}":
+            return module
+        else:
+            return getattr(module, attr_name)
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "ListThreadsResponse",

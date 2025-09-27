@@ -2,25 +2,72 @@
 
 # isort: skip_file
 
-from .create_draft_request import CreateDraftRequest
-from .draft import Draft
-from .draft_attachments import DraftAttachments
-from .draft_bcc import DraftBcc
-from .draft_cc import DraftCc
-from .draft_html import DraftHtml
-from .draft_id import DraftId
-from .draft_in_reply_to import DraftInReplyTo
-from .draft_item import DraftItem
-from .draft_labels import DraftLabels
-from .draft_preview import DraftPreview
-from .draft_reply_to import DraftReplyTo
-from .draft_send_at import DraftSendAt
-from .draft_send_status import DraftSendStatus
-from .draft_subject import DraftSubject
-from .draft_text import DraftText
-from .draft_to import DraftTo
-from .draft_updated_at import DraftUpdatedAt
-from .list_drafts_response import ListDraftsResponse
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .create_draft_request import CreateDraftRequest
+    from .draft import Draft
+    from .draft_attachments import DraftAttachments
+    from .draft_bcc import DraftBcc
+    from .draft_cc import DraftCc
+    from .draft_html import DraftHtml
+    from .draft_id import DraftId
+    from .draft_in_reply_to import DraftInReplyTo
+    from .draft_item import DraftItem
+    from .draft_labels import DraftLabels
+    from .draft_preview import DraftPreview
+    from .draft_reply_to import DraftReplyTo
+    from .draft_send_at import DraftSendAt
+    from .draft_send_status import DraftSendStatus
+    from .draft_subject import DraftSubject
+    from .draft_text import DraftText
+    from .draft_to import DraftTo
+    from .draft_updated_at import DraftUpdatedAt
+    from .list_drafts_response import ListDraftsResponse
+_dynamic_imports: typing.Dict[str, str] = {
+    "CreateDraftRequest": ".create_draft_request",
+    "Draft": ".draft",
+    "DraftAttachments": ".draft_attachments",
+    "DraftBcc": ".draft_bcc",
+    "DraftCc": ".draft_cc",
+    "DraftHtml": ".draft_html",
+    "DraftId": ".draft_id",
+    "DraftInReplyTo": ".draft_in_reply_to",
+    "DraftItem": ".draft_item",
+    "DraftLabels": ".draft_labels",
+    "DraftPreview": ".draft_preview",
+    "DraftReplyTo": ".draft_reply_to",
+    "DraftSendAt": ".draft_send_at",
+    "DraftSendStatus": ".draft_send_status",
+    "DraftSubject": ".draft_subject",
+    "DraftText": ".draft_text",
+    "DraftTo": ".draft_to",
+    "DraftUpdatedAt": ".draft_updated_at",
+    "ListDraftsResponse": ".list_drafts_response",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        if module_name == f".{attr_name}":
+            return module
+        else:
+            return getattr(module, attr_name)
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "CreateDraftRequest",

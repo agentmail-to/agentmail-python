@@ -2,27 +2,74 @@
 
 # isort: skip_file
 
-from .types import (
-    CreateDraftRequest,
-    Draft,
-    DraftAttachments,
-    DraftBcc,
-    DraftCc,
-    DraftHtml,
-    DraftId,
-    DraftInReplyTo,
-    DraftItem,
-    DraftLabels,
-    DraftPreview,
-    DraftReplyTo,
-    DraftSendAt,
-    DraftSendStatus,
-    DraftSubject,
-    DraftText,
-    DraftTo,
-    DraftUpdatedAt,
-    ListDraftsResponse,
-)
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .types import (
+        CreateDraftRequest,
+        Draft,
+        DraftAttachments,
+        DraftBcc,
+        DraftCc,
+        DraftHtml,
+        DraftId,
+        DraftInReplyTo,
+        DraftItem,
+        DraftLabels,
+        DraftPreview,
+        DraftReplyTo,
+        DraftSendAt,
+        DraftSendStatus,
+        DraftSubject,
+        DraftText,
+        DraftTo,
+        DraftUpdatedAt,
+        ListDraftsResponse,
+    )
+_dynamic_imports: typing.Dict[str, str] = {
+    "CreateDraftRequest": ".types",
+    "Draft": ".types",
+    "DraftAttachments": ".types",
+    "DraftBcc": ".types",
+    "DraftCc": ".types",
+    "DraftHtml": ".types",
+    "DraftId": ".types",
+    "DraftInReplyTo": ".types",
+    "DraftItem": ".types",
+    "DraftLabels": ".types",
+    "DraftPreview": ".types",
+    "DraftReplyTo": ".types",
+    "DraftSendAt": ".types",
+    "DraftSendStatus": ".types",
+    "DraftSubject": ".types",
+    "DraftText": ".types",
+    "DraftTo": ".types",
+    "DraftUpdatedAt": ".types",
+    "ListDraftsResponse": ".types",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        if module_name == f".{attr_name}":
+            return module
+        else:
+            return getattr(module, attr_name)
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "CreateDraftRequest",

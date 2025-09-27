@@ -2,17 +2,56 @@
 
 # isort: skip_file
 
-from .after import After
-from .ascending import Ascending
-from .before import Before
-from .count import Count
-from .error_name import ErrorName
-from .error_response import ErrorResponse
-from .labels import Labels
-from .limit import Limit
-from .organization_id import OrganizationId
-from .page_token import PageToken
-from .validation_error_response import ValidationErrorResponse
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .after import After
+    from .ascending import Ascending
+    from .before import Before
+    from .count import Count
+    from .error_name import ErrorName
+    from .error_response import ErrorResponse
+    from .labels import Labels
+    from .limit import Limit
+    from .organization_id import OrganizationId
+    from .page_token import PageToken
+    from .validation_error_response import ValidationErrorResponse
+_dynamic_imports: typing.Dict[str, str] = {
+    "After": ".after",
+    "Ascending": ".ascending",
+    "Before": ".before",
+    "Count": ".count",
+    "ErrorName": ".error_name",
+    "ErrorResponse": ".error_response",
+    "Labels": ".labels",
+    "Limit": ".limit",
+    "OrganizationId": ".organization_id",
+    "PageToken": ".page_token",
+    "ValidationErrorResponse": ".validation_error_response",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        if module_name == f".{attr_name}":
+            return module
+        else:
+            return getattr(module, attr_name)
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "After",

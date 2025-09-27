@@ -2,14 +2,50 @@
 
 # isort: skip_file
 
-from .attachment import Attachment
-from .attachment_content import AttachmentContent
-from .attachment_content_type import AttachmentContentType
-from .attachment_filename import AttachmentFilename
-from .attachment_id import AttachmentId
-from .attachment_inline import AttachmentInline
-from .attachment_size import AttachmentSize
-from .send_attachment import SendAttachment
+import typing
+from importlib import import_module
+
+if typing.TYPE_CHECKING:
+    from .attachment import Attachment
+    from .attachment_content import AttachmentContent
+    from .attachment_content_type import AttachmentContentType
+    from .attachment_filename import AttachmentFilename
+    from .attachment_id import AttachmentId
+    from .attachment_inline import AttachmentInline
+    from .attachment_size import AttachmentSize
+    from .send_attachment import SendAttachment
+_dynamic_imports: typing.Dict[str, str] = {
+    "Attachment": ".attachment",
+    "AttachmentContent": ".attachment_content",
+    "AttachmentContentType": ".attachment_content_type",
+    "AttachmentFilename": ".attachment_filename",
+    "AttachmentId": ".attachment_id",
+    "AttachmentInline": ".attachment_inline",
+    "AttachmentSize": ".attachment_size",
+    "SendAttachment": ".send_attachment",
+}
+
+
+def __getattr__(attr_name: str) -> typing.Any:
+    module_name = _dynamic_imports.get(attr_name)
+    if module_name is None:
+        raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
+    try:
+        module = import_module(module_name, __package__)
+        if module_name == f".{attr_name}":
+            return module
+        else:
+            return getattr(module, attr_name)
+    except ImportError as e:
+        raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
+    except AttributeError as e:
+        raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
+
+
+def __dir__():
+    lazy_attrs = list(_dynamic_imports.keys())
+    return sorted(lazy_attrs)
+
 
 __all__ = [
     "Attachment",

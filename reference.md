@@ -590,7 +590,7 @@ client = AgentMail(
     api_key="YOUR_API_KEY",
 )
 client.domains.get(
-    domain=" your-domain.com",
+    domain="domain",
 )
 
 ```
@@ -646,7 +646,7 @@ client = AgentMail(
     api_key="YOUR_API_KEY",
 )
 client.domains.create(
-    domain="your-domain.com",
+    domain="domain",
 )
 
 ```
@@ -710,7 +710,7 @@ client = AgentMail(
     api_key="YOUR_API_KEY",
 )
 client.domains.delete(
-    domain="dom_12345",
+    domain="domain",
 )
 
 ```

@@ -86,7 +86,7 @@ class DomainsClient:
             api_key="YOUR_API_KEY",
         )
         client.domains.get(
-            domain=" your-domain.com",
+            domain="domain",
         )
         """
         _response = self._raw_client.get(domain, request_options=request_options)
@@ -122,7 +122,7 @@ class DomainsClient:
             api_key="YOUR_API_KEY",
         )
         client.domains.create(
-            domain="your-domain.com",
+            domain="domain",
         )
         """
         _response = self._raw_client.create(
@@ -151,7 +151,7 @@ class DomainsClient:
             api_key="YOUR_API_KEY",
         )
         client.domains.delete(
-            domain="dom_12345",
+            domain="domain",
         )
         """
         _response = self._raw_client.delete(domain, request_options=request_options)
@@ -240,7 +240,7 @@ class AsyncDomainsClient:
 
         async def main() -> None:
             await client.domains.get(
-                domain=" your-domain.com",
+                domain="domain",
             )
 
 
@@ -284,7 +284,7 @@ class AsyncDomainsClient:
 
         async def main() -> None:
             await client.domains.create(
-                domain="your-domain.com",
+                domain="domain",
             )
 
 
@@ -321,7 +321,7 @@ class AsyncDomainsClient:
 
         async def main() -> None:
             await client.domains.delete(
-                domain="dom_12345",
+                domain="domain",
             )
 
 

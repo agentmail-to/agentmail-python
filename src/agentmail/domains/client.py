@@ -3,6 +3,7 @@
 import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.limit import Limit
 from ..types.page_token import PageToken
@@ -11,7 +12,7 @@ from .types.create_domain_response import CreateDomainResponse
 from .types.domain import Domain
 from .types.domain_id import DomainId
 from .types.domain_name import DomainName
-from .types.list_domains_response import ListDomainsResponse
+from .types.domain_summary import DomainSummary
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -38,7 +39,7 @@ class DomainsClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListDomainsResponse:
+    ) -> SyncPager[DomainSummary]:
         """
         Parameters
         ----------
@@ -51,7 +52,7 @@ class DomainsClient:
 
         Returns
         -------
-        ListDomainsResponse
+        SyncPager[DomainSummary]
 
         Examples
         --------
@@ -60,10 +61,14 @@ class DomainsClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.domains.list()
+        response = client.domains.list()
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
         """
-        _response = self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
-        return _response.data
+        return self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
 
     def get(self, domain: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> Domain:
         """
@@ -179,7 +184,7 @@ class AsyncDomainsClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListDomainsResponse:
+    ) -> AsyncPager[DomainSummary]:
         """
         Parameters
         ----------
@@ -192,7 +197,7 @@ class AsyncDomainsClient:
 
         Returns
         -------
-        ListDomainsResponse
+        AsyncPager[DomainSummary]
 
         Examples
         --------
@@ -206,13 +211,18 @@ class AsyncDomainsClient:
 
 
         async def main() -> None:
-            await client.domains.list()
+            response = await client.domains.list()
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
-        return _response.data
+        return await self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
 
     async def get(self, domain: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> Domain:
         """

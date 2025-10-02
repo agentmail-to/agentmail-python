@@ -18,7 +18,12 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-client.inboxes.list()
+response = client.inboxes.list()
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
 
 ```
 </dd>
@@ -271,7 +276,12 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-client.webhooks.list()
+response = client.webhooks.list()
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
 
 ```
 </dd>
@@ -527,7 +537,12 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-client.domains.list()
+response = client.domains.list()
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
 
 ```
 </dd>
@@ -766,7 +781,12 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-client.drafts.list()
+response = client.drafts.list()
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
 
 ```
 </dd>
@@ -917,9 +937,14 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-client.inboxes.drafts.list(
+response = client.inboxes.drafts.list(
     inbox_id="inbox_id",
 )
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
 
 ```
 </dd>
@@ -1369,9 +1394,14 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-client.inboxes.messages.list(
+response = client.inboxes.messages.list(
     inbox_id="inbox_id",
 )
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
 
 ```
 </dd>
@@ -2105,9 +2135,14 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-client.inboxes.threads.list(
+response = client.inboxes.threads.list(
     inbox_id="inbox_id",
 )
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
 
 ```
 </dd>
@@ -2494,7 +2529,12 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-client.threads.list()
+response = client.threads.list()
+for item in response:
+    yield item
+# alternatively, you can paginate page-by-page
+for page in response.iter_pages():
+    yield page
 
 ```
 </dd>

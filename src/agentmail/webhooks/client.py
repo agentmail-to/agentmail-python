@@ -3,6 +3,7 @@
 import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.limit import Limit
 from ..types.page_token import PageToken
@@ -10,7 +11,6 @@ from .raw_client import AsyncRawWebhooksClient, RawWebhooksClient
 from .types.client_id import ClientId
 from .types.event_types import EventTypes
 from .types.inbox_ids import InboxIds
-from .types.list_webhooks_response import ListWebhooksResponse
 from .types.url import Url
 from .types.webhook import Webhook
 from .types.webhook_id import WebhookId
@@ -40,7 +40,7 @@ class WebhooksClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListWebhooksResponse:
+    ) -> SyncPager[Webhook]:
         """
         Parameters
         ----------
@@ -53,7 +53,7 @@ class WebhooksClient:
 
         Returns
         -------
-        ListWebhooksResponse
+        SyncPager[Webhook]
 
         Examples
         --------
@@ -62,10 +62,14 @@ class WebhooksClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.webhooks.list()
+        response = client.webhooks.list()
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
         """
-        _response = self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
-        return _response.data
+        return self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
 
     def get(self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None) -> Webhook:
         """
@@ -187,7 +191,7 @@ class AsyncWebhooksClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListWebhooksResponse:
+    ) -> AsyncPager[Webhook]:
         """
         Parameters
         ----------
@@ -200,7 +204,7 @@ class AsyncWebhooksClient:
 
         Returns
         -------
-        ListWebhooksResponse
+        AsyncPager[Webhook]
 
         Examples
         --------
@@ -214,13 +218,18 @@ class AsyncWebhooksClient:
 
 
         async def main() -> None:
-            await client.webhooks.list()
+            response = await client.webhooks.list()
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
-        return _response.data
+        return await self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
 
     async def get(self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None) -> Webhook:
         """

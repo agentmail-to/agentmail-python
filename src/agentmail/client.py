@@ -11,6 +11,7 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .environment import AgentMailEnvironment
 
 if typing.TYPE_CHECKING:
+    from .api_keys.client import ApiKeysClient, AsyncApiKeysClient
     from .domains.client import AsyncDomainsClient, DomainsClient
     from .drafts.client import AsyncDraftsClient, DraftsClient
     from .inboxes.client import AsyncInboxesClient, InboxesClient
@@ -86,6 +87,7 @@ class AgentMail:
         )
         self._inboxes: typing.Optional[InboxesClient] = None
         self._webhooks: typing.Optional[WebhooksClient] = None
+        self._api_keys: typing.Optional[ApiKeysClient] = None
         self._domains: typing.Optional[DomainsClient] = None
         self._drafts: typing.Optional[DraftsClient] = None
         self._metrics: typing.Optional[MetricsClient] = None
@@ -106,6 +108,14 @@ class AgentMail:
 
             self._webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
         return self._webhooks
+
+    @property
+    def api_keys(self):
+        if self._api_keys is None:
+            from .api_keys.client import ApiKeysClient  # noqa: E402
+
+            self._api_keys = ApiKeysClient(client_wrapper=self._client_wrapper)
+        return self._api_keys
 
     @property
     def domains(self):
@@ -207,6 +217,7 @@ class AsyncAgentMail:
         )
         self._inboxes: typing.Optional[AsyncInboxesClient] = None
         self._webhooks: typing.Optional[AsyncWebhooksClient] = None
+        self._api_keys: typing.Optional[AsyncApiKeysClient] = None
         self._domains: typing.Optional[AsyncDomainsClient] = None
         self._drafts: typing.Optional[AsyncDraftsClient] = None
         self._metrics: typing.Optional[AsyncMetricsClient] = None
@@ -227,6 +238,14 @@ class AsyncAgentMail:
 
             self._webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
         return self._webhooks
+
+    @property
+    def api_keys(self):
+        if self._api_keys is None:
+            from .api_keys.client import AsyncApiKeysClient  # noqa: E402
+
+            self._api_keys = AsyncApiKeysClient(client_wrapper=self._client_wrapper)
+        return self._api_keys
 
     @property
     def domains(self):

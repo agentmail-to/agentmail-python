@@ -1681,6 +1681,135 @@ client.inboxes.drafts.create(
 </dl>
 </details>
 
+<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">update</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.inboxes.drafts.update(
+    inbox_id="inbox_id",
+    draft_id="draft_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**draft_id:** `DraftId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reply_to:** `typing.Optional[DraftReplyTo]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**to:** `typing.Optional[DraftTo]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cc:** `typing.Optional[DraftCc]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bcc:** `typing.Optional[DraftBcc]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**subject:** `typing.Optional[DraftSubject]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**text:** `typing.Optional[DraftText]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**html:** `typing.Optional[DraftHtml]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**send_at:** `typing.Optional[DraftSendAt]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">send</a>(...)</code></summary>
 <dl>
 <dd>

@@ -268,6 +268,94 @@ class RawDraftsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def update(
+        self,
+        inbox_id: InboxId,
+        draft_id: DraftId,
+        *,
+        reply_to: typing.Optional[DraftReplyTo] = OMIT,
+        to: typing.Optional[DraftTo] = OMIT,
+        cc: typing.Optional[DraftCc] = OMIT,
+        bcc: typing.Optional[DraftBcc] = OMIT,
+        subject: typing.Optional[DraftSubject] = OMIT,
+        text: typing.Optional[DraftText] = OMIT,
+        html: typing.Optional[DraftHtml] = OMIT,
+        send_at: typing.Optional[DraftSendAt] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[Draft]:
+        """
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        draft_id : DraftId
+
+        reply_to : typing.Optional[DraftReplyTo]
+
+        to : typing.Optional[DraftTo]
+
+        cc : typing.Optional[DraftCc]
+
+        bcc : typing.Optional[DraftBcc]
+
+        subject : typing.Optional[DraftSubject]
+
+        text : typing.Optional[DraftText]
+
+        html : typing.Optional[DraftHtml]
+
+        send_at : typing.Optional[DraftSendAt]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[Draft]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/drafts/{jsonable_encoder(draft_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="PATCH",
+            json={
+                "reply_to": reply_to,
+                "to": to,
+                "cc": cc,
+                "bcc": bcc,
+                "subject": subject,
+                "text": text,
+                "html": html,
+                "send_at": send_at,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Draft,
+                    construct_type(
+                        type_=Draft,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def send(
         self,
         inbox_id: InboxId,
@@ -595,6 +683,94 @@ class AsyncRawDraftsClient:
                 "in_reply_to": in_reply_to,
                 "send_at": send_at,
                 "client_id": client_id,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Draft,
+                    construct_type(
+                        type_=Draft,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def update(
+        self,
+        inbox_id: InboxId,
+        draft_id: DraftId,
+        *,
+        reply_to: typing.Optional[DraftReplyTo] = OMIT,
+        to: typing.Optional[DraftTo] = OMIT,
+        cc: typing.Optional[DraftCc] = OMIT,
+        bcc: typing.Optional[DraftBcc] = OMIT,
+        subject: typing.Optional[DraftSubject] = OMIT,
+        text: typing.Optional[DraftText] = OMIT,
+        html: typing.Optional[DraftHtml] = OMIT,
+        send_at: typing.Optional[DraftSendAt] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[Draft]:
+        """
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        draft_id : DraftId
+
+        reply_to : typing.Optional[DraftReplyTo]
+
+        to : typing.Optional[DraftTo]
+
+        cc : typing.Optional[DraftCc]
+
+        bcc : typing.Optional[DraftBcc]
+
+        subject : typing.Optional[DraftSubject]
+
+        text : typing.Optional[DraftText]
+
+        html : typing.Optional[DraftHtml]
+
+        send_at : typing.Optional[DraftSendAt]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[Draft]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/drafts/{jsonable_encoder(draft_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="PATCH",
+            json={
+                "reply_to": reply_to,
+                "to": to,
+                "cc": cc,
+                "bcc": bcc,
+                "subject": subject,
+                "text": text,
+                "html": html,
+                "send_at": send_at,
             },
             request_options=request_options,
             omit=OMIT,

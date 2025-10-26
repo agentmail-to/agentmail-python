@@ -27,6 +27,7 @@ if typing.TYPE_CHECKING:
         DraftTo,
         DraftUpdatedAt,
         ListDraftsResponse,
+        UpdateDraftRequest,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "CreateDraftRequest": ".types",
@@ -49,6 +50,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DraftTo": ".types",
     "DraftUpdatedAt": ".types",
     "ListDraftsResponse": ".types",
+    "UpdateDraftRequest": ".types",
 }
 
 
@@ -94,4 +96,5 @@ __all__ = [
     "DraftTo",
     "DraftUpdatedAt",
     "ListDraftsResponse",
+    "UpdateDraftRequest",
 ]

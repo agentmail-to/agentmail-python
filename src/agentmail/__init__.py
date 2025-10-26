@@ -90,6 +90,7 @@ if typing.TYPE_CHECKING:
         DraftTo,
         DraftUpdatedAt,
         ListDraftsResponse,
+        UpdateDraftRequest,
     )
     from .environment import AgentMailEnvironment
     from .events import (
@@ -307,6 +308,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ThreadTimestamp": ".threads",
     "ThreadUpdatedAt": ".threads",
     "Timestamp": ".events",
+    "UpdateDraftRequest": ".drafts",
     "UpdateMessageRequest": ".messages",
     "ValidationError": ".errors",
     "ValidationErrorResponse": ".types",
@@ -483,6 +485,7 @@ __all__ = [
     "ThreadTimestamp",
     "ThreadUpdatedAt",
     "Timestamp",
+    "UpdateDraftRequest",
     "UpdateMessageRequest",
     "ValidationError",
     "ValidationErrorResponse",

@@ -1027,7 +1027,7 @@ client = AgentMail(
     api_key="YOUR_API_KEY",
 )
 client.domains.get(
-    domain="domain",
+    domain_id="domain_id",
 )
 
 ```
@@ -1044,7 +1044,7 @@ client.domains.get(
 <dl>
 <dd>
 
-**domain:** `DomainId` 
+**domain_id:** `DomainId` 
     
 </dd>
 </dl>
@@ -1148,7 +1148,7 @@ client = AgentMail(
     api_key="YOUR_API_KEY",
 )
 client.domains.delete(
-    domain="domain",
+    domain_id="domain_id",
 )
 
 ```
@@ -1165,7 +1165,63 @@ client.domains.delete(
 <dl>
 <dd>
 
-**domain:** `DomainId` 
+**domain_id:** `DomainId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">verify</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.domains.verify(
+    domain_id="domain_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**domain_id:** `DomainId` 
     
 </dd>
 </dl>

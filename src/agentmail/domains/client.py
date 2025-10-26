@@ -70,11 +70,11 @@ class DomainsClient:
         """
         return self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
 
-    def get(self, domain: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> Domain:
+    def get(self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> Domain:
         """
         Parameters
         ----------
-        domain : DomainId
+        domain_id : DomainId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -91,10 +91,10 @@ class DomainsClient:
             api_key="YOUR_API_KEY",
         )
         client.domains.get(
-            domain="domain",
+            domain_id="domain_id",
         )
         """
-        _response = self._raw_client.get(domain, request_options=request_options)
+        _response = self._raw_client.get(domain_id, request_options=request_options)
         return _response.data
 
     def create(
@@ -135,11 +135,11 @@ class DomainsClient:
         )
         return _response.data
 
-    def delete(self, domain: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
-        domain : DomainId
+        domain_id : DomainId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -156,10 +156,37 @@ class DomainsClient:
             api_key="YOUR_API_KEY",
         )
         client.domains.delete(
-            domain="domain",
+            domain_id="domain_id",
         )
         """
-        _response = self._raw_client.delete(domain, request_options=request_options)
+        _response = self._raw_client.delete(domain_id, request_options=request_options)
+        return _response.data
+
+    def verify(self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Parameters
+        ----------
+        domain_id : DomainId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.domains.verify(
+            domain_id="domain_id",
+        )
+        """
+        _response = self._raw_client.verify(domain_id, request_options=request_options)
         return _response.data
 
 
@@ -224,11 +251,11 @@ class AsyncDomainsClient:
         """
         return await self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
 
-    async def get(self, domain: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> Domain:
+    async def get(self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> Domain:
         """
         Parameters
         ----------
-        domain : DomainId
+        domain_id : DomainId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -250,13 +277,13 @@ class AsyncDomainsClient:
 
         async def main() -> None:
             await client.domains.get(
-                domain="domain",
+                domain_id="domain_id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(domain, request_options=request_options)
+        _response = await self._raw_client.get(domain_id, request_options=request_options)
         return _response.data
 
     async def create(
@@ -305,11 +332,11 @@ class AsyncDomainsClient:
         )
         return _response.data
 
-    async def delete(self, domain: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def delete(self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
-        domain : DomainId
+        domain_id : DomainId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -331,11 +358,46 @@ class AsyncDomainsClient:
 
         async def main() -> None:
             await client.domains.delete(
-                domain="domain",
+                domain_id="domain_id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.delete(domain, request_options=request_options)
+        _response = await self._raw_client.delete(domain_id, request_options=request_options)
+        return _response.data
+
+    async def verify(self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+        """
+        Parameters
+        ----------
+        domain_id : DomainId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.domains.verify(
+                domain_id="domain_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.verify(domain_id, request_options=request_options)
         return _response.data

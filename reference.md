@@ -18,12 +18,7 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-response = client.inboxes.list()
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+client.inboxes.list()
 
 ```
 </dd>
@@ -276,12 +271,7 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-response = client.pods.list()
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+client.pods.list()
 
 ```
 </dd>
@@ -774,12 +764,7 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-response = client.api_keys.list()
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+client.api_keys.list()
 
 ```
 </dd>
@@ -954,12 +939,7 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-response = client.domains.list()
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+client.domains.list()
 
 ```
 </dd>
@@ -1255,12 +1235,7 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-response = client.drafts.list()
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+client.drafts.list()
 
 ```
 </dd>
@@ -1411,14 +1386,9 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-response = client.inboxes.drafts.list(
+client.inboxes.drafts.list(
     inbox_id="inbox_id",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -1691,6 +1661,14 @@ client.inboxes.drafts.create(
 <dl>
 <dd>
 
+**client_id:** `typing.Optional[DraftClientId]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -1868,14 +1846,9 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-response = client.inboxes.messages.list(
+client.inboxes.messages.list(
     inbox_id="inbox_id",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -2609,14 +2582,9 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-response = client.inboxes.threads.list(
+client.inboxes.threads.list(
     inbox_id="inbox_id",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -3984,12 +3952,7 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-response = client.threads.list()
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+client.threads.list()
 
 ```
 </dd>

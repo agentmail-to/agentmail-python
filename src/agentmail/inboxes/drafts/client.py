@@ -3,21 +3,21 @@
 import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ...core.pagination import AsyncPager, SyncPager
 from ...core.request_options import RequestOptions
 from ...drafts.types.draft import Draft
 from ...drafts.types.draft_bcc import DraftBcc
 from ...drafts.types.draft_cc import DraftCc
+from ...drafts.types.draft_client_id import DraftClientId
 from ...drafts.types.draft_html import DraftHtml
 from ...drafts.types.draft_id import DraftId
 from ...drafts.types.draft_in_reply_to import DraftInReplyTo
-from ...drafts.types.draft_item import DraftItem
 from ...drafts.types.draft_labels import DraftLabels
 from ...drafts.types.draft_reply_to import DraftReplyTo
 from ...drafts.types.draft_send_at import DraftSendAt
 from ...drafts.types.draft_subject import DraftSubject
 from ...drafts.types.draft_text import DraftText
 from ...drafts.types.draft_to import DraftTo
+from ...drafts.types.list_drafts_response import ListDraftsResponse
 from ...messages.types.send_message_response import SendMessageResponse
 from ...types.after import After
 from ...types.ascending import Ascending
@@ -58,7 +58,7 @@ class DraftsClient:
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[DraftItem]:
+    ) -> ListDraftsResponse:
         """
         Parameters
         ----------
@@ -81,7 +81,7 @@ class DraftsClient:
 
         Returns
         -------
-        SyncPager[DraftItem]
+        ListDraftsResponse
 
         Examples
         --------
@@ -90,16 +90,11 @@ class DraftsClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        response = client.inboxes.drafts.list(
+        client.inboxes.drafts.list(
             inbox_id="inbox_id",
         )
-        for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        for page in response.iter_pages():
-            yield page
         """
-        return self._raw_client.list(
+        _response = self._raw_client.list(
             inbox_id,
             limit=limit,
             page_token=page_token,
@@ -109,6 +104,7 @@ class DraftsClient:
             ascending=ascending,
             request_options=request_options,
         )
+        return _response.data
 
     def get(
         self, inbox_id: InboxId, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
@@ -156,6 +152,7 @@ class DraftsClient:
         html: typing.Optional[DraftHtml] = OMIT,
         in_reply_to: typing.Optional[DraftInReplyTo] = OMIT,
         send_at: typing.Optional[DraftSendAt] = OMIT,
+        client_id: typing.Optional[DraftClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Draft:
         """
@@ -182,6 +179,8 @@ class DraftsClient:
         in_reply_to : typing.Optional[DraftInReplyTo]
 
         send_at : typing.Optional[DraftSendAt]
+
+        client_id : typing.Optional[DraftClientId]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -213,6 +212,7 @@ class DraftsClient:
             html=html,
             in_reply_to=in_reply_to,
             send_at=send_at,
+            client_id=client_id,
             request_options=request_options,
         )
         return _response.data
@@ -322,7 +322,7 @@ class AsyncDraftsClient:
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[DraftItem]:
+    ) -> ListDraftsResponse:
         """
         Parameters
         ----------
@@ -345,7 +345,7 @@ class AsyncDraftsClient:
 
         Returns
         -------
-        AsyncPager[DraftItem]
+        ListDraftsResponse
 
         Examples
         --------
@@ -359,20 +359,14 @@ class AsyncDraftsClient:
 
 
         async def main() -> None:
-            response = await client.inboxes.drafts.list(
+            await client.inboxes.drafts.list(
                 inbox_id="inbox_id",
             )
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
 
 
         asyncio.run(main())
         """
-        return await self._raw_client.list(
+        _response = await self._raw_client.list(
             inbox_id,
             limit=limit,
             page_token=page_token,
@@ -382,6 +376,7 @@ class AsyncDraftsClient:
             ascending=ascending,
             request_options=request_options,
         )
+        return _response.data
 
     async def get(
         self, inbox_id: InboxId, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
@@ -437,6 +432,7 @@ class AsyncDraftsClient:
         html: typing.Optional[DraftHtml] = OMIT,
         in_reply_to: typing.Optional[DraftInReplyTo] = OMIT,
         send_at: typing.Optional[DraftSendAt] = OMIT,
+        client_id: typing.Optional[DraftClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Draft:
         """
@@ -463,6 +459,8 @@ class AsyncDraftsClient:
         in_reply_to : typing.Optional[DraftInReplyTo]
 
         send_at : typing.Optional[DraftSendAt]
+
+        client_id : typing.Optional[DraftClientId]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -502,6 +500,7 @@ class AsyncDraftsClient:
             html=html,
             in_reply_to=in_reply_to,
             send_at=send_at,
+            client_id=client_id,
             request_options=request_options,
         )
         return _response.data

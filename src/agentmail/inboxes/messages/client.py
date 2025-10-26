@@ -4,12 +4,11 @@ import typing
 
 from ...attachments.types.attachment_id import AttachmentId
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ...core.pagination import AsyncPager, SyncPager
 from ...core.request_options import RequestOptions
+from ...messages.types.list_messages_response import ListMessagesResponse
 from ...messages.types.message import Message
 from ...messages.types.message_html import MessageHtml
 from ...messages.types.message_id import MessageId
-from ...messages.types.message_item import MessageItem
 from ...messages.types.message_labels import MessageLabels
 from ...messages.types.message_subject import MessageSubject
 from ...messages.types.message_text import MessageText
@@ -58,7 +57,7 @@ class MessagesClient:
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[MessageItem]:
+    ) -> ListMessagesResponse:
         """
         Parameters
         ----------
@@ -81,7 +80,7 @@ class MessagesClient:
 
         Returns
         -------
-        SyncPager[MessageItem]
+        ListMessagesResponse
 
         Examples
         --------
@@ -90,16 +89,11 @@ class MessagesClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        response = client.inboxes.messages.list(
+        client.inboxes.messages.list(
             inbox_id="inbox_id",
         )
-        for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        for page in response.iter_pages():
-            yield page
         """
-        return self._raw_client.list(
+        _response = self._raw_client.list(
             inbox_id,
             limit=limit,
             page_token=page_token,
@@ -109,6 +103,7 @@ class MessagesClient:
             ascending=ascending,
             request_options=request_options,
         )
+        return _response.data
 
     def get(
         self, inbox_id: InboxId, message_id: MessageId, *, request_options: typing.Optional[RequestOptions] = None
@@ -430,7 +425,7 @@ class AsyncMessagesClient:
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[MessageItem]:
+    ) -> ListMessagesResponse:
         """
         Parameters
         ----------
@@ -453,7 +448,7 @@ class AsyncMessagesClient:
 
         Returns
         -------
-        AsyncPager[MessageItem]
+        ListMessagesResponse
 
         Examples
         --------
@@ -467,20 +462,14 @@ class AsyncMessagesClient:
 
 
         async def main() -> None:
-            response = await client.inboxes.messages.list(
+            await client.inboxes.messages.list(
                 inbox_id="inbox_id",
             )
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
 
 
         asyncio.run(main())
         """
-        return await self._raw_client.list(
+        _response = await self._raw_client.list(
             inbox_id,
             limit=limit,
             page_token=page_token,
@@ -490,6 +479,7 @@ class AsyncMessagesClient:
             ascending=ascending,
             request_options=request_options,
         )
+        return _response.data
 
     async def get(
         self, inbox_id: InboxId, message_id: MessageId, *, request_options: typing.Optional[RequestOptions] = None

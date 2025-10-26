@@ -7,6 +7,7 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from .draft_bcc import DraftBcc
 from .draft_cc import DraftCc
+from .draft_client_id import DraftClientId
 from .draft_html import DraftHtml
 from .draft_in_reply_to import DraftInReplyTo
 from .draft_labels import DraftLabels
@@ -28,6 +29,7 @@ class CreateDraftRequest(UncheckedBaseModel):
     html: typing.Optional[DraftHtml] = None
     in_reply_to: typing.Optional[DraftInReplyTo] = None
     send_at: typing.Optional[DraftSendAt] = None
+    client_id: typing.Optional[DraftClientId] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -11,6 +11,7 @@ if typing.TYPE_CHECKING:
     from .draft_attachments import DraftAttachments
     from .draft_bcc import DraftBcc
     from .draft_cc import DraftCc
+    from .draft_client_id import DraftClientId
     from .draft_html import DraftHtml
     from .draft_id import DraftId
     from .draft_in_reply_to import DraftInReplyTo
@@ -31,6 +32,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DraftAttachments": ".draft_attachments",
     "DraftBcc": ".draft_bcc",
     "DraftCc": ".draft_cc",
+    "DraftClientId": ".draft_client_id",
     "DraftHtml": ".draft_html",
     "DraftId": ".draft_id",
     "DraftInReplyTo": ".draft_in_reply_to",
@@ -75,6 +77,7 @@ __all__ = [
     "DraftAttachments",
     "DraftBcc",
     "DraftCc",
+    "DraftClientId",
     "DraftHtml",
     "DraftId",
     "DraftInReplyTo",

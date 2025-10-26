@@ -6,13 +6,15 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
-from ...types.organization_id import OrganizationId
+from .client_id import ClientId
 from .domain_id import DomainId
+from .feedback_enabled import FeedbackEnabled
 
 
 class DomainSummary(UncheckedBaseModel):
     domain_id: DomainId
-    organization_id: OrganizationId
+    feedback_enabled: FeedbackEnabled
+    client_id: typing.Optional[ClientId] = None
     updated_at: dt.datetime = pydantic.Field()
     """
     Time at which the domain was last updated.
@@ -21,11 +23,6 @@ class DomainSummary(UncheckedBaseModel):
     created_at: dt.datetime = pydantic.Field()
     """
     Time at which the domain was created.
-    """
-
-    feedback_enabled: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Whether to forward bounce and complaint notifications to your domain.
     """
 
     if IS_PYDANTIC_V2:

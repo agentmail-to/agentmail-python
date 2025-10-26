@@ -4,27 +4,28 @@ import contextlib
 import typing
 from json.decoder import JSONDecodeError
 
-from ..attachments.types.attachment_id import AttachmentId
-from ..core.api_error import ApiError
-from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.datetime_utils import serialize_datetime
-from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pagination import AsyncPager, BaseHttpResponse, SyncPager
-from ..core.request_options import RequestOptions
-from ..core.unchecked_base_model import construct_type
-from ..errors.not_found_error import NotFoundError
-from ..types.after import After
-from ..types.ascending import Ascending
-from ..types.before import Before
-from ..types.error_response import ErrorResponse
-from ..types.labels import Labels
-from ..types.limit import Limit
-from ..types.page_token import PageToken
-from .types.list_threads_response import ListThreadsResponse
-from .types.thread import Thread
-from .types.thread_id import ThreadId
-from .types.thread_item import ThreadItem
+from ...attachments.types.attachment_id import AttachmentId
+from ...core.api_error import ApiError
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.datetime_utils import serialize_datetime
+from ...core.http_response import AsyncHttpResponse, HttpResponse
+from ...core.jsonable_encoder import jsonable_encoder
+from ...core.pagination import AsyncPager, BaseHttpResponse, SyncPager
+from ...core.request_options import RequestOptions
+from ...core.unchecked_base_model import construct_type
+from ...errors.not_found_error import NotFoundError
+from ...threads.types.list_threads_response import ListThreadsResponse
+from ...threads.types.thread import Thread
+from ...threads.types.thread_id import ThreadId
+from ...threads.types.thread_item import ThreadItem
+from ...types.after import After
+from ...types.ascending import Ascending
+from ...types.before import Before
+from ...types.error_response import ErrorResponse
+from ...types.labels import Labels
+from ...types.limit import Limit
+from ...types.page_token import PageToken
+from ..types.pod_id import PodId
 
 
 class RawThreadsClient:
@@ -33,6 +34,7 @@ class RawThreadsClient:
 
     def list(
         self,
+        pod_id: PodId,
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
@@ -45,6 +47,8 @@ class RawThreadsClient:
         """
         Parameters
         ----------
+        pod_id : PodId
+
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
@@ -65,7 +69,7 @@ class RawThreadsClient:
         SyncPager[ThreadItem]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v0/threads",
+            f"v0/pods/{jsonable_encoder(pod_id)}/threads",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
@@ -91,6 +95,7 @@ class RawThreadsClient:
                 _parsed_next = _parsed_response.next_page_token
                 _has_next = _parsed_next is not None and _parsed_next != ""
                 _get_next = lambda: self.list(
+                    pod_id,
                     limit=limit,
                     page_token=_parsed_next,
                     labels=labels,
@@ -119,11 +124,13 @@ class RawThreadsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
-        self, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
+        self, pod_id: PodId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Thread]:
         """
         Parameters
         ----------
+        pod_id : PodId
+
         thread_id : ThreadId
 
         request_options : typing.Optional[RequestOptions]
@@ -134,7 +141,7 @@ class RawThreadsClient:
         HttpResponse[Thread]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/threads/{jsonable_encoder(thread_id)}",
+            f"v0/pods/{jsonable_encoder(pod_id)}/threads/{jsonable_encoder(thread_id)}",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
@@ -168,6 +175,7 @@ class RawThreadsClient:
     @contextlib.contextmanager
     def get_attachment(
         self,
+        pod_id: PodId,
         thread_id: ThreadId,
         attachment_id: AttachmentId,
         *,
@@ -176,6 +184,8 @@ class RawThreadsClient:
         """
         Parameters
         ----------
+        pod_id : PodId
+
         thread_id : ThreadId
 
         attachment_id : AttachmentId
@@ -188,7 +198,7 @@ class RawThreadsClient:
         typing.Iterator[HttpResponse[typing.Iterator[bytes]]]
         """
         with self._client_wrapper.httpx_client.stream(
-            f"v0/threads/{jsonable_encoder(thread_id)}/attachments/{jsonable_encoder(attachment_id)}",
+            f"v0/pods/{jsonable_encoder(pod_id)}/threads/{jsonable_encoder(thread_id)}/attachments/{jsonable_encoder(attachment_id)}",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
@@ -229,6 +239,7 @@ class AsyncRawThreadsClient:
 
     async def list(
         self,
+        pod_id: PodId,
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
@@ -241,6 +252,8 @@ class AsyncRawThreadsClient:
         """
         Parameters
         ----------
+        pod_id : PodId
+
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
@@ -261,7 +274,7 @@ class AsyncRawThreadsClient:
         AsyncPager[ThreadItem]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v0/threads",
+            f"v0/pods/{jsonable_encoder(pod_id)}/threads",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
@@ -289,6 +302,7 @@ class AsyncRawThreadsClient:
 
                 async def _get_next():
                     return await self.list(
+                        pod_id,
                         limit=limit,
                         page_token=_parsed_next,
                         labels=labels,
@@ -318,11 +332,13 @@ class AsyncRawThreadsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
+        self, pod_id: PodId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Thread]:
         """
         Parameters
         ----------
+        pod_id : PodId
+
         thread_id : ThreadId
 
         request_options : typing.Optional[RequestOptions]
@@ -333,7 +349,7 @@ class AsyncRawThreadsClient:
         AsyncHttpResponse[Thread]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/threads/{jsonable_encoder(thread_id)}",
+            f"v0/pods/{jsonable_encoder(pod_id)}/threads/{jsonable_encoder(thread_id)}",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
@@ -367,6 +383,7 @@ class AsyncRawThreadsClient:
     @contextlib.asynccontextmanager
     async def get_attachment(
         self,
+        pod_id: PodId,
         thread_id: ThreadId,
         attachment_id: AttachmentId,
         *,
@@ -375,6 +392,8 @@ class AsyncRawThreadsClient:
         """
         Parameters
         ----------
+        pod_id : PodId
+
         thread_id : ThreadId
 
         attachment_id : AttachmentId
@@ -387,7 +406,7 @@ class AsyncRawThreadsClient:
         typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]
         """
         async with self._client_wrapper.httpx_client.stream(
-            f"v0/threads/{jsonable_encoder(thread_id)}/attachments/{jsonable_encoder(attachment_id)}",
+            f"v0/pods/{jsonable_encoder(pod_id)}/threads/{jsonable_encoder(thread_id)}/attachments/{jsonable_encoder(attachment_id)}",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,

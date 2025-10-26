@@ -6,6 +6,7 @@ import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from .client_id import ClientId
+from .display_name import DisplayName
 
 
 class CreateInboxRequest(UncheckedBaseModel):
@@ -19,11 +20,7 @@ class CreateInboxRequest(UncheckedBaseModel):
     Domain of address. Must be verified domain. Defaults to `agentmail.to`.
     """
 
-    display_name: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Display name: `Display Name <username@domain.com>`. Defaults to `AgentMail`. Pass empty string to omit.
-    """
-
+    display_name: typing.Optional[DisplayName] = None
     client_id: typing.Optional[ClientId] = None
 
     if IS_PYDANTIC_V2:

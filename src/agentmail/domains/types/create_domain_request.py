@@ -6,14 +6,12 @@ import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from .domain_name import DomainName
+from .feedback_enabled import FeedbackEnabled
 
 
 class CreateDomainRequest(UncheckedBaseModel):
     domain: DomainName
-    feedback_enabled: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Whether to forward bounce and complaint notifications to your domain.
-    """
+    feedback_enabled: FeedbackEnabled
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

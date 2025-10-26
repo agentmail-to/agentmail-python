@@ -7,12 +7,13 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        ClientId,
         CreateDomainRequest,
-        CreateDomainResponse,
         Domain,
         DomainId,
         DomainName,
         DomainSummary,
+        FeedbackEnabled,
         ListDomainsResponse,
         RecordStatus,
         RecordType,
@@ -20,12 +21,13 @@ if typing.TYPE_CHECKING:
         VerificationStatus,
     )
 _dynamic_imports: typing.Dict[str, str] = {
+    "ClientId": ".types",
     "CreateDomainRequest": ".types",
-    "CreateDomainResponse": ".types",
     "Domain": ".types",
     "DomainId": ".types",
     "DomainName": ".types",
     "DomainSummary": ".types",
+    "FeedbackEnabled": ".types",
     "ListDomainsResponse": ".types",
     "RecordStatus": ".types",
     "RecordType": ".types",
@@ -56,12 +58,13 @@ def __dir__():
 
 
 __all__ = [
+    "ClientId",
     "CreateDomainRequest",
-    "CreateDomainResponse",
     "Domain",
     "DomainId",
     "DomainName",
     "DomainSummary",
+    "FeedbackEnabled",
     "ListDomainsResponse",
     "RecordStatus",
     "RecordType",

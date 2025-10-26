@@ -2,20 +2,21 @@
 
 import typing
 
-from ..attachments.types.attachment_id import AttachmentId
-from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.pagination import AsyncPager, SyncPager
-from ..core.request_options import RequestOptions
-from ..types.after import After
-from ..types.ascending import Ascending
-from ..types.before import Before
-from ..types.labels import Labels
-from ..types.limit import Limit
-from ..types.page_token import PageToken
+from ...attachments.types.attachment_id import AttachmentId
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.pagination import AsyncPager, SyncPager
+from ...core.request_options import RequestOptions
+from ...threads.types.thread import Thread
+from ...threads.types.thread_id import ThreadId
+from ...threads.types.thread_item import ThreadItem
+from ...types.after import After
+from ...types.ascending import Ascending
+from ...types.before import Before
+from ...types.labels import Labels
+from ...types.limit import Limit
+from ...types.page_token import PageToken
+from ..types.pod_id import PodId
 from .raw_client import AsyncRawThreadsClient, RawThreadsClient
-from .types.thread import Thread
-from .types.thread_id import ThreadId
-from .types.thread_item import ThreadItem
 
 
 class ThreadsClient:
@@ -35,6 +36,7 @@ class ThreadsClient:
 
     def list(
         self,
+        pod_id: PodId,
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
@@ -47,6 +49,8 @@ class ThreadsClient:
         """
         Parameters
         ----------
+        pod_id : PodId
+
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
@@ -73,7 +77,9 @@ class ThreadsClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        response = client.threads.list()
+        response = client.pods.threads.list(
+            pod_id="pod_id",
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -81,6 +87,7 @@ class ThreadsClient:
             yield page
         """
         return self._raw_client.list(
+            pod_id,
             limit=limit,
             page_token=page_token,
             labels=labels,
@@ -90,10 +97,14 @@ class ThreadsClient:
             request_options=request_options,
         )
 
-    def get(self, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None) -> Thread:
+    def get(
+        self, pod_id: PodId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> Thread:
         """
         Parameters
         ----------
+        pod_id : PodId
+
         thread_id : ThreadId
 
         request_options : typing.Optional[RequestOptions]
@@ -110,15 +121,17 @@ class ThreadsClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.threads.get(
+        client.pods.threads.get(
+            pod_id="pod_id",
             thread_id="thread_id",
         )
         """
-        _response = self._raw_client.get(thread_id, request_options=request_options)
+        _response = self._raw_client.get(pod_id, thread_id, request_options=request_options)
         return _response.data
 
     def get_attachment(
         self,
+        pod_id: PodId,
         thread_id: ThreadId,
         attachment_id: AttachmentId,
         *,
@@ -127,6 +140,8 @@ class ThreadsClient:
         """
         Parameters
         ----------
+        pod_id : PodId
+
         thread_id : ThreadId
 
         attachment_id : AttachmentId
@@ -145,12 +160,13 @@ class ThreadsClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.threads.get_attachment(
+        client.pods.threads.get_attachment(
+            pod_id="pod_id",
             thread_id="thread_id",
             attachment_id="attachment_id",
         )
         """
-        with self._raw_client.get_attachment(thread_id, attachment_id, request_options=request_options) as r:
+        with self._raw_client.get_attachment(pod_id, thread_id, attachment_id, request_options=request_options) as r:
             yield from r.data
 
 
@@ -171,6 +187,7 @@ class AsyncThreadsClient:
 
     async def list(
         self,
+        pod_id: PodId,
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
@@ -183,6 +200,8 @@ class AsyncThreadsClient:
         """
         Parameters
         ----------
+        pod_id : PodId
+
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
@@ -214,7 +233,9 @@ class AsyncThreadsClient:
 
 
         async def main() -> None:
-            response = await client.threads.list()
+            response = await client.pods.threads.list(
+                pod_id="pod_id",
+            )
             async for item in response:
                 yield item
 
@@ -226,6 +247,7 @@ class AsyncThreadsClient:
         asyncio.run(main())
         """
         return await self._raw_client.list(
+            pod_id,
             limit=limit,
             page_token=page_token,
             labels=labels,
@@ -235,10 +257,14 @@ class AsyncThreadsClient:
             request_options=request_options,
         )
 
-    async def get(self, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None) -> Thread:
+    async def get(
+        self, pod_id: PodId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> Thread:
         """
         Parameters
         ----------
+        pod_id : PodId
+
         thread_id : ThreadId
 
         request_options : typing.Optional[RequestOptions]
@@ -260,18 +286,20 @@ class AsyncThreadsClient:
 
 
         async def main() -> None:
-            await client.threads.get(
+            await client.pods.threads.get(
+                pod_id="pod_id",
                 thread_id="thread_id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(thread_id, request_options=request_options)
+        _response = await self._raw_client.get(pod_id, thread_id, request_options=request_options)
         return _response.data
 
     async def get_attachment(
         self,
+        pod_id: PodId,
         thread_id: ThreadId,
         attachment_id: AttachmentId,
         *,
@@ -280,6 +308,8 @@ class AsyncThreadsClient:
         """
         Parameters
         ----------
+        pod_id : PodId
+
         thread_id : ThreadId
 
         attachment_id : AttachmentId
@@ -303,7 +333,8 @@ class AsyncThreadsClient:
 
 
         async def main() -> None:
-            await client.threads.get_attachment(
+            await client.pods.threads.get_attachment(
+                pod_id="pod_id",
                 thread_id="thread_id",
                 attachment_id="attachment_id",
             )
@@ -311,6 +342,8 @@ class AsyncThreadsClient:
 
         asyncio.run(main())
         """
-        async with self._raw_client.get_attachment(thread_id, attachment_id, request_options=request_options) as r:
+        async with self._raw_client.get_attachment(
+            pod_id, thread_id, attachment_id, request_options=request_options
+        ) as r:
             async for _chunk in r.data:
                 yield _chunk

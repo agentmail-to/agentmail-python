@@ -3,7 +3,7 @@ name = "agentmail"
 
 [tool.poetry]
 name = "agentmail"
-version = "0.0.68"
+version = "0.0.69"
 description = ""
 readme = "README.md"
 authors = []

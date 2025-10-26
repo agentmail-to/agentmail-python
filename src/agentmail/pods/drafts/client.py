@@ -2,39 +2,40 @@
 
 import typing
 
-from ..attachments.types.attachment_id import AttachmentId
-from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.pagination import AsyncPager, SyncPager
-from ..core.request_options import RequestOptions
-from ..types.after import After
-from ..types.ascending import Ascending
-from ..types.before import Before
-from ..types.labels import Labels
-from ..types.limit import Limit
-from ..types.page_token import PageToken
-from .raw_client import AsyncRawThreadsClient, RawThreadsClient
-from .types.thread import Thread
-from .types.thread_id import ThreadId
-from .types.thread_item import ThreadItem
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.pagination import AsyncPager, SyncPager
+from ...core.request_options import RequestOptions
+from ...drafts.types.draft import Draft
+from ...drafts.types.draft_id import DraftId
+from ...drafts.types.draft_item import DraftItem
+from ...types.after import After
+from ...types.ascending import Ascending
+from ...types.before import Before
+from ...types.labels import Labels
+from ...types.limit import Limit
+from ...types.page_token import PageToken
+from ..types.pod_id import PodId
+from .raw_client import AsyncRawDraftsClient, RawDraftsClient
 
 
-class ThreadsClient:
+class DraftsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawThreadsClient(client_wrapper=client_wrapper)
+        self._raw_client = RawDraftsClient(client_wrapper=client_wrapper)
 
     @property
-    def with_raw_response(self) -> RawThreadsClient:
+    def with_raw_response(self) -> RawDraftsClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        RawThreadsClient
+        RawDraftsClient
         """
         return self._raw_client
 
     def list(
         self,
+        pod_id: PodId,
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
@@ -43,10 +44,12 @@ class ThreadsClient:
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[ThreadItem]:
+    ) -> SyncPager[DraftItem]:
         """
         Parameters
         ----------
+        pod_id : PodId
+
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
@@ -64,7 +67,7 @@ class ThreadsClient:
 
         Returns
         -------
-        SyncPager[ThreadItem]
+        SyncPager[DraftItem]
 
         Examples
         --------
@@ -73,7 +76,9 @@ class ThreadsClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        response = client.threads.list()
+        response = client.pods.drafts.list(
+            pod_id="pod_id",
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -81,6 +86,7 @@ class ThreadsClient:
             yield page
         """
         return self._raw_client.list(
+            pod_id,
             limit=limit,
             page_token=page_token,
             labels=labels,
@@ -90,18 +96,22 @@ class ThreadsClient:
             request_options=request_options,
         )
 
-    def get(self, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None) -> Thread:
+    def get(
+        self, pod_id: PodId, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> Draft:
         """
         Parameters
         ----------
-        thread_id : ThreadId
+        pod_id : PodId
+
+        draft_id : DraftId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Thread
+        Draft
 
         Examples
         --------
@@ -110,67 +120,33 @@ class ThreadsClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.threads.get(
-            thread_id="thread_id",
+        client.pods.drafts.get(
+            pod_id="pod_id",
+            draft_id="draft_id",
         )
         """
-        _response = self._raw_client.get(thread_id, request_options=request_options)
+        _response = self._raw_client.get(pod_id, draft_id, request_options=request_options)
         return _response.data
 
-    def get_attachment(
-        self,
-        thread_id: ThreadId,
-        attachment_id: AttachmentId,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[bytes]:
-        """
-        Parameters
-        ----------
-        thread_id : ThreadId
 
-        attachment_id : AttachmentId
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
-
-        Returns
-        -------
-        typing.Iterator[bytes]
-
-        Examples
-        --------
-        from agentmail import AgentMail
-
-        client = AgentMail(
-            api_key="YOUR_API_KEY",
-        )
-        client.threads.get_attachment(
-            thread_id="thread_id",
-            attachment_id="attachment_id",
-        )
-        """
-        with self._raw_client.get_attachment(thread_id, attachment_id, request_options=request_options) as r:
-            yield from r.data
-
-
-class AsyncThreadsClient:
+class AsyncDraftsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawThreadsClient(client_wrapper=client_wrapper)
+        self._raw_client = AsyncRawDraftsClient(client_wrapper=client_wrapper)
 
     @property
-    def with_raw_response(self) -> AsyncRawThreadsClient:
+    def with_raw_response(self) -> AsyncRawDraftsClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        AsyncRawThreadsClient
+        AsyncRawDraftsClient
         """
         return self._raw_client
 
     async def list(
         self,
+        pod_id: PodId,
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
@@ -179,10 +155,12 @@ class AsyncThreadsClient:
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[ThreadItem]:
+    ) -> AsyncPager[DraftItem]:
         """
         Parameters
         ----------
+        pod_id : PodId
+
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
@@ -200,7 +178,7 @@ class AsyncThreadsClient:
 
         Returns
         -------
-        AsyncPager[ThreadItem]
+        AsyncPager[DraftItem]
 
         Examples
         --------
@@ -214,7 +192,9 @@ class AsyncThreadsClient:
 
 
         async def main() -> None:
-            response = await client.threads.list()
+            response = await client.pods.drafts.list(
+                pod_id="pod_id",
+            )
             async for item in response:
                 yield item
 
@@ -226,6 +206,7 @@ class AsyncThreadsClient:
         asyncio.run(main())
         """
         return await self._raw_client.list(
+            pod_id,
             limit=limit,
             page_token=page_token,
             labels=labels,
@@ -235,18 +216,22 @@ class AsyncThreadsClient:
             request_options=request_options,
         )
 
-    async def get(self, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None) -> Thread:
+    async def get(
+        self, pod_id: PodId, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> Draft:
         """
         Parameters
         ----------
-        thread_id : ThreadId
+        pod_id : PodId
+
+        draft_id : DraftId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Thread
+        Draft
 
         Examples
         --------
@@ -260,57 +245,13 @@ class AsyncThreadsClient:
 
 
         async def main() -> None:
-            await client.threads.get(
-                thread_id="thread_id",
+            await client.pods.drafts.get(
+                pod_id="pod_id",
+                draft_id="draft_id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(thread_id, request_options=request_options)
+        _response = await self._raw_client.get(pod_id, draft_id, request_options=request_options)
         return _response.data
-
-    async def get_attachment(
-        self,
-        thread_id: ThreadId,
-        attachment_id: AttachmentId,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[bytes]:
-        """
-        Parameters
-        ----------
-        thread_id : ThreadId
-
-        attachment_id : AttachmentId
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
-
-        Returns
-        -------
-        typing.AsyncIterator[bytes]
-
-        Examples
-        --------
-        import asyncio
-
-        from agentmail import AsyncAgentMail
-
-        client = AsyncAgentMail(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.threads.get_attachment(
-                thread_id="thread_id",
-                attachment_id="attachment_id",
-            )
-
-
-        asyncio.run(main())
-        """
-        async with self._raw_client.get_attachment(thread_id, attachment_id, request_options=request_options) as r:
-            async for _chunk in r.data:
-                yield _chunk

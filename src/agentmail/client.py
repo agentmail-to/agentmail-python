@@ -16,6 +16,7 @@ if typing.TYPE_CHECKING:
     from .drafts.client import AsyncDraftsClient, DraftsClient
     from .inboxes.client import AsyncInboxesClient, InboxesClient
     from .metrics.client import AsyncMetricsClient, MetricsClient
+    from .pods.client import AsyncPodsClient, PodsClient
     from .threads.client import AsyncThreadsClient, ThreadsClient
     from .webhooks.client import AsyncWebhooksClient, WebhooksClient
 
@@ -86,6 +87,7 @@ class AgentMail:
             timeout=_defaulted_timeout,
         )
         self._inboxes: typing.Optional[InboxesClient] = None
+        self._pods: typing.Optional[PodsClient] = None
         self._webhooks: typing.Optional[WebhooksClient] = None
         self._api_keys: typing.Optional[ApiKeysClient] = None
         self._domains: typing.Optional[DomainsClient] = None
@@ -100,6 +102,14 @@ class AgentMail:
 
             self._inboxes = InboxesClient(client_wrapper=self._client_wrapper)
         return self._inboxes
+
+    @property
+    def pods(self):
+        if self._pods is None:
+            from .pods.client import PodsClient  # noqa: E402
+
+            self._pods = PodsClient(client_wrapper=self._client_wrapper)
+        return self._pods
 
     @property
     def webhooks(self):
@@ -216,6 +226,7 @@ class AsyncAgentMail:
             timeout=_defaulted_timeout,
         )
         self._inboxes: typing.Optional[AsyncInboxesClient] = None
+        self._pods: typing.Optional[AsyncPodsClient] = None
         self._webhooks: typing.Optional[AsyncWebhooksClient] = None
         self._api_keys: typing.Optional[AsyncApiKeysClient] = None
         self._domains: typing.Optional[AsyncDomainsClient] = None
@@ -230,6 +241,14 @@ class AsyncAgentMail:
 
             self._inboxes = AsyncInboxesClient(client_wrapper=self._client_wrapper)
         return self._inboxes
+
+    @property
+    def pods(self):
+        if self._pods is None:
+            from .pods.client import AsyncPodsClient  # noqa: E402
+
+            self._pods = AsyncPodsClient(client_wrapper=self._client_wrapper)
+        return self._pods
 
     @property
     def webhooks(self):

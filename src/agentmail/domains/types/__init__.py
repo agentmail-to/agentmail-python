@@ -6,24 +6,26 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .client_id import ClientId
     from .create_domain_request import CreateDomainRequest
-    from .create_domain_response import CreateDomainResponse
     from .domain import Domain
     from .domain_id import DomainId
     from .domain_name import DomainName
     from .domain_summary import DomainSummary
+    from .feedback_enabled import FeedbackEnabled
     from .list_domains_response import ListDomainsResponse
     from .record_status import RecordStatus
     from .record_type import RecordType
     from .verification_record import VerificationRecord
     from .verification_status import VerificationStatus
 _dynamic_imports: typing.Dict[str, str] = {
+    "ClientId": ".client_id",
     "CreateDomainRequest": ".create_domain_request",
-    "CreateDomainResponse": ".create_domain_response",
     "Domain": ".domain",
     "DomainId": ".domain_id",
     "DomainName": ".domain_name",
     "DomainSummary": ".domain_summary",
+    "FeedbackEnabled": ".feedback_enabled",
     "ListDomainsResponse": ".list_domains_response",
     "RecordStatus": ".record_status",
     "RecordType": ".record_type",
@@ -54,12 +56,13 @@ def __dir__():
 
 
 __all__ = [
+    "ClientId",
     "CreateDomainRequest",
-    "CreateDomainResponse",
     "Domain",
     "DomainId",
     "DomainName",
     "DomainSummary",
+    "FeedbackEnabled",
     "ListDomainsResponse",
     "RecordStatus",
     "RecordType",

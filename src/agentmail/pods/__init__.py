@@ -6,18 +6,18 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import ClientId, CreateInboxRequest, DisplayName, Inbox, InboxId, ListInboxesResponse
-    from . import drafts, messages, metrics, threads
+    from .types import ClientId, CreatePodRequest, ListPodsResponse, Name, Pod, PodId
+    from . import domains, drafts, inboxes, threads
 _dynamic_imports: typing.Dict[str, str] = {
     "ClientId": ".types",
-    "CreateInboxRequest": ".types",
-    "DisplayName": ".types",
-    "Inbox": ".types",
-    "InboxId": ".types",
-    "ListInboxesResponse": ".types",
+    "CreatePodRequest": ".types",
+    "ListPodsResponse": ".types",
+    "Name": ".types",
+    "Pod": ".types",
+    "PodId": ".types",
+    "domains": ".domains",
     "drafts": ".drafts",
-    "messages": ".messages",
-    "metrics": ".metrics",
+    "inboxes": ".inboxes",
     "threads": ".threads",
 }
 
@@ -45,13 +45,13 @@ def __dir__():
 
 __all__ = [
     "ClientId",
-    "CreateInboxRequest",
-    "DisplayName",
-    "Inbox",
-    "InboxId",
-    "ListInboxesResponse",
+    "CreatePodRequest",
+    "ListPodsResponse",
+    "Name",
+    "Pod",
+    "PodId",
+    "domains",
     "drafts",
-    "messages",
-    "metrics",
+    "inboxes",
     "threads",
 ]

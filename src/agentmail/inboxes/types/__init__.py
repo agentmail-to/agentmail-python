@@ -8,12 +8,14 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .client_id import ClientId
     from .create_inbox_request import CreateInboxRequest
+    from .display_name import DisplayName
     from .inbox import Inbox
     from .inbox_id import InboxId
     from .list_inboxes_response import ListInboxesResponse
 _dynamic_imports: typing.Dict[str, str] = {
     "ClientId": ".client_id",
     "CreateInboxRequest": ".create_inbox_request",
+    "DisplayName": ".display_name",
     "Inbox": ".inbox",
     "InboxId": ".inbox_id",
     "ListInboxesResponse": ".list_inboxes_response",
@@ -41,4 +43,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ClientId", "CreateInboxRequest", "Inbox", "InboxId", "ListInboxesResponse"]
+__all__ = ["ClientId", "CreateInboxRequest", "DisplayName", "Inbox", "InboxId", "ListInboxesResponse"]

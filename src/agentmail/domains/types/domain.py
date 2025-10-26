@@ -6,30 +6,29 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
-from ...types.organization_id import OrganizationId
+from .client_id import ClientId
 from .domain_id import DomainId
+from .domain_name import DomainName
+from .feedback_enabled import FeedbackEnabled
 from .verification_record import VerificationRecord
 from .verification_status import VerificationStatus
 
 
 class Domain(UncheckedBaseModel):
     domain_id: DomainId
-    organization_id: OrganizationId
+    domain: DomainName
     status: VerificationStatus = pydantic.Field()
     """
     The verification status of the domain.
     """
 
-    feedback_enabled: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Whether bounce and complaint notifications are forwarded to your domain.
-    """
-
+    feedback_enabled: FeedbackEnabled
     records: typing.List[VerificationRecord] = pydantic.Field()
     """
     A list of DNS records required to verify the domain.
     """
 
+    client_id: typing.Optional[ClientId] = None
     updated_at: dt.datetime = pydantic.Field()
     """
     Time at which the domain was last updated.

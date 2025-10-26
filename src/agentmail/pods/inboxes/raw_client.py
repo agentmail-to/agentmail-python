@@ -3,105 +3,149 @@
 import typing
 from json.decoder import JSONDecodeError
 
-from ..core.api_error import ApiError
-from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pagination import AsyncPager, BaseHttpResponse, SyncPager
-from ..core.request_options import RequestOptions
-from ..core.unchecked_base_model import construct_type
-from ..errors.not_found_error import NotFoundError
-from ..errors.validation_error import ValidationError
-from ..types.error_response import ErrorResponse
-from ..types.limit import Limit
-from ..types.page_token import PageToken
-from ..types.validation_error_response import ValidationErrorResponse
-from .types.domain import Domain
-from .types.domain_id import DomainId
-from .types.domain_name import DomainName
-from .types.domain_summary import DomainSummary
-from .types.feedback_enabled import FeedbackEnabled
-from .types.list_domains_response import ListDomainsResponse
+from ...core.api_error import ApiError
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.datetime_utils import serialize_datetime
+from ...core.http_response import AsyncHttpResponse, HttpResponse
+from ...core.jsonable_encoder import jsonable_encoder
+from ...core.pagination import AsyncPager, BaseHttpResponse, SyncPager
+from ...core.request_options import RequestOptions
+from ...core.unchecked_base_model import construct_type
+from ...errors.not_found_error import NotFoundError
+from ...errors.validation_error import ValidationError
+from ...inboxes.types.client_id import ClientId
+from ...inboxes.types.display_name import DisplayName
+from ...inboxes.types.inbox import Inbox
+from ...inboxes.types.inbox_id import InboxId
+from ...inboxes.types.list_inboxes_response import ListInboxesResponse
+from ...types.after import After
+from ...types.ascending import Ascending
+from ...types.before import Before
+from ...types.error_response import ErrorResponse
+from ...types.labels import Labels
+from ...types.limit import Limit
+from ...types.page_token import PageToken
+from ...types.validation_error_response import ValidationErrorResponse
+from ..types.pod_id import PodId
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
 
-class RawDomainsClient:
+class RawInboxesClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     def list(
         self,
+        pod_id: PodId,
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
+        labels: typing.Optional[Labels] = None,
+        before: typing.Optional[Before] = None,
+        after: typing.Optional[After] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[DomainSummary]:
+    ) -> SyncPager[Inbox]:
         """
         Parameters
         ----------
+        pod_id : PodId
+
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
+
+        labels : typing.Optional[Labels]
+
+        before : typing.Optional[Before]
+
+        after : typing.Optional[After]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        SyncPager[DomainSummary]
+        SyncPager[Inbox]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v0/domains",
+            f"v0/pods/{jsonable_encoder(pod_id)}/inboxes",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
                 "limit": limit,
                 "page_token": page_token,
+                "labels": labels,
+                "before": serialize_datetime(before) if before is not None else None,
+                "after": serialize_datetime(after) if after is not None else None,
+                "ascending": ascending,
             },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
-                    ListDomainsResponse,
+                    ListInboxesResponse,
                     construct_type(
-                        type_=ListDomainsResponse,  # type: ignore
+                        type_=ListInboxesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                _items = _parsed_response.domains
+                _items = _parsed_response.inboxes
                 _parsed_next = _parsed_response.next_page_token
                 _has_next = _parsed_next is not None and _parsed_next != ""
                 _get_next = lambda: self.list(
+                    pod_id,
                     limit=limit,
                     page_token=_parsed_next,
+                    labels=labels,
+                    before=before,
+                    after=after,
+                    ascending=ascending,
                     request_options=request_options,
                 )
                 return SyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
                 )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get(self, domain: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Domain]:
+    def get(
+        self, pod_id: PodId, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[Inbox]:
         """
         Parameters
         ----------
-        domain : DomainId
+        pod_id : PodId
+
+        inbox_id : InboxId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[Domain]
+        HttpResponse[Inbox]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/domains/{jsonable_encoder(domain)}",
+            f"v0/pods/{jsonable_encoder(pod_id)}/inboxes/{jsonable_encoder(inbox_id)}",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
@@ -109,9 +153,9 @@ class RawDomainsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    Domain,
+                    Inbox,
                     construct_type(
-                        type_=Domain,  # type: ignore
+                        type_=Inbox,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -134,32 +178,45 @@ class RawDomainsClient:
 
     def create(
         self,
+        pod_id: PodId,
         *,
-        domain: DomainName,
-        feedback_enabled: FeedbackEnabled,
+        username: typing.Optional[str] = OMIT,
+        domain: typing.Optional[str] = OMIT,
+        display_name: typing.Optional[DisplayName] = OMIT,
+        client_id: typing.Optional[ClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[Domain]:
+    ) -> HttpResponse[Inbox]:
         """
         Parameters
         ----------
-        domain : DomainName
+        pod_id : PodId
 
-        feedback_enabled : FeedbackEnabled
+        username : typing.Optional[str]
+            Username of address. Randomly generated if not specified.
+
+        domain : typing.Optional[str]
+            Domain of address. Must be verified domain. Defaults to `agentmail.to`.
+
+        display_name : typing.Optional[DisplayName]
+
+        client_id : typing.Optional[ClientId]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[Domain]
+        HttpResponse[Inbox]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v0/domains",
+            f"v0/pods/{jsonable_encoder(pod_id)}/inboxes",
             base_url=self._client_wrapper.get_environment().http,
             method="POST",
             json={
+                "username": username,
                 "domain": domain,
-                "feedback_enabled": feedback_enabled,
+                "display_name": display_name,
+                "client_id": client_id,
             },
             request_options=request_options,
             omit=OMIT,
@@ -167,9 +224,9 @@ class RawDomainsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    Domain,
+                    Inbox,
                     construct_type(
-                        type_=Domain,  # type: ignore
+                        type_=Inbox,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -191,12 +248,14 @@ class RawDomainsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
-        self, domain: DomainId, *, request_options: typing.Optional[RequestOptions] = None
+        self, pod_id: PodId, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
         Parameters
         ----------
-        domain : DomainId
+        pod_id : PodId
+
+        inbox_id : InboxId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -206,7 +265,7 @@ class RawDomainsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/domains/{jsonable_encoder(domain)}",
+            f"v0/pods/{jsonable_encoder(pod_id)}/inboxes/{jsonable_encoder(inbox_id)}",
             base_url=self._client_wrapper.get_environment().http,
             method="DELETE",
             request_options=request_options,
@@ -231,63 +290,98 @@ class RawDomainsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
-class AsyncRawDomainsClient:
+class AsyncRawInboxesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     async def list(
         self,
+        pod_id: PodId,
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
+        labels: typing.Optional[Labels] = None,
+        before: typing.Optional[Before] = None,
+        after: typing.Optional[After] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[DomainSummary]:
+    ) -> AsyncPager[Inbox]:
         """
         Parameters
         ----------
+        pod_id : PodId
+
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
+
+        labels : typing.Optional[Labels]
+
+        before : typing.Optional[Before]
+
+        after : typing.Optional[After]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncPager[DomainSummary]
+        AsyncPager[Inbox]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v0/domains",
+            f"v0/pods/{jsonable_encoder(pod_id)}/inboxes",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
                 "limit": limit,
                 "page_token": page_token,
+                "labels": labels,
+                "before": serialize_datetime(before) if before is not None else None,
+                "after": serialize_datetime(after) if after is not None else None,
+                "ascending": ascending,
             },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
-                    ListDomainsResponse,
+                    ListInboxesResponse,
                     construct_type(
-                        type_=ListDomainsResponse,  # type: ignore
+                        type_=ListInboxesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                _items = _parsed_response.domains
+                _items = _parsed_response.inboxes
                 _parsed_next = _parsed_response.next_page_token
                 _has_next = _parsed_next is not None and _parsed_next != ""
 
                 async def _get_next():
                     return await self.list(
+                        pod_id,
                         limit=limit,
                         page_token=_parsed_next,
+                        labels=labels,
+                        before=before,
+                        after=after,
+                        ascending=ascending,
                         request_options=request_options,
                     )
 
                 return AsyncPager(
                     has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
                 )
             _response_json = _response.json()
         except JSONDecodeError:
@@ -295,22 +389,24 @@ class AsyncRawDomainsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self, domain: DomainId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[Domain]:
+        self, pod_id: PodId, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[Inbox]:
         """
         Parameters
         ----------
-        domain : DomainId
+        pod_id : PodId
+
+        inbox_id : InboxId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[Domain]
+        AsyncHttpResponse[Inbox]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/domains/{jsonable_encoder(domain)}",
+            f"v0/pods/{jsonable_encoder(pod_id)}/inboxes/{jsonable_encoder(inbox_id)}",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
@@ -318,9 +414,9 @@ class AsyncRawDomainsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    Domain,
+                    Inbox,
                     construct_type(
-                        type_=Domain,  # type: ignore
+                        type_=Inbox,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -343,32 +439,45 @@ class AsyncRawDomainsClient:
 
     async def create(
         self,
+        pod_id: PodId,
         *,
-        domain: DomainName,
-        feedback_enabled: FeedbackEnabled,
+        username: typing.Optional[str] = OMIT,
+        domain: typing.Optional[str] = OMIT,
+        display_name: typing.Optional[DisplayName] = OMIT,
+        client_id: typing.Optional[ClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[Domain]:
+    ) -> AsyncHttpResponse[Inbox]:
         """
         Parameters
         ----------
-        domain : DomainName
+        pod_id : PodId
 
-        feedback_enabled : FeedbackEnabled
+        username : typing.Optional[str]
+            Username of address. Randomly generated if not specified.
+
+        domain : typing.Optional[str]
+            Domain of address. Must be verified domain. Defaults to `agentmail.to`.
+
+        display_name : typing.Optional[DisplayName]
+
+        client_id : typing.Optional[ClientId]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[Domain]
+        AsyncHttpResponse[Inbox]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v0/domains",
+            f"v0/pods/{jsonable_encoder(pod_id)}/inboxes",
             base_url=self._client_wrapper.get_environment().http,
             method="POST",
             json={
+                "username": username,
                 "domain": domain,
-                "feedback_enabled": feedback_enabled,
+                "display_name": display_name,
+                "client_id": client_id,
             },
             request_options=request_options,
             omit=OMIT,
@@ -376,9 +485,9 @@ class AsyncRawDomainsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    Domain,
+                    Inbox,
                     construct_type(
-                        type_=Domain,  # type: ignore
+                        type_=Inbox,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -400,12 +509,14 @@ class AsyncRawDomainsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
-        self, domain: DomainId, *, request_options: typing.Optional[RequestOptions] = None
+        self, pod_id: PodId, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
         Parameters
         ----------
-        domain : DomainId
+        pod_id : PodId
+
+        inbox_id : InboxId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -415,7 +526,7 @@ class AsyncRawDomainsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/domains/{jsonable_encoder(domain)}",
+            f"v0/pods/{jsonable_encoder(pod_id)}/inboxes/{jsonable_encoder(inbox_id)}",
             base_url=self._client_wrapper.get_environment().http,
             method="DELETE",
             request_options=request_options,

@@ -17,6 +17,7 @@ from ..types.limit import Limit
 from ..types.page_token import PageToken
 from ..types.validation_error_response import ValidationErrorResponse
 from .types.client_id import ClientId
+from .types.display_name import DisplayName
 from .types.inbox import Inbox
 from .types.inbox_id import InboxId
 from .types.list_inboxes_response import ListInboxesResponse
@@ -135,7 +136,7 @@ class RawInboxesClient:
         *,
         username: typing.Optional[str] = OMIT,
         domain: typing.Optional[str] = OMIT,
-        display_name: typing.Optional[str] = OMIT,
+        display_name: typing.Optional[DisplayName] = OMIT,
         client_id: typing.Optional[ClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Inbox]:
@@ -148,8 +149,7 @@ class RawInboxesClient:
         domain : typing.Optional[str]
             Domain of address. Must be verified domain. Defaults to `agentmail.to`.
 
-        display_name : typing.Optional[str]
-            Display name: `Display Name <username@domain.com>`. Defaults to `AgentMail`. Pass empty string to omit.
+        display_name : typing.Optional[DisplayName]
 
         client_id : typing.Optional[ClientId]
 
@@ -355,7 +355,7 @@ class AsyncRawInboxesClient:
         *,
         username: typing.Optional[str] = OMIT,
         domain: typing.Optional[str] = OMIT,
-        display_name: typing.Optional[str] = OMIT,
+        display_name: typing.Optional[DisplayName] = OMIT,
         client_id: typing.Optional[ClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Inbox]:
@@ -368,8 +368,7 @@ class AsyncRawInboxesClient:
         domain : typing.Optional[str]
             Domain of address. Must be verified domain. Defaults to `agentmail.to`.
 
-        display_name : typing.Optional[str]
-            Display name: `Display Name <username@domain.com>`. Defaults to `AgentMail`. Pass empty string to omit.
+        display_name : typing.Optional[DisplayName]
 
         client_id : typing.Optional[ClientId]
 

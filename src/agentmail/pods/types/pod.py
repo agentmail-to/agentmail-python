@@ -7,23 +7,24 @@ import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from .client_id import ClientId
-from .display_name import DisplayName
-from .inbox_id import InboxId
+from .name import Name
+from .pod_id import PodId
 
 
-class Inbox(UncheckedBaseModel):
-    inbox_id: InboxId
-    display_name: typing.Optional[DisplayName] = None
-    client_id: typing.Optional[ClientId] = None
+class Pod(UncheckedBaseModel):
+    pod_id: PodId
+    name: Name
     updated_at: dt.datetime = pydantic.Field()
     """
-    Time at which inbox was last updated.
+    Time at which pod was last updated.
     """
 
     created_at: dt.datetime = pydantic.Field()
     """
-    Time at which inbox was created.
+    Time at which pod was created.
     """
+
+    client_id: typing.Optional[ClientId] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

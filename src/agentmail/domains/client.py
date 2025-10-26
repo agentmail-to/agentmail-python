@@ -8,11 +8,11 @@ from ..core.request_options import RequestOptions
 from ..types.limit import Limit
 from ..types.page_token import PageToken
 from .raw_client import AsyncRawDomainsClient, RawDomainsClient
-from .types.create_domain_response import CreateDomainResponse
 from .types.domain import Domain
 from .types.domain_id import DomainId
 from .types.domain_name import DomainName
 from .types.domain_summary import DomainSummary
+from .types.feedback_enabled import FeedbackEnabled
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -101,23 +101,22 @@ class DomainsClient:
         self,
         *,
         domain: DomainName,
-        feedback_enabled: typing.Optional[bool] = OMIT,
+        feedback_enabled: FeedbackEnabled,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> CreateDomainResponse:
+    ) -> Domain:
         """
         Parameters
         ----------
         domain : DomainName
 
-        feedback_enabled : typing.Optional[bool]
-            Whether to forward bounce and complaint notifications to your domain.
+        feedback_enabled : FeedbackEnabled
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        CreateDomainResponse
+        Domain
 
         Examples
         --------
@@ -128,6 +127,7 @@ class DomainsClient:
         )
         client.domains.create(
             domain="domain",
+            feedback_enabled=True,
         )
         """
         _response = self._raw_client.create(
@@ -263,23 +263,22 @@ class AsyncDomainsClient:
         self,
         *,
         domain: DomainName,
-        feedback_enabled: typing.Optional[bool] = OMIT,
+        feedback_enabled: FeedbackEnabled,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> CreateDomainResponse:
+    ) -> Domain:
         """
         Parameters
         ----------
         domain : DomainName
 
-        feedback_enabled : typing.Optional[bool]
-            Whether to forward bounce and complaint notifications to your domain.
+        feedback_enabled : FeedbackEnabled
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        CreateDomainResponse
+        Domain
 
         Examples
         --------
@@ -295,6 +294,7 @@ class AsyncDomainsClient:
         async def main() -> None:
             await client.domains.create(
                 domain="domain",
+                feedback_enabled=True,
             )
 
 

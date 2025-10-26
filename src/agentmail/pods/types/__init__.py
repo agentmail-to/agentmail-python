@@ -6,19 +6,19 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import ClientId, CreateInboxRequest, DisplayName, Inbox, InboxId, ListInboxesResponse
-    from . import drafts, messages, metrics, threads
+    from .client_id import ClientId
+    from .create_pod_request import CreatePodRequest
+    from .list_pods_response import ListPodsResponse
+    from .name import Name
+    from .pod import Pod
+    from .pod_id import PodId
 _dynamic_imports: typing.Dict[str, str] = {
-    "ClientId": ".types",
-    "CreateInboxRequest": ".types",
-    "DisplayName": ".types",
-    "Inbox": ".types",
-    "InboxId": ".types",
-    "ListInboxesResponse": ".types",
-    "drafts": ".drafts",
-    "messages": ".messages",
-    "metrics": ".metrics",
-    "threads": ".threads",
+    "ClientId": ".client_id",
+    "CreatePodRequest": ".create_pod_request",
+    "ListPodsResponse": ".list_pods_response",
+    "Name": ".name",
+    "Pod": ".pod",
+    "PodId": ".pod_id",
 }
 
 
@@ -43,15 +43,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = [
-    "ClientId",
-    "CreateInboxRequest",
-    "DisplayName",
-    "Inbox",
-    "InboxId",
-    "ListInboxesResponse",
-    "drafts",
-    "messages",
-    "metrics",
-    "threads",
-]
+__all__ = ["ClientId", "CreatePodRequest", "ListPodsResponse", "Name", "Pod", "PodId"]

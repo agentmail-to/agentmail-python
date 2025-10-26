@@ -9,38 +9,38 @@ from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.limit import Limit
 from ..types.page_token import PageToken
-from .raw_client import AsyncRawInboxesClient, RawInboxesClient
+from .raw_client import AsyncRawPodsClient, RawPodsClient
 from .types.client_id import ClientId
-from .types.display_name import DisplayName
-from .types.inbox import Inbox
-from .types.inbox_id import InboxId
+from .types.name import Name
+from .types.pod import Pod
+from .types.pod_id import PodId
 
 if typing.TYPE_CHECKING:
+    from .domains.client import AsyncDomainsClient, DomainsClient
     from .drafts.client import AsyncDraftsClient, DraftsClient
-    from .messages.client import AsyncMessagesClient, MessagesClient
-    from .metrics.client import AsyncMetricsClient, MetricsClient
+    from .inboxes.client import AsyncInboxesClient, InboxesClient
     from .threads.client import AsyncThreadsClient, ThreadsClient
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
 
-class InboxesClient:
+class PodsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawInboxesClient(client_wrapper=client_wrapper)
+        self._raw_client = RawPodsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
+        self._inboxes: typing.Optional[InboxesClient] = None
         self._threads: typing.Optional[ThreadsClient] = None
-        self._messages: typing.Optional[MessagesClient] = None
         self._drafts: typing.Optional[DraftsClient] = None
-        self._metrics: typing.Optional[MetricsClient] = None
+        self._domains: typing.Optional[DomainsClient] = None
 
     @property
-    def with_raw_response(self) -> RawInboxesClient:
+    def with_raw_response(self) -> RawPodsClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        RawInboxesClient
+        RawPodsClient
         """
         return self._raw_client
 
@@ -50,7 +50,7 @@ class InboxesClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[Inbox]:
+    ) -> SyncPager[Pod]:
         """
         Parameters
         ----------
@@ -63,7 +63,7 @@ class InboxesClient:
 
         Returns
         -------
-        SyncPager[Inbox]
+        SyncPager[Pod]
 
         Examples
         --------
@@ -72,7 +72,7 @@ class InboxesClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        response = client.inboxes.list()
+        response = client.pods.list()
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -81,18 +81,18 @@ class InboxesClient:
         """
         return self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
 
-    def get(self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None) -> Inbox:
+    def get(self, pod_id: PodId, *, request_options: typing.Optional[RequestOptions] = None) -> Pod:
         """
         Parameters
         ----------
-        inbox_id : InboxId
+        pod_id : PodId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Inbox
+        Pod
 
         Examples
         --------
@@ -101,32 +101,24 @@ class InboxesClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.inboxes.get(
-            inbox_id="inbox_id",
+        client.pods.get(
+            pod_id="pod_id",
         )
         """
-        _response = self._raw_client.get(inbox_id, request_options=request_options)
+        _response = self._raw_client.get(pod_id, request_options=request_options)
         return _response.data
 
     def create(
         self,
         *,
-        username: typing.Optional[str] = OMIT,
-        domain: typing.Optional[str] = OMIT,
-        display_name: typing.Optional[DisplayName] = OMIT,
+        name: typing.Optional[Name] = OMIT,
         client_id: typing.Optional[ClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Inbox:
+    ) -> Pod:
         """
         Parameters
         ----------
-        username : typing.Optional[str]
-            Username of address. Randomly generated if not specified.
-
-        domain : typing.Optional[str]
-            Domain of address. Must be verified domain. Defaults to `agentmail.to`.
-
-        display_name : typing.Optional[DisplayName]
+        name : typing.Optional[Name]
 
         client_id : typing.Optional[ClientId]
 
@@ -135,7 +127,7 @@ class InboxesClient:
 
         Returns
         -------
-        Inbox
+        Pod
 
         Examples
         --------
@@ -144,22 +136,16 @@ class InboxesClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.inboxes.create()
+        client.pods.create()
         """
-        _response = self._raw_client.create(
-            username=username,
-            domain=domain,
-            display_name=display_name,
-            client_id=client_id,
-            request_options=request_options,
-        )
+        _response = self._raw_client.create(name=name, client_id=client_id, request_options=request_options)
         return _response.data
 
-    def delete(self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(self, pod_id: PodId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
-        inbox_id : InboxId
+        pod_id : PodId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -175,12 +161,20 @@ class InboxesClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.inboxes.delete(
-            inbox_id="inbox_id",
+        client.pods.delete(
+            pod_id="pod_id",
         )
         """
-        _response = self._raw_client.delete(inbox_id, request_options=request_options)
+        _response = self._raw_client.delete(pod_id, request_options=request_options)
         return _response.data
+
+    @property
+    def inboxes(self):
+        if self._inboxes is None:
+            from .inboxes.client import InboxesClient  # noqa: E402
+
+            self._inboxes = InboxesClient(client_wrapper=self._client_wrapper)
+        return self._inboxes
 
     @property
     def threads(self):
@@ -191,14 +185,6 @@ class InboxesClient:
         return self._threads
 
     @property
-    def messages(self):
-        if self._messages is None:
-            from .messages.client import MessagesClient  # noqa: E402
-
-            self._messages = MessagesClient(client_wrapper=self._client_wrapper)
-        return self._messages
-
-    @property
     def drafts(self):
         if self._drafts is None:
             from .drafts.client import DraftsClient  # noqa: E402
@@ -207,31 +193,31 @@ class InboxesClient:
         return self._drafts
 
     @property
-    def metrics(self):
-        if self._metrics is None:
-            from .metrics.client import MetricsClient  # noqa: E402
+    def domains(self):
+        if self._domains is None:
+            from .domains.client import DomainsClient  # noqa: E402
 
-            self._metrics = MetricsClient(client_wrapper=self._client_wrapper)
-        return self._metrics
+            self._domains = DomainsClient(client_wrapper=self._client_wrapper)
+        return self._domains
 
 
-class AsyncInboxesClient:
+class AsyncPodsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawInboxesClient(client_wrapper=client_wrapper)
+        self._raw_client = AsyncRawPodsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
+        self._inboxes: typing.Optional[AsyncInboxesClient] = None
         self._threads: typing.Optional[AsyncThreadsClient] = None
-        self._messages: typing.Optional[AsyncMessagesClient] = None
         self._drafts: typing.Optional[AsyncDraftsClient] = None
-        self._metrics: typing.Optional[AsyncMetricsClient] = None
+        self._domains: typing.Optional[AsyncDomainsClient] = None
 
     @property
-    def with_raw_response(self) -> AsyncRawInboxesClient:
+    def with_raw_response(self) -> AsyncRawPodsClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        AsyncRawInboxesClient
+        AsyncRawPodsClient
         """
         return self._raw_client
 
@@ -241,7 +227,7 @@ class AsyncInboxesClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[Inbox]:
+    ) -> AsyncPager[Pod]:
         """
         Parameters
         ----------
@@ -254,7 +240,7 @@ class AsyncInboxesClient:
 
         Returns
         -------
-        AsyncPager[Inbox]
+        AsyncPager[Pod]
 
         Examples
         --------
@@ -268,7 +254,7 @@ class AsyncInboxesClient:
 
 
         async def main() -> None:
-            response = await client.inboxes.list()
+            response = await client.pods.list()
             async for item in response:
                 yield item
 
@@ -281,18 +267,18 @@ class AsyncInboxesClient:
         """
         return await self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
 
-    async def get(self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None) -> Inbox:
+    async def get(self, pod_id: PodId, *, request_options: typing.Optional[RequestOptions] = None) -> Pod:
         """
         Parameters
         ----------
-        inbox_id : InboxId
+        pod_id : PodId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Inbox
+        Pod
 
         Examples
         --------
@@ -306,35 +292,27 @@ class AsyncInboxesClient:
 
 
         async def main() -> None:
-            await client.inboxes.get(
-                inbox_id="inbox_id",
+            await client.pods.get(
+                pod_id="pod_id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(inbox_id, request_options=request_options)
+        _response = await self._raw_client.get(pod_id, request_options=request_options)
         return _response.data
 
     async def create(
         self,
         *,
-        username: typing.Optional[str] = OMIT,
-        domain: typing.Optional[str] = OMIT,
-        display_name: typing.Optional[DisplayName] = OMIT,
+        name: typing.Optional[Name] = OMIT,
         client_id: typing.Optional[ClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Inbox:
+    ) -> Pod:
         """
         Parameters
         ----------
-        username : typing.Optional[str]
-            Username of address. Randomly generated if not specified.
-
-        domain : typing.Optional[str]
-            Domain of address. Must be verified domain. Defaults to `agentmail.to`.
-
-        display_name : typing.Optional[DisplayName]
+        name : typing.Optional[Name]
 
         client_id : typing.Optional[ClientId]
 
@@ -343,7 +321,7 @@ class AsyncInboxesClient:
 
         Returns
         -------
-        Inbox
+        Pod
 
         Examples
         --------
@@ -357,25 +335,19 @@ class AsyncInboxesClient:
 
 
         async def main() -> None:
-            await client.inboxes.create()
+            await client.pods.create()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create(
-            username=username,
-            domain=domain,
-            display_name=display_name,
-            client_id=client_id,
-            request_options=request_options,
-        )
+        _response = await self._raw_client.create(name=name, client_id=client_id, request_options=request_options)
         return _response.data
 
-    async def delete(self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def delete(self, pod_id: PodId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
-        inbox_id : InboxId
+        pod_id : PodId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -396,15 +368,23 @@ class AsyncInboxesClient:
 
 
         async def main() -> None:
-            await client.inboxes.delete(
-                inbox_id="inbox_id",
+            await client.pods.delete(
+                pod_id="pod_id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.delete(inbox_id, request_options=request_options)
+        _response = await self._raw_client.delete(pod_id, request_options=request_options)
         return _response.data
+
+    @property
+    def inboxes(self):
+        if self._inboxes is None:
+            from .inboxes.client import AsyncInboxesClient  # noqa: E402
+
+            self._inboxes = AsyncInboxesClient(client_wrapper=self._client_wrapper)
+        return self._inboxes
 
     @property
     def threads(self):
@@ -415,14 +395,6 @@ class AsyncInboxesClient:
         return self._threads
 
     @property
-    def messages(self):
-        if self._messages is None:
-            from .messages.client import AsyncMessagesClient  # noqa: E402
-
-            self._messages = AsyncMessagesClient(client_wrapper=self._client_wrapper)
-        return self._messages
-
-    @property
     def drafts(self):
         if self._drafts is None:
             from .drafts.client import AsyncDraftsClient  # noqa: E402
@@ -431,9 +403,9 @@ class AsyncInboxesClient:
         return self._drafts
 
     @property
-    def metrics(self):
-        if self._metrics is None:
-            from .metrics.client import AsyncMetricsClient  # noqa: E402
+    def domains(self):
+        if self._domains is None:
+            from .domains.client import AsyncDomainsClient  # noqa: E402
 
-            self._metrics = AsyncMetricsClient(client_wrapper=self._client_wrapper)
-        return self._metrics
+            self._domains = AsyncDomainsClient(client_wrapper=self._client_wrapper)
+        return self._domains

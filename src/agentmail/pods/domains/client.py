@@ -2,39 +2,45 @@
 
 import typing
 
-from ..attachments.types.attachment_id import AttachmentId
-from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.pagination import AsyncPager, SyncPager
-from ..core.request_options import RequestOptions
-from ..types.after import After
-from ..types.ascending import Ascending
-from ..types.before import Before
-from ..types.labels import Labels
-from ..types.limit import Limit
-from ..types.page_token import PageToken
-from .raw_client import AsyncRawThreadsClient, RawThreadsClient
-from .types.thread import Thread
-from .types.thread_id import ThreadId
-from .types.thread_item import ThreadItem
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.pagination import AsyncPager, SyncPager
+from ...core.request_options import RequestOptions
+from ...domains.types.domain import Domain
+from ...domains.types.domain_id import DomainId
+from ...domains.types.domain_name import DomainName
+from ...domains.types.domain_summary import DomainSummary
+from ...domains.types.feedback_enabled import FeedbackEnabled
+from ...types.after import After
+from ...types.ascending import Ascending
+from ...types.before import Before
+from ...types.labels import Labels
+from ...types.limit import Limit
+from ...types.page_token import PageToken
+from ..types.pod_id import PodId
+from .raw_client import AsyncRawDomainsClient, RawDomainsClient
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
-class ThreadsClient:
+class DomainsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawThreadsClient(client_wrapper=client_wrapper)
+        self._raw_client = RawDomainsClient(client_wrapper=client_wrapper)
 
     @property
-    def with_raw_response(self) -> RawThreadsClient:
+    def with_raw_response(self) -> RawDomainsClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        RawThreadsClient
+        RawDomainsClient
         """
         return self._raw_client
 
     def list(
         self,
+        pod_id: PodId,
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
@@ -43,10 +49,12 @@ class ThreadsClient:
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[ThreadItem]:
+    ) -> SyncPager[DomainSummary]:
         """
         Parameters
         ----------
+        pod_id : PodId
+
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
@@ -64,7 +72,7 @@ class ThreadsClient:
 
         Returns
         -------
-        SyncPager[ThreadItem]
+        SyncPager[DomainSummary]
 
         Examples
         --------
@@ -73,7 +81,9 @@ class ThreadsClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        response = client.threads.list()
+        response = client.pods.domains.list(
+            pod_id="pod_id",
+        )
         for item in response:
             yield item
         # alternatively, you can paginate page-by-page
@@ -81,6 +91,7 @@ class ThreadsClient:
             yield page
         """
         return self._raw_client.list(
+            pod_id,
             limit=limit,
             page_token=page_token,
             labels=labels,
@@ -90,18 +101,29 @@ class ThreadsClient:
             request_options=request_options,
         )
 
-    def get(self, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None) -> Thread:
+    def create(
+        self,
+        pod_id: PodId,
+        *,
+        domain: DomainName,
+        feedback_enabled: FeedbackEnabled,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Domain:
         """
         Parameters
         ----------
-        thread_id : ThreadId
+        pod_id : PodId
+
+        domain : DomainName
+
+        feedback_enabled : FeedbackEnabled
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Thread
+        Domain
 
         Examples
         --------
@@ -110,33 +132,33 @@ class ThreadsClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.threads.get(
-            thread_id="thread_id",
+        client.pods.domains.create(
+            pod_id="pod_id",
+            domain="domain",
+            feedback_enabled=True,
         )
         """
-        _response = self._raw_client.get(thread_id, request_options=request_options)
+        _response = self._raw_client.create(
+            pod_id, domain=domain, feedback_enabled=feedback_enabled, request_options=request_options
+        )
         return _response.data
 
-    def get_attachment(
-        self,
-        thread_id: ThreadId,
-        attachment_id: AttachmentId,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[bytes]:
+    def delete(
+        self, pod_id: PodId, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         Parameters
         ----------
-        thread_id : ThreadId
+        pod_id : PodId
 
-        attachment_id : AttachmentId
+        domain_id : DomainId
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
         Returns
         -------
-        typing.Iterator[bytes]
+        None
 
         Examples
         --------
@@ -145,32 +167,33 @@ class ThreadsClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.threads.get_attachment(
-            thread_id="thread_id",
-            attachment_id="attachment_id",
+        client.pods.domains.delete(
+            pod_id="pod_id",
+            domain_id="domain_id",
         )
         """
-        with self._raw_client.get_attachment(thread_id, attachment_id, request_options=request_options) as r:
-            yield from r.data
+        _response = self._raw_client.delete(pod_id, domain_id, request_options=request_options)
+        return _response.data
 
 
-class AsyncThreadsClient:
+class AsyncDomainsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawThreadsClient(client_wrapper=client_wrapper)
+        self._raw_client = AsyncRawDomainsClient(client_wrapper=client_wrapper)
 
     @property
-    def with_raw_response(self) -> AsyncRawThreadsClient:
+    def with_raw_response(self) -> AsyncRawDomainsClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        AsyncRawThreadsClient
+        AsyncRawDomainsClient
         """
         return self._raw_client
 
     async def list(
         self,
+        pod_id: PodId,
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
@@ -179,10 +202,12 @@ class AsyncThreadsClient:
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[ThreadItem]:
+    ) -> AsyncPager[DomainSummary]:
         """
         Parameters
         ----------
+        pod_id : PodId
+
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
@@ -200,7 +225,7 @@ class AsyncThreadsClient:
 
         Returns
         -------
-        AsyncPager[ThreadItem]
+        AsyncPager[DomainSummary]
 
         Examples
         --------
@@ -214,7 +239,9 @@ class AsyncThreadsClient:
 
 
         async def main() -> None:
-            response = await client.threads.list()
+            response = await client.pods.domains.list(
+                pod_id="pod_id",
+            )
             async for item in response:
                 yield item
 
@@ -226,6 +253,7 @@ class AsyncThreadsClient:
         asyncio.run(main())
         """
         return await self._raw_client.list(
+            pod_id,
             limit=limit,
             page_token=page_token,
             labels=labels,
@@ -235,18 +263,29 @@ class AsyncThreadsClient:
             request_options=request_options,
         )
 
-    async def get(self, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None) -> Thread:
+    async def create(
+        self,
+        pod_id: PodId,
+        *,
+        domain: DomainName,
+        feedback_enabled: FeedbackEnabled,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Domain:
         """
         Parameters
         ----------
-        thread_id : ThreadId
+        pod_id : PodId
+
+        domain : DomainName
+
+        feedback_enabled : FeedbackEnabled
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Thread
+        Domain
 
         Examples
         --------
@@ -260,36 +299,36 @@ class AsyncThreadsClient:
 
 
         async def main() -> None:
-            await client.threads.get(
-                thread_id="thread_id",
+            await client.pods.domains.create(
+                pod_id="pod_id",
+                domain="domain",
+                feedback_enabled=True,
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(thread_id, request_options=request_options)
+        _response = await self._raw_client.create(
+            pod_id, domain=domain, feedback_enabled=feedback_enabled, request_options=request_options
+        )
         return _response.data
 
-    async def get_attachment(
-        self,
-        thread_id: ThreadId,
-        attachment_id: AttachmentId,
-        *,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[bytes]:
+    async def delete(
+        self, pod_id: PodId, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         Parameters
         ----------
-        thread_id : ThreadId
+        pod_id : PodId
 
-        attachment_id : AttachmentId
+        domain_id : DomainId
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
         Returns
         -------
-        typing.AsyncIterator[bytes]
+        None
 
         Examples
         --------
@@ -303,14 +342,13 @@ class AsyncThreadsClient:
 
 
         async def main() -> None:
-            await client.threads.get_attachment(
-                thread_id="thread_id",
-                attachment_id="attachment_id",
+            await client.pods.domains.delete(
+                pod_id="pod_id",
+                domain_id="domain_id",
             )
 
 
         asyncio.run(main())
         """
-        async with self._raw_client.get_attachment(thread_id, attachment_id, request_options=request_options) as r:
-            async for _chunk in r.data:
-                yield _chunk
+        _response = await self._raw_client.delete(pod_id, domain_id, request_options=request_options)
+        return _response.data

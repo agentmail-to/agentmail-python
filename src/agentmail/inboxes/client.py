@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.limit import Limit
 from ..types.page_token import PageToken
@@ -13,7 +14,6 @@ from .types.client_id import ClientId
 from .types.display_name import DisplayName
 from .types.inbox import Inbox
 from .types.inbox_id import InboxId
-from .types.list_inboxes_response import ListInboxesResponse
 
 if typing.TYPE_CHECKING:
     from .drafts.client import AsyncDraftsClient, DraftsClient
@@ -50,7 +50,7 @@ class InboxesClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListInboxesResponse:
+    ) -> SyncPager[Inbox]:
         """
         Parameters
         ----------
@@ -63,7 +63,7 @@ class InboxesClient:
 
         Returns
         -------
-        ListInboxesResponse
+        SyncPager[Inbox]
 
         Examples
         --------
@@ -72,10 +72,14 @@ class InboxesClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.inboxes.list()
+        response = client.inboxes.list()
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
         """
-        _response = self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
-        return _response.data
+        return self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
 
     def get(self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None) -> Inbox:
         """
@@ -237,7 +241,7 @@ class AsyncInboxesClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListInboxesResponse:
+    ) -> AsyncPager[Inbox]:
         """
         Parameters
         ----------
@@ -250,7 +254,7 @@ class AsyncInboxesClient:
 
         Returns
         -------
-        ListInboxesResponse
+        AsyncPager[Inbox]
 
         Examples
         --------
@@ -264,13 +268,18 @@ class AsyncInboxesClient:
 
 
         async def main() -> None:
-            await client.inboxes.list()
+            response = await client.inboxes.list()
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
-        return _response.data
+        return await self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
 
     async def get(self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None) -> Inbox:
         """

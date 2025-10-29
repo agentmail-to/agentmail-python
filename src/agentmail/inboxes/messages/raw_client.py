@@ -10,6 +10,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.datetime_utils import serialize_datetime
 from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.jsonable_encoder import jsonable_encoder
+from ...core.pagination import AsyncPager, BaseHttpResponse, SyncPager
 from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
@@ -20,6 +21,7 @@ from ...messages.types.list_messages_response import ListMessagesResponse
 from ...messages.types.message import Message
 from ...messages.types.message_html import MessageHtml
 from ...messages.types.message_id import MessageId
+from ...messages.types.message_item import MessageItem
 from ...messages.types.message_labels import MessageLabels
 from ...messages.types.message_subject import MessageSubject
 from ...messages.types.message_text import MessageText
@@ -58,7 +60,7 @@ class RawMessagesClient:
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[ListMessagesResponse]:
+    ) -> SyncPager[MessageItem]:
         """
         Parameters
         ----------
@@ -81,7 +83,7 @@ class RawMessagesClient:
 
         Returns
         -------
-        HttpResponse[ListMessagesResponse]
+        SyncPager[MessageItem]
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages",
@@ -99,14 +101,29 @@ class RawMessagesClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
+                _parsed_response = typing.cast(
                     ListMessagesResponse,
                     construct_type(
                         type_=ListMessagesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=_data)
+                _items = _parsed_response.messages
+                _parsed_next = _parsed_response.next_page_token
+                _has_next = _parsed_next is not None and _parsed_next != ""
+                _get_next = lambda: self.list(
+                    inbox_id,
+                    limit=limit,
+                    page_token=_parsed_next,
+                    labels=labels,
+                    before=before,
+                    after=after,
+                    ascending=ascending,
+                    request_options=request_options,
+                )
+                return SyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
+                )
             if _response.status_code == 404:
                 raise NotFoundError(
                     headers=dict(_response.headers),
@@ -611,7 +628,7 @@ class AsyncRawMessagesClient:
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[ListMessagesResponse]:
+    ) -> AsyncPager[MessageItem]:
         """
         Parameters
         ----------
@@ -634,7 +651,7 @@ class AsyncRawMessagesClient:
 
         Returns
         -------
-        AsyncHttpResponse[ListMessagesResponse]
+        AsyncPager[MessageItem]
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages",
@@ -652,14 +669,32 @@ class AsyncRawMessagesClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
+                _parsed_response = typing.cast(
                     ListMessagesResponse,
                     construct_type(
                         type_=ListMessagesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=_data)
+                _items = _parsed_response.messages
+                _parsed_next = _parsed_response.next_page_token
+                _has_next = _parsed_next is not None and _parsed_next != ""
+
+                async def _get_next():
+                    return await self.list(
+                        inbox_id,
+                        limit=limit,
+                        page_token=_parsed_next,
+                        labels=labels,
+                        before=before,
+                        after=after,
+                        ascending=ascending,
+                        request_options=request_options,
+                    )
+
+                return AsyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
+                )
             if _response.status_code == 404:
                 raise NotFoundError(
                     headers=dict(_response.headers),

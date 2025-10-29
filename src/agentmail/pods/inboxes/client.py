@@ -3,12 +3,12 @@
 import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.pagination import AsyncPager, SyncPager
 from ...core.request_options import RequestOptions
 from ...inboxes.types.client_id import ClientId
 from ...inboxes.types.display_name import DisplayName
 from ...inboxes.types.inbox import Inbox
 from ...inboxes.types.inbox_id import InboxId
-from ...inboxes.types.list_inboxes_response import ListInboxesResponse
 from ...types.after import After
 from ...types.ascending import Ascending
 from ...types.before import Before
@@ -48,7 +48,7 @@ class InboxesClient:
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListInboxesResponse:
+    ) -> SyncPager[Inbox]:
         """
         Parameters
         ----------
@@ -71,7 +71,7 @@ class InboxesClient:
 
         Returns
         -------
-        ListInboxesResponse
+        SyncPager[Inbox]
 
         Examples
         --------
@@ -80,11 +80,16 @@ class InboxesClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.pods.inboxes.list(
+        response = client.pods.inboxes.list(
             pod_id="pod_id",
         )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
         """
-        _response = self._raw_client.list(
+        return self._raw_client.list(
             pod_id,
             limit=limit,
             page_token=page_token,
@@ -94,7 +99,6 @@ class InboxesClient:
             ascending=ascending,
             request_options=request_options,
         )
-        return _response.data
 
     def get(
         self, pod_id: PodId, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None
@@ -240,7 +244,7 @@ class AsyncInboxesClient:
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListInboxesResponse:
+    ) -> AsyncPager[Inbox]:
         """
         Parameters
         ----------
@@ -263,7 +267,7 @@ class AsyncInboxesClient:
 
         Returns
         -------
-        ListInboxesResponse
+        AsyncPager[Inbox]
 
         Examples
         --------
@@ -277,14 +281,20 @@ class AsyncInboxesClient:
 
 
         async def main() -> None:
-            await client.pods.inboxes.list(
+            response = await client.pods.inboxes.list(
                 pod_id="pod_id",
             )
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(
+        return await self._raw_client.list(
             pod_id,
             limit=limit,
             page_token=page_token,
@@ -294,7 +304,6 @@ class AsyncInboxesClient:
             ascending=ascending,
             request_options=request_options,
         )
-        return _response.data
 
     async def get(
         self, pod_id: PodId, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None

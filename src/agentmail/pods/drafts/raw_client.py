@@ -8,10 +8,12 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.datetime_utils import serialize_datetime
 from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.jsonable_encoder import jsonable_encoder
+from ...core.pagination import AsyncPager, BaseHttpResponse, SyncPager
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...drafts.types.draft import Draft
 from ...drafts.types.draft_id import DraftId
+from ...drafts.types.draft_item import DraftItem
 from ...drafts.types.list_drafts_response import ListDraftsResponse
 from ...errors.not_found_error import NotFoundError
 from ...types.after import After
@@ -39,7 +41,7 @@ class RawDraftsClient:
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[ListDraftsResponse]:
+    ) -> SyncPager[DraftItem]:
         """
         Parameters
         ----------
@@ -62,7 +64,7 @@ class RawDraftsClient:
 
         Returns
         -------
-        HttpResponse[ListDraftsResponse]
+        SyncPager[DraftItem]
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v0/pods/{jsonable_encoder(pod_id)}/drafts",
@@ -80,14 +82,29 @@ class RawDraftsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
+                _parsed_response = typing.cast(
                     ListDraftsResponse,
                     construct_type(
                         type_=ListDraftsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return HttpResponse(response=_response, data=_data)
+                _items = _parsed_response.drafts
+                _parsed_next = _parsed_response.next_page_token
+                _has_next = _parsed_next is not None and _parsed_next != ""
+                _get_next = lambda: self.list(
+                    pod_id,
+                    limit=limit,
+                    page_token=_parsed_next,
+                    labels=labels,
+                    before=before,
+                    after=after,
+                    ascending=ascending,
+                    request_options=request_options,
+                )
+                return SyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
+                )
             if _response.status_code == 404:
                 raise NotFoundError(
                     headers=dict(_response.headers),
@@ -169,7 +186,7 @@ class AsyncRawDraftsClient:
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[ListDraftsResponse]:
+    ) -> AsyncPager[DraftItem]:
         """
         Parameters
         ----------
@@ -192,7 +209,7 @@ class AsyncRawDraftsClient:
 
         Returns
         -------
-        AsyncHttpResponse[ListDraftsResponse]
+        AsyncPager[DraftItem]
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v0/pods/{jsonable_encoder(pod_id)}/drafts",
@@ -210,14 +227,32 @@ class AsyncRawDraftsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _data = typing.cast(
+                _parsed_response = typing.cast(
                     ListDraftsResponse,
                     construct_type(
                         type_=ListDraftsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                return AsyncHttpResponse(response=_response, data=_data)
+                _items = _parsed_response.drafts
+                _parsed_next = _parsed_response.next_page_token
+                _has_next = _parsed_next is not None and _parsed_next != ""
+
+                async def _get_next():
+                    return await self.list(
+                        pod_id,
+                        limit=limit,
+                        page_token=_parsed_next,
+                        labels=labels,
+                        before=before,
+                        after=after,
+                        ascending=ascending,
+                        request_options=request_options,
+                    )
+
+                return AsyncPager(
+                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
+                )
             if _response.status_code == 404:
                 raise NotFoundError(
                     headers=dict(_response.headers),

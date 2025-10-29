@@ -8,7 +8,6 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from .client_id import ClientId
 from .domain_id import DomainId
-from .domain_name import DomainName
 from .feedback_enabled import FeedbackEnabled
 from .verification_record import VerificationRecord
 from .verification_status import VerificationStatus
@@ -16,7 +15,6 @@ from .verification_status import VerificationStatus
 
 class Domain(UncheckedBaseModel):
     domain_id: DomainId
-    domain: DomainName
     status: VerificationStatus = pydantic.Field()
     """
     The verification status of the domain.

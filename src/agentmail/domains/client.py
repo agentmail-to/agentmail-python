@@ -92,6 +92,35 @@ class DomainsClient:
         _response = self._raw_client.get(domain_id, request_options=request_options)
         return _response.data
 
+    def get_zone_file(
+        self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Iterator[bytes]:
+        """
+        Parameters
+        ----------
+        domain_id : DomainId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.Iterator[bytes]
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.domains.get_zone_file(
+            domain_id="domain_id",
+        )
+        """
+        with self._raw_client.get_zone_file(domain_id, request_options=request_options) as r:
+            yield from r.data
+
     def create(
         self,
         *,
@@ -275,6 +304,44 @@ class AsyncDomainsClient:
         """
         _response = await self._raw_client.get(domain_id, request_options=request_options)
         return _response.data
+
+    async def get_zone_file(
+        self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.AsyncIterator[bytes]:
+        """
+        Parameters
+        ----------
+        domain_id : DomainId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.AsyncIterator[bytes]
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.domains.get_zone_file(
+                domain_id="domain_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        async with self._raw_client.get_zone_file(domain_id, request_options=request_options) as r:
+            async for _chunk in r.data:
+                yield _chunk
 
     async def create(
         self,

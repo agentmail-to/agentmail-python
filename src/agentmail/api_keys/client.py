@@ -3,14 +3,13 @@
 import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.limit import Limit
 from ..types.page_token import PageToken
 from .raw_client import AsyncRawApiKeysClient, RawApiKeysClient
-from .types.api_key import ApiKey
 from .types.api_key_id import ApiKeyId
 from .types.create_api_key_response import CreateApiKeyResponse
+from .types.list_api_keys_response import ListApiKeysResponse
 from .types.name import Name
 
 # this is used as the default value for optional parameters
@@ -38,7 +37,7 @@ class ApiKeysClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[ApiKey]:
+    ) -> ListApiKeysResponse:
         """
         Parameters
         ----------
@@ -51,7 +50,7 @@ class ApiKeysClient:
 
         Returns
         -------
-        SyncPager[ApiKey]
+        ListApiKeysResponse
 
         Examples
         --------
@@ -60,14 +59,10 @@ class ApiKeysClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        response = client.api_keys.list()
-        for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        for page in response.iter_pages():
-            yield page
+        client.api_keys.list()
         """
-        return self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
+        _response = self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
+        return _response.data
 
     def create(self, *, name: Name, request_options: typing.Optional[RequestOptions] = None) -> CreateApiKeyResponse:
         """
@@ -145,7 +140,7 @@ class AsyncApiKeysClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[ApiKey]:
+    ) -> ListApiKeysResponse:
         """
         Parameters
         ----------
@@ -158,7 +153,7 @@ class AsyncApiKeysClient:
 
         Returns
         -------
-        AsyncPager[ApiKey]
+        ListApiKeysResponse
 
         Examples
         --------
@@ -172,18 +167,13 @@ class AsyncApiKeysClient:
 
 
         async def main() -> None:
-            response = await client.api_keys.list()
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
+            await client.api_keys.list()
 
 
         asyncio.run(main())
         """
-        return await self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
+        _response = await self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
+        return _response.data
 
     async def create(
         self, *, name: Name, request_options: typing.Optional[RequestOptions] = None

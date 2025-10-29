@@ -8,7 +8,6 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pagination import AsyncPager, BaseHttpResponse, SyncPager
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.not_found_error import NotFoundError
@@ -20,7 +19,6 @@ from ..types.validation_error_response import ValidationErrorResponse
 from .types.domain import Domain
 from .types.domain_id import DomainId
 from .types.domain_name import DomainName
-from .types.domain_summary import DomainSummary
 from .types.feedback_enabled import FeedbackEnabled
 from .types.list_domains_response import ListDomainsResponse
 
@@ -38,7 +36,7 @@ class RawDomainsClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[DomainSummary]:
+    ) -> HttpResponse[ListDomainsResponse]:
         """
         Parameters
         ----------
@@ -51,7 +49,7 @@ class RawDomainsClient:
 
         Returns
         -------
-        SyncPager[DomainSummary]
+        HttpResponse[ListDomainsResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
             "v0/domains",
@@ -65,24 +63,14 @@ class RawDomainsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(
+                _data = typing.cast(
                     ListDomainsResponse,
                     construct_type(
                         type_=ListDomainsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                _items = _parsed_response.domains
-                _parsed_next = _parsed_response.next_page_token
-                _has_next = _parsed_next is not None and _parsed_next != ""
-                _get_next = lambda: self.list(
-                    limit=limit,
-                    page_token=_parsed_next,
-                    request_options=request_options,
-                )
-                return SyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -335,7 +323,7 @@ class AsyncRawDomainsClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[DomainSummary]:
+    ) -> AsyncHttpResponse[ListDomainsResponse]:
         """
         Parameters
         ----------
@@ -348,7 +336,7 @@ class AsyncRawDomainsClient:
 
         Returns
         -------
-        AsyncPager[DomainSummary]
+        AsyncHttpResponse[ListDomainsResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v0/domains",
@@ -362,27 +350,14 @@ class AsyncRawDomainsClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(
+                _data = typing.cast(
                     ListDomainsResponse,
                     construct_type(
                         type_=ListDomainsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                _items = _parsed_response.domains
-                _parsed_next = _parsed_response.next_page_token
-                _has_next = _parsed_next is not None and _parsed_next != ""
-
-                async def _get_next():
-                    return await self.list(
-                        limit=limit,
-                        page_token=_parsed_next,
-                        request_options=request_options,
-                    )
-
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

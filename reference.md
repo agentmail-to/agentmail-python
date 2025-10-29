@@ -18,12 +18,7 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-response = client.inboxes.list()
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+client.inboxes.list()
 
 ```
 </dd>
@@ -276,12 +271,7 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-response = client.pods.list()
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+client.pods.list()
 
 ```
 </dd>
@@ -518,12 +508,7 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-response = client.webhooks.list()
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+client.webhooks.list()
 
 ```
 </dd>
@@ -779,12 +764,7 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-response = client.api_keys.list()
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+client.api_keys.list()
 
 ```
 </dd>
@@ -959,12 +939,7 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-response = client.domains.list()
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+client.domains.list()
 
 ```
 </dd>
@@ -1316,12 +1291,7 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-response = client.drafts.list()
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+client.drafts.list()
 
 ```
 </dd>
@@ -1472,14 +1442,9 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-response = client.inboxes.drafts.list(
+client.inboxes.drafts.list(
     inbox_id="inbox_id",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -2066,14 +2031,9 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-response = client.inboxes.messages.list(
+client.inboxes.messages.list(
     inbox_id="inbox_id",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -2807,14 +2767,9 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-response = client.inboxes.threads.list(
+client.inboxes.threads.list(
     inbox_id="inbox_id",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -3201,14 +3156,9 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-response = client.pods.domains.list(
+client.pods.domains.list(
     pod_id="pod_id",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -3450,14 +3400,9 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-response = client.pods.drafts.list(
+client.pods.drafts.list(
     pod_id="pod_id",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -3625,14 +3570,9 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-response = client.pods.inboxes.list(
+client.pods.inboxes.list(
     pod_id="pod_id",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -3953,14 +3893,9 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-response = client.pods.threads.list(
+client.pods.threads.list(
     pod_id="pod_id",
 )
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
 
 ```
 </dd>
@@ -4202,12 +4137,7 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-response = client.threads.list()
-for item in response:
-    yield item
-# alternatively, you can paginate page-by-page
-for page in response.iter_pages():
-    yield page
+client.threads.list()
 
 ```
 </dd>

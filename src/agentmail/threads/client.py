@@ -4,7 +4,6 @@ import typing
 
 from ..attachments.types.attachment_id import AttachmentId
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.pagination import AsyncPager, SyncPager
 from ..core.request_options import RequestOptions
 from ..types.after import After
 from ..types.ascending import Ascending
@@ -13,9 +12,9 @@ from ..types.labels import Labels
 from ..types.limit import Limit
 from ..types.page_token import PageToken
 from .raw_client import AsyncRawThreadsClient, RawThreadsClient
+from .types.list_threads_response import ListThreadsResponse
 from .types.thread import Thread
 from .types.thread_id import ThreadId
-from .types.thread_item import ThreadItem
 
 
 class ThreadsClient:
@@ -43,7 +42,7 @@ class ThreadsClient:
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[ThreadItem]:
+    ) -> ListThreadsResponse:
         """
         Parameters
         ----------
@@ -64,7 +63,7 @@ class ThreadsClient:
 
         Returns
         -------
-        SyncPager[ThreadItem]
+        ListThreadsResponse
 
         Examples
         --------
@@ -73,14 +72,9 @@ class ThreadsClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        response = client.threads.list()
-        for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        for page in response.iter_pages():
-            yield page
+        client.threads.list()
         """
-        return self._raw_client.list(
+        _response = self._raw_client.list(
             limit=limit,
             page_token=page_token,
             labels=labels,
@@ -89,6 +83,7 @@ class ThreadsClient:
             ascending=ascending,
             request_options=request_options,
         )
+        return _response.data
 
     def get(self, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None) -> Thread:
         """
@@ -179,7 +174,7 @@ class AsyncThreadsClient:
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[ThreadItem]:
+    ) -> ListThreadsResponse:
         """
         Parameters
         ----------
@@ -200,7 +195,7 @@ class AsyncThreadsClient:
 
         Returns
         -------
-        AsyncPager[ThreadItem]
+        ListThreadsResponse
 
         Examples
         --------
@@ -214,18 +209,12 @@ class AsyncThreadsClient:
 
 
         async def main() -> None:
-            response = await client.threads.list()
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
+            await client.threads.list()
 
 
         asyncio.run(main())
         """
-        return await self._raw_client.list(
+        _response = await self._raw_client.list(
             limit=limit,
             page_token=page_token,
             labels=labels,
@@ -234,6 +223,7 @@ class AsyncThreadsClient:
             ascending=ascending,
             request_options=request_options,
         )
+        return _response.data
 
     async def get(self, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None) -> Thread:
         """

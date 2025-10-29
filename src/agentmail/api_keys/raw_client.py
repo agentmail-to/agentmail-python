@@ -7,7 +7,6 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
-from ..core.pagination import AsyncPager, BaseHttpResponse, SyncPager
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.not_found_error import NotFoundError
@@ -16,7 +15,6 @@ from ..types.error_response import ErrorResponse
 from ..types.limit import Limit
 from ..types.page_token import PageToken
 from ..types.validation_error_response import ValidationErrorResponse
-from .types.api_key import ApiKey
 from .types.api_key_id import ApiKeyId
 from .types.create_api_key_response import CreateApiKeyResponse
 from .types.list_api_keys_response import ListApiKeysResponse
@@ -36,7 +34,7 @@ class RawApiKeysClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[ApiKey]:
+    ) -> HttpResponse[ListApiKeysResponse]:
         """
         Parameters
         ----------
@@ -49,7 +47,7 @@ class RawApiKeysClient:
 
         Returns
         -------
-        SyncPager[ApiKey]
+        HttpResponse[ListApiKeysResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
             "v0/api-keys",
@@ -63,24 +61,14 @@ class RawApiKeysClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(
+                _data = typing.cast(
                     ListApiKeysResponse,
                     construct_type(
                         type_=ListApiKeysResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                _items = _parsed_response.api_keys
-                _parsed_next = _parsed_response.next_page_token
-                _has_next = _parsed_next is not None and _parsed_next != ""
-                _get_next = lambda: self.list(
-                    limit=limit,
-                    page_token=_parsed_next,
-                    request_options=request_options,
-                )
-                return SyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return HttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -188,7 +176,7 @@ class AsyncRawApiKeysClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[ApiKey]:
+    ) -> AsyncHttpResponse[ListApiKeysResponse]:
         """
         Parameters
         ----------
@@ -201,7 +189,7 @@ class AsyncRawApiKeysClient:
 
         Returns
         -------
-        AsyncPager[ApiKey]
+        AsyncHttpResponse[ListApiKeysResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
             "v0/api-keys",
@@ -215,27 +203,14 @@ class AsyncRawApiKeysClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                _parsed_response = typing.cast(
+                _data = typing.cast(
                     ListApiKeysResponse,
                     construct_type(
                         type_=ListApiKeysResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
-                _items = _parsed_response.api_keys
-                _parsed_next = _parsed_response.next_page_token
-                _has_next = _parsed_next is not None and _parsed_next != ""
-
-                async def _get_next():
-                    return await self.list(
-                        limit=limit,
-                        page_token=_parsed_next,
-                        request_options=request_options,
-                    )
-
-                return AsyncPager(
-                    has_next=_has_next, items=_items, get_next=_get_next, response=BaseHttpResponse(response=_response)
-                )
+                return AsyncHttpResponse(response=_response, data=_data)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)

@@ -6,7 +6,15 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import ClientId, CreateInboxRequest, DisplayName, Inbox, InboxId, ListInboxesResponse
+    from .types import (
+        ClientId,
+        CreateInboxRequest,
+        DisplayName,
+        Inbox,
+        InboxId,
+        ListInboxesResponse,
+        UpdateInboxRequest,
+    )
     from . import drafts, messages, metrics, threads
 _dynamic_imports: typing.Dict[str, str] = {
     "ClientId": ".types",
@@ -15,6 +23,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Inbox": ".types",
     "InboxId": ".types",
     "ListInboxesResponse": ".types",
+    "UpdateInboxRequest": ".types",
     "drafts": ".drafts",
     "messages": ".messages",
     "metrics": ".metrics",
@@ -50,6 +59,7 @@ __all__ = [
     "Inbox",
     "InboxId",
     "ListInboxesResponse",
+    "UpdateInboxRequest",
     "drafts",
     "messages",
     "metrics",

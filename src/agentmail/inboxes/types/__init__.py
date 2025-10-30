@@ -12,6 +12,7 @@ if typing.TYPE_CHECKING:
     from .inbox import Inbox
     from .inbox_id import InboxId
     from .list_inboxes_response import ListInboxesResponse
+    from .update_inbox_request import UpdateInboxRequest
 _dynamic_imports: typing.Dict[str, str] = {
     "ClientId": ".client_id",
     "CreateInboxRequest": ".create_inbox_request",
@@ -19,6 +20,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Inbox": ".inbox",
     "InboxId": ".inbox_id",
     "ListInboxesResponse": ".list_inboxes_response",
+    "UpdateInboxRequest": ".update_inbox_request",
 }
 
 
@@ -43,4 +45,12 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ClientId", "CreateInboxRequest", "DisplayName", "Inbox", "InboxId", "ListInboxesResponse"]
+__all__ = [
+    "ClientId",
+    "CreateInboxRequest",
+    "DisplayName",
+    "Inbox",
+    "InboxId",
+    "ListInboxesResponse",
+    "UpdateInboxRequest",
+]

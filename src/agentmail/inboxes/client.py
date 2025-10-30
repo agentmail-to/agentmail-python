@@ -151,6 +151,38 @@ class InboxesClient:
         )
         return _response.data
 
+    def update(
+        self, inbox_id: InboxId, *, display_name: DisplayName, request_options: typing.Optional[RequestOptions] = None
+    ) -> Inbox:
+        """
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        display_name : DisplayName
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Inbox
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.inboxes.update(
+            inbox_id="inbox_id",
+            display_name="display_name",
+        )
+        """
+        _response = self._raw_client.update(inbox_id, display_name=display_name, request_options=request_options)
+        return _response.data
+
     def delete(self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
@@ -360,6 +392,46 @@ class AsyncInboxesClient:
             client_id=client_id,
             request_options=request_options,
         )
+        return _response.data
+
+    async def update(
+        self, inbox_id: InboxId, *, display_name: DisplayName, request_options: typing.Optional[RequestOptions] = None
+    ) -> Inbox:
+        """
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        display_name : DisplayName
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Inbox
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.inboxes.update(
+                inbox_id="inbox_id",
+                display_name="display_name",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update(inbox_id, display_name=display_name, request_options=request_options)
         return _response.data
 
     async def delete(self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None) -> None:

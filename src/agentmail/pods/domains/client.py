@@ -3,13 +3,12 @@
 import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ...core.pagination import AsyncPager, SyncPager
 from ...core.request_options import RequestOptions
 from ...domains.types.domain import Domain
 from ...domains.types.domain_id import DomainId
 from ...domains.types.domain_name import DomainName
-from ...domains.types.domain_summary import DomainSummary
 from ...domains.types.feedback_enabled import FeedbackEnabled
+from ...domains.types.list_domains_response import ListDomainsResponse
 from ...types.after import After
 from ...types.ascending import Ascending
 from ...types.before import Before
@@ -49,7 +48,7 @@ class DomainsClient:
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> SyncPager[DomainSummary]:
+    ) -> ListDomainsResponse:
         """
         Parameters
         ----------
@@ -72,7 +71,7 @@ class DomainsClient:
 
         Returns
         -------
-        SyncPager[DomainSummary]
+        ListDomainsResponse
 
         Examples
         --------
@@ -81,16 +80,11 @@ class DomainsClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        response = client.pods.domains.list(
+        client.pods.domains.list(
             pod_id="pod_id",
         )
-        for item in response:
-            yield item
-        # alternatively, you can paginate page-by-page
-        for page in response.iter_pages():
-            yield page
         """
-        return self._raw_client.list(
+        _response = self._raw_client.list(
             pod_id,
             limit=limit,
             page_token=page_token,
@@ -100,6 +94,7 @@ class DomainsClient:
             ascending=ascending,
             request_options=request_options,
         )
+        return _response.data
 
     def create(
         self,
@@ -202,7 +197,7 @@ class AsyncDomainsClient:
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncPager[DomainSummary]:
+    ) -> ListDomainsResponse:
         """
         Parameters
         ----------
@@ -225,7 +220,7 @@ class AsyncDomainsClient:
 
         Returns
         -------
-        AsyncPager[DomainSummary]
+        ListDomainsResponse
 
         Examples
         --------
@@ -239,20 +234,14 @@ class AsyncDomainsClient:
 
 
         async def main() -> None:
-            response = await client.pods.domains.list(
+            await client.pods.domains.list(
                 pod_id="pod_id",
             )
-            async for item in response:
-                yield item
-
-            # alternatively, you can paginate page-by-page
-            async for page in response.iter_pages():
-                yield page
 
 
         asyncio.run(main())
         """
-        return await self._raw_client.list(
+        _response = await self._raw_client.list(
             pod_id,
             limit=limit,
             page_token=page_token,
@@ -262,6 +251,7 @@ class AsyncDomainsClient:
             ascending=ascending,
             request_options=request_options,
         )
+        return _response.data
 
     async def create(
         self,

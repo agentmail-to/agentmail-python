@@ -3,7 +3,7 @@ name = "agentmail"
 
 [tool.poetry]
 name = "agentmail"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 readme = "README.md"
 authors = []
@@ -30,7 +30,7 @@ packages = [
     { include = "agentmail", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/agentmail-to/agentmail-python'
 
 [tool.poetry.dependencies]

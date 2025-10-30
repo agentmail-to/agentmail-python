@@ -7,11 +7,13 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from ...inboxes.types.inbox_id import InboxId
 from ...messages.types.message_id import MessageId
+from ...threads.types.thread_id import ThreadId
 from .timestamp import Timestamp
 
 
 class Send(UncheckedBaseModel):
     inbox_id: InboxId
+    thread_id: ThreadId
     message_id: MessageId
     timestamp: Timestamp
     recipients: typing.List[str] = pydantic.Field()

@@ -183,7 +183,7 @@ client = AgentMail(...)
 
 with client.websockets.connect(...) as socket:
     # Iterate over the messages as they arrive
-    for message in socket
+    for message in socket:
         print(message)
 
     # Or, attach handlers to specific events
@@ -209,7 +209,7 @@ client = AsyncAgentMail(...)
 
 async with client.websockets.connect(...) as socket:
     # Iterate over the messages as they arrive
-    async for message in socket
+    async for message in socket:
         print(message)
 
     # Or, attach handlers to specific events

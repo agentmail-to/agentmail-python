@@ -32,6 +32,7 @@ if typing.TYPE_CHECKING:
     from .send_message_attachments import SendMessageAttachments
     from .send_message_bcc import SendMessageBcc
     from .send_message_cc import SendMessageCc
+    from .send_message_headers import SendMessageHeaders
     from .send_message_reply_to import SendMessageReplyTo
     from .send_message_request import SendMessageRequest
     from .send_message_response import SendMessageResponse
@@ -64,6 +65,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SendMessageAttachments": ".send_message_attachments",
     "SendMessageBcc": ".send_message_bcc",
     "SendMessageCc": ".send_message_cc",
+    "SendMessageHeaders": ".send_message_headers",
     "SendMessageReplyTo": ".send_message_reply_to",
     "SendMessageRequest": ".send_message_request",
     "SendMessageResponse": ".send_message_response",
@@ -120,6 +122,7 @@ __all__ = [
     "SendMessageAttachments",
     "SendMessageBcc",
     "SendMessageCc",
+    "SendMessageHeaders",
     "SendMessageReplyTo",
     "SendMessageRequest",
     "SendMessageResponse",

@@ -6,14 +6,16 @@ import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from ...types.count import Count
+from ...types.limit import Limit
 from ...types.page_token import PageToken
-from .domain_summary import DomainSummary
+from .domain_item import DomainItem
 
 
 class ListDomainsResponse(UncheckedBaseModel):
     count: Count
+    limit: typing.Optional[Limit] = None
     next_page_token: typing.Optional[PageToken] = None
-    domains: typing.List[DomainSummary] = pydantic.Field()
+    domains: typing.List[DomainItem] = pydantic.Field()
     """
     Ordered by `created_at` descending.
     """

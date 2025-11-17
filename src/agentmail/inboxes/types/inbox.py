@@ -6,12 +6,14 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
+from ...pods.types.pod_id import PodId
 from .client_id import ClientId
 from .display_name import DisplayName
 from .inbox_id import InboxId
 
 
 class Inbox(UncheckedBaseModel):
+    pod_id: PodId
     inbox_id: InboxId
     display_name: typing.Optional[DisplayName] = None
     client_id: typing.Optional[ClientId] = None

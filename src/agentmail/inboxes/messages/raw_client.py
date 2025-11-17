@@ -26,6 +26,7 @@ from ...messages.types.message_text import MessageText
 from ...messages.types.send_message_attachments import SendMessageAttachments
 from ...messages.types.send_message_bcc import SendMessageBcc
 from ...messages.types.send_message_cc import SendMessageCc
+from ...messages.types.send_message_headers import SendMessageHeaders
 from ...messages.types.send_message_reply_to import SendMessageReplyTo
 from ...messages.types.send_message_response import SendMessageResponse
 from ...messages.types.send_message_to import SendMessageTo
@@ -298,6 +299,7 @@ class RawMessagesClient:
         text: typing.Optional[MessageText] = OMIT,
         html: typing.Optional[MessageHtml] = OMIT,
         attachments: typing.Optional[SendMessageAttachments] = OMIT,
+        headers: typing.Optional[SendMessageHeaders] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SendMessageResponse]:
         """
@@ -322,6 +324,8 @@ class RawMessagesClient:
         html : typing.Optional[MessageHtml]
 
         attachments : typing.Optional[SendMessageAttachments]
+
+        headers : typing.Optional[SendMessageHeaders]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -350,6 +354,7 @@ class RawMessagesClient:
                 "attachments": convert_and_respect_annotation_metadata(
                     object_=attachments, annotation=SendMessageAttachments, direction="write"
                 ),
+                "headers": headers,
             },
             request_options=request_options,
             omit=OMIT,
@@ -415,6 +420,7 @@ class RawMessagesClient:
         text: typing.Optional[MessageText] = OMIT,
         html: typing.Optional[MessageHtml] = OMIT,
         attachments: typing.Optional[SendMessageAttachments] = OMIT,
+        headers: typing.Optional[SendMessageHeaders] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SendMessageResponse]:
         """
@@ -439,6 +445,8 @@ class RawMessagesClient:
         html : typing.Optional[MessageHtml]
 
         attachments : typing.Optional[SendMessageAttachments]
+
+        headers : typing.Optional[SendMessageHeaders]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -466,6 +474,7 @@ class RawMessagesClient:
                 "attachments": convert_and_respect_annotation_metadata(
                     object_=attachments, annotation=SendMessageAttachments, direction="write"
                 ),
+                "headers": headers,
             },
             request_options=request_options,
             omit=OMIT,
@@ -853,6 +862,7 @@ class AsyncRawMessagesClient:
         text: typing.Optional[MessageText] = OMIT,
         html: typing.Optional[MessageHtml] = OMIT,
         attachments: typing.Optional[SendMessageAttachments] = OMIT,
+        headers: typing.Optional[SendMessageHeaders] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SendMessageResponse]:
         """
@@ -877,6 +887,8 @@ class AsyncRawMessagesClient:
         html : typing.Optional[MessageHtml]
 
         attachments : typing.Optional[SendMessageAttachments]
+
+        headers : typing.Optional[SendMessageHeaders]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -905,6 +917,7 @@ class AsyncRawMessagesClient:
                 "attachments": convert_and_respect_annotation_metadata(
                     object_=attachments, annotation=SendMessageAttachments, direction="write"
                 ),
+                "headers": headers,
             },
             request_options=request_options,
             omit=OMIT,
@@ -970,6 +983,7 @@ class AsyncRawMessagesClient:
         text: typing.Optional[MessageText] = OMIT,
         html: typing.Optional[MessageHtml] = OMIT,
         attachments: typing.Optional[SendMessageAttachments] = OMIT,
+        headers: typing.Optional[SendMessageHeaders] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SendMessageResponse]:
         """
@@ -994,6 +1008,8 @@ class AsyncRawMessagesClient:
         html : typing.Optional[MessageHtml]
 
         attachments : typing.Optional[SendMessageAttachments]
+
+        headers : typing.Optional[SendMessageHeaders]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1021,6 +1037,7 @@ class AsyncRawMessagesClient:
                 "attachments": convert_and_respect_annotation_metadata(
                     object_=attachments, annotation=SendMessageAttachments, direction="write"
                 ),
+                "headers": headers,
             },
             request_options=request_options,
             omit=OMIT,

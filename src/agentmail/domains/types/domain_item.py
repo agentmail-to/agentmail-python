@@ -6,12 +6,14 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
+from ...pods.types.pod_id import PodId
 from .client_id import ClientId
 from .domain_id import DomainId
 from .feedback_enabled import FeedbackEnabled
 
 
-class DomainSummary(UncheckedBaseModel):
+class DomainItem(UncheckedBaseModel):
+    pod_id: typing.Optional[PodId] = None
     domain_id: DomainId
     feedback_enabled: FeedbackEnabled
     client_id: typing.Optional[ClientId] = None

@@ -2502,6 +2502,14 @@ client.inboxes.messages.send(
 <dl>
 <dd>
 
+**headers:** `typing.Optional[SendMessageHeaders]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -2624,6 +2632,14 @@ client.inboxes.messages.reply(
 <dd>
 
 **attachments:** `typing.Optional[SendMessageAttachments]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**headers:** `typing.Optional[SendMessageHeaders]` 
     
 </dd>
 </dl>

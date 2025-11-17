@@ -10,8 +10,8 @@ if typing.TYPE_CHECKING:
     from .create_domain_request import CreateDomainRequest
     from .domain import Domain
     from .domain_id import DomainId
+    from .domain_item import DomainItem
     from .domain_name import DomainName
-    from .domain_summary import DomainSummary
     from .feedback_enabled import FeedbackEnabled
     from .list_domains_response import ListDomainsResponse
     from .record_status import RecordStatus
@@ -23,8 +23,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CreateDomainRequest": ".create_domain_request",
     "Domain": ".domain",
     "DomainId": ".domain_id",
+    "DomainItem": ".domain_item",
     "DomainName": ".domain_name",
-    "DomainSummary": ".domain_summary",
     "FeedbackEnabled": ".feedback_enabled",
     "ListDomainsResponse": ".list_domains_response",
     "RecordStatus": ".record_status",
@@ -60,8 +60,8 @@ __all__ = [
     "CreateDomainRequest",
     "Domain",
     "DomainId",
+    "DomainItem",
     "DomainName",
-    "DomainSummary",
     "FeedbackEnabled",
     "ListDomainsResponse",
     "RecordStatus",

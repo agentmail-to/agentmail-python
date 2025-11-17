@@ -15,6 +15,7 @@ from ...messages.types.message_text import MessageText
 from ...messages.types.send_message_attachments import SendMessageAttachments
 from ...messages.types.send_message_bcc import SendMessageBcc
 from ...messages.types.send_message_cc import SendMessageCc
+from ...messages.types.send_message_headers import SendMessageHeaders
 from ...messages.types.send_message_reply_to import SendMessageReplyTo
 from ...messages.types.send_message_response import SendMessageResponse
 from ...messages.types.send_message_to import SendMessageTo
@@ -222,6 +223,7 @@ class MessagesClient:
         text: typing.Optional[MessageText] = OMIT,
         html: typing.Optional[MessageHtml] = OMIT,
         attachments: typing.Optional[SendMessageAttachments] = OMIT,
+        headers: typing.Optional[SendMessageHeaders] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
@@ -246,6 +248,8 @@ class MessagesClient:
         html : typing.Optional[MessageHtml]
 
         attachments : typing.Optional[SendMessageAttachments]
+
+        headers : typing.Optional[SendMessageHeaders]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -276,6 +280,7 @@ class MessagesClient:
             text=text,
             html=html,
             attachments=attachments,
+            headers=headers,
             request_options=request_options,
         )
         return _response.data
@@ -293,6 +298,7 @@ class MessagesClient:
         text: typing.Optional[MessageText] = OMIT,
         html: typing.Optional[MessageHtml] = OMIT,
         attachments: typing.Optional[SendMessageAttachments] = OMIT,
+        headers: typing.Optional[SendMessageHeaders] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
@@ -317,6 +323,8 @@ class MessagesClient:
         html : typing.Optional[MessageHtml]
 
         attachments : typing.Optional[SendMessageAttachments]
+
+        headers : typing.Optional[SendMessageHeaders]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -348,6 +356,7 @@ class MessagesClient:
             text=text,
             html=html,
             attachments=attachments,
+            headers=headers,
             request_options=request_options,
         )
         return _response.data
@@ -626,6 +635,7 @@ class AsyncMessagesClient:
         text: typing.Optional[MessageText] = OMIT,
         html: typing.Optional[MessageHtml] = OMIT,
         attachments: typing.Optional[SendMessageAttachments] = OMIT,
+        headers: typing.Optional[SendMessageHeaders] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
@@ -650,6 +660,8 @@ class AsyncMessagesClient:
         html : typing.Optional[MessageHtml]
 
         attachments : typing.Optional[SendMessageAttachments]
+
+        headers : typing.Optional[SendMessageHeaders]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -688,6 +700,7 @@ class AsyncMessagesClient:
             text=text,
             html=html,
             attachments=attachments,
+            headers=headers,
             request_options=request_options,
         )
         return _response.data
@@ -705,6 +718,7 @@ class AsyncMessagesClient:
         text: typing.Optional[MessageText] = OMIT,
         html: typing.Optional[MessageHtml] = OMIT,
         attachments: typing.Optional[SendMessageAttachments] = OMIT,
+        headers: typing.Optional[SendMessageHeaders] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
@@ -729,6 +743,8 @@ class AsyncMessagesClient:
         html : typing.Optional[MessageHtml]
 
         attachments : typing.Optional[SendMessageAttachments]
+
+        headers : typing.Optional[SendMessageHeaders]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -768,6 +784,7 @@ class AsyncMessagesClient:
             text=text,
             html=html,
             attachments=attachments,
+            headers=headers,
             request_options=request_options,
         )
         return _response.data

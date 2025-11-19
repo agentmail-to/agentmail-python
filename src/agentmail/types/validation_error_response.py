@@ -10,7 +10,7 @@ from .error_name import ErrorName
 
 class ValidationErrorResponse(UncheckedBaseModel):
     name: ErrorName
-    errors: typing.Optional[typing.Any] = pydantic.Field(default=None)
+    errors: typing.Any = pydantic.Field()
     """
     Validation errors.
     """

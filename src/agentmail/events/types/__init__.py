@@ -9,7 +9,10 @@ if typing.TYPE_CHECKING:
     from .bounce import Bounce
     from .complaint import Complaint
     from .delivery import Delivery
+    from .domain_verified_event import DomainVerifiedEvent
     from .event_id import EventId
+    from .event_type import EventType
+    from .event_types import EventTypes
     from .message_bounced_event import MessageBouncedEvent
     from .message_complained_event import MessageComplainedEvent
     from .message_delivered_event import MessageDeliveredEvent
@@ -24,7 +27,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Bounce": ".bounce",
     "Complaint": ".complaint",
     "Delivery": ".delivery",
+    "DomainVerifiedEvent": ".domain_verified_event",
     "EventId": ".event_id",
+    "EventType": ".event_type",
+    "EventTypes": ".event_types",
     "MessageBouncedEvent": ".message_bounced_event",
     "MessageComplainedEvent": ".message_complained_event",
     "MessageDeliveredEvent": ".message_delivered_event",
@@ -63,7 +69,10 @@ __all__ = [
     "Bounce",
     "Complaint",
     "Delivery",
+    "DomainVerifiedEvent",
     "EventId",
+    "EventType",
+    "EventTypes",
     "MessageBouncedEvent",
     "MessageComplainedEvent",
     "MessageDeliveredEvent",

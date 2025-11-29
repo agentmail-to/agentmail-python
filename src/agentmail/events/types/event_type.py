@@ -10,6 +10,7 @@ EventType = typing.Union[
         "message.bounced",
         "message.complained",
         "message.rejected",
+        "domain.verified",
     ],
     typing.Any,
 ]

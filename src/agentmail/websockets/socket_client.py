@@ -8,6 +8,7 @@ import websockets
 import websockets.sync.connection as websockets_sync_connection
 from ..core.events import EventEmitterMixin, EventType
 from ..core.pydantic_utilities import parse_obj_as
+from ..events.types.domain_verified_event import DomainVerifiedEvent
 from ..events.types.message_bounced_event import MessageBouncedEvent
 from ..events.types.message_complained_event import MessageComplainedEvent
 from ..events.types.message_delivered_event import MessageDeliveredEvent
@@ -30,6 +31,7 @@ WebsocketsSocketClientResponse = typing.Union[
     MessageBouncedEvent,
     MessageComplainedEvent,
     MessageRejectedEvent,
+    DomainVerifiedEvent,
 ]
 
 

@@ -4,11 +4,11 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..events.types.event_types import EventTypes
 from ..types.limit import Limit
 from ..types.page_token import PageToken
 from .raw_client import AsyncRawWebhooksClient, RawWebhooksClient
 from .types.client_id import ClientId
-from .types.event_types import EventTypes
 from .types.inbox_ids import InboxIds
 from .types.list_webhooks_response import ListWebhooksResponse
 from .types.url import Url

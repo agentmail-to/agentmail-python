@@ -5,17 +5,15 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
-from ...events.types.event_types import EventTypes
-from .client_id import ClientId
-from .inbox_ids import InboxIds
-from .url import Url
+from ...domains.types.domain import Domain
+from .event_id import EventId
 
 
-class CreateWebhookRequest(UncheckedBaseModel):
-    url: Url
-    event_types: EventTypes
-    inbox_ids: typing.Optional[InboxIds] = None
-    client_id: typing.Optional[ClientId] = None
+class DomainVerifiedEvent(UncheckedBaseModel):
+    type: typing.Literal["event"] = "event"
+    event_type: typing.Literal["domain.verified"] = "domain.verified"
+    event_id: EventId
+    domain: Domain
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

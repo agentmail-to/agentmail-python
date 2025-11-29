@@ -6,24 +6,12 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import (
-        ClientId,
-        CreateWebhookRequest,
-        EventType,
-        EventTypes,
-        InboxIds,
-        ListWebhooksResponse,
-        Url,
-        Webhook,
-        WebhookId,
-    )
+    from .types import ClientId, CreateWebhookRequest, InboxIds, ListWebhooksResponse, Url, Webhook, WebhookId
     from . import events
     from .events import SvixId, SvixSignature, SvixTimestamp
 _dynamic_imports: typing.Dict[str, str] = {
     "ClientId": ".types",
     "CreateWebhookRequest": ".types",
-    "EventType": ".types",
-    "EventTypes": ".types",
     "InboxIds": ".types",
     "ListWebhooksResponse": ".types",
     "SvixId": ".events",
@@ -60,8 +48,6 @@ def __dir__():
 __all__ = [
     "ClientId",
     "CreateWebhookRequest",
-    "EventType",
-    "EventTypes",
     "InboxIds",
     "ListWebhooksResponse",
     "SvixId",

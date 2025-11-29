@@ -19,6 +19,7 @@ if typing.TYPE_CHECKING:
     from .pods.client import AsyncPodsClient, PodsClient
     from .threads.client import AsyncThreadsClient, ThreadsClient
     from .webhooks.client import AsyncWebhooksClient, WebhooksClient
+    from .websockets.client import AsyncWebsocketsClient, WebsocketsClient
 
 
 class AgentMail:
@@ -94,6 +95,7 @@ class AgentMail:
         self._drafts: typing.Optional[DraftsClient] = None
         self._metrics: typing.Optional[MetricsClient] = None
         self._threads: typing.Optional[ThreadsClient] = None
+        self._websockets: typing.Optional[WebsocketsClient] = None
 
     @property
     def inboxes(self):
@@ -158,6 +160,14 @@ class AgentMail:
 
             self._threads = ThreadsClient(client_wrapper=self._client_wrapper)
         return self._threads
+
+    @property
+    def websockets(self):
+        if self._websockets is None:
+            from .websockets.client import WebsocketsClient  # noqa: E402
+
+            self._websockets = WebsocketsClient(client_wrapper=self._client_wrapper)
+        return self._websockets
 
 
 class AsyncAgentMail:
@@ -233,6 +243,7 @@ class AsyncAgentMail:
         self._drafts: typing.Optional[AsyncDraftsClient] = None
         self._metrics: typing.Optional[AsyncMetricsClient] = None
         self._threads: typing.Optional[AsyncThreadsClient] = None
+        self._websockets: typing.Optional[AsyncWebsocketsClient] = None
 
     @property
     def inboxes(self):
@@ -297,3 +308,11 @@ class AsyncAgentMail:
 
             self._threads = AsyncThreadsClient(client_wrapper=self._client_wrapper)
         return self._threads
+
+    @property
+    def websockets(self):
+        if self._websockets is None:
+            from .websockets.client import AsyncWebsocketsClient  # noqa: E402
+
+            self._websockets = AsyncWebsocketsClient(client_wrapper=self._client_wrapper)
+        return self._websockets

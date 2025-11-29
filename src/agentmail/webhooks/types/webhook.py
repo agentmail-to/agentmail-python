@@ -6,8 +6,8 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
+from ...events.types.event_types import EventTypes
 from .client_id import ClientId
-from .event_types import EventTypes
 from .inbox_ids import InboxIds
 from .url import Url
 from .webhook_id import WebhookId

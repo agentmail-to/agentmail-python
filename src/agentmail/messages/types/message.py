@@ -47,6 +47,16 @@ class Message(UncheckedBaseModel):
     preview: typing.Optional[MessagePreview] = None
     text: typing.Optional[MessageText] = None
     html: typing.Optional[MessageHtml] = None
+    extracted_text: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Extracted new text content.
+    """
+
+    extracted_html: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Extracted new HTML content.
+    """
+
     attachments: typing.Optional[MessageAttachments] = None
     in_reply_to: typing.Optional[MessageInReplyTo] = None
     references: typing.Optional[MessageReferences] = None

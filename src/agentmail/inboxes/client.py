@@ -9,7 +9,7 @@ from ..core.request_options import RequestOptions
 from ..types.limit import Limit
 from ..types.page_token import PageToken
 from .raw_client import AsyncRawInboxesClient, RawInboxesClient
-from .types.client_id import ClientId
+from .types.create_inbox_request import CreateInboxRequest
 from .types.display_name import DisplayName
 from .types.inbox import Inbox
 from .types.inbox_id import InboxId
@@ -107,24 +107,13 @@ class InboxesClient:
     def create(
         self,
         *,
-        username: typing.Optional[str] = OMIT,
-        domain: typing.Optional[str] = OMIT,
-        display_name: typing.Optional[DisplayName] = OMIT,
-        client_id: typing.Optional[ClientId] = OMIT,
+        request: typing.Optional[CreateInboxRequest] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Inbox:
         """
         Parameters
         ----------
-        username : typing.Optional[str]
-            Username of address. Randomly generated if not specified.
-
-        domain : typing.Optional[str]
-            Domain of address. Must be verified domain. Defaults to `agentmail.to`.
-
-        display_name : typing.Optional[DisplayName]
-
-        client_id : typing.Optional[ClientId]
+        request : typing.Optional[CreateInboxRequest]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -142,13 +131,7 @@ class InboxesClient:
         )
         client.inboxes.create()
         """
-        _response = self._raw_client.create(
-            username=username,
-            domain=domain,
-            display_name=display_name,
-            client_id=client_id,
-            request_options=request_options,
-        )
+        _response = self._raw_client.create(request=request, request_options=request_options)
         return _response.data
 
     def update(
@@ -342,24 +325,13 @@ class AsyncInboxesClient:
     async def create(
         self,
         *,
-        username: typing.Optional[str] = OMIT,
-        domain: typing.Optional[str] = OMIT,
-        display_name: typing.Optional[DisplayName] = OMIT,
-        client_id: typing.Optional[ClientId] = OMIT,
+        request: typing.Optional[CreateInboxRequest] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Inbox:
         """
         Parameters
         ----------
-        username : typing.Optional[str]
-            Username of address. Randomly generated if not specified.
-
-        domain : typing.Optional[str]
-            Domain of address. Must be verified domain. Defaults to `agentmail.to`.
-
-        display_name : typing.Optional[DisplayName]
-
-        client_id : typing.Optional[ClientId]
+        request : typing.Optional[CreateInboxRequest]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -385,13 +357,7 @@ class AsyncInboxesClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create(
-            username=username,
-            domain=domain,
-            display_name=display_name,
-            client_id=client_id,
-            request_options=request_options,
-        )
+        _response = await self._raw_client.create(request=request, request_options=request_options)
         return _response.data
 
     async def update(

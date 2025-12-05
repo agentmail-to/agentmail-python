@@ -152,31 +152,7 @@ client.inboxes.create()
 <dl>
 <dd>
 
-**username:** `typing.Optional[str]` — Username of address. Randomly generated if not specified.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**domain:** `typing.Optional[str]` — Domain of address. Must be verified domain. Defaults to `agentmail.to`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**display_name:** `typing.Optional[DisplayName]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[ClientId]` 
+**request:** `typing.Optional[CreateInboxRequest]` 
     
 </dd>
 </dl>

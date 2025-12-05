@@ -8,6 +8,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
 from ..core.request_options import RequestOptions
+from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
 from ..errors.not_found_error import NotFoundError
 from ..errors.validation_error import ValidationError
@@ -15,7 +16,7 @@ from ..types.error_response import ErrorResponse
 from ..types.limit import Limit
 from ..types.page_token import PageToken
 from ..types.validation_error_response import ValidationErrorResponse
-from .types.client_id import ClientId
+from .types.create_inbox_request import CreateInboxRequest
 from .types.display_name import DisplayName
 from .types.inbox import Inbox
 from .types.inbox_id import InboxId
@@ -123,24 +124,13 @@ class RawInboxesClient:
     def create(
         self,
         *,
-        username: typing.Optional[str] = OMIT,
-        domain: typing.Optional[str] = OMIT,
-        display_name: typing.Optional[DisplayName] = OMIT,
-        client_id: typing.Optional[ClientId] = OMIT,
+        request: typing.Optional[CreateInboxRequest] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Inbox]:
         """
         Parameters
         ----------
-        username : typing.Optional[str]
-            Username of address. Randomly generated if not specified.
-
-        domain : typing.Optional[str]
-            Domain of address. Must be verified domain. Defaults to `agentmail.to`.
-
-        display_name : typing.Optional[DisplayName]
-
-        client_id : typing.Optional[ClientId]
+        request : typing.Optional[CreateInboxRequest]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -153,12 +143,9 @@ class RawInboxesClient:
             "v0/inboxes",
             base_url=self._client_wrapper.get_environment().http,
             method="POST",
-            json={
-                "username": username,
-                "domain": domain,
-                "display_name": display_name,
-                "client_id": client_id,
-            },
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=CreateInboxRequest, direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )
@@ -382,24 +369,13 @@ class AsyncRawInboxesClient:
     async def create(
         self,
         *,
-        username: typing.Optional[str] = OMIT,
-        domain: typing.Optional[str] = OMIT,
-        display_name: typing.Optional[DisplayName] = OMIT,
-        client_id: typing.Optional[ClientId] = OMIT,
+        request: typing.Optional[CreateInboxRequest] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Inbox]:
         """
         Parameters
         ----------
-        username : typing.Optional[str]
-            Username of address. Randomly generated if not specified.
-
-        domain : typing.Optional[str]
-            Domain of address. Must be verified domain. Defaults to `agentmail.to`.
-
-        display_name : typing.Optional[DisplayName]
-
-        client_id : typing.Optional[ClientId]
+        request : typing.Optional[CreateInboxRequest]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -412,12 +388,9 @@ class AsyncRawInboxesClient:
             "v0/inboxes",
             base_url=self._client_wrapper.get_environment().http,
             method="POST",
-            json={
-                "username": username,
-                "domain": domain,
-                "display_name": display_name,
-                "client_id": client_id,
-            },
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=CreateInboxRequest, direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )

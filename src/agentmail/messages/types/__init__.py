@@ -28,6 +28,8 @@ if typing.TYPE_CHECKING:
     from .message_timestamp import MessageTimestamp
     from .message_to import MessageTo
     from .message_updated_at import MessageUpdatedAt
+    from .reply_all import ReplyAll
+    from .reply_all_message_request import ReplyAllMessageRequest
     from .reply_to_message_request import ReplyToMessageRequest
     from .send_message_attachments import SendMessageAttachments
     from .send_message_bcc import SendMessageBcc
@@ -61,6 +63,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MessageTimestamp": ".message_timestamp",
     "MessageTo": ".message_to",
     "MessageUpdatedAt": ".message_updated_at",
+    "ReplyAll": ".reply_all",
+    "ReplyAllMessageRequest": ".reply_all_message_request",
     "ReplyToMessageRequest": ".reply_to_message_request",
     "SendMessageAttachments": ".send_message_attachments",
     "SendMessageBcc": ".send_message_bcc",
@@ -118,6 +122,8 @@ __all__ = [
     "MessageTimestamp",
     "MessageTo",
     "MessageUpdatedAt",
+    "ReplyAll",
+    "ReplyAllMessageRequest",
     "ReplyToMessageRequest",
     "SendMessageAttachments",
     "SendMessageBcc",

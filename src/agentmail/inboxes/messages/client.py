@@ -12,6 +12,7 @@ from ...messages.types.message_id import MessageId
 from ...messages.types.message_labels import MessageLabels
 from ...messages.types.message_subject import MessageSubject
 from ...messages.types.message_text import MessageText
+from ...messages.types.reply_all import ReplyAll
 from ...messages.types.send_message_attachments import SendMessageAttachments
 from ...messages.types.send_message_bcc import SendMessageBcc
 from ...messages.types.send_message_cc import SendMessageCc
@@ -295,6 +296,7 @@ class MessagesClient:
         to: typing.Optional[SendMessageTo] = OMIT,
         cc: typing.Optional[SendMessageCc] = OMIT,
         bcc: typing.Optional[SendMessageBcc] = OMIT,
+        reply_all: typing.Optional[ReplyAll] = OMIT,
         text: typing.Optional[MessageText] = OMIT,
         html: typing.Optional[MessageHtml] = OMIT,
         attachments: typing.Optional[SendMessageAttachments] = OMIT,
@@ -317,6 +319,8 @@ class MessagesClient:
         cc : typing.Optional[SendMessageCc]
 
         bcc : typing.Optional[SendMessageBcc]
+
+        reply_all : typing.Optional[ReplyAll]
 
         text : typing.Optional[MessageText]
 
@@ -353,6 +357,71 @@ class MessagesClient:
             to=to,
             cc=cc,
             bcc=bcc,
+            reply_all=reply_all,
+            text=text,
+            html=html,
+            attachments=attachments,
+            headers=headers,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def reply_all(
+        self,
+        inbox_id: InboxId,
+        message_id: MessageId,
+        *,
+        labels: typing.Optional[MessageLabels] = OMIT,
+        reply_to: typing.Optional[SendMessageReplyTo] = OMIT,
+        text: typing.Optional[MessageText] = OMIT,
+        html: typing.Optional[MessageHtml] = OMIT,
+        attachments: typing.Optional[SendMessageAttachments] = OMIT,
+        headers: typing.Optional[SendMessageHeaders] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SendMessageResponse:
+        """
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_id : MessageId
+
+        labels : typing.Optional[MessageLabels]
+
+        reply_to : typing.Optional[SendMessageReplyTo]
+
+        text : typing.Optional[MessageText]
+
+        html : typing.Optional[MessageHtml]
+
+        attachments : typing.Optional[SendMessageAttachments]
+
+        headers : typing.Optional[SendMessageHeaders]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SendMessageResponse
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.inboxes.messages.reply_all(
+            inbox_id="inbox_id",
+            message_id="message_id",
+        )
+        """
+        _response = self._raw_client.reply_all(
+            inbox_id,
+            message_id,
+            labels=labels,
+            reply_to=reply_to,
             text=text,
             html=html,
             attachments=attachments,
@@ -715,6 +784,7 @@ class AsyncMessagesClient:
         to: typing.Optional[SendMessageTo] = OMIT,
         cc: typing.Optional[SendMessageCc] = OMIT,
         bcc: typing.Optional[SendMessageBcc] = OMIT,
+        reply_all: typing.Optional[ReplyAll] = OMIT,
         text: typing.Optional[MessageText] = OMIT,
         html: typing.Optional[MessageHtml] = OMIT,
         attachments: typing.Optional[SendMessageAttachments] = OMIT,
@@ -737,6 +807,8 @@ class AsyncMessagesClient:
         cc : typing.Optional[SendMessageCc]
 
         bcc : typing.Optional[SendMessageBcc]
+
+        reply_all : typing.Optional[ReplyAll]
 
         text : typing.Optional[MessageText]
 
@@ -781,6 +853,79 @@ class AsyncMessagesClient:
             to=to,
             cc=cc,
             bcc=bcc,
+            reply_all=reply_all,
+            text=text,
+            html=html,
+            attachments=attachments,
+            headers=headers,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def reply_all(
+        self,
+        inbox_id: InboxId,
+        message_id: MessageId,
+        *,
+        labels: typing.Optional[MessageLabels] = OMIT,
+        reply_to: typing.Optional[SendMessageReplyTo] = OMIT,
+        text: typing.Optional[MessageText] = OMIT,
+        html: typing.Optional[MessageHtml] = OMIT,
+        attachments: typing.Optional[SendMessageAttachments] = OMIT,
+        headers: typing.Optional[SendMessageHeaders] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SendMessageResponse:
+        """
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_id : MessageId
+
+        labels : typing.Optional[MessageLabels]
+
+        reply_to : typing.Optional[SendMessageReplyTo]
+
+        text : typing.Optional[MessageText]
+
+        html : typing.Optional[MessageHtml]
+
+        attachments : typing.Optional[SendMessageAttachments]
+
+        headers : typing.Optional[SendMessageHeaders]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SendMessageResponse
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.inboxes.messages.reply_all(
+                inbox_id="inbox_id",
+                message_id="message_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.reply_all(
+            inbox_id,
+            message_id,
+            labels=labels,
+            reply_to=reply_to,
             text=text,
             html=html,
             attachments=attachments,

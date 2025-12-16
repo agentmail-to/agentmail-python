@@ -23,6 +23,7 @@ from ...messages.types.message_id import MessageId
 from ...messages.types.message_labels import MessageLabels
 from ...messages.types.message_subject import MessageSubject
 from ...messages.types.message_text import MessageText
+from ...messages.types.reply_all import ReplyAll
 from ...messages.types.send_message_attachments import SendMessageAttachments
 from ...messages.types.send_message_bcc import SendMessageBcc
 from ...messages.types.send_message_cc import SendMessageCc
@@ -417,6 +418,7 @@ class RawMessagesClient:
         to: typing.Optional[SendMessageTo] = OMIT,
         cc: typing.Optional[SendMessageCc] = OMIT,
         bcc: typing.Optional[SendMessageBcc] = OMIT,
+        reply_all: typing.Optional[ReplyAll] = OMIT,
         text: typing.Optional[MessageText] = OMIT,
         html: typing.Optional[MessageHtml] = OMIT,
         attachments: typing.Optional[SendMessageAttachments] = OMIT,
@@ -439,6 +441,8 @@ class RawMessagesClient:
         cc : typing.Optional[SendMessageCc]
 
         bcc : typing.Optional[SendMessageBcc]
+
+        reply_all : typing.Optional[ReplyAll]
 
         text : typing.Optional[MessageText]
 
@@ -468,6 +472,113 @@ class RawMessagesClient:
                 "cc": convert_and_respect_annotation_metadata(object_=cc, annotation=SendMessageCc, direction="write"),
                 "bcc": convert_and_respect_annotation_metadata(
                     object_=bcc, annotation=SendMessageBcc, direction="write"
+                ),
+                "reply_all": reply_all,
+                "text": text,
+                "html": html,
+                "attachments": convert_and_respect_annotation_metadata(
+                    object_=attachments, annotation=SendMessageAttachments, direction="write"
+                ),
+                "headers": headers,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    SendMessageResponse,
+                    construct_type(
+                        type_=SendMessageResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise MessageRejectedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def reply_all(
+        self,
+        inbox_id: InboxId,
+        message_id: MessageId,
+        *,
+        labels: typing.Optional[MessageLabels] = OMIT,
+        reply_to: typing.Optional[SendMessageReplyTo] = OMIT,
+        text: typing.Optional[MessageText] = OMIT,
+        html: typing.Optional[MessageHtml] = OMIT,
+        attachments: typing.Optional[SendMessageAttachments] = OMIT,
+        headers: typing.Optional[SendMessageHeaders] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[SendMessageResponse]:
+        """
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_id : MessageId
+
+        labels : typing.Optional[MessageLabels]
+
+        reply_to : typing.Optional[SendMessageReplyTo]
+
+        text : typing.Optional[MessageText]
+
+        html : typing.Optional[MessageHtml]
+
+        attachments : typing.Optional[SendMessageAttachments]
+
+        headers : typing.Optional[SendMessageHeaders]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[SendMessageResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}/reply-all",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "labels": labels,
+                "reply_to": convert_and_respect_annotation_metadata(
+                    object_=reply_to, annotation=SendMessageReplyTo, direction="write"
                 ),
                 "text": text,
                 "html": html,
@@ -980,6 +1091,7 @@ class AsyncRawMessagesClient:
         to: typing.Optional[SendMessageTo] = OMIT,
         cc: typing.Optional[SendMessageCc] = OMIT,
         bcc: typing.Optional[SendMessageBcc] = OMIT,
+        reply_all: typing.Optional[ReplyAll] = OMIT,
         text: typing.Optional[MessageText] = OMIT,
         html: typing.Optional[MessageHtml] = OMIT,
         attachments: typing.Optional[SendMessageAttachments] = OMIT,
@@ -1002,6 +1114,8 @@ class AsyncRawMessagesClient:
         cc : typing.Optional[SendMessageCc]
 
         bcc : typing.Optional[SendMessageBcc]
+
+        reply_all : typing.Optional[ReplyAll]
 
         text : typing.Optional[MessageText]
 
@@ -1031,6 +1145,113 @@ class AsyncRawMessagesClient:
                 "cc": convert_and_respect_annotation_metadata(object_=cc, annotation=SendMessageCc, direction="write"),
                 "bcc": convert_and_respect_annotation_metadata(
                     object_=bcc, annotation=SendMessageBcc, direction="write"
+                ),
+                "reply_all": reply_all,
+                "text": text,
+                "html": html,
+                "attachments": convert_and_respect_annotation_metadata(
+                    object_=attachments, annotation=SendMessageAttachments, direction="write"
+                ),
+                "headers": headers,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    SendMessageResponse,
+                    construct_type(
+                        type_=SendMessageResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise MessageRejectedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def reply_all(
+        self,
+        inbox_id: InboxId,
+        message_id: MessageId,
+        *,
+        labels: typing.Optional[MessageLabels] = OMIT,
+        reply_to: typing.Optional[SendMessageReplyTo] = OMIT,
+        text: typing.Optional[MessageText] = OMIT,
+        html: typing.Optional[MessageHtml] = OMIT,
+        attachments: typing.Optional[SendMessageAttachments] = OMIT,
+        headers: typing.Optional[SendMessageHeaders] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[SendMessageResponse]:
+        """
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_id : MessageId
+
+        labels : typing.Optional[MessageLabels]
+
+        reply_to : typing.Optional[SendMessageReplyTo]
+
+        text : typing.Optional[MessageText]
+
+        html : typing.Optional[MessageHtml]
+
+        attachments : typing.Optional[SendMessageAttachments]
+
+        headers : typing.Optional[SendMessageHeaders]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[SendMessageResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}/reply-all",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "labels": labels,
+                "reply_to": convert_and_respect_annotation_metadata(
+                    object_=reply_to, annotation=SendMessageReplyTo, direction="write"
                 ),
                 "text": text,
                 "html": html,

@@ -8,22 +8,14 @@ from ...core.unchecked_base_model import UncheckedBaseModel
 from .message_html import MessageHtml
 from .message_labels import MessageLabels
 from .message_text import MessageText
-from .reply_all import ReplyAll
 from .send_message_attachments import SendMessageAttachments
-from .send_message_bcc import SendMessageBcc
-from .send_message_cc import SendMessageCc
 from .send_message_headers import SendMessageHeaders
 from .send_message_reply_to import SendMessageReplyTo
-from .send_message_to import SendMessageTo
 
 
-class ReplyToMessageRequest(UncheckedBaseModel):
+class ReplyAllMessageRequest(UncheckedBaseModel):
     labels: typing.Optional[MessageLabels] = None
     reply_to: typing.Optional[SendMessageReplyTo] = None
-    to: typing.Optional[SendMessageTo] = None
-    cc: typing.Optional[SendMessageCc] = None
-    bcc: typing.Optional[SendMessageBcc] = None
-    reply_all: typing.Optional[ReplyAll] = None
     text: typing.Optional[MessageText] = None
     html: typing.Optional[MessageHtml] = None
     attachments: typing.Optional[SendMessageAttachments] = None

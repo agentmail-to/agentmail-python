@@ -23,10 +23,10 @@ class BaseClientWrapper:
 
     def get_headers(self) -> typing.Dict[str, str]:
         headers: typing.Dict[str, str] = {
-            "User-Agent": "agentmail/0.1.11",
+            "User-Agent": "agentmail/0.1.12",
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "agentmail",
-            "X-Fern-SDK-Version": "0.1.11",
+            "X-Fern-SDK-Version": "0.1.12",
             **(self.get_custom_headers() or {}),
         }
         headers["Authorization"] = f"Bearer {self._get_api_key()}"

@@ -17,6 +17,7 @@ from ..types.after import After
 from ..types.ascending import Ascending
 from ..types.before import Before
 from ..types.error_response import ErrorResponse
+from ..types.include_spam import IncludeSpam
 from ..types.labels import Labels
 from ..types.limit import Limit
 from ..types.page_token import PageToken
@@ -38,6 +39,7 @@ class RawThreadsClient:
         before: typing.Optional[Before] = None,
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
+        include_spam: typing.Optional[IncludeSpam] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListThreadsResponse]:
         """
@@ -54,6 +56,8 @@ class RawThreadsClient:
         after : typing.Optional[After]
 
         ascending : typing.Optional[Ascending]
+
+        include_spam : typing.Optional[IncludeSpam]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -73,6 +77,7 @@ class RawThreadsClient:
                 "before": serialize_datetime(before) if before is not None else None,
                 "after": serialize_datetime(after) if after is not None else None,
                 "ascending": ascending,
+                "include_spam": include_spam,
             },
             request_options=request_options,
         )
@@ -220,6 +225,7 @@ class AsyncRawThreadsClient:
         before: typing.Optional[Before] = None,
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
+        include_spam: typing.Optional[IncludeSpam] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListThreadsResponse]:
         """
@@ -236,6 +242,8 @@ class AsyncRawThreadsClient:
         after : typing.Optional[After]
 
         ascending : typing.Optional[Ascending]
+
+        include_spam : typing.Optional[IncludeSpam]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -255,6 +263,7 @@ class AsyncRawThreadsClient:
                 "before": serialize_datetime(before) if before is not None else None,
                 "after": serialize_datetime(after) if after is not None else None,
                 "ascending": ascending,
+                "include_spam": include_spam,
             },
             request_options=request_options,
         )

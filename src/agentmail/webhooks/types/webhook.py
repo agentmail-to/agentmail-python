@@ -25,7 +25,7 @@ class Webhook(UncheckedBaseModel):
 
     enabled: bool = pydantic.Field()
     """
-    Whether the webhook is enabled.
+    Webhook is enabled.
     """
 
     updated_at: dt.datetime = pydantic.Field()

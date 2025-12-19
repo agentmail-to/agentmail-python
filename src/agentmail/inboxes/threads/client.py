@@ -11,6 +11,7 @@ from ...threads.types.thread_id import ThreadId
 from ...types.after import After
 from ...types.ascending import Ascending
 from ...types.before import Before
+from ...types.include_spam import IncludeSpam
 from ...types.labels import Labels
 from ...types.limit import Limit
 from ...types.page_token import PageToken
@@ -43,6 +44,7 @@ class ThreadsClient:
         before: typing.Optional[Before] = None,
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
+        include_spam: typing.Optional[IncludeSpam] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
         """
@@ -61,6 +63,8 @@ class ThreadsClient:
         after : typing.Optional[After]
 
         ascending : typing.Optional[Ascending]
+
+        include_spam : typing.Optional[IncludeSpam]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -88,6 +92,7 @@ class ThreadsClient:
             before=before,
             after=after,
             ascending=ascending,
+            include_spam=include_spam,
             request_options=request_options,
         )
         return _response.data
@@ -222,6 +227,7 @@ class AsyncThreadsClient:
         before: typing.Optional[Before] = None,
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
+        include_spam: typing.Optional[IncludeSpam] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
         """
@@ -240,6 +246,8 @@ class AsyncThreadsClient:
         after : typing.Optional[After]
 
         ascending : typing.Optional[Ascending]
+
+        include_spam : typing.Optional[IncludeSpam]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -275,6 +283,7 @@ class AsyncThreadsClient:
             before=before,
             after=after,
             ascending=ascending,
+            include_spam=include_spam,
             request_options=request_options,
         )
         return _response.data

@@ -23,6 +23,7 @@ from ...messages.types.send_message_to import SendMessageTo
 from ...types.after import After
 from ...types.ascending import Ascending
 from ...types.before import Before
+from ...types.include_spam import IncludeSpam
 from ...types.labels import Labels
 from ...types.limit import Limit
 from ...types.page_token import PageToken
@@ -58,6 +59,7 @@ class MessagesClient:
         before: typing.Optional[Before] = None,
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
+        include_spam: typing.Optional[IncludeSpam] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListMessagesResponse:
         """
@@ -76,6 +78,8 @@ class MessagesClient:
         after : typing.Optional[After]
 
         ascending : typing.Optional[Ascending]
+
+        include_spam : typing.Optional[IncludeSpam]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -103,6 +107,7 @@ class MessagesClient:
             before=before,
             after=after,
             ascending=ascending,
+            include_spam=include_spam,
             request_options=request_options,
         )
         return _response.data
@@ -502,6 +507,7 @@ class AsyncMessagesClient:
         before: typing.Optional[Before] = None,
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
+        include_spam: typing.Optional[IncludeSpam] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListMessagesResponse:
         """
@@ -520,6 +526,8 @@ class AsyncMessagesClient:
         after : typing.Optional[After]
 
         ascending : typing.Optional[Ascending]
+
+        include_spam : typing.Optional[IncludeSpam]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -555,6 +563,7 @@ class AsyncMessagesClient:
             before=before,
             after=after,
             ascending=ascending,
+            include_spam=include_spam,
             request_options=request_options,
         )
         return _response.data

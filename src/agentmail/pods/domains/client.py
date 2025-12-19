@@ -9,10 +9,6 @@ from ...domains.types.domain_id import DomainId
 from ...domains.types.domain_name import DomainName
 from ...domains.types.feedback_enabled import FeedbackEnabled
 from ...domains.types.list_domains_response import ListDomainsResponse
-from ...types.after import After
-from ...types.ascending import Ascending
-from ...types.before import Before
-from ...types.labels import Labels
 from ...types.limit import Limit
 from ...types.page_token import PageToken
 from ..types.pod_id import PodId
@@ -43,10 +39,6 @@ class DomainsClient:
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
-        labels: typing.Optional[Labels] = None,
-        before: typing.Optional[Before] = None,
-        after: typing.Optional[After] = None,
-        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListDomainsResponse:
         """
@@ -57,14 +49,6 @@ class DomainsClient:
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
-
-        labels : typing.Optional[Labels]
-
-        before : typing.Optional[Before]
-
-        after : typing.Optional[After]
-
-        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -84,16 +68,7 @@ class DomainsClient:
             pod_id="pod_id",
         )
         """
-        _response = self._raw_client.list(
-            pod_id,
-            limit=limit,
-            page_token=page_token,
-            labels=labels,
-            before=before,
-            after=after,
-            ascending=ascending,
-            request_options=request_options,
-        )
+        _response = self._raw_client.list(pod_id, limit=limit, page_token=page_token, request_options=request_options)
         return _response.data
 
     def create(
@@ -192,10 +167,6 @@ class AsyncDomainsClient:
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
-        labels: typing.Optional[Labels] = None,
-        before: typing.Optional[Before] = None,
-        after: typing.Optional[After] = None,
-        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListDomainsResponse:
         """
@@ -206,14 +177,6 @@ class AsyncDomainsClient:
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
-
-        labels : typing.Optional[Labels]
-
-        before : typing.Optional[Before]
-
-        after : typing.Optional[After]
-
-        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -242,14 +205,7 @@ class AsyncDomainsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
-            pod_id,
-            limit=limit,
-            page_token=page_token,
-            labels=labels,
-            before=before,
-            after=after,
-            ascending=ascending,
-            request_options=request_options,
+            pod_id, limit=limit, page_token=page_token, request_options=request_options
         )
         return _response.data
 

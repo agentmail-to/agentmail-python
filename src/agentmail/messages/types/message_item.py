@@ -14,6 +14,7 @@ from .message_bcc import MessageBcc
 from .message_cc import MessageCc
 from .message_created_at import MessageCreatedAt
 from .message_from import MessageFrom
+from .message_headers import MessageHeaders
 from .message_id import MessageId
 from .message_in_reply_to import MessageInReplyTo
 from .message_labels import MessageLabels
@@ -41,6 +42,7 @@ class MessageItem(UncheckedBaseModel):
     attachments: typing.Optional[MessageAttachments] = None
     in_reply_to: typing.Optional[MessageInReplyTo] = None
     references: typing.Optional[MessageReferences] = None
+    headers: typing.Optional[MessageHeaders] = None
     size: MessageSize
     updated_at: MessageUpdatedAt
     created_at: MessageCreatedAt

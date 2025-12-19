@@ -14,6 +14,7 @@ if typing.TYPE_CHECKING:
     from .message_cc import MessageCc
     from .message_created_at import MessageCreatedAt
     from .message_from import MessageFrom
+    from .message_headers import MessageHeaders
     from .message_html import MessageHtml
     from .message_id import MessageId
     from .message_in_reply_to import MessageInReplyTo
@@ -49,6 +50,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MessageCc": ".message_cc",
     "MessageCreatedAt": ".message_created_at",
     "MessageFrom": ".message_from",
+    "MessageHeaders": ".message_headers",
     "MessageHtml": ".message_html",
     "MessageId": ".message_id",
     "MessageInReplyTo": ".message_in_reply_to",
@@ -108,6 +110,7 @@ __all__ = [
     "MessageCc",
     "MessageCreatedAt",
     "MessageFrom",
+    "MessageHeaders",
     "MessageHtml",
     "MessageId",
     "MessageInReplyTo",

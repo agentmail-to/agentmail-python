@@ -2,4 +2,4 @@
 
 import typing
 
-RecordStatus = typing.Union[typing.Literal["MISSING", "VERIFIED"], typing.Any]
+RecordStatus = typing.Union[typing.Literal["MISSING", "INVALID", "VALID"], typing.Any]

@@ -2,4 +2,6 @@
 
 import typing
 
-VerificationStatus = typing.Union[typing.Literal["PENDING", "VERIFYING", "READY"], typing.Any]
+VerificationStatus = typing.Union[
+    typing.Literal["NOT_STARTED", "PENDING", "INVALID", "FAILED", "VERIFYING", "VERIFIED"], typing.Any
+]

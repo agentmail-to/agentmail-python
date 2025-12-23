@@ -6,20 +6,15 @@ import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from ...events.types.event_types import EventTypes
+from ...events.types.inbox_ids import InboxIds
+from ...events.types.pod_ids import PodIds
 
 
 class Subscribe(UncheckedBaseModel):
     type: typing.Literal["subscribe"] = "subscribe"
     event_types: typing.Optional[EventTypes] = None
-    inbox_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
-    """
-    IDs of the inboxes to subscribe to.
-    """
-
-    pod_ids: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
-    """
-    IDs of the pods to subscribe to.
-    """
+    inbox_ids: typing.Optional[InboxIds] = None
+    pod_ids: typing.Optional[PodIds] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

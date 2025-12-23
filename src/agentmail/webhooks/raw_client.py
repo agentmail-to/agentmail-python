@@ -12,12 +12,13 @@ from ..core.unchecked_base_model import construct_type
 from ..errors.not_found_error import NotFoundError
 from ..errors.validation_error import ValidationError
 from ..events.types.event_types import EventTypes
+from ..events.types.inbox_ids import InboxIds
+from ..events.types.pod_ids import PodIds
 from ..types.error_response import ErrorResponse
 from ..types.limit import Limit
 from ..types.page_token import PageToken
 from ..types.validation_error_response import ValidationErrorResponse
 from .types.client_id import ClientId
-from .types.inbox_ids import InboxIds
 from .types.list_webhooks_response import ListWebhooksResponse
 from .types.url import Url
 from .types.webhook import Webhook
@@ -129,6 +130,7 @@ class RawWebhooksClient:
         *,
         url: Url,
         event_types: EventTypes,
+        pod_ids: typing.Optional[PodIds] = OMIT,
         inbox_ids: typing.Optional[InboxIds] = OMIT,
         client_id: typing.Optional[ClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -139,6 +141,8 @@ class RawWebhooksClient:
         url : Url
 
         event_types : EventTypes
+
+        pod_ids : typing.Optional[PodIds]
 
         inbox_ids : typing.Optional[InboxIds]
 
@@ -158,6 +162,7 @@ class RawWebhooksClient:
             json={
                 "url": url,
                 "event_types": event_types,
+                "pod_ids": pod_ids,
                 "inbox_ids": inbox_ids,
                 "client_id": client_id,
             },
@@ -333,6 +338,7 @@ class AsyncRawWebhooksClient:
         *,
         url: Url,
         event_types: EventTypes,
+        pod_ids: typing.Optional[PodIds] = OMIT,
         inbox_ids: typing.Optional[InboxIds] = OMIT,
         client_id: typing.Optional[ClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -343,6 +349,8 @@ class AsyncRawWebhooksClient:
         url : Url
 
         event_types : EventTypes
+
+        pod_ids : typing.Optional[PodIds]
 
         inbox_ids : typing.Optional[InboxIds]
 
@@ -362,6 +370,7 @@ class AsyncRawWebhooksClient:
             json={
                 "url": url,
                 "event_types": event_types,
+                "pod_ids": pod_ids,
                 "inbox_ids": inbox_ids,
                 "client_id": client_id,
             },

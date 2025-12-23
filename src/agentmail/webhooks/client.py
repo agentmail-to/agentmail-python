@@ -5,11 +5,12 @@ import typing
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..events.types.event_types import EventTypes
+from ..events.types.inbox_ids import InboxIds
+from ..events.types.pod_ids import PodIds
 from ..types.limit import Limit
 from ..types.page_token import PageToken
 from .raw_client import AsyncRawWebhooksClient, RawWebhooksClient
 from .types.client_id import ClientId
-from .types.inbox_ids import InboxIds
 from .types.list_webhooks_response import ListWebhooksResponse
 from .types.url import Url
 from .types.webhook import Webhook
@@ -99,6 +100,7 @@ class WebhooksClient:
         *,
         url: Url,
         event_types: EventTypes,
+        pod_ids: typing.Optional[PodIds] = OMIT,
         inbox_ids: typing.Optional[InboxIds] = OMIT,
         client_id: typing.Optional[ClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -109,6 +111,8 @@ class WebhooksClient:
         url : Url
 
         event_types : EventTypes
+
+        pod_ids : typing.Optional[PodIds]
 
         inbox_ids : typing.Optional[InboxIds]
 
@@ -134,7 +138,12 @@ class WebhooksClient:
         )
         """
         _response = self._raw_client.create(
-            url=url, event_types=event_types, inbox_ids=inbox_ids, client_id=client_id, request_options=request_options
+            url=url,
+            event_types=event_types,
+            pod_ids=pod_ids,
+            inbox_ids=inbox_ids,
+            client_id=client_id,
+            request_options=request_options,
         )
         return _response.data
 
@@ -262,6 +271,7 @@ class AsyncWebhooksClient:
         *,
         url: Url,
         event_types: EventTypes,
+        pod_ids: typing.Optional[PodIds] = OMIT,
         inbox_ids: typing.Optional[InboxIds] = OMIT,
         client_id: typing.Optional[ClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -272,6 +282,8 @@ class AsyncWebhooksClient:
         url : Url
 
         event_types : EventTypes
+
+        pod_ids : typing.Optional[PodIds]
 
         inbox_ids : typing.Optional[InboxIds]
 
@@ -305,7 +317,12 @@ class AsyncWebhooksClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
-            url=url, event_types=event_types, inbox_ids=inbox_ids, client_id=client_id, request_options=request_options
+            url=url,
+            event_types=event_types,
+            pod_ids=pod_ids,
+            inbox_ids=inbox_ids,
+            client_id=client_id,
+            request_options=request_options,
         )
         return _response.data
 

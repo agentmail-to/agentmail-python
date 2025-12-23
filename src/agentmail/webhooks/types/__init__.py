@@ -8,7 +8,6 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .client_id import ClientId
     from .create_webhook_request import CreateWebhookRequest
-    from .inbox_ids import InboxIds
     from .list_webhooks_response import ListWebhooksResponse
     from .url import Url
     from .webhook import Webhook
@@ -16,7 +15,6 @@ if typing.TYPE_CHECKING:
 _dynamic_imports: typing.Dict[str, str] = {
     "ClientId": ".client_id",
     "CreateWebhookRequest": ".create_webhook_request",
-    "InboxIds": ".inbox_ids",
     "ListWebhooksResponse": ".list_webhooks_response",
     "Url": ".url",
     "Webhook": ".webhook",
@@ -45,4 +43,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["ClientId", "CreateWebhookRequest", "InboxIds", "ListWebhooksResponse", "Url", "Webhook", "WebhookId"]
+__all__ = ["ClientId", "CreateWebhookRequest", "ListWebhooksResponse", "Url", "Webhook", "WebhookId"]

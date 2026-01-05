@@ -30,6 +30,7 @@ if typing.TYPE_CHECKING:
         inboxes,
         messages,
         metrics,
+        organizations,
         pods,
         threads,
         webhooks,
@@ -162,6 +163,7 @@ if typing.TYPE_CHECKING:
         MetricStartTimestamp,
         MetricTimestamp,
     )
+    from .organizations import Organization
     from .threads import (
         ListThreadsResponse,
         Thread,
@@ -287,6 +289,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MetricTimestamp": ".metrics",
     "Name": ".api_keys",
     "NotFoundError": ".errors",
+    "Organization": ".organizations",
     "OrganizationId": ".types",
     "PageToken": ".types",
     "PodIds": ".events",
@@ -343,6 +346,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "inboxes": ".inboxes",
     "messages": ".messages",
     "metrics": ".metrics",
+    "organizations": ".organizations",
     "pods": ".pods",
     "threads": ".threads",
     "webhooks": ".webhooks",
@@ -474,6 +478,7 @@ __all__ = [
     "MetricTimestamp",
     "Name",
     "NotFoundError",
+    "Organization",
     "OrganizationId",
     "PageToken",
     "PodIds",
@@ -530,6 +535,7 @@ __all__ = [
     "inboxes",
     "messages",
     "metrics",
+    "organizations",
     "pods",
     "threads",
     "webhooks",

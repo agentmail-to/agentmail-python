@@ -16,6 +16,7 @@ if typing.TYPE_CHECKING:
     from .drafts.client import AsyncDraftsClient, DraftsClient
     from .inboxes.client import AsyncInboxesClient, InboxesClient
     from .metrics.client import AsyncMetricsClient, MetricsClient
+    from .organizations.client import AsyncOrganizationsClient, OrganizationsClient
     from .pods.client import AsyncPodsClient, PodsClient
     from .threads.client import AsyncThreadsClient, ThreadsClient
     from .webhooks.client import AsyncWebhooksClient, WebhooksClient
@@ -94,6 +95,7 @@ class AgentMail:
         self._domains: typing.Optional[DomainsClient] = None
         self._drafts: typing.Optional[DraftsClient] = None
         self._metrics: typing.Optional[MetricsClient] = None
+        self._organizations: typing.Optional[OrganizationsClient] = None
         self._threads: typing.Optional[ThreadsClient] = None
         self._websockets: typing.Optional[WebsocketsClient] = None
 
@@ -152,6 +154,14 @@ class AgentMail:
 
             self._metrics = MetricsClient(client_wrapper=self._client_wrapper)
         return self._metrics
+
+    @property
+    def organizations(self):
+        if self._organizations is None:
+            from .organizations.client import OrganizationsClient  # noqa: E402
+
+            self._organizations = OrganizationsClient(client_wrapper=self._client_wrapper)
+        return self._organizations
 
     @property
     def threads(self):
@@ -242,6 +252,7 @@ class AsyncAgentMail:
         self._domains: typing.Optional[AsyncDomainsClient] = None
         self._drafts: typing.Optional[AsyncDraftsClient] = None
         self._metrics: typing.Optional[AsyncMetricsClient] = None
+        self._organizations: typing.Optional[AsyncOrganizationsClient] = None
         self._threads: typing.Optional[AsyncThreadsClient] = None
         self._websockets: typing.Optional[AsyncWebsocketsClient] = None
 
@@ -300,6 +311,14 @@ class AsyncAgentMail:
 
             self._metrics = AsyncMetricsClient(client_wrapper=self._client_wrapper)
         return self._metrics
+
+    @property
+    def organizations(self):
+        if self._organizations is None:
+            from .organizations.client import AsyncOrganizationsClient  # noqa: E402
+
+            self._organizations = AsyncOrganizationsClient(client_wrapper=self._client_wrapper)
+        return self._organizations
 
     @property
     def threads(self):

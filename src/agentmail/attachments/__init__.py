@@ -9,20 +9,22 @@ if typing.TYPE_CHECKING:
     from .types import (
         Attachment,
         AttachmentContent,
+        AttachmentContentDisposition,
+        AttachmentContentId,
         AttachmentContentType,
         AttachmentFilename,
         AttachmentId,
-        AttachmentInline,
         AttachmentSize,
         SendAttachment,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "Attachment": ".types",
     "AttachmentContent": ".types",
+    "AttachmentContentDisposition": ".types",
+    "AttachmentContentId": ".types",
     "AttachmentContentType": ".types",
     "AttachmentFilename": ".types",
     "AttachmentId": ".types",
-    "AttachmentInline": ".types",
     "AttachmentSize": ".types",
     "SendAttachment": ".types",
 }
@@ -52,10 +54,11 @@ def __dir__():
 __all__ = [
     "Attachment",
     "AttachmentContent",
+    "AttachmentContentDisposition",
+    "AttachmentContentId",
     "AttachmentContentType",
     "AttachmentFilename",
     "AttachmentId",
-    "AttachmentInline",
     "AttachmentSize",
     "SendAttachment",
 ]

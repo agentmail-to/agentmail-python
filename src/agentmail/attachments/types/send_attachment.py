@@ -6,6 +6,8 @@ import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from .attachment_content import AttachmentContent
+from .attachment_content_disposition import AttachmentContentDisposition
+from .attachment_content_id import AttachmentContentId
 from .attachment_content_type import AttachmentContentType
 from .attachment_filename import AttachmentFilename
 
@@ -13,6 +15,8 @@ from .attachment_filename import AttachmentFilename
 class SendAttachment(UncheckedBaseModel):
     filename: typing.Optional[AttachmentFilename] = None
     content_type: typing.Optional[AttachmentContentType] = None
+    content_disposition: typing.Optional[AttachmentContentDisposition] = None
+    content_id: typing.Optional[AttachmentContentId] = None
     content: AttachmentContent
 
     if IS_PYDANTIC_V2:

@@ -5,19 +5,21 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
+from .attachment_content_disposition import AttachmentContentDisposition
+from .attachment_content_id import AttachmentContentId
 from .attachment_content_type import AttachmentContentType
 from .attachment_filename import AttachmentFilename
 from .attachment_id import AttachmentId
-from .attachment_inline import AttachmentInline
 from .attachment_size import AttachmentSize
 
 
 class Attachment(UncheckedBaseModel):
     attachment_id: AttachmentId
     filename: typing.Optional[AttachmentFilename] = None
-    content_type: typing.Optional[AttachmentContentType] = None
     size: AttachmentSize
-    inline: AttachmentInline
+    content_type: typing.Optional[AttachmentContentType] = None
+    content_disposition: AttachmentContentDisposition
+    content_id: typing.Optional[AttachmentContentId] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

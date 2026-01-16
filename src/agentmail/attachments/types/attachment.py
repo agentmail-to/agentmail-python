@@ -18,7 +18,7 @@ class Attachment(UncheckedBaseModel):
     filename: typing.Optional[AttachmentFilename] = None
     size: AttachmentSize
     content_type: typing.Optional[AttachmentContentType] = None
-    content_disposition: AttachmentContentDisposition
+    content_disposition: typing.Optional[AttachmentContentDisposition] = None
     content_id: typing.Optional[AttachmentContentId] = None
 
     if IS_PYDANTIC_V2:

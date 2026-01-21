@@ -33,7 +33,7 @@ class MessageItem(UncheckedBaseModel):
     message_id: MessageId
     labels: MessageLabels
     timestamp: MessageTimestamp
-    from_: typing_extensions.Annotated[MessageFrom, FieldMetadata(alias="from")] = pydantic.Field(alias="from")
+    from_: typing_extensions.Annotated[MessageFrom, FieldMetadata(alias="from")]
     to: MessageTo
     cc: typing.Optional[MessageCc] = None
     bcc: typing.Optional[MessageBcc] = None

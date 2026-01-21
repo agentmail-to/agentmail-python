@@ -1,6 +1,6 @@
 # Reference
 ## Inboxes
-<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListInboxesResponse]</code></summary>
+<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -62,7 +62,7 @@ client.inboxes.list()
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">get</a>(...) -&gt; AsyncHttpResponse[Inbox]</code></summary>
+<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -118,7 +118,7 @@ client.inboxes.get(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">create</a>(...) -&gt; AsyncHttpResponse[Inbox]</code></summary>
+<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">create</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -172,7 +172,7 @@ client.inboxes.create()
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">update</a>(...) -&gt; AsyncHttpResponse[Inbox]</code></summary>
+<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">update</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -237,7 +237,7 @@ client.inboxes.update(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -294,7 +294,7 @@ client.inboxes.delete(
 </details>
 
 ## Pods
-<details><summary><code>client.pods.<a href="src/agentmail/pods/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListPodsResponse]</code></summary>
+<details><summary><code>client.pods.<a href="src/agentmail/pods/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -356,7 +356,7 @@ client.pods.list()
 </dl>
 </details>
 
-<details><summary><code>client.pods.<a href="src/agentmail/pods/client.py">get</a>(...) -&gt; AsyncHttpResponse[Pod]</code></summary>
+<details><summary><code>client.pods.<a href="src/agentmail/pods/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -412,7 +412,7 @@ client.pods.get(
 </dl>
 </details>
 
-<details><summary><code>client.pods.<a href="src/agentmail/pods/client.py">create</a>(...) -&gt; AsyncHttpResponse[Pod]</code></summary>
+<details><summary><code>client.pods.<a href="src/agentmail/pods/client.py">create</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -474,7 +474,7 @@ client.pods.create()
 </dl>
 </details>
 
-<details><summary><code>client.pods.<a href="src/agentmail/pods/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.pods.<a href="src/agentmail/pods/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -531,7 +531,7 @@ client.pods.delete(
 </details>
 
 ## Webhooks
-<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListWebhooksResponse]</code></summary>
+<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -593,7 +593,7 @@ client.webhooks.list()
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">get</a>(...) -&gt; AsyncHttpResponse[Webhook]</code></summary>
+<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -649,7 +649,7 @@ client.webhooks.get(
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">create</a>(...) -&gt; AsyncHttpResponse[Webhook]</code></summary>
+<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">create</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -738,7 +738,7 @@ client.webhooks.create(
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -795,7 +795,7 @@ client.webhooks.delete(
 </details>
 
 ## ApiKeys
-<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListApiKeysResponse]</code></summary>
+<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -857,7 +857,7 @@ client.api_keys.list()
 </dl>
 </details>
 
-<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">create</a>(...) -&gt; AsyncHttpResponse[CreateApiKeyResponse]</code></summary>
+<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">create</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -913,7 +913,7 @@ client.api_keys.create(
 </dl>
 </details>
 
-<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -970,7 +970,7 @@ client.api_keys.delete(
 </details>
 
 ## Domains
-<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListDomainsResponse]</code></summary>
+<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1032,7 +1032,7 @@ client.domains.list()
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">get</a>(...) -&gt; AsyncHttpResponse[Domain]</code></summary>
+<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1088,7 +1088,7 @@ client.domains.get(
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">get_zone_file</a>(...) -&gt; typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]</code></summary>
+<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">get_zone_file</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1144,7 +1144,7 @@ client.domains.get_zone_file(
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">create</a>(...) -&gt; AsyncHttpResponse[Domain]</code></summary>
+<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">create</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1209,7 +1209,7 @@ client.domains.create(
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1265,7 +1265,7 @@ client.domains.delete(
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">verify</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">verify</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1322,7 +1322,7 @@ client.domains.verify(
 </details>
 
 ## Drafts
-<details><summary><code>client.drafts.<a href="src/agentmail/drafts/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListDraftsResponse]</code></summary>
+<details><summary><code>client.drafts.<a href="src/agentmail/drafts/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1416,7 +1416,7 @@ client.drafts.list()
 </dl>
 </details>
 
-<details><summary><code>client.drafts.<a href="src/agentmail/drafts/client.py">get</a>(...) -&gt; AsyncHttpResponse[Draft]</code></summary>
+<details><summary><code>client.drafts.<a href="src/agentmail/drafts/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1473,7 +1473,7 @@ client.drafts.get(
 </details>
 
 ## Inboxes Drafts
-<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListDraftsResponse]</code></summary>
+<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1577,7 +1577,7 @@ client.inboxes.drafts.list(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">get</a>(...) -&gt; AsyncHttpResponse[Draft]</code></summary>
+<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1642,7 +1642,7 @@ client.inboxes.drafts.get(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">create</a>(...) -&gt; AsyncHttpResponse[Draft]</code></summary>
+<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">create</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1786,7 +1786,7 @@ client.inboxes.drafts.create(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">update</a>(...) -&gt; AsyncHttpResponse[Draft]</code></summary>
+<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">update</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1915,7 +1915,7 @@ client.inboxes.drafts.update(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">send</a>(...) -&gt; AsyncHttpResponse[SendMessageResponse]</code></summary>
+<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">send</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1996,7 +1996,7 @@ client.inboxes.drafts.send(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2062,7 +2062,7 @@ client.inboxes.drafts.delete(
 </details>
 
 ## Inboxes Messages
-<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListMessagesResponse]</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2174,7 +2174,7 @@ client.inboxes.messages.list(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">get</a>(...) -&gt; AsyncHttpResponse[Message]</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2239,7 +2239,7 @@ client.inboxes.messages.get(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">get_attachment</a>(...) -&gt; AsyncHttpResponse[AttachmentResponse]</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">get_attachment</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2313,7 +2313,7 @@ client.inboxes.messages.get_attachment(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">get_raw</a>(...) -&gt; typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">get_raw</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2378,7 +2378,7 @@ client.inboxes.messages.get_raw(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">send</a>(...) -&gt; AsyncHttpResponse[SendMessageResponse]</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">send</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2514,7 +2514,7 @@ client.inboxes.messages.send(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">reply</a>(...) -&gt; AsyncHttpResponse[SendMessageResponse]</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">reply</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2659,7 +2659,7 @@ client.inboxes.messages.reply(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">reply_all</a>(...) -&gt; AsyncHttpResponse[SendMessageResponse]</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">reply_all</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2772,7 +2772,7 @@ client.inboxes.messages.reply_all(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">update</a>(...) -&gt; AsyncHttpResponse[Message]</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">update</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2854,7 +2854,7 @@ client.inboxes.messages.update(
 </details>
 
 ## Inboxes Metrics
-<details><summary><code>client.inboxes.metrics.<a href="src/agentmail/inboxes/metrics/client.py">get</a>(...) -&gt; AsyncHttpResponse[ListMetricsResponse]</code></summary>
+<details><summary><code>client.inboxes.metrics.<a href="src/agentmail/inboxes/metrics/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2943,7 +2943,7 @@ client.inboxes.metrics.get(
 </details>
 
 ## Inboxes Threads
-<details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListThreadsResponse]</code></summary>
+<details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3055,7 +3055,7 @@ client.inboxes.threads.list(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">get</a>(...) -&gt; AsyncHttpResponse[Thread]</code></summary>
+<details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3120,7 +3120,7 @@ client.inboxes.threads.get(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">get_attachment</a>(...) -&gt; AsyncHttpResponse[AttachmentResponse]</code></summary>
+<details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">get_attachment</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3194,7 +3194,7 @@ client.inboxes.threads.get_attachment(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3260,7 +3260,7 @@ client.inboxes.threads.delete(
 </details>
 
 ## Metrics
-<details><summary><code>client.metrics.<a href="src/agentmail/metrics/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListMetricsResponse]</code></summary>
+<details><summary><code>client.metrics.<a href="src/agentmail/metrics/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3340,7 +3340,7 @@ client.metrics.list(
 </details>
 
 ## Organizations
-<details><summary><code>client.organizations.<a href="src/agentmail/organizations/client.py">get</a>() -&gt; AsyncHttpResponse[Organization]</code></summary>
+<details><summary><code>client.organizations.<a href="src/agentmail/organizations/client.py">get</a>()</code></summary>
 <dl>
 <dd>
 
@@ -3401,7 +3401,7 @@ client.organizations.get()
 </details>
 
 ## Pods Domains
-<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListDomainsResponse]</code></summary>
+<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3473,7 +3473,7 @@ client.pods.domains.list(
 </dl>
 </details>
 
-<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">create</a>(...) -&gt; AsyncHttpResponse[Domain]</code></summary>
+<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">create</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3547,7 +3547,7 @@ client.pods.domains.create(
 </dl>
 </details>
 
-<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3613,7 +3613,7 @@ client.pods.domains.delete(
 </details>
 
 ## Pods Drafts
-<details><summary><code>client.pods.drafts.<a href="src/agentmail/pods/drafts/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListDraftsResponse]</code></summary>
+<details><summary><code>client.pods.drafts.<a href="src/agentmail/pods/drafts/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3717,7 +3717,7 @@ client.pods.drafts.list(
 </dl>
 </details>
 
-<details><summary><code>client.pods.drafts.<a href="src/agentmail/pods/drafts/client.py">get</a>(...) -&gt; AsyncHttpResponse[Draft]</code></summary>
+<details><summary><code>client.pods.drafts.<a href="src/agentmail/pods/drafts/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3783,7 +3783,7 @@ client.pods.drafts.get(
 </details>
 
 ## Pods Inboxes
-<details><summary><code>client.pods.inboxes.<a href="src/agentmail/pods/inboxes/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListInboxesResponse]</code></summary>
+<details><summary><code>client.pods.inboxes.<a href="src/agentmail/pods/inboxes/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3855,7 +3855,7 @@ client.pods.inboxes.list(
 </dl>
 </details>
 
-<details><summary><code>client.pods.inboxes.<a href="src/agentmail/pods/inboxes/client.py">get</a>(...) -&gt; AsyncHttpResponse[Inbox]</code></summary>
+<details><summary><code>client.pods.inboxes.<a href="src/agentmail/pods/inboxes/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3920,7 +3920,7 @@ client.pods.inboxes.get(
 </dl>
 </details>
 
-<details><summary><code>client.pods.inboxes.<a href="src/agentmail/pods/inboxes/client.py">create</a>(...) -&gt; AsyncHttpResponse[Inbox]</code></summary>
+<details><summary><code>client.pods.inboxes.<a href="src/agentmail/pods/inboxes/client.py">create</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -4008,7 +4008,7 @@ client.pods.inboxes.create(
 </dl>
 </details>
 
-<details><summary><code>client.pods.inboxes.<a href="src/agentmail/pods/inboxes/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.pods.inboxes.<a href="src/agentmail/pods/inboxes/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -4074,7 +4074,7 @@ client.pods.inboxes.delete(
 </details>
 
 ## Pods Threads
-<details><summary><code>client.pods.threads.<a href="src/agentmail/pods/threads/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListThreadsResponse]</code></summary>
+<details><summary><code>client.pods.threads.<a href="src/agentmail/pods/threads/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -4186,7 +4186,7 @@ client.pods.threads.list(
 </dl>
 </details>
 
-<details><summary><code>client.pods.threads.<a href="src/agentmail/pods/threads/client.py">get</a>(...) -&gt; AsyncHttpResponse[Thread]</code></summary>
+<details><summary><code>client.pods.threads.<a href="src/agentmail/pods/threads/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -4251,7 +4251,7 @@ client.pods.threads.get(
 </dl>
 </details>
 
-<details><summary><code>client.pods.threads.<a href="src/agentmail/pods/threads/client.py">get_attachment</a>(...) -&gt; AsyncHttpResponse[AttachmentResponse]</code></summary>
+<details><summary><code>client.pods.threads.<a href="src/agentmail/pods/threads/client.py">get_attachment</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -4326,7 +4326,7 @@ client.pods.threads.get_attachment(
 </details>
 
 ## Threads
-<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListThreadsResponse]</code></summary>
+<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">list</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -4428,7 +4428,7 @@ client.threads.list()
 </dl>
 </details>
 
-<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">get</a>(...) -&gt; AsyncHttpResponse[Thread]</code></summary>
+<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">get</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -4484,7 +4484,7 @@ client.threads.get(
 </dl>
 </details>
 
-<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">get_attachment</a>(...) -&gt; AsyncHttpResponse[AttachmentResponse]</code></summary>
+<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">get_attachment</a>(...)</code></summary>
 <dl>
 <dd>
 

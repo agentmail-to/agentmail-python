@@ -14,6 +14,7 @@ if typing.TYPE_CHECKING:
         AttachmentContentType,
         AttachmentFilename,
         AttachmentId,
+        AttachmentResponse,
         AttachmentSize,
         SendAttachment,
     )
@@ -25,6 +26,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AttachmentContentType": ".types",
     "AttachmentFilename": ".types",
     "AttachmentId": ".types",
+    "AttachmentResponse": ".types",
     "AttachmentSize": ".types",
     "SendAttachment": ".types",
 }
@@ -59,6 +61,7 @@ __all__ = [
     "AttachmentContentType",
     "AttachmentFilename",
     "AttachmentId",
+    "AttachmentResponse",
     "AttachmentSize",
     "SendAttachment",
 ]

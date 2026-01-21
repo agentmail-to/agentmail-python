@@ -5,6 +5,7 @@ import typing
 from json.decoder import JSONDecodeError
 
 from ...attachments.types.attachment_id import AttachmentId
+from ...attachments.types.attachment_response import AttachmentResponse
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.datetime_utils import serialize_datetime
@@ -179,7 +180,6 @@ class RawMessagesClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    @contextlib.contextmanager
     def get_attachment(
         self,
         inbox_id: InboxId,
@@ -187,7 +187,7 @@ class RawMessagesClient:
         attachment_id: AttachmentId,
         *,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
+    ) -> HttpResponse[AttachmentResponse]:
         """
         Parameters
         ----------
@@ -198,46 +198,43 @@ class RawMessagesClient:
         attachment_id : AttachmentId
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
         Returns
         -------
-        typing.Iterator[HttpResponse[typing.Iterator[bytes]]]
+        HttpResponse[AttachmentResponse]
         """
-        with self._client_wrapper.httpx_client.stream(
+        _response = self._client_wrapper.httpx_client.request(
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}/attachments/{jsonable_encoder(attachment_id)}",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
-        ) as _response:
-
-            def _stream() -> HttpResponse[typing.Iterator[bytes]]:
-                try:
-                    if 200 <= _response.status_code < 300:
-                        _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
-                        return HttpResponse(
-                            response=_response, data=(_chunk for _chunk in _response.iter_bytes(chunk_size=_chunk_size))
-                        )
-                    _response.read()
-                    if _response.status_code == 404:
-                        raise NotFoundError(
-                            headers=dict(_response.headers),
-                            body=typing.cast(
-                                ErrorResponse,
-                                construct_type(
-                                    type_=ErrorResponse,  # type: ignore
-                                    object_=_response.json(),
-                                ),
-                            ),
-                        )
-                    _response_json = _response.json()
-                except JSONDecodeError:
-                    raise ApiError(
-                        status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
-                    )
-                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-            yield _stream()
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    AttachmentResponse,
+                    construct_type(
+                        type_=AttachmentResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     @contextlib.contextmanager
     def get_raw(
@@ -854,7 +851,6 @@ class AsyncRawMessagesClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    @contextlib.asynccontextmanager
     async def get_attachment(
         self,
         inbox_id: InboxId,
@@ -862,7 +858,7 @@ class AsyncRawMessagesClient:
         attachment_id: AttachmentId,
         *,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
+    ) -> AsyncHttpResponse[AttachmentResponse]:
         """
         Parameters
         ----------
@@ -873,47 +869,43 @@ class AsyncRawMessagesClient:
         attachment_id : AttachmentId
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
         Returns
         -------
-        typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]
+        AsyncHttpResponse[AttachmentResponse]
         """
-        async with self._client_wrapper.httpx_client.stream(
+        _response = await self._client_wrapper.httpx_client.request(
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}/attachments/{jsonable_encoder(attachment_id)}",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
-        ) as _response:
-
-            async def _stream() -> AsyncHttpResponse[typing.AsyncIterator[bytes]]:
-                try:
-                    if 200 <= _response.status_code < 300:
-                        _chunk_size = request_options.get("chunk_size", None) if request_options is not None else None
-                        return AsyncHttpResponse(
-                            response=_response,
-                            data=(_chunk async for _chunk in _response.aiter_bytes(chunk_size=_chunk_size)),
-                        )
-                    await _response.aread()
-                    if _response.status_code == 404:
-                        raise NotFoundError(
-                            headers=dict(_response.headers),
-                            body=typing.cast(
-                                ErrorResponse,
-                                construct_type(
-                                    type_=ErrorResponse,  # type: ignore
-                                    object_=_response.json(),
-                                ),
-                            ),
-                        )
-                    _response_json = _response.json()
-                except JSONDecodeError:
-                    raise ApiError(
-                        status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
-                    )
-                raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-            yield await _stream()
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    AttachmentResponse,
+                    construct_type(
+                        type_=AttachmentResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     @contextlib.asynccontextmanager
     async def get_raw(

@@ -3,6 +3,7 @@
 import typing
 
 from ...attachments.types.attachment_id import AttachmentId
+from ...attachments.types.attachment_response import AttachmentResponse
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...messages.types.list_messages_response import ListMessagesResponse
@@ -151,7 +152,7 @@ class MessagesClient:
         attachment_id: AttachmentId,
         *,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.Iterator[bytes]:
+    ) -> AttachmentResponse:
         """
         Parameters
         ----------
@@ -162,11 +163,11 @@ class MessagesClient:
         attachment_id : AttachmentId
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
         Returns
         -------
-        typing.Iterator[bytes]
+        AttachmentResponse
 
         Examples
         --------
@@ -181,8 +182,10 @@ class MessagesClient:
             attachment_id="attachment_id",
         )
         """
-        with self._raw_client.get_attachment(inbox_id, message_id, attachment_id, request_options=request_options) as r:
-            yield from r.data
+        _response = self._raw_client.get_attachment(
+            inbox_id, message_id, attachment_id, request_options=request_options
+        )
+        return _response.data
 
     def get_raw(
         self, inbox_id: InboxId, message_id: MessageId, *, request_options: typing.Optional[RequestOptions] = None
@@ -615,7 +618,7 @@ class AsyncMessagesClient:
         attachment_id: AttachmentId,
         *,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> typing.AsyncIterator[bytes]:
+    ) -> AttachmentResponse:
         """
         Parameters
         ----------
@@ -626,11 +629,11 @@ class AsyncMessagesClient:
         attachment_id : AttachmentId
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
         Returns
         -------
-        typing.AsyncIterator[bytes]
+        AttachmentResponse
 
         Examples
         --------
@@ -653,11 +656,10 @@ class AsyncMessagesClient:
 
         asyncio.run(main())
         """
-        async with self._raw_client.get_attachment(
+        _response = await self._raw_client.get_attachment(
             inbox_id, message_id, attachment_id, request_options=request_options
-        ) as r:
-            async for _chunk in r.data:
-                yield _chunk
+        )
+        return _response.data
 
     async def get_raw(
         self, inbox_id: InboxId, message_id: MessageId, *, request_options: typing.Optional[RequestOptions] = None

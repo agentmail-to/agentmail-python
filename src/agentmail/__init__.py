@@ -54,6 +54,7 @@ if typing.TYPE_CHECKING:
         AttachmentContentType,
         AttachmentFilename,
         AttachmentId,
+        AttachmentResponse,
         AttachmentSize,
         SendAttachment,
     )
@@ -203,6 +204,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AttachmentContentType": ".attachments",
     "AttachmentFilename": ".attachments",
     "AttachmentId": ".attachments",
+    "AttachmentResponse": ".attachments",
     "AttachmentSize": ".attachments",
     "Before": ".types",
     "Bounce": ".events",
@@ -393,6 +395,7 @@ __all__ = [
     "AttachmentContentType",
     "AttachmentFilename",
     "AttachmentId",
+    "AttachmentResponse",
     "AttachmentSize",
     "Before",
     "Bounce",

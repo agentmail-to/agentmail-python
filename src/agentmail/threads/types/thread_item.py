@@ -28,8 +28,8 @@ class ThreadItem(UncheckedBaseModel):
     thread_id: ThreadId
     labels: ThreadLabels
     timestamp: ThreadTimestamp
-    received_timestamp: ThreadReceivedTimestamp
-    sent_timestamp: ThreadSentTimestamp
+    received_timestamp: typing.Optional[ThreadReceivedTimestamp] = None
+    sent_timestamp: typing.Optional[ThreadSentTimestamp] = None
     senders: ThreadSenders
     recipients: ThreadRecipients
     subject: typing.Optional[ThreadSubject] = None

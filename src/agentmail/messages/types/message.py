@@ -35,7 +35,7 @@ class Message(UncheckedBaseModel):
     message_id: MessageId
     labels: MessageLabels
     timestamp: MessageTimestamp
-    from_: typing_extensions.Annotated[MessageFrom, FieldMetadata(alias="from")]
+    from_: typing_extensions.Annotated[MessageFrom, FieldMetadata(alias="from")] = pydantic.Field(alias="from")
     reply_to: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
     """
     Reply-to addresses. In format `username@domain.com` or `Display Name <username@domain.com>`.

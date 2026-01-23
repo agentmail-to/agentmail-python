@@ -1,12 +1,13 @@
 {
-  "cliVersion": "2.14.0",
+  "cliVersion": "3.49.4",
   "generatorName": "fernapi/fern-python-sdk",
-  "generatorVersion": "4.41.2",
+  "generatorVersion": "4.49.0",
   "generatorConfig": {
     "client_class_name": "AgentMail",
     "pydantic_config": {
       "skip_validation": true
     },
     "should_generate_websocket_clients": true
-  }
+  },
+  "sdkVersion": "0.2.3"
 }

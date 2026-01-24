@@ -75,7 +75,7 @@ class AgentMail:
         )
         if api_key is None:
             raise ApiError(
-                body="The client must be instantiated be either passing in api_key or setting AGENTMAIL_API_KEY"
+                body="The client must be instantiated by either passing in api_key or setting AGENTMAIL_API_KEY"
             )
         self._client_wrapper = SyncClientWrapper(
             environment=environment,
@@ -232,7 +232,7 @@ class AsyncAgentMail:
         )
         if api_key is None:
             raise ApiError(
-                body="The client must be instantiated be either passing in api_key or setting AGENTMAIL_API_KEY"
+                body="The client must be instantiated by either passing in api_key or setting AGENTMAIL_API_KEY"
             )
         self._client_wrapper = AsyncClientWrapper(
             environment=environment,

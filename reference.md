@@ -2772,6 +2772,151 @@ client.inboxes.messages.reply_all(
 </dl>
 </details>
 
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">forward</a>(...) -&gt; AsyncHttpResponse[SendMessageResponse]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.inboxes.messages.forward(
+    inbox_id="inbox_id",
+    message_id="message_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**message_id:** `MessageId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**labels:** `typing.Optional[MessageLabels]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reply_to:** `typing.Optional[SendMessageReplyTo]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**to:** `typing.Optional[SendMessageTo]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**cc:** `typing.Optional[SendMessageCc]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**bcc:** `typing.Optional[SendMessageBcc]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**subject:** `typing.Optional[MessageSubject]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**text:** `typing.Optional[MessageText]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**html:** `typing.Optional[MessageHtml]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**attachments:** `typing.Optional[SendMessageAttachments]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**headers:** `typing.Optional[SendMessageHeaders]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">update</a>(...) -&gt; AsyncHttpResponse[Message]</code></summary>
 <dl>
 <dd>

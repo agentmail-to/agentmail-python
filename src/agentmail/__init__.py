@@ -48,7 +48,6 @@ if typing.TYPE_CHECKING:
     )
     from .attachments import (
         Attachment,
-        AttachmentContent,
         AttachmentContentDisposition,
         AttachmentContentId,
         AttachmentContentType,
@@ -198,7 +197,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Ascending": ".types",
     "AsyncAgentMail": ".client",
     "Attachment": ".attachments",
-    "AttachmentContent": ".attachments",
     "AttachmentContentDisposition": ".attachments",
     "AttachmentContentId": ".attachments",
     "AttachmentContentType": ".attachments",
@@ -389,7 +387,6 @@ __all__ = [
     "Ascending",
     "AsyncAgentMail",
     "Attachment",
-    "AttachmentContent",
     "AttachmentContentDisposition",
     "AttachmentContentId",
     "AttachmentContentType",

@@ -8,7 +8,6 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import (
         Attachment,
-        AttachmentContent,
         AttachmentContentDisposition,
         AttachmentContentId,
         AttachmentContentType,
@@ -20,7 +19,6 @@ if typing.TYPE_CHECKING:
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "Attachment": ".types",
-    "AttachmentContent": ".types",
     "AttachmentContentDisposition": ".types",
     "AttachmentContentId": ".types",
     "AttachmentContentType": ".types",
@@ -55,7 +53,6 @@ def __dir__():
 
 __all__ = [
     "Attachment",
-    "AttachmentContent",
     "AttachmentContentDisposition",
     "AttachmentContentId",
     "AttachmentContentType",

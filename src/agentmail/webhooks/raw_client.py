@@ -125,6 +125,90 @@ class RawWebhooksClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def update(
+        self,
+        webhook_id: WebhookId,
+        *,
+        add_inbox_ids: typing.Optional[InboxIds] = OMIT,
+        remove_inbox_ids: typing.Optional[InboxIds] = OMIT,
+        add_pod_ids: typing.Optional[PodIds] = OMIT,
+        remove_pod_ids: typing.Optional[PodIds] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[Webhook]:
+        """
+        Parameters
+        ----------
+        webhook_id : WebhookId
+
+        add_inbox_ids : typing.Optional[InboxIds]
+            Inbox IDs to subscribe to the webhook.
+
+        remove_inbox_ids : typing.Optional[InboxIds]
+            Inbox IDs to unsubscribe from the webhook.
+
+        add_pod_ids : typing.Optional[PodIds]
+            Pod IDs to subscribe to the webhook.
+
+        remove_pod_ids : typing.Optional[PodIds]
+            Pod IDs to unsubscribe from the webhook.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[Webhook]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/webhooks/{jsonable_encoder(webhook_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="PATCH",
+            json={
+                "add_inbox_ids": add_inbox_ids,
+                "remove_inbox_ids": remove_inbox_ids,
+                "add_pod_ids": add_pod_ids,
+                "remove_pod_ids": remove_pod_ids,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Webhook,
+                    construct_type(
+                        type_=Webhook,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def create(
         self,
         *,
@@ -324,6 +408,90 @@ class AsyncRawWebhooksClient:
                         ErrorResponse,
                         construct_type(
                             type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def update(
+        self,
+        webhook_id: WebhookId,
+        *,
+        add_inbox_ids: typing.Optional[InboxIds] = OMIT,
+        remove_inbox_ids: typing.Optional[InboxIds] = OMIT,
+        add_pod_ids: typing.Optional[PodIds] = OMIT,
+        remove_pod_ids: typing.Optional[PodIds] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[Webhook]:
+        """
+        Parameters
+        ----------
+        webhook_id : WebhookId
+
+        add_inbox_ids : typing.Optional[InboxIds]
+            Inbox IDs to subscribe to the webhook.
+
+        remove_inbox_ids : typing.Optional[InboxIds]
+            Inbox IDs to unsubscribe from the webhook.
+
+        add_pod_ids : typing.Optional[PodIds]
+            Pod IDs to subscribe to the webhook.
+
+        remove_pod_ids : typing.Optional[PodIds]
+            Pod IDs to unsubscribe from the webhook.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[Webhook]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/webhooks/{jsonable_encoder(webhook_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="PATCH",
+            json={
+                "add_inbox_ids": add_inbox_ids,
+                "remove_inbox_ids": remove_inbox_ids,
+                "add_pod_ids": add_pod_ids,
+                "remove_pod_ids": remove_pod_ids,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Webhook,
+                    construct_type(
+                        type_=Webhook,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

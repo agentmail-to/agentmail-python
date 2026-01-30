@@ -6,7 +6,15 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import ClientId, CreateWebhookRequest, ListWebhooksResponse, Url, Webhook, WebhookId
+    from .types import (
+        ClientId,
+        CreateWebhookRequest,
+        ListWebhooksResponse,
+        UpdateWebhookRequest,
+        Url,
+        Webhook,
+        WebhookId,
+    )
     from . import events
     from .events import SvixId, SvixSignature, SvixTimestamp
 _dynamic_imports: typing.Dict[str, str] = {
@@ -16,6 +24,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SvixId": ".events",
     "SvixSignature": ".events",
     "SvixTimestamp": ".events",
+    "UpdateWebhookRequest": ".types",
     "Url": ".types",
     "Webhook": ".types",
     "WebhookId": ".types",
@@ -51,6 +60,7 @@ __all__ = [
     "SvixId",
     "SvixSignature",
     "SvixTimestamp",
+    "UpdateWebhookRequest",
     "Url",
     "Webhook",
     "WebhookId",

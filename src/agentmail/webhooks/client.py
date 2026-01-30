@@ -95,6 +95,61 @@ class WebhooksClient:
         _response = self._raw_client.get(webhook_id, request_options=request_options)
         return _response.data
 
+    def update(
+        self,
+        webhook_id: WebhookId,
+        *,
+        add_inbox_ids: typing.Optional[InboxIds] = OMIT,
+        remove_inbox_ids: typing.Optional[InboxIds] = OMIT,
+        add_pod_ids: typing.Optional[PodIds] = OMIT,
+        remove_pod_ids: typing.Optional[PodIds] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Webhook:
+        """
+        Parameters
+        ----------
+        webhook_id : WebhookId
+
+        add_inbox_ids : typing.Optional[InboxIds]
+            Inbox IDs to subscribe to the webhook.
+
+        remove_inbox_ids : typing.Optional[InboxIds]
+            Inbox IDs to unsubscribe from the webhook.
+
+        add_pod_ids : typing.Optional[PodIds]
+            Pod IDs to subscribe to the webhook.
+
+        remove_pod_ids : typing.Optional[PodIds]
+            Pod IDs to unsubscribe from the webhook.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Webhook
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.webhooks.update(
+            webhook_id="webhook_id",
+        )
+        """
+        _response = self._raw_client.update(
+            webhook_id,
+            add_inbox_ids=add_inbox_ids,
+            remove_inbox_ids=remove_inbox_ids,
+            add_pod_ids=add_pod_ids,
+            remove_pod_ids=remove_pod_ids,
+            request_options=request_options,
+        )
+        return _response.data
+
     def create(
         self,
         *,
@@ -264,6 +319,69 @@ class AsyncWebhooksClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get(webhook_id, request_options=request_options)
+        return _response.data
+
+    async def update(
+        self,
+        webhook_id: WebhookId,
+        *,
+        add_inbox_ids: typing.Optional[InboxIds] = OMIT,
+        remove_inbox_ids: typing.Optional[InboxIds] = OMIT,
+        add_pod_ids: typing.Optional[PodIds] = OMIT,
+        remove_pod_ids: typing.Optional[PodIds] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Webhook:
+        """
+        Parameters
+        ----------
+        webhook_id : WebhookId
+
+        add_inbox_ids : typing.Optional[InboxIds]
+            Inbox IDs to subscribe to the webhook.
+
+        remove_inbox_ids : typing.Optional[InboxIds]
+            Inbox IDs to unsubscribe from the webhook.
+
+        add_pod_ids : typing.Optional[PodIds]
+            Pod IDs to subscribe to the webhook.
+
+        remove_pod_ids : typing.Optional[PodIds]
+            Pod IDs to unsubscribe from the webhook.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Webhook
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.webhooks.update(
+                webhook_id="webhook_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update(
+            webhook_id,
+            add_inbox_ids=add_inbox_ids,
+            remove_inbox_ids=remove_inbox_ids,
+            add_pod_ids=add_pod_ids,
+            remove_pod_ids=remove_pod_ids,
+            request_options=request_options,
+        )
         return _response.data
 
     async def create(

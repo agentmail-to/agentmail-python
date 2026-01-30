@@ -649,6 +649,94 @@ client.webhooks.get(
 </dl>
 </details>
 
+<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">update</a>(...) -&gt; AsyncHttpResponse[Webhook]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.webhooks.update(
+    webhook_id="webhook_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**webhook_id:** `WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**add_inbox_ids:** `typing.Optional[InboxIds]` — Inbox IDs to subscribe to the webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**remove_inbox_ids:** `typing.Optional[InboxIds]` — Inbox IDs to unsubscribe from the webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**add_pod_ids:** `typing.Optional[PodIds]` — Pod IDs to subscribe to the webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**remove_pod_ids:** `typing.Optional[PodIds]` — Pod IDs to unsubscribe from the webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">create</a>(...) -&gt; AsyncHttpResponse[Webhook]</code></summary>
 <dl>
 <dd>

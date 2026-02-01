@@ -2,6 +2,7 @@
 
 import typing
 
+from ...attachments.types.send_attachment import SendAttachment
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...drafts.types.draft import Draft
@@ -150,6 +151,7 @@ class DraftsClient:
         subject: typing.Optional[DraftSubject] = OMIT,
         text: typing.Optional[DraftText] = OMIT,
         html: typing.Optional[DraftHtml] = OMIT,
+        attachments: typing.Optional[typing.Sequence[SendAttachment]] = OMIT,
         in_reply_to: typing.Optional[DraftInReplyTo] = OMIT,
         send_at: typing.Optional[DraftSendAt] = OMIT,
         client_id: typing.Optional[DraftClientId] = OMIT,
@@ -175,6 +177,9 @@ class DraftsClient:
         text : typing.Optional[DraftText]
 
         html : typing.Optional[DraftHtml]
+
+        attachments : typing.Optional[typing.Sequence[SendAttachment]]
+            Attachments to include in draft.
 
         in_reply_to : typing.Optional[DraftInReplyTo]
 
@@ -210,6 +215,7 @@ class DraftsClient:
             subject=subject,
             text=text,
             html=html,
+            attachments=attachments,
             in_reply_to=in_reply_to,
             send_at=send_at,
             client_id=client_id,
@@ -502,6 +508,7 @@ class AsyncDraftsClient:
         subject: typing.Optional[DraftSubject] = OMIT,
         text: typing.Optional[DraftText] = OMIT,
         html: typing.Optional[DraftHtml] = OMIT,
+        attachments: typing.Optional[typing.Sequence[SendAttachment]] = OMIT,
         in_reply_to: typing.Optional[DraftInReplyTo] = OMIT,
         send_at: typing.Optional[DraftSendAt] = OMIT,
         client_id: typing.Optional[DraftClientId] = OMIT,
@@ -527,6 +534,9 @@ class AsyncDraftsClient:
         text : typing.Optional[DraftText]
 
         html : typing.Optional[DraftHtml]
+
+        attachments : typing.Optional[typing.Sequence[SendAttachment]]
+            Attachments to include in draft.
 
         in_reply_to : typing.Optional[DraftInReplyTo]
 
@@ -570,6 +580,7 @@ class AsyncDraftsClient:
             subject=subject,
             text=text,
             html=html,
+            attachments=attachments,
             in_reply_to=in_reply_to,
             send_at=send_at,
             client_id=client_id,

@@ -3,6 +3,7 @@
 import typing
 
 import pydantic
+from ...attachments.types.send_attachment import SendAttachment
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from .draft_bcc import DraftBcc
@@ -27,6 +28,11 @@ class CreateDraftRequest(UncheckedBaseModel):
     subject: typing.Optional[DraftSubject] = None
     text: typing.Optional[DraftText] = None
     html: typing.Optional[DraftHtml] = None
+    attachments: typing.Optional[typing.List[SendAttachment]] = pydantic.Field(default=None)
+    """
+    Attachments to include in draft.
+    """
+
     in_reply_to: typing.Optional[DraftInReplyTo] = None
     send_at: typing.Optional[DraftSendAt] = None
     client_id: typing.Optional[DraftClientId] = None

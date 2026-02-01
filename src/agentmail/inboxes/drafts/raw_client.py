@@ -3,12 +3,14 @@
 import typing
 from json.decoder import JSONDecodeError
 
+from ...attachments.types.send_attachment import SendAttachment
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.datetime_utils import serialize_datetime
 from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.request_options import RequestOptions
+from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from ...drafts.types.draft import Draft
 from ...drafts.types.draft_bcc import DraftBcc
@@ -183,6 +185,7 @@ class RawDraftsClient:
         subject: typing.Optional[DraftSubject] = OMIT,
         text: typing.Optional[DraftText] = OMIT,
         html: typing.Optional[DraftHtml] = OMIT,
+        attachments: typing.Optional[typing.Sequence[SendAttachment]] = OMIT,
         in_reply_to: typing.Optional[DraftInReplyTo] = OMIT,
         send_at: typing.Optional[DraftSendAt] = OMIT,
         client_id: typing.Optional[DraftClientId] = OMIT,
@@ -208,6 +211,9 @@ class RawDraftsClient:
         text : typing.Optional[DraftText]
 
         html : typing.Optional[DraftHtml]
+
+        attachments : typing.Optional[typing.Sequence[SendAttachment]]
+            Attachments to include in draft.
 
         in_reply_to : typing.Optional[DraftInReplyTo]
 
@@ -235,6 +241,9 @@ class RawDraftsClient:
                 "subject": subject,
                 "text": text,
                 "html": html,
+                "attachments": convert_and_respect_annotation_metadata(
+                    object_=attachments, annotation=typing.Sequence[SendAttachment], direction="write"
+                ),
                 "in_reply_to": in_reply_to,
                 "send_at": send_at,
                 "client_id": client_id,
@@ -628,6 +637,7 @@ class AsyncRawDraftsClient:
         subject: typing.Optional[DraftSubject] = OMIT,
         text: typing.Optional[DraftText] = OMIT,
         html: typing.Optional[DraftHtml] = OMIT,
+        attachments: typing.Optional[typing.Sequence[SendAttachment]] = OMIT,
         in_reply_to: typing.Optional[DraftInReplyTo] = OMIT,
         send_at: typing.Optional[DraftSendAt] = OMIT,
         client_id: typing.Optional[DraftClientId] = OMIT,
@@ -653,6 +663,9 @@ class AsyncRawDraftsClient:
         text : typing.Optional[DraftText]
 
         html : typing.Optional[DraftHtml]
+
+        attachments : typing.Optional[typing.Sequence[SendAttachment]]
+            Attachments to include in draft.
 
         in_reply_to : typing.Optional[DraftInReplyTo]
 
@@ -680,6 +693,9 @@ class AsyncRawDraftsClient:
                 "subject": subject,
                 "text": text,
                 "html": html,
+                "attachments": convert_and_respect_annotation_metadata(
+                    object_=attachments, annotation=typing.Sequence[SendAttachment], direction="write"
+                ),
                 "in_reply_to": in_reply_to,
                 "send_at": send_at,
                 "client_id": client_id,

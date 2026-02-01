@@ -1838,6 +1838,14 @@ client.inboxes.drafts.create(
 <dl>
 <dd>
 
+**attachments:** `typing.Optional[typing.Sequence[SendAttachment]]` — Attachments to include in draft.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **in_reply_to:** `typing.Optional[DraftInReplyTo]` 
     
 </dd>

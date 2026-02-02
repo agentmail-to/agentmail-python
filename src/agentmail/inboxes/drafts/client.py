@@ -2,6 +2,8 @@
 
 import typing
 
+from ...attachments.types.attachment_id import AttachmentId
+from ...attachments.types.attachment_response import AttachmentResponse
 from ...attachments.types.send_attachment import SendAttachment
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
@@ -137,6 +139,46 @@ class DraftsClient:
         )
         """
         _response = self._raw_client.get(inbox_id, draft_id, request_options=request_options)
+        return _response.data
+
+    def get_attachment(
+        self,
+        inbox_id: InboxId,
+        draft_id: DraftId,
+        attachment_id: AttachmentId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AttachmentResponse:
+        """
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        draft_id : DraftId
+
+        attachment_id : AttachmentId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AttachmentResponse
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.inboxes.drafts.get_attachment(
+            inbox_id="inbox_id",
+            draft_id="draft_id",
+            attachment_id="attachment_id",
+        )
+        """
+        _response = self._raw_client.get_attachment(inbox_id, draft_id, attachment_id, request_options=request_options)
         return _response.data
 
     def create(
@@ -494,6 +536,56 @@ class AsyncDraftsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get(inbox_id, draft_id, request_options=request_options)
+        return _response.data
+
+    async def get_attachment(
+        self,
+        inbox_id: InboxId,
+        draft_id: DraftId,
+        attachment_id: AttachmentId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AttachmentResponse:
+        """
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        draft_id : DraftId
+
+        attachment_id : AttachmentId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AttachmentResponse
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.inboxes.drafts.get_attachment(
+                inbox_id="inbox_id",
+                draft_id="draft_id",
+                attachment_id="attachment_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_attachment(
+            inbox_id, draft_id, attachment_id, request_options=request_options
+        )
         return _response.data
 
     async def create(

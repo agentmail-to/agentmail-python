@@ -3,6 +3,8 @@
 import typing
 from json.decoder import JSONDecodeError
 
+from ...attachments.types.attachment_id import AttachmentId
+from ...attachments.types.attachment_response import AttachmentResponse
 from ...attachments.types.send_attachment import SendAttachment
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
@@ -153,6 +155,62 @@ class RawDraftsClient:
                     Draft,
                     construct_type(
                         type_=Draft,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def get_attachment(
+        self,
+        inbox_id: InboxId,
+        draft_id: DraftId,
+        attachment_id: AttachmentId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[AttachmentResponse]:
+        """
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        draft_id : DraftId
+
+        attachment_id : AttachmentId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[AttachmentResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/drafts/{jsonable_encoder(draft_id)}/attachments/{jsonable_encoder(attachment_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    AttachmentResponse,
+                    construct_type(
+                        type_=AttachmentResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -605,6 +663,62 @@ class AsyncRawDraftsClient:
                     Draft,
                     construct_type(
                         type_=Draft,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get_attachment(
+        self,
+        inbox_id: InboxId,
+        draft_id: DraftId,
+        attachment_id: AttachmentId,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[AttachmentResponse]:
+        """
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        draft_id : DraftId
+
+        attachment_id : AttachmentId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[AttachmentResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/drafts/{jsonable_encoder(draft_id)}/attachments/{jsonable_encoder(attachment_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    AttachmentResponse,
+                    construct_type(
+                        type_=AttachmentResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

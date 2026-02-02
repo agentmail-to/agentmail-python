@@ -1560,6 +1560,71 @@ client.drafts.get(
 </dl>
 </details>
 
+<details><summary><code>client.drafts.<a href="src/agentmail/drafts/client.py">get_attachment</a>(...) -&gt; AsyncHttpResponse[AttachmentResponse]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.drafts.get_attachment(
+    draft_id="draft_id",
+    attachment_id="attachment_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**draft_id:** `DraftId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**attachment_id:** `AttachmentId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inboxes Drafts
 <details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListDraftsResponse]</code></summary>
 <dl>
@@ -1711,6 +1776,80 @@ client.inboxes.drafts.get(
 <dd>
 
 **draft_id:** `DraftId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">get_attachment</a>(...) -&gt; AsyncHttpResponse[AttachmentResponse]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.inboxes.drafts.get_attachment(
+    inbox_id="inbox_id",
+    draft_id="draft_id",
+    attachment_id="attachment_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**draft_id:** `DraftId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**attachment_id:** `AttachmentId` 
     
 </dd>
 </dl>
@@ -4004,6 +4143,80 @@ client.pods.drafts.get(
 <dd>
 
 **draft_id:** `DraftId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.drafts.<a href="src/agentmail/pods/drafts/client.py">get_attachment</a>(...) -&gt; AsyncHttpResponse[AttachmentResponse]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.pods.drafts.get_attachment(
+    pod_id="pod_id",
+    draft_id="draft_id",
+    attachment_id="attachment_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**draft_id:** `DraftId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**attachment_id:** `AttachmentId` 
     
 </dd>
 </dl>

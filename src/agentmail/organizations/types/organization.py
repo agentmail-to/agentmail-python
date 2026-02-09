@@ -35,6 +35,31 @@ class Organization(UncheckedBaseModel):
     Maximum number of domains allowed.
     """
 
+    billing_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Provider-agnostic billing customer ID.
+    """
+
+    billing_type: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Billing provider type (e.g. "stripe").
+    """
+
+    billing_subscription_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Active billing subscription ID.
+    """
+
+    authentication_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Provider-agnostic authentication ID.
+    """
+
+    authentication_type: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Authentication provider type.
+    """
+
     updated_at: dt.datetime = pydantic.Field()
     """
     Time at which organization was last updated.

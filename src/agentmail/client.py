@@ -34,7 +34,7 @@ class AgentMail:
 
 
 
-        Defaults to AgentMailEnvironment.PRODUCTION
+        Defaults to AgentMailEnvironment.PROD
 
 
 
@@ -63,7 +63,7 @@ class AgentMail:
     def __init__(
         self,
         *,
-        environment: AgentMailEnvironment = AgentMailEnvironment.PRODUCTION,
+        environment: AgentMailEnvironment = AgentMailEnvironment.PROD,
         api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("AGENTMAIL_API_KEY"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,
@@ -191,7 +191,7 @@ class AsyncAgentMail:
 
 
 
-        Defaults to AgentMailEnvironment.PRODUCTION
+        Defaults to AgentMailEnvironment.PROD
 
 
 
@@ -220,7 +220,7 @@ class AsyncAgentMail:
     def __init__(
         self,
         *,
-        environment: AgentMailEnvironment = AgentMailEnvironment.PRODUCTION,
+        environment: AgentMailEnvironment = AgentMailEnvironment.PROD,
         api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = os.getenv("AGENTMAIL_API_KEY"),
         headers: typing.Optional[typing.Dict[str, str]] = None,
         timeout: typing.Optional[float] = None,

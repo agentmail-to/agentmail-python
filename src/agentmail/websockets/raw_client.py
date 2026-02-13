@@ -26,13 +26,13 @@ class RawWebsocketsClient:
 
     @contextmanager
     def connect(
-        self, *, auth_token: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+        self, *, api_key: str, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Iterator[WebsocketsSocketClient]:
         """
         Parameters
         ----------
-        auth_token : typing.Optional[str]
-            Your API key. Required if Authorization header is not set.
+        api_key : str
+            Your API key.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -46,7 +46,7 @@ class RawWebsocketsClient:
             jsonable_encoder(
                 remove_none_from_dict(
                     {
-                        "auth_token": auth_token,
+                        "api_key": api_key,
                         **(
                             request_options.get("additional_query_parameters", {}) or {}
                             if request_options is not None
@@ -85,13 +85,13 @@ class AsyncRawWebsocketsClient:
 
     @asynccontextmanager
     async def connect(
-        self, *, auth_token: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+        self, *, api_key: str, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.AsyncIterator[AsyncWebsocketsSocketClient]:
         """
         Parameters
         ----------
-        auth_token : typing.Optional[str]
-            Your API key. Required if Authorization header is not set.
+        api_key : str
+            Your API key.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -105,7 +105,7 @@ class AsyncRawWebsocketsClient:
             jsonable_encoder(
                 remove_none_from_dict(
                     {
-                        "auth_token": auth_token,
+                        "api_key": api_key,
                         **(
                             request_options.get("additional_query_parameters", {}) or {}
                             if request_options is not None

@@ -26,13 +26,13 @@ class RawWebsocketsClient:
 
     @contextmanager
     def connect(
-        self, *, api_key: str, request_options: typing.Optional[RequestOptions] = None
+        self, *, api_key: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Iterator[WebsocketsSocketClient]:
         """
         Parameters
         ----------
-        api_key : str
-            Your API key.
+        api_key : typing.Optional[str]
+            Your API key. Required if Authorization header is not set.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -85,13 +85,13 @@ class AsyncRawWebsocketsClient:
 
     @asynccontextmanager
     async def connect(
-        self, *, api_key: str, request_options: typing.Optional[RequestOptions] = None
+        self, *, api_key: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.AsyncIterator[AsyncWebsocketsSocketClient]:
         """
         Parameters
         ----------
-        api_key : str
-            Your API key.
+        api_key : typing.Optional[str]
+            Your API key. Required if Authorization header is not set.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

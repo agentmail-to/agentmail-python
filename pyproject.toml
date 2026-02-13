@@ -7,6 +7,7 @@ name = "agentmail"
 version = "0.2.15"
 description = ""
 readme = "README.md"
+license = "MIT"
 authors = []
 keywords = []
 

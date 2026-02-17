@@ -9,5 +9,5 @@
     },
     "should_generate_websocket_clients": true
   },
-  "sdkVersion": "0.2.16"
+  "sdkVersion": "0.2.17"
 }

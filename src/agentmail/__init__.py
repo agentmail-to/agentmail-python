@@ -11,6 +11,7 @@ if typing.TYPE_CHECKING:
         Ascending,
         Before,
         Count,
+        ErrorMessage,
         ErrorName,
         ErrorResponse,
         IncludeSpam,
@@ -186,7 +187,7 @@ if typing.TYPE_CHECKING:
         ThreadUpdatedAt,
     )
     from .version import __version__
-    from .websockets import Subscribe, Subscribed
+    from .websockets import Error, Subscribe, Subscribed
 _dynamic_imports: typing.Dict[str, str] = {
     "Addresses": ".messages",
     "After": ".types",
@@ -238,6 +239,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DraftText": ".drafts",
     "DraftTo": ".drafts",
     "DraftUpdatedAt": ".drafts",
+    "Error": ".websockets",
+    "ErrorMessage": ".types",
     "ErrorName": ".types",
     "ErrorResponse": ".types",
     "EventId": ".events",
@@ -428,6 +431,8 @@ __all__ = [
     "DraftText",
     "DraftTo",
     "DraftUpdatedAt",
+    "Error",
+    "ErrorMessage",
     "ErrorName",
     "ErrorResponse",
     "EventId",

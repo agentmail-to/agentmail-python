@@ -10,6 +10,7 @@ if typing.TYPE_CHECKING:
     from .ascending import Ascending
     from .before import Before
     from .count import Count
+    from .error_message import ErrorMessage
     from .error_name import ErrorName
     from .error_response import ErrorResponse
     from .include_spam import IncludeSpam
@@ -23,6 +24,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Ascending": ".ascending",
     "Before": ".before",
     "Count": ".count",
+    "ErrorMessage": ".error_message",
     "ErrorName": ".error_name",
     "ErrorResponse": ".error_response",
     "IncludeSpam": ".include_spam",
@@ -60,6 +62,7 @@ __all__ = [
     "Ascending",
     "Before",
     "Count",
+    "ErrorMessage",
     "ErrorName",
     "ErrorResponse",
     "IncludeSpam",

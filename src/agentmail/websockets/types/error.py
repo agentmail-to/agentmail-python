@@ -3,13 +3,14 @@
 import typing
 
 import pydantic
-from ..core.pydantic_utilities import IS_PYDANTIC_V2
-from ..core.unchecked_base_model import UncheckedBaseModel
-from .error_message import ErrorMessage
-from .error_name import ErrorName
+from ...core.pydantic_utilities import IS_PYDANTIC_V2
+from ...core.unchecked_base_model import UncheckedBaseModel
+from ...types.error_message import ErrorMessage
+from ...types.error_name import ErrorName
 
 
-class ErrorResponse(UncheckedBaseModel):
+class Error(UncheckedBaseModel):
+    type: typing.Literal["error"] = "error"
     name: ErrorName
     message: ErrorMessage
 

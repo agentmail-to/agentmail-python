@@ -1,5 +1,5 @@
 {
-  "cliVersion": "3.54.1",
+  "cliVersion": "3.78.0",
   "generatorName": "fernapi/fern-python-sdk",
   "generatorVersion": "4.54.2",
   "generatorConfig": {
@@ -9,5 +9,5 @@
     },
     "should_generate_websocket_clients": true
   },
-  "sdkVersion": "0.2.15"
+  "sdkVersion": "0.2.16"
 }

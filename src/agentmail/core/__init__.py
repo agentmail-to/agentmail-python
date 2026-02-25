@@ -14,6 +14,7 @@ if typing.TYPE_CHECKING:
     from .http_client import AsyncHttpClient, HttpClient
     from .http_response import AsyncHttpResponse, HttpResponse
     from .jsonable_encoder import jsonable_encoder
+    from .logging import ConsoleLogger, ILogger, LogConfig, LogLevel, Logger, create_logger
     from .pydantic_utilities import (
         IS_PYDANTIC_V2,
         UniversalBaseModel,
@@ -28,19 +29,26 @@ if typing.TYPE_CHECKING:
     from .request_options import RequestOptions
     from .serialization import FieldMetadata, convert_and_respect_annotation_metadata
     from .unchecked_base_model import UncheckedBaseModel, UnionMetadata, construct_type
+    from .websocket_compat import InvalidWebSocketStatus, get_status_code
 _dynamic_imports: typing.Dict[str, str] = {
     "ApiError": ".api_error",
     "AsyncClientWrapper": ".client_wrapper",
     "AsyncHttpClient": ".http_client",
     "AsyncHttpResponse": ".http_response",
     "BaseClientWrapper": ".client_wrapper",
+    "ConsoleLogger": ".logging",
     "EventEmitterMixin": ".events",
     "EventType": ".events",
     "FieldMetadata": ".serialization",
     "File": ".file",
     "HttpClient": ".http_client",
     "HttpResponse": ".http_response",
+    "ILogger": ".logging",
     "IS_PYDANTIC_V2": ".pydantic_utilities",
+    "InvalidWebSocketStatus": ".websocket_compat",
+    "LogConfig": ".logging",
+    "LogLevel": ".logging",
+    "Logger": ".logging",
     "RequestOptions": ".request_options",
     "SyncClientWrapper": ".client_wrapper",
     "UncheckedBaseModel": ".unchecked_base_model",
@@ -50,7 +58,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "construct_type": ".unchecked_base_model",
     "convert_and_respect_annotation_metadata": ".serialization",
     "convert_file_dict_to_httpx_tuples": ".file",
+    "create_logger": ".logging",
     "encode_query": ".query_encoder",
+    "get_status_code": ".websocket_compat",
     "jsonable_encoder": ".jsonable_encoder",
     "parse_obj_as": ".pydantic_utilities",
     "remove_none_from_dict": ".remove_none_from_dict",
@@ -89,13 +99,19 @@ __all__ = [
     "AsyncHttpClient",
     "AsyncHttpResponse",
     "BaseClientWrapper",
+    "ConsoleLogger",
     "EventEmitterMixin",
     "EventType",
     "FieldMetadata",
     "File",
     "HttpClient",
     "HttpResponse",
+    "ILogger",
     "IS_PYDANTIC_V2",
+    "InvalidWebSocketStatus",
+    "LogConfig",
+    "LogLevel",
+    "Logger",
     "RequestOptions",
     "SyncClientWrapper",
     "UncheckedBaseModel",
@@ -105,7 +121,9 @@ __all__ = [
     "construct_type",
     "convert_and_respect_annotation_metadata",
     "convert_file_dict_to_httpx_tuples",
+    "create_logger",
     "encode_query",
+    "get_status_code",
     "jsonable_encoder",
     "parse_obj_as",
     "remove_none_from_dict",

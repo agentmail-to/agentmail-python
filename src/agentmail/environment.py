@@ -6,6 +6,7 @@ from __future__ import annotations
 class AgentMailEnvironment:
     PROD: AgentMailEnvironment
     PROD_X_402: AgentMailEnvironment
+    PROD_MPP: AgentMailEnvironment
     EU_PROD: AgentMailEnvironment
 
     def __init__(self, *, http: str, websockets: str):
@@ -16,5 +17,8 @@ class AgentMailEnvironment:
 AgentMailEnvironment.PROD = AgentMailEnvironment(http="https://api.agentmail.to", websockets="wss://ws.agentmail.to")
 AgentMailEnvironment.PROD_X_402 = AgentMailEnvironment(
     http="https://x402.api.agentmail.to", websockets="wss://x402.ws.agentmail.to"
+)
+AgentMailEnvironment.PROD_MPP = AgentMailEnvironment(
+    http="https://mpp.api.agentmail.to", websockets="wss://mpp.ws.agentmail.to"
 )
 AgentMailEnvironment.EU_PROD = AgentMailEnvironment(http="https://api.agentmail.eu", websockets="wss://ws.agentmail.eu")

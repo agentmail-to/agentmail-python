@@ -2397,6 +2397,14 @@ client.inboxes.messages.list(
 <dl>
 <dd>
 
+**include_blocked:** `typing.Optional[IncludeBlocked]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -3423,6 +3431,14 @@ client.inboxes.threads.list(
 <dl>
 <dd>
 
+**include_blocked:** `typing.Optional[IncludeBlocked]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -3620,6 +3636,318 @@ client.inboxes.threads.delete(
 <dd>
 
 **thread_id:** `ThreadId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Lists
+<details><summary><code>client.lists.<a href="src/agentmail/lists/client.py">create</a>(...) -&gt; AsyncHttpResponse[ListEntry]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.lists.create(
+    direction="send",
+    type="allow",
+    entry="entry",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**direction:** `Direction` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `ListType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**entry:** `str` — Email address or domain to add.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reason:** `typing.Optional[str]` — Reason for adding the entry.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.lists.<a href="src/agentmail/lists/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListListEntriesResponse]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.lists.list(
+    direction="send",
+    type="allow",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**direction:** `Direction` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `ListType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[Limit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.lists.<a href="src/agentmail/lists/client.py">get</a>(...) -&gt; AsyncHttpResponse[ListEntry]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.lists.get(
+    direction="send",
+    type="allow",
+    entry="entry",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**direction:** `Direction` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `ListType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**entry:** `str` — Email address or domain.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.lists.<a href="src/agentmail/lists/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.lists.delete(
+    direction="send",
+    type="allow",
+    entry="entry",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**direction:** `Direction` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `ListType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**entry:** `str` — Email address or domain.
     
 </dd>
 </dl>
@@ -4527,6 +4855,354 @@ client.pods.inboxes.delete(
 </dl>
 </details>
 
+## Pods Lists
+<details><summary><code>client.pods.lists.<a href="src/agentmail/pods/lists/client.py">create</a>(...) -&gt; AsyncHttpResponse[PodListEntry]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.pods.lists.create(
+    pod_id="pod_id",
+    direction="send",
+    type="allow",
+    entry="entry",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**direction:** `Direction` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `ListType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**entry:** `str` — Email address or domain to add.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reason:** `typing.Optional[str]` — Reason for adding the entry.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.lists.<a href="src/agentmail/pods/lists/client.py">list</a>(...) -&gt; AsyncHttpResponse[PodListListEntriesResponse]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.pods.lists.list(
+    pod_id="pod_id",
+    direction="send",
+    type="allow",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**direction:** `Direction` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `ListType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[Limit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.lists.<a href="src/agentmail/pods/lists/client.py">get</a>(...) -&gt; AsyncHttpResponse[PodListEntry]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.pods.lists.get(
+    pod_id="pod_id",
+    direction="send",
+    type="allow",
+    entry="entry",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**direction:** `Direction` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `ListType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**entry:** `str` — Email address or domain.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.lists.<a href="src/agentmail/pods/lists/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.pods.lists.delete(
+    pod_id="pod_id",
+    direction="send",
+    type="allow",
+    entry="entry",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**direction:** `Direction` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `ListType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**entry:** `str` — Email address or domain.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Pods Threads
 <details><summary><code>client.pods.threads.<a href="src/agentmail/pods/threads/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListThreadsResponse]</code></summary>
 <dl>
@@ -4621,6 +5297,14 @@ client.pods.threads.list(
 <dd>
 
 **include_spam:** `typing.Optional[IncludeSpam]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_blocked:** `typing.Optional[IncludeBlocked]` 
     
 </dd>
 </dl>
@@ -4863,6 +5547,14 @@ client.threads.list()
 <dd>
 
 **include_spam:** `typing.Optional[IncludeSpam]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_blocked:** `typing.Optional[IncludeBlocked]` 
     
 </dd>
 </dl>

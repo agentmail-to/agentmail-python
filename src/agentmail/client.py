@@ -16,6 +16,7 @@ if typing.TYPE_CHECKING:
     from .domains.client import AsyncDomainsClient, DomainsClient
     from .drafts.client import AsyncDraftsClient, DraftsClient
     from .inboxes.client import AsyncInboxesClient, InboxesClient
+    from .lists.client import AsyncListsClient, ListsClient
     from .metrics.client import AsyncMetricsClient, MetricsClient
     from .organizations.client import AsyncOrganizationsClient, OrganizationsClient
     from .pods.client import AsyncPodsClient, PodsClient
@@ -100,6 +101,7 @@ class AgentMail:
         self._api_keys: typing.Optional[ApiKeysClient] = None
         self._domains: typing.Optional[DomainsClient] = None
         self._drafts: typing.Optional[DraftsClient] = None
+        self._lists: typing.Optional[ListsClient] = None
         self._metrics: typing.Optional[MetricsClient] = None
         self._organizations: typing.Optional[OrganizationsClient] = None
         self._threads: typing.Optional[ThreadsClient] = None
@@ -152,6 +154,14 @@ class AgentMail:
 
             self._drafts = DraftsClient(client_wrapper=self._client_wrapper)
         return self._drafts
+
+    @property
+    def lists(self):
+        if self._lists is None:
+            from .lists.client import ListsClient  # noqa: E402
+
+            self._lists = ListsClient(client_wrapper=self._client_wrapper)
+        return self._lists
 
     @property
     def metrics(self):
@@ -262,6 +272,7 @@ class AsyncAgentMail:
         self._api_keys: typing.Optional[AsyncApiKeysClient] = None
         self._domains: typing.Optional[AsyncDomainsClient] = None
         self._drafts: typing.Optional[AsyncDraftsClient] = None
+        self._lists: typing.Optional[AsyncListsClient] = None
         self._metrics: typing.Optional[AsyncMetricsClient] = None
         self._organizations: typing.Optional[AsyncOrganizationsClient] = None
         self._threads: typing.Optional[AsyncThreadsClient] = None
@@ -314,6 +325,14 @@ class AsyncAgentMail:
 
             self._drafts = AsyncDraftsClient(client_wrapper=self._client_wrapper)
         return self._drafts
+
+    @property
+    def lists(self):
+        if self._lists is None:
+            from .lists.client import AsyncListsClient  # noqa: E402
+
+            self._lists = AsyncListsClient(client_wrapper=self._client_wrapper)
+        return self._lists
 
     @property
     def metrics(self):

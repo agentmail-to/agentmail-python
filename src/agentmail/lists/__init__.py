@@ -6,20 +6,27 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import ClientId, CreatePodRequest, ListPodsResponse, Name, Pod, PodId
-    from . import domains, drafts, inboxes, lists, threads
+    from .types import (
+        CreateListEntryRequest,
+        Direction,
+        EntryType,
+        ListEntry,
+        ListEntryBase,
+        ListListEntriesResponse,
+        ListType,
+        PodListEntry,
+        PodListListEntriesResponse,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
-    "ClientId": ".types",
-    "CreatePodRequest": ".types",
-    "ListPodsResponse": ".types",
-    "Name": ".types",
-    "Pod": ".types",
-    "PodId": ".types",
-    "domains": ".domains",
-    "drafts": ".drafts",
-    "inboxes": ".inboxes",
-    "lists": ".lists",
-    "threads": ".threads",
+    "CreateListEntryRequest": ".types",
+    "Direction": ".types",
+    "EntryType": ".types",
+    "ListEntry": ".types",
+    "ListEntryBase": ".types",
+    "ListListEntriesResponse": ".types",
+    "ListType": ".types",
+    "PodListEntry": ".types",
+    "PodListListEntriesResponse": ".types",
 }
 
 
@@ -45,15 +52,13 @@ def __dir__():
 
 
 __all__ = [
-    "ClientId",
-    "CreatePodRequest",
-    "ListPodsResponse",
-    "Name",
-    "Pod",
-    "PodId",
-    "domains",
-    "drafts",
-    "inboxes",
-    "lists",
-    "threads",
+    "CreateListEntryRequest",
+    "Direction",
+    "EntryType",
+    "ListEntry",
+    "ListEntryBase",
+    "ListListEntriesResponse",
+    "ListType",
+    "PodListEntry",
+    "PodListListEntriesResponse",
 ]

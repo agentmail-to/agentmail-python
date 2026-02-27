@@ -19,6 +19,7 @@ if typing.TYPE_CHECKING:
     from .domains.client import AsyncDomainsClient, DomainsClient
     from .drafts.client import AsyncDraftsClient, DraftsClient
     from .inboxes.client import AsyncInboxesClient, InboxesClient
+    from .lists.client import AsyncListsClient, ListsClient
     from .threads.client import AsyncThreadsClient, ThreadsClient
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -32,6 +33,7 @@ class PodsClient:
         self._threads: typing.Optional[ThreadsClient] = None
         self._drafts: typing.Optional[DraftsClient] = None
         self._domains: typing.Optional[DomainsClient] = None
+        self._lists: typing.Optional[ListsClient] = None
 
     @property
     def with_raw_response(self) -> RawPodsClient:
@@ -196,6 +198,14 @@ class PodsClient:
             self._domains = DomainsClient(client_wrapper=self._client_wrapper)
         return self._domains
 
+    @property
+    def lists(self):
+        if self._lists is None:
+            from .lists.client import ListsClient  # noqa: E402
+
+            self._lists = ListsClient(client_wrapper=self._client_wrapper)
+        return self._lists
+
 
 class AsyncPodsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -205,6 +215,7 @@ class AsyncPodsClient:
         self._threads: typing.Optional[AsyncThreadsClient] = None
         self._drafts: typing.Optional[AsyncDraftsClient] = None
         self._domains: typing.Optional[AsyncDomainsClient] = None
+        self._lists: typing.Optional[AsyncListsClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawPodsClient:
@@ -400,3 +411,11 @@ class AsyncPodsClient:
 
             self._domains = AsyncDomainsClient(client_wrapper=self._client_wrapper)
         return self._domains
+
+    @property
+    def lists(self):
+        if self._lists is None:
+            from .lists.client import AsyncListsClient  # noqa: E402
+
+            self._lists = AsyncListsClient(client_wrapper=self._client_wrapper)
+        return self._lists

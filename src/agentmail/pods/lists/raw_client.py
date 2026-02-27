@@ -3,194 +3,186 @@
 import typing
 from json.decoder import JSONDecodeError
 
-from ...attachments.types.attachment_id import AttachmentId
-from ...attachments.types.attachment_response import AttachmentResponse
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ...core.datetime_utils import serialize_datetime
 from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...errors.not_found_error import NotFoundError
-from ...threads.types.list_threads_response import ListThreadsResponse
-from ...threads.types.thread import Thread
-from ...threads.types.thread_id import ThreadId
-from ...types.after import After
-from ...types.ascending import Ascending
-from ...types.before import Before
+from ...errors.validation_error import ValidationError
+from ...lists.types.direction import Direction
+from ...lists.types.list_type import ListType
+from ...lists.types.pod_list_entry import PodListEntry
+from ...lists.types.pod_list_list_entries_response import PodListListEntriesResponse
 from ...types.error_response import ErrorResponse
-from ...types.include_blocked import IncludeBlocked
-from ...types.include_spam import IncludeSpam
-from ...types.labels import Labels
 from ...types.limit import Limit
 from ...types.page_token import PageToken
-from ..types.inbox_id import InboxId
+from ...types.validation_error_response import ValidationErrorResponse
+from ..types.pod_id import PodId
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
-class RawThreadsClient:
+class RawListsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list(
+    def create(
         self,
-        inbox_id: InboxId,
+        pod_id: PodId,
+        direction: Direction,
+        type: ListType,
         *,
-        limit: typing.Optional[Limit] = None,
-        page_token: typing.Optional[PageToken] = None,
-        labels: typing.Optional[Labels] = None,
-        before: typing.Optional[Before] = None,
-        after: typing.Optional[After] = None,
-        ascending: typing.Optional[Ascending] = None,
-        include_spam: typing.Optional[IncludeSpam] = None,
-        include_blocked: typing.Optional[IncludeBlocked] = None,
+        entry: str,
+        reason: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[ListThreadsResponse]:
+    ) -> HttpResponse[PodListEntry]:
         """
         Parameters
         ----------
-        inbox_id : InboxId
+        pod_id : PodId
 
-        limit : typing.Optional[Limit]
+        direction : Direction
 
-        page_token : typing.Optional[PageToken]
+        type : ListType
 
-        labels : typing.Optional[Labels]
+        entry : str
+            Email address or domain to add.
 
-        before : typing.Optional[Before]
-
-        after : typing.Optional[After]
-
-        ascending : typing.Optional[Ascending]
-
-        include_spam : typing.Optional[IncludeSpam]
-
-        include_blocked : typing.Optional[IncludeBlocked]
+        reason : typing.Optional[str]
+            Reason for adding the entry.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[ListThreadsResponse]
+        HttpResponse[PodListEntry]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads",
+            f"v0/pods/{jsonable_encoder(pod_id)}/lists/{jsonable_encoder(direction)}/{jsonable_encoder(type)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "entry": entry,
+                "reason": reason,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    PodListEntry,
+                    construct_type(
+                        type_=PodListEntry,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def list(
+        self,
+        pod_id: PodId,
+        direction: Direction,
+        type: ListType,
+        *,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[PodListListEntriesResponse]:
+        """
+        Parameters
+        ----------
+        pod_id : PodId
+
+        direction : Direction
+
+        type : ListType
+
+        limit : typing.Optional[Limit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[PodListListEntriesResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/pods/{jsonable_encoder(pod_id)}/lists/{jsonable_encoder(direction)}/{jsonable_encoder(type)}",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
                 "limit": limit,
                 "page_token": page_token,
-                "labels": labels,
-                "before": serialize_datetime(before) if before is not None else None,
-                "after": serialize_datetime(after) if after is not None else None,
-                "ascending": ascending,
-                "include_spam": include_spam,
-                "include_blocked": include_blocked,
             },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ListThreadsResponse,
+                    PodListListEntriesResponse,
                     construct_type(
-                        type_=ListThreadsResponse,  # type: ignore
+                        type_=PodListListEntriesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        construct_type(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
-        self, inbox_id: InboxId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[Thread]:
-        """
-        Parameters
-        ----------
-        inbox_id : InboxId
-
-        thread_id : ThreadId
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[Thread]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads/{jsonable_encoder(thread_id)}",
-            base_url=self._client_wrapper.get_environment().http,
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    Thread,
-                    construct_type(
-                        type_=Thread,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        construct_type(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def get_attachment(
         self,
-        inbox_id: InboxId,
-        thread_id: ThreadId,
-        attachment_id: AttachmentId,
+        pod_id: PodId,
+        direction: Direction,
+        type: ListType,
+        entry: str,
         *,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[AttachmentResponse]:
+    ) -> HttpResponse[PodListEntry]:
         """
         Parameters
         ----------
-        inbox_id : InboxId
+        pod_id : PodId
 
-        thread_id : ThreadId
+        direction : Direction
 
-        attachment_id : AttachmentId
+        type : ListType
+
+        entry : str
+            Email address or domain.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[AttachmentResponse]
+        HttpResponse[PodListEntry]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads/{jsonable_encoder(thread_id)}/attachments/{jsonable_encoder(attachment_id)}",
+            f"v0/pods/{jsonable_encoder(pod_id)}/lists/{jsonable_encoder(direction)}/{jsonable_encoder(type)}/{jsonable_encoder(entry)}",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
@@ -198,9 +190,9 @@ class RawThreadsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    AttachmentResponse,
+                    PodListEntry,
                     construct_type(
-                        type_=AttachmentResponse,  # type: ignore
+                        type_=PodListEntry,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -222,14 +214,25 @@ class RawThreadsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
-        self, inbox_id: InboxId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        pod_id: PodId,
+        direction: Direction,
+        type: ListType,
+        entry: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[None]:
         """
         Parameters
         ----------
-        inbox_id : InboxId
+        pod_id : PodId
 
-        thread_id : ThreadId
+        direction : Direction
+
+        type : ListType
+
+        entry : str
+            Email address or domain.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -239,7 +242,7 @@ class RawThreadsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads/{jsonable_encoder(thread_id)}",
+            f"v0/pods/{jsonable_encoder(pod_id)}/lists/{jsonable_encoder(direction)}/{jsonable_encoder(type)}/{jsonable_encoder(entry)}",
             base_url=self._client_wrapper.get_environment().http,
             method="DELETE",
             request_options=request_options,
@@ -264,169 +267,164 @@ class RawThreadsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
-class AsyncRawThreadsClient:
+class AsyncRawListsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def list(
+    async def create(
         self,
-        inbox_id: InboxId,
+        pod_id: PodId,
+        direction: Direction,
+        type: ListType,
         *,
-        limit: typing.Optional[Limit] = None,
-        page_token: typing.Optional[PageToken] = None,
-        labels: typing.Optional[Labels] = None,
-        before: typing.Optional[Before] = None,
-        after: typing.Optional[After] = None,
-        ascending: typing.Optional[Ascending] = None,
-        include_spam: typing.Optional[IncludeSpam] = None,
-        include_blocked: typing.Optional[IncludeBlocked] = None,
+        entry: str,
+        reason: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[ListThreadsResponse]:
+    ) -> AsyncHttpResponse[PodListEntry]:
         """
         Parameters
         ----------
-        inbox_id : InboxId
+        pod_id : PodId
 
-        limit : typing.Optional[Limit]
+        direction : Direction
 
-        page_token : typing.Optional[PageToken]
+        type : ListType
 
-        labels : typing.Optional[Labels]
+        entry : str
+            Email address or domain to add.
 
-        before : typing.Optional[Before]
-
-        after : typing.Optional[After]
-
-        ascending : typing.Optional[Ascending]
-
-        include_spam : typing.Optional[IncludeSpam]
-
-        include_blocked : typing.Optional[IncludeBlocked]
+        reason : typing.Optional[str]
+            Reason for adding the entry.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[ListThreadsResponse]
+        AsyncHttpResponse[PodListEntry]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads",
+            f"v0/pods/{jsonable_encoder(pod_id)}/lists/{jsonable_encoder(direction)}/{jsonable_encoder(type)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "entry": entry,
+                "reason": reason,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    PodListEntry,
+                    construct_type(
+                        type_=PodListEntry,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def list(
+        self,
+        pod_id: PodId,
+        direction: Direction,
+        type: ListType,
+        *,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[PodListListEntriesResponse]:
+        """
+        Parameters
+        ----------
+        pod_id : PodId
+
+        direction : Direction
+
+        type : ListType
+
+        limit : typing.Optional[Limit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[PodListListEntriesResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/pods/{jsonable_encoder(pod_id)}/lists/{jsonable_encoder(direction)}/{jsonable_encoder(type)}",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
                 "limit": limit,
                 "page_token": page_token,
-                "labels": labels,
-                "before": serialize_datetime(before) if before is not None else None,
-                "after": serialize_datetime(after) if after is not None else None,
-                "ascending": ascending,
-                "include_spam": include_spam,
-                "include_blocked": include_blocked,
             },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ListThreadsResponse,
+                    PodListListEntriesResponse,
                     construct_type(
-                        type_=ListThreadsResponse,  # type: ignore
+                        type_=PodListListEntriesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        construct_type(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self, inbox_id: InboxId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[Thread]:
-        """
-        Parameters
-        ----------
-        inbox_id : InboxId
-
-        thread_id : ThreadId
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[Thread]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads/{jsonable_encoder(thread_id)}",
-            base_url=self._client_wrapper.get_environment().http,
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    Thread,
-                    construct_type(
-                        type_=Thread,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        construct_type(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def get_attachment(
         self,
-        inbox_id: InboxId,
-        thread_id: ThreadId,
-        attachment_id: AttachmentId,
+        pod_id: PodId,
+        direction: Direction,
+        type: ListType,
+        entry: str,
         *,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[AttachmentResponse]:
+    ) -> AsyncHttpResponse[PodListEntry]:
         """
         Parameters
         ----------
-        inbox_id : InboxId
+        pod_id : PodId
 
-        thread_id : ThreadId
+        direction : Direction
 
-        attachment_id : AttachmentId
+        type : ListType
+
+        entry : str
+            Email address or domain.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[AttachmentResponse]
+        AsyncHttpResponse[PodListEntry]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads/{jsonable_encoder(thread_id)}/attachments/{jsonable_encoder(attachment_id)}",
+            f"v0/pods/{jsonable_encoder(pod_id)}/lists/{jsonable_encoder(direction)}/{jsonable_encoder(type)}/{jsonable_encoder(entry)}",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
@@ -434,9 +432,9 @@ class AsyncRawThreadsClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    AttachmentResponse,
+                    PodListEntry,
                     construct_type(
-                        type_=AttachmentResponse,  # type: ignore
+                        type_=PodListEntry,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -458,14 +456,25 @@ class AsyncRawThreadsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
-        self, inbox_id: InboxId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        pod_id: PodId,
+        direction: Direction,
+        type: ListType,
+        entry: str,
+        *,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[None]:
         """
         Parameters
         ----------
-        inbox_id : InboxId
+        pod_id : PodId
 
-        thread_id : ThreadId
+        direction : Direction
+
+        type : ListType
+
+        entry : str
+            Email address or domain.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -475,7 +484,7 @@ class AsyncRawThreadsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads/{jsonable_encoder(thread_id)}",
+            f"v0/pods/{jsonable_encoder(pod_id)}/lists/{jsonable_encoder(direction)}/{jsonable_encoder(type)}/{jsonable_encoder(entry)}",
             base_url=self._client_wrapper.get_environment().http,
             method="DELETE",
             request_options=request_options,

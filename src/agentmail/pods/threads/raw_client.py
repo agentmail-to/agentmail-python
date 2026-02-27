@@ -20,6 +20,7 @@ from ...types.after import After
 from ...types.ascending import Ascending
 from ...types.before import Before
 from ...types.error_response import ErrorResponse
+from ...types.include_blocked import IncludeBlocked
 from ...types.include_spam import IncludeSpam
 from ...types.labels import Labels
 from ...types.limit import Limit
@@ -42,6 +43,7 @@ class RawThreadsClient:
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         include_spam: typing.Optional[IncludeSpam] = None,
+        include_blocked: typing.Optional[IncludeBlocked] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListThreadsResponse]:
         """
@@ -63,6 +65,8 @@ class RawThreadsClient:
 
         include_spam : typing.Optional[IncludeSpam]
 
+        include_blocked : typing.Optional[IncludeBlocked]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -82,6 +86,7 @@ class RawThreadsClient:
                 "after": serialize_datetime(after) if after is not None else None,
                 "ascending": ascending,
                 "include_spam": include_spam,
+                "include_blocked": include_blocked,
             },
             request_options=request_options,
         )
@@ -232,6 +237,7 @@ class AsyncRawThreadsClient:
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         include_spam: typing.Optional[IncludeSpam] = None,
+        include_blocked: typing.Optional[IncludeBlocked] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListThreadsResponse]:
         """
@@ -253,6 +259,8 @@ class AsyncRawThreadsClient:
 
         include_spam : typing.Optional[IncludeSpam]
 
+        include_blocked : typing.Optional[IncludeBlocked]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -272,6 +280,7 @@ class AsyncRawThreadsClient:
                 "after": serialize_datetime(after) if after is not None else None,
                 "ascending": ascending,
                 "include_spam": include_spam,
+                "include_blocked": include_blocked,
             },
             request_options=request_options,
         )

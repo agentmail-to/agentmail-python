@@ -9,6 +9,7 @@ from ..core.request_options import RequestOptions
 from ..types.after import After
 from ..types.ascending import Ascending
 from ..types.before import Before
+from ..types.include_blocked import IncludeBlocked
 from ..types.include_spam import IncludeSpam
 from ..types.labels import Labels
 from ..types.limit import Limit
@@ -44,6 +45,7 @@ class ThreadsClient:
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         include_spam: typing.Optional[IncludeSpam] = None,
+        include_blocked: typing.Optional[IncludeBlocked] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
         """
@@ -62,6 +64,8 @@ class ThreadsClient:
         ascending : typing.Optional[Ascending]
 
         include_spam : typing.Optional[IncludeSpam]
+
+        include_blocked : typing.Optional[IncludeBlocked]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -87,6 +91,7 @@ class ThreadsClient:
             after=after,
             ascending=ascending,
             include_spam=include_spam,
+            include_blocked=include_blocked,
             request_options=request_options,
         )
         return _response.data
@@ -180,6 +185,7 @@ class AsyncThreadsClient:
         after: typing.Optional[After] = None,
         ascending: typing.Optional[Ascending] = None,
         include_spam: typing.Optional[IncludeSpam] = None,
+        include_blocked: typing.Optional[IncludeBlocked] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
         """
@@ -198,6 +204,8 @@ class AsyncThreadsClient:
         ascending : typing.Optional[Ascending]
 
         include_spam : typing.Optional[IncludeSpam]
+
+        include_blocked : typing.Optional[IncludeBlocked]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -231,6 +239,7 @@ class AsyncThreadsClient:
             after=after,
             ascending=ascending,
             include_spam=include_spam,
+            include_blocked=include_blocked,
             request_options=request_options,
         )
         return _response.data

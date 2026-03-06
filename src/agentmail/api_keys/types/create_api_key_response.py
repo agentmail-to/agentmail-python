@@ -20,6 +20,11 @@ class CreateApiKeyResponse(UncheckedBaseModel):
 
     prefix: Prefix
     name: Name
+    pod_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Pod ID the api key is scoped to.
+    """
+
     created_at: CreatedAt
 
     if IS_PYDANTIC_V2:

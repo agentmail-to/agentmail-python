@@ -16,6 +16,7 @@ from ...domains.types.feedback_enabled import FeedbackEnabled
 from ...domains.types.list_domains_response import ListDomainsResponse
 from ...errors.not_found_error import NotFoundError
 from ...errors.validation_error import ValidationError
+from ...types.ascending import Ascending
 from ...types.error_response import ErrorResponse
 from ...types.limit import Limit
 from ...types.page_token import PageToken
@@ -36,6 +37,7 @@ class RawDomainsClient:
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListDomainsResponse]:
         """
@@ -46,6 +48,8 @@ class RawDomainsClient:
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -61,6 +65,7 @@ class RawDomainsClient:
             params={
                 "limit": limit,
                 "page_token": page_token,
+                "ascending": ascending,
             },
             request_options=request_options,
         )
@@ -151,6 +156,55 @@ class RawDomainsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def get(
+        self, pod_id: PodId, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[Domain]:
+        """
+        Parameters
+        ----------
+        pod_id : PodId
+
+        domain_id : DomainId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[Domain]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/pods/{jsonable_encoder(pod_id)}/domains/{jsonable_encoder(domain_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Domain,
+                    construct_type(
+                        type_=Domain,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def delete(
         self, pod_id: PodId, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
@@ -204,6 +258,7 @@ class AsyncRawDomainsClient:
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListDomainsResponse]:
         """
@@ -214,6 +269,8 @@ class AsyncRawDomainsClient:
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -229,6 +286,7 @@ class AsyncRawDomainsClient:
             params={
                 "limit": limit,
                 "page_token": page_token,
+                "ascending": ascending,
             },
             request_options=request_options,
         )
@@ -310,6 +368,55 @@ class AsyncRawDomainsClient:
                         ValidationErrorResponse,
                         construct_type(
                             type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def get(
+        self, pod_id: PodId, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[Domain]:
+        """
+        Parameters
+        ----------
+        pod_id : PodId
+
+        domain_id : DomainId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[Domain]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/pods/{jsonable_encoder(pod_id)}/domains/{jsonable_encoder(domain_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Domain,
+                    construct_type(
+                        type_=Domain,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

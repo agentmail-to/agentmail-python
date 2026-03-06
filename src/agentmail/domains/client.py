@@ -4,6 +4,7 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.ascending import Ascending
 from ..types.limit import Limit
 from ..types.page_token import PageToken
 from .raw_client import AsyncRawDomainsClient, RawDomainsClient
@@ -37,6 +38,7 @@ class DomainsClient:
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListDomainsResponse:
         """
@@ -45,6 +47,8 @@ class DomainsClient:
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -62,7 +66,9 @@ class DomainsClient:
         )
         client.domains.list()
         """
-        _response = self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
+        _response = self._raw_client.list(
+            limit=limit, page_token=page_token, ascending=ascending, request_options=request_options
+        )
         return _response.data
 
     def get(self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> Domain:
@@ -234,6 +240,7 @@ class AsyncDomainsClient:
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListDomainsResponse:
         """
@@ -242,6 +249,8 @@ class AsyncDomainsClient:
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -267,7 +276,9 @@ class AsyncDomainsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
+        _response = await self._raw_client.list(
+            limit=limit, page_token=page_token, ascending=ascending, request_options=request_options
+        )
         return _response.data
 
     async def get(self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> Domain:

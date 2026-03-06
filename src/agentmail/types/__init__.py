@@ -15,6 +15,7 @@ if typing.TYPE_CHECKING:
     from .error_response import ErrorResponse
     from .include_blocked import IncludeBlocked
     from .include_spam import IncludeSpam
+    from .include_trash import IncludeTrash
     from .labels import Labels
     from .limit import Limit
     from .organization_id import OrganizationId
@@ -30,6 +31,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ErrorResponse": ".error_response",
     "IncludeBlocked": ".include_blocked",
     "IncludeSpam": ".include_spam",
+    "IncludeTrash": ".include_trash",
     "Labels": ".labels",
     "Limit": ".limit",
     "OrganizationId": ".organization_id",
@@ -69,6 +71,7 @@ __all__ = [
     "ErrorResponse",
     "IncludeBlocked",
     "IncludeSpam",
+    "IncludeTrash",
     "Labels",
     "Limit",
     "OrganizationId",

@@ -6,6 +6,7 @@ import typing
 
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
+from ..types.ascending import Ascending
 from ..types.limit import Limit
 from ..types.page_token import PageToken
 from .raw_client import AsyncRawPodsClient, RawPodsClient
@@ -16,6 +17,7 @@ from .types.pod import Pod
 from .types.pod_id import PodId
 
 if typing.TYPE_CHECKING:
+    from .api_keys.client import ApiKeysClient, AsyncApiKeysClient
     from .domains.client import AsyncDomainsClient, DomainsClient
     from .drafts.client import AsyncDraftsClient, DraftsClient
     from .inboxes.client import AsyncInboxesClient, InboxesClient
@@ -34,6 +36,7 @@ class PodsClient:
         self._drafts: typing.Optional[DraftsClient] = None
         self._domains: typing.Optional[DomainsClient] = None
         self._lists: typing.Optional[ListsClient] = None
+        self._api_keys: typing.Optional[ApiKeysClient] = None
 
     @property
     def with_raw_response(self) -> RawPodsClient:
@@ -51,6 +54,7 @@ class PodsClient:
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListPodsResponse:
         """
@@ -59,6 +63,8 @@ class PodsClient:
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -76,7 +82,9 @@ class PodsClient:
         )
         client.pods.list()
         """
-        _response = self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
+        _response = self._raw_client.list(
+            limit=limit, page_token=page_token, ascending=ascending, request_options=request_options
+        )
         return _response.data
 
     def get(self, pod_id: PodId, *, request_options: typing.Optional[RequestOptions] = None) -> Pod:
@@ -206,6 +214,14 @@ class PodsClient:
             self._lists = ListsClient(client_wrapper=self._client_wrapper)
         return self._lists
 
+    @property
+    def api_keys(self):
+        if self._api_keys is None:
+            from .api_keys.client import ApiKeysClient  # noqa: E402
+
+            self._api_keys = ApiKeysClient(client_wrapper=self._client_wrapper)
+        return self._api_keys
+
 
 class AsyncPodsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -216,6 +232,7 @@ class AsyncPodsClient:
         self._drafts: typing.Optional[AsyncDraftsClient] = None
         self._domains: typing.Optional[AsyncDomainsClient] = None
         self._lists: typing.Optional[AsyncListsClient] = None
+        self._api_keys: typing.Optional[AsyncApiKeysClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawPodsClient:
@@ -233,6 +250,7 @@ class AsyncPodsClient:
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListPodsResponse:
         """
@@ -241,6 +259,8 @@ class AsyncPodsClient:
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -266,7 +286,9 @@ class AsyncPodsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
+        _response = await self._raw_client.list(
+            limit=limit, page_token=page_token, ascending=ascending, request_options=request_options
+        )
         return _response.data
 
     async def get(self, pod_id: PodId, *, request_options: typing.Optional[RequestOptions] = None) -> Pod:
@@ -419,3 +441,11 @@ class AsyncPodsClient:
 
             self._lists = AsyncListsClient(client_wrapper=self._client_wrapper)
         return self._lists
+
+    @property
+    def api_keys(self):
+        if self._api_keys is None:
+            from .api_keys.client import AsyncApiKeysClient  # noqa: E402
+
+            self._api_keys = AsyncApiKeysClient(client_wrapper=self._client_wrapper)
+        return self._api_keys

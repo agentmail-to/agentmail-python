@@ -16,6 +16,11 @@ class ApiKey(UncheckedBaseModel):
     api_key_id: ApiKeyId
     prefix: Prefix
     name: Name
+    pod_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Pod ID the api key is scoped to. If set, the key can only access resources within this pod.
+    """
+
     used_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Time at which api key was last used.

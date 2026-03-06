@@ -3,108 +3,136 @@
 import typing
 from json.decoder import JSONDecodeError
 
-from ..core.api_error import ApiError
-from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
-from ..core.request_options import RequestOptions
-from ..core.unchecked_base_model import construct_type
-from ..errors.not_found_error import NotFoundError
-from ..errors.validation_error import ValidationError
-from ..types.ascending import Ascending
-from ..types.error_response import ErrorResponse
-from ..types.limit import Limit
-from ..types.page_token import PageToken
-from ..types.validation_error_response import ValidationErrorResponse
-from .types.client_id import ClientId
-from .types.list_pods_response import ListPodsResponse
-from .types.name import Name
-from .types.pod import Pod
-from .types.pod_id import PodId
+from ...api_keys.types.api_key_id import ApiKeyId
+from ...api_keys.types.create_api_key_response import CreateApiKeyResponse
+from ...api_keys.types.list_api_keys_response import ListApiKeysResponse
+from ...api_keys.types.name import Name
+from ...core.api_error import ApiError
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.http_response import AsyncHttpResponse, HttpResponse
+from ...core.jsonable_encoder import jsonable_encoder
+from ...core.request_options import RequestOptions
+from ...core.unchecked_base_model import construct_type
+from ...errors.not_found_error import NotFoundError
+from ...errors.validation_error import ValidationError
+from ...types.error_response import ErrorResponse
+from ...types.limit import Limit
+from ...types.page_token import PageToken
+from ...types.validation_error_response import ValidationErrorResponse
+from ..types.pod_id import PodId
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
 
-class RawPodsClient:
+class RawApiKeysClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def list(
-        self,
-        *,
-        limit: typing.Optional[Limit] = None,
-        page_token: typing.Optional[PageToken] = None,
-        ascending: typing.Optional[Ascending] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[ListPodsResponse]:
+    def create(
+        self, pod_id: PodId, *, name: Name, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[CreateApiKeyResponse]:
         """
         Parameters
         ----------
-        limit : typing.Optional[Limit]
+        pod_id : PodId
 
-        page_token : typing.Optional[PageToken]
-
-        ascending : typing.Optional[Ascending]
+        name : Name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[ListPodsResponse]
+        HttpResponse[CreateApiKeyResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v0/pods",
+            f"v0/pods/{jsonable_encoder(pod_id)}/api-keys",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "name": name,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    CreateApiKeyResponse,
+                    construct_type(
+                        type_=CreateApiKeyResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def list(
+        self,
+        pod_id: PodId,
+        *,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[ListApiKeysResponse]:
+        """
+        Parameters
+        ----------
+        pod_id : PodId
+
+        limit : typing.Optional[Limit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ListApiKeysResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/pods/{jsonable_encoder(pod_id)}/api-keys",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
                 "limit": limit,
                 "page_token": page_token,
-                "ascending": ascending,
             },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ListPodsResponse,
+                    ListApiKeysResponse,
                     construct_type(
-                        type_=ListPodsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def get(self, pod_id: PodId, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Pod]:
-        """
-        Parameters
-        ----------
-        pod_id : PodId
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[Pod]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"v0/pods/{jsonable_encoder(pod_id)}",
-            base_url=self._client_wrapper.get_environment().http,
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    Pod,
-                    construct_type(
-                        type_=Pod,  # type: ignore
+                        type_=ListApiKeysResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -125,69 +153,15 @@ class RawPodsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def create(
-        self,
-        *,
-        name: typing.Optional[Name] = OMIT,
-        client_id: typing.Optional[ClientId] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[Pod]:
-        """
-        Parameters
-        ----------
-        name : typing.Optional[Name]
-
-        client_id : typing.Optional[ClientId]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[Pod]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "v0/pods",
-            base_url=self._client_wrapper.get_environment().http,
-            method="POST",
-            json={
-                "name": name,
-                "client_id": client_id,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    Pod,
-                    construct_type(
-                        type_=Pod,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise ValidationError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ValidationErrorResponse,
-                        construct_type(
-                            type_=ValidationErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def delete(self, pod_id: PodId, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
+    def delete(
+        self, pod_id: PodId, api_key: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[None]:
         """
         Parameters
         ----------
         pod_id : PodId
+
+        api_key : ApiKeyId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -197,7 +171,7 @@ class RawPodsClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/pods/{jsonable_encoder(pod_id)}",
+            f"v0/pods/{jsonable_encoder(pod_id)}/api-keys/{jsonable_encoder(api_key)}",
             base_url=self._client_wrapper.get_environment().http,
             method="DELETE",
             request_options=request_options,
@@ -222,87 +196,114 @@ class RawPodsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
-class AsyncRawPodsClient:
+class AsyncRawApiKeysClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def list(
-        self,
-        *,
-        limit: typing.Optional[Limit] = None,
-        page_token: typing.Optional[PageToken] = None,
-        ascending: typing.Optional[Ascending] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[ListPodsResponse]:
+    async def create(
+        self, pod_id: PodId, *, name: Name, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[CreateApiKeyResponse]:
         """
         Parameters
         ----------
-        limit : typing.Optional[Limit]
+        pod_id : PodId
 
-        page_token : typing.Optional[PageToken]
-
-        ascending : typing.Optional[Ascending]
+        name : Name
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[ListPodsResponse]
+        AsyncHttpResponse[CreateApiKeyResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v0/pods",
+            f"v0/pods/{jsonable_encoder(pod_id)}/api-keys",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "name": name,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    CreateApiKeyResponse,
+                    construct_type(
+                        type_=CreateApiKeyResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def list(
+        self,
+        pod_id: PodId,
+        *,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[ListApiKeysResponse]:
+        """
+        Parameters
+        ----------
+        pod_id : PodId
+
+        limit : typing.Optional[Limit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ListApiKeysResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/pods/{jsonable_encoder(pod_id)}/api-keys",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
                 "limit": limit,
                 "page_token": page_token,
-                "ascending": ascending,
             },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ListPodsResponse,
+                    ListApiKeysResponse,
                     construct_type(
-                        type_=ListPodsResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def get(
-        self, pod_id: PodId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[Pod]:
-        """
-        Parameters
-        ----------
-        pod_id : PodId
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[Pod]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"v0/pods/{jsonable_encoder(pod_id)}",
-            base_url=self._client_wrapper.get_environment().http,
-            method="GET",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    Pod,
-                    construct_type(
-                        type_=Pod,  # type: ignore
+                        type_=ListApiKeysResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -323,71 +324,15 @@ class AsyncRawPodsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    async def create(
-        self,
-        *,
-        name: typing.Optional[Name] = OMIT,
-        client_id: typing.Optional[ClientId] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[Pod]:
-        """
-        Parameters
-        ----------
-        name : typing.Optional[Name]
-
-        client_id : typing.Optional[ClientId]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[Pod]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "v0/pods",
-            base_url=self._client_wrapper.get_environment().http,
-            method="POST",
-            json={
-                "name": name,
-                "client_id": client_id,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    Pod,
-                    construct_type(
-                        type_=Pod,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise ValidationError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ValidationErrorResponse,
-                        construct_type(
-                            type_=ValidationErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
     async def delete(
-        self, pod_id: PodId, *, request_options: typing.Optional[RequestOptions] = None
+        self, pod_id: PodId, api_key: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
         Parameters
         ----------
         pod_id : PodId
+
+        api_key : ApiKeyId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -397,7 +342,7 @@ class AsyncRawPodsClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/pods/{jsonable_encoder(pod_id)}",
+            f"v0/pods/{jsonable_encoder(pod_id)}/api-keys/{jsonable_encoder(api_key)}",
             base_url=self._client_wrapper.get_environment().http,
             method="DELETE",
             request_options=request_options,

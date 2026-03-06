@@ -2,16 +2,16 @@
 
 import typing
 
-from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.request_options import RequestOptions
-from ..types.ascending import Ascending
-from ..types.limit import Limit
-from ..types.page_token import PageToken
+from ...api_keys.types.api_key_id import ApiKeyId
+from ...api_keys.types.create_api_key_response import CreateApiKeyResponse
+from ...api_keys.types.list_api_keys_response import ListApiKeysResponse
+from ...api_keys.types.name import Name
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.request_options import RequestOptions
+from ...types.limit import Limit
+from ...types.page_token import PageToken
+from ..types.pod_id import PodId
 from .raw_client import AsyncRawApiKeysClient, RawApiKeysClient
-from .types.api_key_id import ApiKeyId
-from .types.create_api_key_response import CreateApiKeyResponse
-from .types.list_api_keys_response import ListApiKeysResponse
-from .types.name import Name
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -32,48 +32,14 @@ class ApiKeysClient:
         """
         return self._raw_client
 
-    def list(
-        self,
-        *,
-        limit: typing.Optional[Limit] = None,
-        page_token: typing.Optional[PageToken] = None,
-        ascending: typing.Optional[Ascending] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListApiKeysResponse:
+    def create(
+        self, pod_id: PodId, *, name: Name, request_options: typing.Optional[RequestOptions] = None
+    ) -> CreateApiKeyResponse:
         """
         Parameters
         ----------
-        limit : typing.Optional[Limit]
+        pod_id : PodId
 
-        page_token : typing.Optional[PageToken]
-
-        ascending : typing.Optional[Ascending]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ListApiKeysResponse
-
-        Examples
-        --------
-        from agentmail import AgentMail
-
-        client = AgentMail(
-            api_key="YOUR_API_KEY",
-        )
-        client.api_keys.list()
-        """
-        _response = self._raw_client.list(
-            limit=limit, page_token=page_token, ascending=ascending, request_options=request_options
-        )
-        return _response.data
-
-    def create(self, *, name: Name, request_options: typing.Optional[RequestOptions] = None) -> CreateApiKeyResponse:
-        """
-        Parameters
-        ----------
         name : Name
 
         request_options : typing.Optional[RequestOptions]
@@ -90,17 +56,60 @@ class ApiKeysClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.api_keys.create(
+        client.pods.api_keys.create(
+            pod_id="pod_id",
             name="name",
         )
         """
-        _response = self._raw_client.create(name=name, request_options=request_options)
+        _response = self._raw_client.create(pod_id, name=name, request_options=request_options)
         return _response.data
 
-    def delete(self, api_key: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def list(
+        self,
+        pod_id: PodId,
+        *,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ListApiKeysResponse:
         """
         Parameters
         ----------
+        pod_id : PodId
+
+        limit : typing.Optional[Limit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListApiKeysResponse
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.pods.api_keys.list(
+            pod_id="pod_id",
+        )
+        """
+        _response = self._raw_client.list(pod_id, limit=limit, page_token=page_token, request_options=request_options)
+        return _response.data
+
+    def delete(
+        self, pod_id: PodId, api_key: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        pod_id : PodId
+
         api_key : ApiKeyId
 
         request_options : typing.Optional[RequestOptions]
@@ -117,11 +126,12 @@ class ApiKeysClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.api_keys.delete(
+        client.pods.api_keys.delete(
+            pod_id="pod_id",
             api_key="api_key",
         )
         """
-        _response = self._raw_client.delete(api_key, request_options=request_options)
+        _response = self._raw_client.delete(pod_id, api_key, request_options=request_options)
         return _response.data
 
 
@@ -140,58 +150,14 @@ class AsyncApiKeysClient:
         """
         return self._raw_client
 
-    async def list(
-        self,
-        *,
-        limit: typing.Optional[Limit] = None,
-        page_token: typing.Optional[PageToken] = None,
-        ascending: typing.Optional[Ascending] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListApiKeysResponse:
-        """
-        Parameters
-        ----------
-        limit : typing.Optional[Limit]
-
-        page_token : typing.Optional[PageToken]
-
-        ascending : typing.Optional[Ascending]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ListApiKeysResponse
-
-        Examples
-        --------
-        import asyncio
-
-        from agentmail import AsyncAgentMail
-
-        client = AsyncAgentMail(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.api_keys.list()
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.list(
-            limit=limit, page_token=page_token, ascending=ascending, request_options=request_options
-        )
-        return _response.data
-
     async def create(
-        self, *, name: Name, request_options: typing.Optional[RequestOptions] = None
+        self, pod_id: PodId, *, name: Name, request_options: typing.Optional[RequestOptions] = None
     ) -> CreateApiKeyResponse:
         """
         Parameters
         ----------
+        pod_id : PodId
+
         name : Name
 
         request_options : typing.Optional[RequestOptions]
@@ -213,20 +179,73 @@ class AsyncApiKeysClient:
 
 
         async def main() -> None:
-            await client.api_keys.create(
+            await client.pods.api_keys.create(
+                pod_id="pod_id",
                 name="name",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create(name=name, request_options=request_options)
+        _response = await self._raw_client.create(pod_id, name=name, request_options=request_options)
         return _response.data
 
-    async def delete(self, api_key: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def list(
+        self,
+        pod_id: PodId,
+        *,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ListApiKeysResponse:
         """
         Parameters
         ----------
+        pod_id : PodId
+
+        limit : typing.Optional[Limit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListApiKeysResponse
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.pods.api_keys.list(
+                pod_id="pod_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list(
+            pod_id, limit=limit, page_token=page_token, request_options=request_options
+        )
+        return _response.data
+
+    async def delete(
+        self, pod_id: PodId, api_key: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        pod_id : PodId
+
         api_key : ApiKeyId
 
         request_options : typing.Optional[RequestOptions]
@@ -248,12 +267,13 @@ class AsyncApiKeysClient:
 
 
         async def main() -> None:
-            await client.api_keys.delete(
+            await client.pods.api_keys.delete(
+                pod_id="pod_id",
                 api_key="api_key",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.delete(api_key, request_options=request_options)
+        _response = await self._raw_client.delete(pod_id, api_key, request_options=request_options)
         return _response.data

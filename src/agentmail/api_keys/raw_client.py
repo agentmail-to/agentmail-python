@@ -11,6 +11,7 @@ from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.not_found_error import NotFoundError
 from ..errors.validation_error import ValidationError
+from ..types.ascending import Ascending
 from ..types.error_response import ErrorResponse
 from ..types.limit import Limit
 from ..types.page_token import PageToken
@@ -33,6 +34,7 @@ class RawApiKeysClient:
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListApiKeysResponse]:
         """
@@ -41,6 +43,8 @@ class RawApiKeysClient:
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -56,6 +60,7 @@ class RawApiKeysClient:
             params={
                 "limit": limit,
                 "page_token": page_token,
+                "ascending": ascending,
             },
             request_options=request_options,
         )
@@ -175,6 +180,7 @@ class AsyncRawApiKeysClient:
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListApiKeysResponse]:
         """
@@ -183,6 +189,8 @@ class AsyncRawApiKeysClient:
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -198,6 +206,7 @@ class AsyncRawApiKeysClient:
             params={
                 "limit": limit,
                 "page_token": page_token,
+                "ascending": ascending,
             },
             request_options=request_options,
         )

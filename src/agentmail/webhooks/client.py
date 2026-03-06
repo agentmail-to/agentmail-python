@@ -7,6 +7,7 @@ from ..core.request_options import RequestOptions
 from ..events.types.event_types import EventTypes
 from ..events.types.inbox_ids import InboxIds
 from ..events.types.pod_ids import PodIds
+from ..types.ascending import Ascending
 from ..types.limit import Limit
 from ..types.page_token import PageToken
 from .raw_client import AsyncRawWebhooksClient, RawWebhooksClient
@@ -40,6 +41,7 @@ class WebhooksClient:
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListWebhooksResponse:
         """
@@ -48,6 +50,8 @@ class WebhooksClient:
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -65,7 +69,9 @@ class WebhooksClient:
         )
         client.webhooks.list()
         """
-        _response = self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
+        _response = self._raw_client.list(
+            limit=limit, page_token=page_token, ascending=ascending, request_options=request_options
+        )
         return _response.data
 
     def get(self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None) -> Webhook:
@@ -250,6 +256,7 @@ class AsyncWebhooksClient:
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListWebhooksResponse:
         """
@@ -258,6 +265,8 @@ class AsyncWebhooksClient:
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -283,7 +292,9 @@ class AsyncWebhooksClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
+        _response = await self._raw_client.list(
+            limit=limit, page_token=page_token, ascending=ascending, request_options=request_options
+        )
         return _response.data
 
     async def get(self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None) -> Webhook:

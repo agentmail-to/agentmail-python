@@ -14,6 +14,7 @@ from ..errors.validation_error import ValidationError
 from ..events.types.event_types import EventTypes
 from ..events.types.inbox_ids import InboxIds
 from ..events.types.pod_ids import PodIds
+from ..types.ascending import Ascending
 from ..types.error_response import ErrorResponse
 from ..types.limit import Limit
 from ..types.page_token import PageToken
@@ -37,6 +38,7 @@ class RawWebhooksClient:
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListWebhooksResponse]:
         """
@@ -45,6 +47,8 @@ class RawWebhooksClient:
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -60,6 +64,7 @@ class RawWebhooksClient:
             params={
                 "limit": limit,
                 "page_token": page_token,
+                "ascending": ascending,
             },
             request_options=request_options,
         )
@@ -329,6 +334,7 @@ class AsyncRawWebhooksClient:
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListWebhooksResponse]:
         """
@@ -337,6 +343,8 @@ class AsyncRawWebhooksClient:
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
+
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -352,6 +360,7 @@ class AsyncRawWebhooksClient:
             params={
                 "limit": limit,
                 "page_token": page_token,
+                "ascending": ascending,
             },
             request_options=request_options,
         )

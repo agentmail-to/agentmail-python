@@ -423,6 +423,48 @@ class RawDraftsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def delete(
+        self, inbox_id: InboxId, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[None]:
+        """
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        draft_id : DraftId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/drafts/{jsonable_encoder(draft_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def send(
         self,
         inbox_id: InboxId,
@@ -497,48 +539,6 @@ class RawDraftsClient:
                 )
             if _response.status_code == 403:
                 raise MessageRejectedError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        construct_type(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def delete(
-        self, inbox_id: InboxId, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[None]:
-        """
-        Parameters
-        ----------
-        inbox_id : InboxId
-
-        draft_id : DraftId
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[None]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/drafts/{jsonable_encoder(draft_id)}",
-            base_url=self._client_wrapper.get_environment().http,
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return HttpResponse(response=_response, data=None)
-            if _response.status_code == 404:
-                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
@@ -931,6 +931,48 @@ class AsyncRawDraftsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    async def delete(
+        self, inbox_id: InboxId, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[None]:
+        """
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        draft_id : DraftId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/drafts/{jsonable_encoder(draft_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     async def send(
         self,
         inbox_id: InboxId,
@@ -1005,48 +1047,6 @@ class AsyncRawDraftsClient:
                 )
             if _response.status_code == 403:
                 raise MessageRejectedError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        construct_type(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def delete(
-        self, inbox_id: InboxId, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[None]:
-        """
-        Parameters
-        ----------
-        inbox_id : InboxId
-
-        draft_id : DraftId
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[None]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/drafts/{jsonable_encoder(draft_id)}",
-            base_url=self._client_wrapper.get_environment().http,
-            method="DELETE",
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                return AsyncHttpResponse(response=_response, data=None)
-            if _response.status_code == 404:
-                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,

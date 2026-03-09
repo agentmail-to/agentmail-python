@@ -19,6 +19,7 @@ from ..types.before import Before
 from ..types.error_response import ErrorResponse
 from ..types.include_blocked import IncludeBlocked
 from ..types.include_spam import IncludeSpam
+from ..types.include_trash import IncludeTrash
 from ..types.labels import Labels
 from ..types.limit import Limit
 from ..types.page_token import PageToken
@@ -42,6 +43,7 @@ class RawThreadsClient:
         ascending: typing.Optional[Ascending] = None,
         include_spam: typing.Optional[IncludeSpam] = None,
         include_blocked: typing.Optional[IncludeBlocked] = None,
+        include_trash: typing.Optional[IncludeTrash] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListThreadsResponse]:
         """
@@ -63,6 +65,8 @@ class RawThreadsClient:
 
         include_blocked : typing.Optional[IncludeBlocked]
 
+        include_trash : typing.Optional[IncludeTrash]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -83,6 +87,7 @@ class RawThreadsClient:
                 "ascending": ascending,
                 "include_spam": include_spam,
                 "include_blocked": include_blocked,
+                "include_trash": include_trash,
             },
             request_options=request_options,
         )
@@ -212,6 +217,58 @@ class RawThreadsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def delete(
+        self,
+        thread_id: ThreadId,
+        *,
+        permanent: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[None]:
+        """
+        Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+
+        Parameters
+        ----------
+        thread_id : ThreadId
+
+        permanent : typing.Optional[bool]
+            If true, permanently delete the thread instead of moving to trash.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/threads/{jsonable_encoder(thread_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="DELETE",
+            params={
+                "permanent": permanent,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawThreadsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -228,6 +285,7 @@ class AsyncRawThreadsClient:
         ascending: typing.Optional[Ascending] = None,
         include_spam: typing.Optional[IncludeSpam] = None,
         include_blocked: typing.Optional[IncludeBlocked] = None,
+        include_trash: typing.Optional[IncludeTrash] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListThreadsResponse]:
         """
@@ -249,6 +307,8 @@ class AsyncRawThreadsClient:
 
         include_blocked : typing.Optional[IncludeBlocked]
 
+        include_trash : typing.Optional[IncludeTrash]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -269,6 +329,7 @@ class AsyncRawThreadsClient:
                 "ascending": ascending,
                 "include_spam": include_spam,
                 "include_blocked": include_blocked,
+                "include_trash": include_trash,
             },
             request_options=request_options,
         )
@@ -382,6 +443,58 @@ class AsyncRawThreadsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def delete(
+        self,
+        thread_id: ThreadId,
+        *,
+        permanent: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[None]:
+        """
+        Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+
+        Parameters
+        ----------
+        thread_id : ThreadId
+
+        permanent : typing.Optional[bool]
+            If true, permanently delete the thread instead of moving to trash.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/threads/{jsonable_encoder(thread_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="DELETE",
+            params={
+                "permanent": permanent,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
             if _response.status_code == 404:
                 raise NotFoundError(
                     headers=dict(_response.headers),

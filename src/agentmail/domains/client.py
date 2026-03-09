@@ -165,6 +165,43 @@ class DomainsClient:
         )
         return _response.data
 
+    def update(
+        self,
+        domain_id: DomainId,
+        *,
+        feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Domain:
+        """
+        Parameters
+        ----------
+        domain_id : DomainId
+
+        feedback_enabled : typing.Optional[FeedbackEnabled]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Domain
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.domains.update(
+            domain_id="domain_id",
+        )
+        """
+        _response = self._raw_client.update(
+            domain_id, feedback_enabled=feedback_enabled, request_options=request_options
+        )
+        return _response.data
+
     def delete(self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
@@ -397,6 +434,51 @@ class AsyncDomainsClient:
         """
         _response = await self._raw_client.create(
             domain=domain, feedback_enabled=feedback_enabled, request_options=request_options
+        )
+        return _response.data
+
+    async def update(
+        self,
+        domain_id: DomainId,
+        *,
+        feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Domain:
+        """
+        Parameters
+        ----------
+        domain_id : DomainId
+
+        feedback_enabled : typing.Optional[FeedbackEnabled]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Domain
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.domains.update(
+                domain_id="domain_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update(
+            domain_id, feedback_enabled=feedback_enabled, request_options=request_options
         )
         return _response.data
 

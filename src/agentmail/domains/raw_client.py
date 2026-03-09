@@ -237,6 +237,63 @@ class RawDomainsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def update(
+        self,
+        domain_id: DomainId,
+        *,
+        feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[Domain]:
+        """
+        Parameters
+        ----------
+        domain_id : DomainId
+
+        feedback_enabled : typing.Optional[FeedbackEnabled]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[Domain]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/domains/{jsonable_encoder(domain_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="PATCH",
+            json={
+                "feedback_enabled": feedback_enabled,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Domain,
+                    construct_type(
+                        type_=Domain,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def delete(
         self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
@@ -520,6 +577,63 @@ class AsyncRawDomainsClient:
                         ValidationErrorResponse,
                         construct_type(
                             type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def update(
+        self,
+        domain_id: DomainId,
+        *,
+        feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[Domain]:
+        """
+        Parameters
+        ----------
+        domain_id : DomainId
+
+        feedback_enabled : typing.Optional[FeedbackEnabled]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[Domain]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/domains/{jsonable_encoder(domain_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="PATCH",
+            json={
+                "feedback_enabled": feedback_enabled,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Domain,
+                    construct_type(
+                        type_=Domain,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

@@ -2,16 +2,17 @@
 
 import typing
 
-from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.request_options import RequestOptions
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.request_options import RequestOptions
+from ...metrics.types.descending import Descending
+from ...metrics.types.end import End
+from ...metrics.types.metric_event_types import MetricEventTypes
+from ...metrics.types.metric_limit import MetricLimit
+from ...metrics.types.period import Period
+from ...metrics.types.query_metrics_response import QueryMetricsResponse
+from ...metrics.types.start import Start
+from ..types.pod_id import PodId
 from .raw_client import AsyncRawMetricsClient, RawMetricsClient
-from .types.descending import Descending
-from .types.end import End
-from .types.metric_event_types import MetricEventTypes
-from .types.metric_limit import MetricLimit
-from .types.period import Period
-from .types.query_metrics_response import QueryMetricsResponse
-from .types.start import Start
 
 
 class MetricsClient:
@@ -31,6 +32,7 @@ class MetricsClient:
 
     def query(
         self,
+        pod_id: PodId,
         *,
         event_types: typing.Optional[MetricEventTypes] = None,
         start: typing.Optional[Start] = None,
@@ -43,6 +45,8 @@ class MetricsClient:
         """
         Parameters
         ----------
+        pod_id : PodId
+
         event_types : typing.Optional[MetricEventTypes]
 
         start : typing.Optional[Start]
@@ -69,9 +73,12 @@ class MetricsClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.metrics.query()
+        client.pods.metrics.query(
+            pod_id="pod_id",
+        )
         """
         _response = self._raw_client.query(
+            pod_id,
             event_types=event_types,
             start=start,
             end=end,
@@ -100,6 +107,7 @@ class AsyncMetricsClient:
 
     async def query(
         self,
+        pod_id: PodId,
         *,
         event_types: typing.Optional[MetricEventTypes] = None,
         start: typing.Optional[Start] = None,
@@ -112,6 +120,8 @@ class AsyncMetricsClient:
         """
         Parameters
         ----------
+        pod_id : PodId
+
         event_types : typing.Optional[MetricEventTypes]
 
         start : typing.Optional[Start]
@@ -143,12 +153,15 @@ class AsyncMetricsClient:
 
 
         async def main() -> None:
-            await client.metrics.query()
+            await client.pods.metrics.query(
+                pod_id="pod_id",
+            )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.query(
+            pod_id,
             event_types=event_types,
             start=start,
             end=end,

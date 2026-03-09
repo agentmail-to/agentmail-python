@@ -77,6 +77,70 @@ class DomainsClient:
         )
         return _response.data
 
+    def get(
+        self, pod_id: PodId, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> Domain:
+        """
+        Parameters
+        ----------
+        pod_id : PodId
+
+        domain_id : DomainId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Domain
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.pods.domains.get(
+            pod_id="pod_id",
+            domain_id="domain_id",
+        )
+        """
+        _response = self._raw_client.get(pod_id, domain_id, request_options=request_options)
+        return _response.data
+
+    def get_zone_file(
+        self, pod_id: PodId, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Iterator[bytes]:
+        """
+        Parameters
+        ----------
+        pod_id : PodId
+
+        domain_id : DomainId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.Iterator[bytes]
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.pods.domains.get_zone_file(
+            pod_id="pod_id",
+            domain_id="domain_id",
+        )
+        """
+        with self._raw_client.get_zone_file(pod_id, domain_id, request_options=request_options) as r:
+            yield from r.data
+
     def create(
         self,
         pod_id: PodId,
@@ -119,8 +183,13 @@ class DomainsClient:
         )
         return _response.data
 
-    def get(
-        self, pod_id: PodId, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
+    def update(
+        self,
+        pod_id: PodId,
+        domain_id: DomainId,
+        *,
+        feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Domain:
         """
         Parameters
@@ -128,6 +197,8 @@ class DomainsClient:
         pod_id : PodId
 
         domain_id : DomainId
+
+        feedback_enabled : typing.Optional[FeedbackEnabled]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -143,12 +214,14 @@ class DomainsClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.pods.domains.get(
+        client.pods.domains.update(
             pod_id="pod_id",
             domain_id="domain_id",
         )
         """
-        _response = self._raw_client.get(pod_id, domain_id, request_options=request_options)
+        _response = self._raw_client.update(
+            pod_id, domain_id, feedback_enabled=feedback_enabled, request_options=request_options
+        )
         return _response.data
 
     def delete(
@@ -181,6 +254,38 @@ class DomainsClient:
         )
         """
         _response = self._raw_client.delete(pod_id, domain_id, request_options=request_options)
+        return _response.data
+
+    def verify(
+        self, pod_id: PodId, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        pod_id : PodId
+
+        domain_id : DomainId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.pods.domains.verify(
+            pod_id="pod_id",
+            domain_id="domain_id",
+        )
+        """
+        _response = self._raw_client.verify(pod_id, domain_id, request_options=request_options)
         return _response.data
 
 
@@ -250,6 +355,87 @@ class AsyncDomainsClient:
         )
         return _response.data
 
+    async def get(
+        self, pod_id: PodId, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> Domain:
+        """
+        Parameters
+        ----------
+        pod_id : PodId
+
+        domain_id : DomainId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Domain
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.pods.domains.get(
+                pod_id="pod_id",
+                domain_id="domain_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get(pod_id, domain_id, request_options=request_options)
+        return _response.data
+
+    async def get_zone_file(
+        self, pod_id: PodId, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.AsyncIterator[bytes]:
+        """
+        Parameters
+        ----------
+        pod_id : PodId
+
+        domain_id : DomainId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+
+        Returns
+        -------
+        typing.AsyncIterator[bytes]
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.pods.domains.get_zone_file(
+                pod_id="pod_id",
+                domain_id="domain_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        async with self._raw_client.get_zone_file(pod_id, domain_id, request_options=request_options) as r:
+            async for _chunk in r.data:
+                yield _chunk
+
     async def create(
         self,
         pod_id: PodId,
@@ -300,8 +486,13 @@ class AsyncDomainsClient:
         )
         return _response.data
 
-    async def get(
-        self, pod_id: PodId, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
+    async def update(
+        self,
+        pod_id: PodId,
+        domain_id: DomainId,
+        *,
+        feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Domain:
         """
         Parameters
@@ -309,6 +500,8 @@ class AsyncDomainsClient:
         pod_id : PodId
 
         domain_id : DomainId
+
+        feedback_enabled : typing.Optional[FeedbackEnabled]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -329,7 +522,7 @@ class AsyncDomainsClient:
 
 
         async def main() -> None:
-            await client.pods.domains.get(
+            await client.pods.domains.update(
                 pod_id="pod_id",
                 domain_id="domain_id",
             )
@@ -337,7 +530,9 @@ class AsyncDomainsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(pod_id, domain_id, request_options=request_options)
+        _response = await self._raw_client.update(
+            pod_id, domain_id, feedback_enabled=feedback_enabled, request_options=request_options
+        )
         return _response.data
 
     async def delete(
@@ -378,4 +573,44 @@ class AsyncDomainsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.delete(pod_id, domain_id, request_options=request_options)
+        return _response.data
+
+    async def verify(
+        self, pod_id: PodId, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Parameters
+        ----------
+        pod_id : PodId
+
+        domain_id : DomainId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.pods.domains.verify(
+                pod_id="pod_id",
+                domain_id="domain_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.verify(pod_id, domain_id, request_options=request_options)
         return _response.data

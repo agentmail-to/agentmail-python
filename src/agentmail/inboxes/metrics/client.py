@@ -4,10 +4,13 @@ import typing
 
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
-from ...metrics.types.list_metrics_response import ListMetricsResponse
-from ...metrics.types.metric_end_timestamp import MetricEndTimestamp
+from ...metrics.types.descending import Descending
+from ...metrics.types.end import End
 from ...metrics.types.metric_event_types import MetricEventTypes
-from ...metrics.types.metric_start_timestamp import MetricStartTimestamp
+from ...metrics.types.metric_limit import MetricLimit
+from ...metrics.types.period import Period
+from ...metrics.types.query_metrics_response import QueryMetricsResponse
+from ...metrics.types.start import Start
 from ..types.inbox_id import InboxId
 from .raw_client import AsyncRawMetricsClient, RawMetricsClient
 
@@ -27,57 +30,61 @@ class MetricsClient:
         """
         return self._raw_client
 
-    def get(
+    def query(
         self,
         inbox_id: InboxId,
         *,
-        start_timestamp: MetricStartTimestamp,
-        end_timestamp: MetricEndTimestamp,
         event_types: typing.Optional[MetricEventTypes] = None,
+        start: typing.Optional[Start] = None,
+        end: typing.Optional[End] = None,
+        period: typing.Optional[Period] = None,
+        limit: typing.Optional[MetricLimit] = None,
+        descending: typing.Optional[Descending] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListMetricsResponse:
+    ) -> QueryMetricsResponse:
         """
         Parameters
         ----------
         inbox_id : InboxId
 
-        start_timestamp : MetricStartTimestamp
-
-        end_timestamp : MetricEndTimestamp
-
         event_types : typing.Optional[MetricEventTypes]
+
+        start : typing.Optional[Start]
+
+        end : typing.Optional[End]
+
+        period : typing.Optional[Period]
+
+        limit : typing.Optional[MetricLimit]
+
+        descending : typing.Optional[Descending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ListMetricsResponse
+        QueryMetricsResponse
 
         Examples
         --------
-        import datetime
-
         from agentmail import AgentMail
 
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.inboxes.metrics.get(
+        client.inboxes.metrics.query(
             inbox_id="inbox_id",
-            start_timestamp=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
-            end_timestamp=datetime.datetime.fromisoformat(
-                "2024-01-15 09:30:00+00:00",
-            ),
         )
         """
-        _response = self._raw_client.get(
+        _response = self._raw_client.query(
             inbox_id,
-            start_timestamp=start_timestamp,
-            end_timestamp=end_timestamp,
             event_types=event_types,
+            start=start,
+            end=end,
+            period=period,
+            limit=limit,
+            descending=descending,
             request_options=request_options,
         )
         return _response.data
@@ -98,37 +105,45 @@ class AsyncMetricsClient:
         """
         return self._raw_client
 
-    async def get(
+    async def query(
         self,
         inbox_id: InboxId,
         *,
-        start_timestamp: MetricStartTimestamp,
-        end_timestamp: MetricEndTimestamp,
         event_types: typing.Optional[MetricEventTypes] = None,
+        start: typing.Optional[Start] = None,
+        end: typing.Optional[End] = None,
+        period: typing.Optional[Period] = None,
+        limit: typing.Optional[MetricLimit] = None,
+        descending: typing.Optional[Descending] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListMetricsResponse:
+    ) -> QueryMetricsResponse:
         """
         Parameters
         ----------
         inbox_id : InboxId
 
-        start_timestamp : MetricStartTimestamp
-
-        end_timestamp : MetricEndTimestamp
-
         event_types : typing.Optional[MetricEventTypes]
+
+        start : typing.Optional[Start]
+
+        end : typing.Optional[End]
+
+        period : typing.Optional[Period]
+
+        limit : typing.Optional[MetricLimit]
+
+        descending : typing.Optional[Descending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        ListMetricsResponse
+        QueryMetricsResponse
 
         Examples
         --------
         import asyncio
-        import datetime
 
         from agentmail import AsyncAgentMail
 
@@ -138,24 +153,21 @@ class AsyncMetricsClient:
 
 
         async def main() -> None:
-            await client.inboxes.metrics.get(
+            await client.inboxes.metrics.query(
                 inbox_id="inbox_id",
-                start_timestamp=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
-                end_timestamp=datetime.datetime.fromisoformat(
-                    "2024-01-15 09:30:00+00:00",
-                ),
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(
+        _response = await self._raw_client.query(
             inbox_id,
-            start_timestamp=start_timestamp,
-            end_timestamp=end_timestamp,
             event_types=event_types,
+            start=start,
+            end=end,
+            period=period,
+            limit=limit,
+            descending=descending,
             request_options=request_options,
         )
         return _response.data

@@ -180,6 +180,48 @@ class ThreadsClient:
         _response = self._raw_client.get_attachment(pod_id, thread_id, attachment_id, request_options=request_options)
         return _response.data
 
+    def delete(
+        self,
+        pod_id: PodId,
+        thread_id: ThreadId,
+        *,
+        permanent: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+
+        Parameters
+        ----------
+        pod_id : PodId
+
+        thread_id : ThreadId
+
+        permanent : typing.Optional[bool]
+            If true, permanently delete the thread instead of moving to trash.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.pods.threads.delete(
+            pod_id="pod_id",
+            thread_id="thread_id",
+        )
+        """
+        _response = self._raw_client.delete(pod_id, thread_id, permanent=permanent, request_options=request_options)
+        return _response.data
+
 
 class AsyncThreadsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -362,5 +404,57 @@ class AsyncThreadsClient:
         """
         _response = await self._raw_client.get_attachment(
             pod_id, thread_id, attachment_id, request_options=request_options
+        )
+        return _response.data
+
+    async def delete(
+        self,
+        pod_id: PodId,
+        thread_id: ThreadId,
+        *,
+        permanent: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+
+        Parameters
+        ----------
+        pod_id : PodId
+
+        thread_id : ThreadId
+
+        permanent : typing.Optional[bool]
+            If true, permanently delete the thread instead of moving to trash.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.pods.threads.delete(
+                pod_id="pod_id",
+                thread_id="thread_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete(
+            pod_id, thread_id, permanent=permanent, request_options=request_options
         )
         return _response.data

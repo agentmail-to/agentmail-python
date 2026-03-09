@@ -11,6 +11,7 @@ from ..types.ascending import Ascending
 from ..types.before import Before
 from ..types.include_blocked import IncludeBlocked
 from ..types.include_spam import IncludeSpam
+from ..types.include_trash import IncludeTrash
 from ..types.labels import Labels
 from ..types.limit import Limit
 from ..types.page_token import PageToken
@@ -46,6 +47,7 @@ class ThreadsClient:
         ascending: typing.Optional[Ascending] = None,
         include_spam: typing.Optional[IncludeSpam] = None,
         include_blocked: typing.Optional[IncludeBlocked] = None,
+        include_trash: typing.Optional[IncludeTrash] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
         """
@@ -66,6 +68,8 @@ class ThreadsClient:
         include_spam : typing.Optional[IncludeSpam]
 
         include_blocked : typing.Optional[IncludeBlocked]
+
+        include_trash : typing.Optional[IncludeTrash]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -92,6 +96,7 @@ class ThreadsClient:
             ascending=ascending,
             include_spam=include_spam,
             include_blocked=include_blocked,
+            include_trash=include_trash,
             request_options=request_options,
         )
         return _response.data
@@ -159,6 +164,44 @@ class ThreadsClient:
         _response = self._raw_client.get_attachment(thread_id, attachment_id, request_options=request_options)
         return _response.data
 
+    def delete(
+        self,
+        thread_id: ThreadId,
+        *,
+        permanent: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+
+        Parameters
+        ----------
+        thread_id : ThreadId
+
+        permanent : typing.Optional[bool]
+            If true, permanently delete the thread instead of moving to trash.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.threads.delete(
+            thread_id="thread_id",
+        )
+        """
+        _response = self._raw_client.delete(thread_id, permanent=permanent, request_options=request_options)
+        return _response.data
+
 
 class AsyncThreadsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -186,6 +229,7 @@ class AsyncThreadsClient:
         ascending: typing.Optional[Ascending] = None,
         include_spam: typing.Optional[IncludeSpam] = None,
         include_blocked: typing.Optional[IncludeBlocked] = None,
+        include_trash: typing.Optional[IncludeTrash] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
         """
@@ -206,6 +250,8 @@ class AsyncThreadsClient:
         include_spam : typing.Optional[IncludeSpam]
 
         include_blocked : typing.Optional[IncludeBlocked]
+
+        include_trash : typing.Optional[IncludeTrash]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -240,6 +286,7 @@ class AsyncThreadsClient:
             ascending=ascending,
             include_spam=include_spam,
             include_blocked=include_blocked,
+            include_trash=include_trash,
             request_options=request_options,
         )
         return _response.data
@@ -321,4 +368,50 @@ class AsyncThreadsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get_attachment(thread_id, attachment_id, request_options=request_options)
+        return _response.data
+
+    async def delete(
+        self,
+        thread_id: ThreadId,
+        *,
+        permanent: typing.Optional[bool] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+
+        Parameters
+        ----------
+        thread_id : ThreadId
+
+        permanent : typing.Optional[bool]
+            If true, permanently delete the thread instead of moving to trash.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.threads.delete(
+                thread_id="thread_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete(thread_id, permanent=permanent, request_options=request_options)
         return _response.data

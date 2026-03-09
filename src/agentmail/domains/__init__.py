@@ -17,6 +17,7 @@ if typing.TYPE_CHECKING:
         ListDomainsResponse,
         RecordStatus,
         RecordType,
+        UpdateDomainRequest,
         VerificationRecord,
         VerificationStatus,
     )
@@ -31,6 +32,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListDomainsResponse": ".types",
     "RecordStatus": ".types",
     "RecordType": ".types",
+    "UpdateDomainRequest": ".types",
     "VerificationRecord": ".types",
     "VerificationStatus": ".types",
 }
@@ -68,6 +70,7 @@ __all__ = [
     "ListDomainsResponse",
     "RecordStatus",
     "RecordType",
+    "UpdateDomainRequest",
     "VerificationRecord",
     "VerificationStatus",
 ]

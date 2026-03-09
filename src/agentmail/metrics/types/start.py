@@ -2,4 +2,4 @@
 
 import datetime as dt
 
-MetricStartTimestamp = dt.datetime
+Start = dt.datetime

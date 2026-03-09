@@ -673,94 +673,6 @@ client.webhooks.get(
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">update</a>(...) -&gt; AsyncHttpResponse[Webhook]</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-
-client = AgentMail(
-    api_key="YOUR_API_KEY",
-)
-client.webhooks.update(
-    webhook_id="webhook_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**webhook_id:** `WebhookId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**add_inbox_ids:** `typing.Optional[InboxIds]` — Inbox IDs to subscribe to the webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**remove_inbox_ids:** `typing.Optional[InboxIds]` — Inbox IDs to unsubscribe from the webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**add_pod_ids:** `typing.Optional[PodIds]` — Pod IDs to subscribe to the webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**remove_pod_ids:** `typing.Optional[PodIds]` — Pod IDs to unsubscribe from the webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">create</a>(...) -&gt; AsyncHttpResponse[Webhook]</code></summary>
 <dl>
 <dd>
@@ -831,6 +743,94 @@ client.webhooks.create(
 <dd>
 
 **client_id:** `typing.Optional[ClientId]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">update</a>(...) -&gt; AsyncHttpResponse[Webhook]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.webhooks.update(
+    webhook_id="webhook_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**webhook_id:** `WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**add_inbox_ids:** `typing.Optional[InboxIds]` — Inbox IDs to subscribe to the webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**remove_inbox_ids:** `typing.Optional[InboxIds]` — Inbox IDs to unsubscribe from the webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**add_pod_ids:** `typing.Optional[PodIds]` — Pod IDs to subscribe to the webhook.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**remove_pod_ids:** `typing.Optional[PodIds]` — Pod IDs to unsubscribe from the webhook.
     
 </dd>
 </dl>
@@ -1318,6 +1318,70 @@ client.domains.create(
 <dd>
 
 **feedback_enabled:** `FeedbackEnabled` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">update</a>(...) -&gt; AsyncHttpResponse[Domain]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.domains.update(
+    domain_id="domain_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**domain_id:** `DomainId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**feedback_enabled:** `typing.Optional[FeedbackEnabled]` 
     
 </dd>
 </dl>
@@ -2190,6 +2254,71 @@ client.inboxes.drafts.update(
 </dl>
 </details>
 
+<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.inboxes.drafts.delete(
+    inbox_id="inbox_id",
+    draft_id="draft_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**draft_id:** `DraftId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">send</a>(...) -&gt; AsyncHttpResponse[SendMessageResponse]</code></summary>
 <dl>
 <dd>
@@ -2252,71 +2381,6 @@ client.inboxes.drafts.send(
 <dd>
 
 **remove_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to remove from message.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-
-client = AgentMail(
-    api_key="YOUR_API_KEY",
-)
-client.inboxes.drafts.delete(
-    inbox_id="inbox_id",
-    draft_id="draft_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**inbox_id:** `InboxId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**draft_id:** `DraftId` 
     
 </dd>
 </dl>
@@ -2604,7 +2668,7 @@ client.inboxes.messages.get_attachment(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">get_raw</a>(...) -&gt; typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">get_raw</a>(...) -&gt; AsyncHttpResponse[RawMessageResponse]</code></summary>
 <dl>
 <dd>
 
@@ -2657,7 +2721,88 @@ client.inboxes.messages.get_raw(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">update</a>(...) -&gt; AsyncHttpResponse[Message]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.inboxes.messages.update(
+    inbox_id="inbox_id",
+    message_id="message_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**message_id:** `MessageId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**add_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to add to message.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**remove_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to remove from message.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -3208,89 +3353,8 @@ client.inboxes.messages.forward(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">update</a>(...) -&gt; AsyncHttpResponse[Message]</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-
-client = AgentMail(
-    api_key="YOUR_API_KEY",
-)
-client.inboxes.messages.update(
-    inbox_id="inbox_id",
-    message_id="message_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**inbox_id:** `InboxId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**message_id:** `MessageId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**add_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to add to message.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**remove_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to remove from message.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 ## Inboxes Metrics
-<details><summary><code>client.inboxes.metrics.<a href="src/agentmail/inboxes/metrics/client.py">get</a>(...) -&gt; AsyncHttpResponse[ListMetricsResponse]</code></summary>
+<details><summary><code>client.inboxes.metrics.<a href="src/agentmail/inboxes/metrics/client.py">query</a>(...) -&gt; AsyncHttpResponse[QueryMetricsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -3303,21 +3367,13 @@ client.inboxes.messages.update(
 <dd>
 
 ```python
-import datetime
-
 from agentmail import AgentMail
 
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-client.inboxes.metrics.get(
+client.inboxes.metrics.query(
     inbox_id="inbox_id",
-    start_timestamp=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    end_timestamp=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
 )
 
 ```
@@ -3335,22 +3391,6 @@ client.inboxes.metrics.get(
 <dd>
 
 **inbox_id:** `InboxId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**start_timestamp:** `MetricStartTimestamp` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**end_timestamp:** `MetricEndTimestamp` 
     
 </dd>
 </dl>
@@ -3359,6 +3399,46 @@ client.inboxes.metrics.get(
 <dd>
 
 **event_types:** `typing.Optional[MetricEventTypes]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start:** `typing.Optional[Start]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end:** `typing.Optional[End]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**period:** `typing.Optional[Period]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[MetricLimit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**descending:** `typing.Optional[Descending]` 
     
 </dd>
 </dl>
@@ -3650,6 +3730,20 @@ client.inboxes.threads.get_attachment(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -3699,6 +3793,14 @@ client.inboxes.threads.delete(
 <dl>
 <dd>
 
+**permanent:** `typing.Optional[bool]` — If true, permanently delete the thread instead of moving to trash.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -3712,88 +3814,6 @@ client.inboxes.threads.delete(
 </details>
 
 ## Lists
-<details><summary><code>client.lists.<a href="src/agentmail/lists/client.py">create</a>(...) -&gt; AsyncHttpResponse[ListEntry]</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-
-client = AgentMail(
-    api_key="YOUR_API_KEY",
-)
-client.lists.create(
-    direction="send",
-    type="allow",
-    entry="entry",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**direction:** `Direction` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**type:** `ListType` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**entry:** `str` — Email address or domain to add.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**reason:** `typing.Optional[str]` — Reason for adding the entry.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.lists.<a href="src/agentmail/lists/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListListEntriesResponse]</code></summary>
 <dl>
 <dd>
@@ -3949,6 +3969,88 @@ client.lists.get(
 </dl>
 </details>
 
+<details><summary><code>client.lists.<a href="src/agentmail/lists/client.py">create</a>(...) -&gt; AsyncHttpResponse[ListEntry]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.lists.create(
+    direction="send",
+    type="allow",
+    entry="entry",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**direction:** `Direction` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `ListType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**entry:** `str` — Email address or domain to add.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reason:** `typing.Optional[str]` — Reason for adding the entry.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.lists.<a href="src/agentmail/lists/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
@@ -4024,7 +4126,7 @@ client.lists.delete(
 </details>
 
 ## Metrics
-<details><summary><code>client.metrics.<a href="src/agentmail/metrics/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListMetricsResponse]</code></summary>
+<details><summary><code>client.metrics.<a href="src/agentmail/metrics/client.py">query</a>(...) -&gt; AsyncHttpResponse[QueryMetricsResponse]</code></summary>
 <dl>
 <dd>
 
@@ -4037,21 +4139,12 @@ client.lists.delete(
 <dd>
 
 ```python
-import datetime
-
 from agentmail import AgentMail
 
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-client.metrics.list(
-    start_timestamp=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-    end_timestamp=datetime.datetime.fromisoformat(
-        "2024-01-15 09:30:00+00:00",
-    ),
-)
+client.metrics.query()
 
 ```
 </dd>
@@ -4067,23 +4160,47 @@ client.metrics.list(
 <dl>
 <dd>
 
-**start_timestamp:** `MetricStartTimestamp` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**end_timestamp:** `MetricEndTimestamp` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
 **event_types:** `typing.Optional[MetricEventTypes]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start:** `typing.Optional[Start]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end:** `typing.Optional[End]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**period:** `typing.Optional[Period]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[MetricLimit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**descending:** `typing.Optional[Descending]` 
     
 </dd>
 </dl>
@@ -4165,71 +4282,6 @@ client.organizations.get()
 </details>
 
 ## Pods ApiKeys
-<details><summary><code>client.pods.api_keys.<a href="src/agentmail/pods/api_keys/client.py">create</a>(...) -&gt; AsyncHttpResponse[CreateApiKeyResponse]</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-
-client = AgentMail(
-    api_key="YOUR_API_KEY",
-)
-client.pods.api_keys.create(
-    pod_id="pod_id",
-    name="name",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**pod_id:** `PodId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**name:** `Name` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.pods.api_keys.<a href="src/agentmail/pods/api_keys/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListApiKeysResponse]</code></summary>
 <dl>
 <dd>
@@ -4283,6 +4335,71 @@ client.pods.api_keys.list(
 <dd>
 
 **page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.api_keys.<a href="src/agentmail/pods/api_keys/client.py">create</a>(...) -&gt; AsyncHttpResponse[CreateApiKeyResponse]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.pods.api_keys.create(
+    pod_id="pod_id",
+    name="name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `Name` 
     
 </dd>
 </dl>
@@ -4448,6 +4565,136 @@ client.pods.domains.list(
 </dl>
 </details>
 
+<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">get</a>(...) -&gt; AsyncHttpResponse[Domain]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.pods.domains.get(
+    pod_id="pod_id",
+    domain_id="domain_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**domain_id:** `DomainId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">get_zone_file</a>(...) -&gt; typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.pods.domains.get_zone_file(
+    pod_id="pod_id",
+    domain_id="domain_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**domain_id:** `DomainId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">create</a>(...) -&gt; AsyncHttpResponse[Domain]</code></summary>
 <dl>
 <dd>
@@ -4522,7 +4769,7 @@ client.pods.domains.create(
 </dl>
 </details>
 
-<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">get</a>(...) -&gt; AsyncHttpResponse[Domain]</code></summary>
+<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">update</a>(...) -&gt; AsyncHttpResponse[Domain]</code></summary>
 <dl>
 <dd>
 
@@ -4540,7 +4787,80 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-client.pods.domains.get(
+client.pods.domains.update(
+    pod_id="pod_id",
+    domain_id="domain_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**domain_id:** `DomainId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**feedback_enabled:** `typing.Optional[FeedbackEnabled]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.pods.domains.delete(
     pod_id="pod_id",
     domain_id="domain_id",
 )
@@ -4587,7 +4907,7 @@ client.pods.domains.get(
 </dl>
 </details>
 
-<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">verify</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
 
@@ -4605,7 +4925,7 @@ from agentmail import AgentMail
 client = AgentMail(
     api_key="YOUR_API_KEY",
 )
-client.pods.domains.delete(
+client.pods.domains.verify(
     pod_id="pod_id",
     domain_id="domain_id",
 )
@@ -5130,6 +5450,80 @@ client.pods.inboxes.create(
 </dl>
 </details>
 
+<details><summary><code>client.pods.inboxes.<a href="src/agentmail/pods/inboxes/client.py">update</a>(...) -&gt; AsyncHttpResponse[Inbox]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.pods.inboxes.update(
+    pod_id="pod_id",
+    inbox_id="inbox_id",
+    display_name="display_name",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**display_name:** `DisplayName` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.pods.inboxes.<a href="src/agentmail/pods/inboxes/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
@@ -5196,97 +5590,6 @@ client.pods.inboxes.delete(
 </details>
 
 ## Pods Lists
-<details><summary><code>client.pods.lists.<a href="src/agentmail/pods/lists/client.py">create</a>(...) -&gt; AsyncHttpResponse[PodListEntry]</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-
-client = AgentMail(
-    api_key="YOUR_API_KEY",
-)
-client.pods.lists.create(
-    pod_id="pod_id",
-    direction="send",
-    type="allow",
-    entry="entry",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**pod_id:** `PodId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**direction:** `Direction` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**type:** `ListType` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**entry:** `str` — Email address or domain to add.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**reason:** `typing.Optional[str]` — Reason for adding the entry.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.pods.lists.<a href="src/agentmail/pods/lists/client.py">list</a>(...) -&gt; AsyncHttpResponse[PodListListEntriesResponse]</code></summary>
 <dl>
 <dd>
@@ -5460,6 +5763,97 @@ client.pods.lists.get(
 </dl>
 </details>
 
+<details><summary><code>client.pods.lists.<a href="src/agentmail/pods/lists/client.py">create</a>(...) -&gt; AsyncHttpResponse[PodListEntry]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.pods.lists.create(
+    pod_id="pod_id",
+    direction="send",
+    type="allow",
+    entry="entry",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**direction:** `Direction` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `ListType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**entry:** `str` — Email address or domain to add.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**reason:** `typing.Optional[str]` — Reason for adding the entry.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.pods.lists.<a href="src/agentmail/pods/lists/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
@@ -5524,6 +5918,111 @@ client.pods.lists.delete(
 <dd>
 
 **entry:** `str` — Email address or domain.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Pods Metrics
+<details><summary><code>client.pods.metrics.<a href="src/agentmail/pods/metrics/client.py">query</a>(...) -&gt; AsyncHttpResponse[QueryMetricsResponse]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.pods.metrics.query(
+    pod_id="pod_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**event_types:** `typing.Optional[MetricEventTypes]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start:** `typing.Optional[Start]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end:** `typing.Optional[End]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**period:** `typing.Optional[Period]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[MetricLimit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**descending:** `typing.Optional[Descending]` 
     
 </dd>
 </dl>
@@ -5811,6 +6310,93 @@ client.pods.threads.get_attachment(
 </dl>
 </details>
 
+<details><summary><code>client.pods.threads.<a href="src/agentmail/pods/threads/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.pods.threads.delete(
+    pod_id="pod_id",
+    thread_id="thread_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**thread_id:** `ThreadId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**permanent:** `typing.Optional[bool]` — If true, permanently delete the thread instead of moving to trash.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Threads
 <details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListThreadsResponse]</code></summary>
 <dl>
@@ -5903,6 +6489,14 @@ client.threads.list()
 <dd>
 
 **include_blocked:** `typing.Optional[IncludeBlocked]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_trash:** `typing.Optional[IncludeTrash]` 
     
 </dd>
 </dl>
@@ -6024,6 +6618,84 @@ client.threads.get_attachment(
 <dd>
 
 **attachment_id:** `AttachmentId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.threads.delete(
+    thread_id="thread_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**thread_id:** `ThreadId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**permanent:** `typing.Optional[bool]` — If true, permanently delete the thread instead of moving to trash.
     
 </dd>
 </dl>

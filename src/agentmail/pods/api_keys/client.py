@@ -32,38 +32,6 @@ class ApiKeysClient:
         """
         return self._raw_client
 
-    def create(
-        self, pod_id: PodId, *, name: Name, request_options: typing.Optional[RequestOptions] = None
-    ) -> CreateApiKeyResponse:
-        """
-        Parameters
-        ----------
-        pod_id : PodId
-
-        name : Name
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        CreateApiKeyResponse
-
-        Examples
-        --------
-        from agentmail import AgentMail
-
-        client = AgentMail(
-            api_key="YOUR_API_KEY",
-        )
-        client.pods.api_keys.create(
-            pod_id="pod_id",
-            name="name",
-        )
-        """
-        _response = self._raw_client.create(pod_id, name=name, request_options=request_options)
-        return _response.data
-
     def list(
         self,
         pod_id: PodId,
@@ -100,6 +68,38 @@ class ApiKeysClient:
         )
         """
         _response = self._raw_client.list(pod_id, limit=limit, page_token=page_token, request_options=request_options)
+        return _response.data
+
+    def create(
+        self, pod_id: PodId, *, name: Name, request_options: typing.Optional[RequestOptions] = None
+    ) -> CreateApiKeyResponse:
+        """
+        Parameters
+        ----------
+        pod_id : PodId
+
+        name : Name
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CreateApiKeyResponse
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.pods.api_keys.create(
+            pod_id="pod_id",
+            name="name",
+        )
+        """
+        _response = self._raw_client.create(pod_id, name=name, request_options=request_options)
         return _response.data
 
     def delete(
@@ -150,46 +150,6 @@ class AsyncApiKeysClient:
         """
         return self._raw_client
 
-    async def create(
-        self, pod_id: PodId, *, name: Name, request_options: typing.Optional[RequestOptions] = None
-    ) -> CreateApiKeyResponse:
-        """
-        Parameters
-        ----------
-        pod_id : PodId
-
-        name : Name
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        CreateApiKeyResponse
-
-        Examples
-        --------
-        import asyncio
-
-        from agentmail import AsyncAgentMail
-
-        client = AsyncAgentMail(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.pods.api_keys.create(
-                pod_id="pod_id",
-                name="name",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.create(pod_id, name=name, request_options=request_options)
-        return _response.data
-
     async def list(
         self,
         pod_id: PodId,
@@ -236,6 +196,46 @@ class AsyncApiKeysClient:
         _response = await self._raw_client.list(
             pod_id, limit=limit, page_token=page_token, request_options=request_options
         )
+        return _response.data
+
+    async def create(
+        self, pod_id: PodId, *, name: Name, request_options: typing.Optional[RequestOptions] = None
+    ) -> CreateApiKeyResponse:
+        """
+        Parameters
+        ----------
+        pod_id : PodId
+
+        name : Name
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CreateApiKeyResponse
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.pods.api_keys.create(
+                pod_id="pod_id",
+                name="name",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create(pod_id, name=name, request_options=request_options)
         return _response.data
 
     async def delete(

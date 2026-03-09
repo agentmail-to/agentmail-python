@@ -19,7 +19,7 @@ from ...metrics.types.period import Period
 from ...metrics.types.query_metrics_response import QueryMetricsResponse
 from ...metrics.types.start import Start
 from ...types.validation_error_response import ValidationErrorResponse
-from ..types.inbox_id import InboxId
+from ..types.pod_id import PodId
 
 
 class RawMetricsClient:
@@ -28,7 +28,7 @@ class RawMetricsClient:
 
     def query(
         self,
-        inbox_id: InboxId,
+        pod_id: PodId,
         *,
         event_types: typing.Optional[MetricEventTypes] = None,
         start: typing.Optional[Start] = None,
@@ -41,7 +41,7 @@ class RawMetricsClient:
         """
         Parameters
         ----------
-        inbox_id : InboxId
+        pod_id : PodId
 
         event_types : typing.Optional[MetricEventTypes]
 
@@ -63,7 +63,7 @@ class RawMetricsClient:
         HttpResponse[QueryMetricsResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/metrics",
+            f"v0/pods/{jsonable_encoder(pod_id)}/metrics",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
@@ -109,7 +109,7 @@ class AsyncRawMetricsClient:
 
     async def query(
         self,
-        inbox_id: InboxId,
+        pod_id: PodId,
         *,
         event_types: typing.Optional[MetricEventTypes] = None,
         start: typing.Optional[Start] = None,
@@ -122,7 +122,7 @@ class AsyncRawMetricsClient:
         """
         Parameters
         ----------
-        inbox_id : InboxId
+        pod_id : PodId
 
         event_types : typing.Optional[MetricEventTypes]
 
@@ -144,7 +144,7 @@ class AsyncRawMetricsClient:
         AsyncHttpResponse[QueryMetricsResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/inboxes/{jsonable_encoder(inbox_id)}/metrics",
+            f"v0/pods/{jsonable_encoder(pod_id)}/metrics",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={

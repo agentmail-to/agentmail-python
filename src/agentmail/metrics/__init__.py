@@ -7,22 +7,26 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
-        ListMetricsResponse,
-        MessageMetrics,
-        MetricEndTimestamp,
+        Descending,
+        End,
+        MetricBucket,
         MetricEventType,
         MetricEventTypes,
-        MetricStartTimestamp,
-        MetricTimestamp,
+        MetricLimit,
+        Period,
+        QueryMetricsResponse,
+        Start,
     )
 _dynamic_imports: typing.Dict[str, str] = {
-    "ListMetricsResponse": ".types",
-    "MessageMetrics": ".types",
-    "MetricEndTimestamp": ".types",
+    "Descending": ".types",
+    "End": ".types",
+    "MetricBucket": ".types",
     "MetricEventType": ".types",
     "MetricEventTypes": ".types",
-    "MetricStartTimestamp": ".types",
-    "MetricTimestamp": ".types",
+    "MetricLimit": ".types",
+    "Period": ".types",
+    "QueryMetricsResponse": ".types",
+    "Start": ".types",
 }
 
 
@@ -48,11 +52,13 @@ def __dir__():
 
 
 __all__ = [
-    "ListMetricsResponse",
-    "MessageMetrics",
-    "MetricEndTimestamp",
+    "Descending",
+    "End",
+    "MetricBucket",
     "MetricEventType",
     "MetricEventTypes",
-    "MetricStartTimestamp",
-    "MetricTimestamp",
+    "MetricLimit",
+    "Period",
+    "QueryMetricsResponse",
+    "Start",
 ]

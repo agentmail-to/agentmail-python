@@ -101,6 +101,58 @@ class WebhooksClient:
         _response = self._raw_client.get(webhook_id, request_options=request_options)
         return _response.data
 
+    def create(
+        self,
+        *,
+        url: Url,
+        event_types: EventTypes,
+        pod_ids: typing.Optional[PodIds] = OMIT,
+        inbox_ids: typing.Optional[InboxIds] = OMIT,
+        client_id: typing.Optional[ClientId] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Webhook:
+        """
+        Parameters
+        ----------
+        url : Url
+
+        event_types : EventTypes
+
+        pod_ids : typing.Optional[PodIds]
+
+        inbox_ids : typing.Optional[InboxIds]
+
+        client_id : typing.Optional[ClientId]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Webhook
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.webhooks.create(
+            url="url",
+            event_types=["message.received", "message.received"],
+        )
+        """
+        _response = self._raw_client.create(
+            url=url,
+            event_types=event_types,
+            pod_ids=pod_ids,
+            inbox_ids=inbox_ids,
+            client_id=client_id,
+            request_options=request_options,
+        )
+        return _response.data
+
     def update(
         self,
         webhook_id: WebhookId,
@@ -152,58 +204,6 @@ class WebhooksClient:
             remove_inbox_ids=remove_inbox_ids,
             add_pod_ids=add_pod_ids,
             remove_pod_ids=remove_pod_ids,
-            request_options=request_options,
-        )
-        return _response.data
-
-    def create(
-        self,
-        *,
-        url: Url,
-        event_types: EventTypes,
-        pod_ids: typing.Optional[PodIds] = OMIT,
-        inbox_ids: typing.Optional[InboxIds] = OMIT,
-        client_id: typing.Optional[ClientId] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> Webhook:
-        """
-        Parameters
-        ----------
-        url : Url
-
-        event_types : EventTypes
-
-        pod_ids : typing.Optional[PodIds]
-
-        inbox_ids : typing.Optional[InboxIds]
-
-        client_id : typing.Optional[ClientId]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        Webhook
-
-        Examples
-        --------
-        from agentmail import AgentMail
-
-        client = AgentMail(
-            api_key="YOUR_API_KEY",
-        )
-        client.webhooks.create(
-            url="url",
-            event_types=["message.received", "message.received"],
-        )
-        """
-        _response = self._raw_client.create(
-            url=url,
-            event_types=event_types,
-            pod_ids=pod_ids,
-            inbox_ids=inbox_ids,
-            client_id=client_id,
             request_options=request_options,
         )
         return _response.data
@@ -332,6 +332,66 @@ class AsyncWebhooksClient:
         _response = await self._raw_client.get(webhook_id, request_options=request_options)
         return _response.data
 
+    async def create(
+        self,
+        *,
+        url: Url,
+        event_types: EventTypes,
+        pod_ids: typing.Optional[PodIds] = OMIT,
+        inbox_ids: typing.Optional[InboxIds] = OMIT,
+        client_id: typing.Optional[ClientId] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Webhook:
+        """
+        Parameters
+        ----------
+        url : Url
+
+        event_types : EventTypes
+
+        pod_ids : typing.Optional[PodIds]
+
+        inbox_ids : typing.Optional[InboxIds]
+
+        client_id : typing.Optional[ClientId]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Webhook
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.webhooks.create(
+                url="url",
+                event_types=["message.received", "message.received"],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create(
+            url=url,
+            event_types=event_types,
+            pod_ids=pod_ids,
+            inbox_ids=inbox_ids,
+            client_id=client_id,
+            request_options=request_options,
+        )
+        return _response.data
+
     async def update(
         self,
         webhook_id: WebhookId,
@@ -391,66 +451,6 @@ class AsyncWebhooksClient:
             remove_inbox_ids=remove_inbox_ids,
             add_pod_ids=add_pod_ids,
             remove_pod_ids=remove_pod_ids,
-            request_options=request_options,
-        )
-        return _response.data
-
-    async def create(
-        self,
-        *,
-        url: Url,
-        event_types: EventTypes,
-        pod_ids: typing.Optional[PodIds] = OMIT,
-        inbox_ids: typing.Optional[InboxIds] = OMIT,
-        client_id: typing.Optional[ClientId] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> Webhook:
-        """
-        Parameters
-        ----------
-        url : Url
-
-        event_types : EventTypes
-
-        pod_ids : typing.Optional[PodIds]
-
-        inbox_ids : typing.Optional[InboxIds]
-
-        client_id : typing.Optional[ClientId]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        Webhook
-
-        Examples
-        --------
-        import asyncio
-
-        from agentmail import AsyncAgentMail
-
-        client = AsyncAgentMail(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.webhooks.create(
-                url="url",
-                event_types=["message.received", "message.received"],
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.create(
-            url=url,
-            event_types=event_types,
-            pod_ids=pod_ids,
-            inbox_ids=inbox_ids,
-            client_id=client_id,
             request_options=request_options,
         )
         return _response.data

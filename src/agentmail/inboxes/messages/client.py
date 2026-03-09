@@ -13,6 +13,7 @@ from ...messages.types.message_id import MessageId
 from ...messages.types.message_labels import MessageLabels
 from ...messages.types.message_subject import MessageSubject
 from ...messages.types.message_text import MessageText
+from ...messages.types.raw_message_response import RawMessageResponse
 from ...messages.types.reply_all import ReplyAll
 from ...messages.types.send_message_attachments import SendMessageAttachments
 from ...messages.types.send_message_bcc import SendMessageBcc
@@ -199,7 +200,7 @@ class MessagesClient:
 
     def get_raw(
         self, inbox_id: InboxId, message_id: MessageId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.Iterator[bytes]:
+    ) -> RawMessageResponse:
         """
         Parameters
         ----------
@@ -208,11 +209,11 @@ class MessagesClient:
         message_id : MessageId
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
         Returns
         -------
-        typing.Iterator[bytes]
+        RawMessageResponse
 
         Examples
         --------
@@ -226,8 +227,54 @@ class MessagesClient:
             message_id="message_id",
         )
         """
-        with self._raw_client.get_raw(inbox_id, message_id, request_options=request_options) as r:
-            yield from r.data
+        _response = self._raw_client.get_raw(inbox_id, message_id, request_options=request_options)
+        return _response.data
+
+    def update(
+        self,
+        inbox_id: InboxId,
+        message_id: MessageId,
+        *,
+        add_labels: typing.Optional[typing.Sequence[str]] = OMIT,
+        remove_labels: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Message:
+        """
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_id : MessageId
+
+        add_labels : typing.Optional[typing.Sequence[str]]
+            Labels to add to message.
+
+        remove_labels : typing.Optional[typing.Sequence[str]]
+            Labels to remove from message.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Message
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.inboxes.messages.update(
+            inbox_id="inbox_id",
+            message_id="message_id",
+        )
+        """
+        _response = self._raw_client.update(
+            inbox_id, message_id, add_labels=add_labels, remove_labels=remove_labels, request_options=request_options
+        )
+        return _response.data
 
     def send(
         self,
@@ -528,52 +575,6 @@ class MessagesClient:
         )
         return _response.data
 
-    def update(
-        self,
-        inbox_id: InboxId,
-        message_id: MessageId,
-        *,
-        add_labels: typing.Optional[typing.Sequence[str]] = OMIT,
-        remove_labels: typing.Optional[typing.Sequence[str]] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> Message:
-        """
-        Parameters
-        ----------
-        inbox_id : InboxId
-
-        message_id : MessageId
-
-        add_labels : typing.Optional[typing.Sequence[str]]
-            Labels to add to message.
-
-        remove_labels : typing.Optional[typing.Sequence[str]]
-            Labels to remove from message.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        Message
-
-        Examples
-        --------
-        from agentmail import AgentMail
-
-        client = AgentMail(
-            api_key="YOUR_API_KEY",
-        )
-        client.inboxes.messages.update(
-            inbox_id="inbox_id",
-            message_id="message_id",
-        )
-        """
-        _response = self._raw_client.update(
-            inbox_id, message_id, add_labels=add_labels, remove_labels=remove_labels, request_options=request_options
-        )
-        return _response.data
-
 
 class AsyncMessagesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -761,7 +762,7 @@ class AsyncMessagesClient:
 
     async def get_raw(
         self, inbox_id: InboxId, message_id: MessageId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> typing.AsyncIterator[bytes]:
+    ) -> RawMessageResponse:
         """
         Parameters
         ----------
@@ -770,11 +771,11 @@ class AsyncMessagesClient:
         message_id : MessageId
 
         request_options : typing.Optional[RequestOptions]
-            Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+            Request-specific configuration.
 
         Returns
         -------
-        typing.AsyncIterator[bytes]
+        RawMessageResponse
 
         Examples
         --------
@@ -796,9 +797,62 @@ class AsyncMessagesClient:
 
         asyncio.run(main())
         """
-        async with self._raw_client.get_raw(inbox_id, message_id, request_options=request_options) as r:
-            async for _chunk in r.data:
-                yield _chunk
+        _response = await self._raw_client.get_raw(inbox_id, message_id, request_options=request_options)
+        return _response.data
+
+    async def update(
+        self,
+        inbox_id: InboxId,
+        message_id: MessageId,
+        *,
+        add_labels: typing.Optional[typing.Sequence[str]] = OMIT,
+        remove_labels: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Message:
+        """
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_id : MessageId
+
+        add_labels : typing.Optional[typing.Sequence[str]]
+            Labels to add to message.
+
+        remove_labels : typing.Optional[typing.Sequence[str]]
+            Labels to remove from message.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Message
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.inboxes.messages.update(
+                inbox_id="inbox_id",
+                message_id="message_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update(
+            inbox_id, message_id, add_labels=add_labels, remove_labels=remove_labels, request_options=request_options
+        )
+        return _response.data
 
     async def send(
         self,
@@ -1128,59 +1182,5 @@ class AsyncMessagesClient:
             attachments=attachments,
             headers=headers,
             request_options=request_options,
-        )
-        return _response.data
-
-    async def update(
-        self,
-        inbox_id: InboxId,
-        message_id: MessageId,
-        *,
-        add_labels: typing.Optional[typing.Sequence[str]] = OMIT,
-        remove_labels: typing.Optional[typing.Sequence[str]] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> Message:
-        """
-        Parameters
-        ----------
-        inbox_id : InboxId
-
-        message_id : MessageId
-
-        add_labels : typing.Optional[typing.Sequence[str]]
-            Labels to add to message.
-
-        remove_labels : typing.Optional[typing.Sequence[str]]
-            Labels to remove from message.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        Message
-
-        Examples
-        --------
-        import asyncio
-
-        from agentmail import AsyncAgentMail
-
-        client = AsyncAgentMail(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.inboxes.messages.update(
-                inbox_id="inbox_id",
-                message_id="message_id",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.update(
-            inbox_id, message_id, add_labels=add_labels, remove_labels=remove_labels, request_options=request_options
         )
         return _response.data

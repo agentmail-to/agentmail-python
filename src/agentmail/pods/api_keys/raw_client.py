@@ -29,6 +29,66 @@ class RawApiKeysClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
+    def list(
+        self,
+        pod_id: PodId,
+        *,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[ListApiKeysResponse]:
+        """
+        Parameters
+        ----------
+        pod_id : PodId
+
+        limit : typing.Optional[Limit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ListApiKeysResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/pods/{jsonable_encoder(pod_id)}/api-keys",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            params={
+                "limit": limit,
+                "page_token": page_token,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ListApiKeysResponse,
+                    construct_type(
+                        type_=ListApiKeysResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def create(
         self, pod_id: PodId, *, name: Name, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[CreateApiKeyResponse]:
@@ -93,66 +153,6 @@ class RawApiKeysClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def list(
-        self,
-        pod_id: PodId,
-        *,
-        limit: typing.Optional[Limit] = None,
-        page_token: typing.Optional[PageToken] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[ListApiKeysResponse]:
-        """
-        Parameters
-        ----------
-        pod_id : PodId
-
-        limit : typing.Optional[Limit]
-
-        page_token : typing.Optional[PageToken]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[ListApiKeysResponse]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"v0/pods/{jsonable_encoder(pod_id)}/api-keys",
-            base_url=self._client_wrapper.get_environment().http,
-            method="GET",
-            params={
-                "limit": limit,
-                "page_token": page_token,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ListApiKeysResponse,
-                    construct_type(
-                        type_=ListApiKeysResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        construct_type(
-                            type_=ErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
     def delete(
         self, pod_id: PodId, api_key: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
@@ -199,6 +199,66 @@ class RawApiKeysClient:
 class AsyncRawApiKeysClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
+
+    async def list(
+        self,
+        pod_id: PodId,
+        *,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[ListApiKeysResponse]:
+        """
+        Parameters
+        ----------
+        pod_id : PodId
+
+        limit : typing.Optional[Limit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ListApiKeysResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/pods/{jsonable_encoder(pod_id)}/api-keys",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            params={
+                "limit": limit,
+                "page_token": page_token,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ListApiKeysResponse,
+                    construct_type(
+                        type_=ListApiKeysResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
         self, pod_id: PodId, *, name: Name, request_options: typing.Optional[RequestOptions] = None
@@ -255,66 +315,6 @@ class AsyncRawApiKeysClient:
                         ValidationErrorResponse,
                         construct_type(
                             type_=ValidationErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def list(
-        self,
-        pod_id: PodId,
-        *,
-        limit: typing.Optional[Limit] = None,
-        page_token: typing.Optional[PageToken] = None,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[ListApiKeysResponse]:
-        """
-        Parameters
-        ----------
-        pod_id : PodId
-
-        limit : typing.Optional[Limit]
-
-        page_token : typing.Optional[PageToken]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[ListApiKeysResponse]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"v0/pods/{jsonable_encoder(pod_id)}/api-keys",
-            base_url=self._client_wrapper.get_environment().http,
-            method="GET",
-            params={
-                "limit": limit,
-                "page_token": page_token,
-            },
-            request_options=request_options,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    ListApiKeysResponse,
-                    construct_type(
-                        type_=ListApiKeysResponse,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 404:
-                raise NotFoundError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ErrorResponse,
-                        construct_type(
-                            type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

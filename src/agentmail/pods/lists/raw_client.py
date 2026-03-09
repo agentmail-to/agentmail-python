@@ -29,75 +29,6 @@ class RawListsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def create(
-        self,
-        pod_id: PodId,
-        direction: Direction,
-        type: ListType,
-        *,
-        entry: str,
-        reason: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[PodListEntry]:
-        """
-        Parameters
-        ----------
-        pod_id : PodId
-
-        direction : Direction
-
-        type : ListType
-
-        entry : str
-            Email address or domain to add.
-
-        reason : typing.Optional[str]
-            Reason for adding the entry.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[PodListEntry]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            f"v0/pods/{jsonable_encoder(pod_id)}/lists/{jsonable_encoder(direction)}/{jsonable_encoder(type)}",
-            base_url=self._client_wrapper.get_environment().http,
-            method="POST",
-            json={
-                "entry": entry,
-                "reason": reason,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    PodListEntry,
-                    construct_type(
-                        type_=PodListEntry,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise ValidationError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ValidationErrorResponse,
-                        construct_type(
-                            type_=ValidationErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
     def list(
         self,
         pod_id: PodId,
@@ -213,6 +144,75 @@ class RawListsClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def create(
+        self,
+        pod_id: PodId,
+        direction: Direction,
+        type: ListType,
+        *,
+        entry: str,
+        reason: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[PodListEntry]:
+        """
+        Parameters
+        ----------
+        pod_id : PodId
+
+        direction : Direction
+
+        type : ListType
+
+        entry : str
+            Email address or domain to add.
+
+        reason : typing.Optional[str]
+            Reason for adding the entry.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[PodListEntry]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/pods/{jsonable_encoder(pod_id)}/lists/{jsonable_encoder(direction)}/{jsonable_encoder(type)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "entry": entry,
+                "reason": reason,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    PodListEntry,
+                    construct_type(
+                        type_=PodListEntry,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def delete(
         self,
         pod_id: PodId,
@@ -270,75 +270,6 @@ class RawListsClient:
 class AsyncRawListsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
-
-    async def create(
-        self,
-        pod_id: PodId,
-        direction: Direction,
-        type: ListType,
-        *,
-        entry: str,
-        reason: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[PodListEntry]:
-        """
-        Parameters
-        ----------
-        pod_id : PodId
-
-        direction : Direction
-
-        type : ListType
-
-        entry : str
-            Email address or domain to add.
-
-        reason : typing.Optional[str]
-            Reason for adding the entry.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[PodListEntry]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            f"v0/pods/{jsonable_encoder(pod_id)}/lists/{jsonable_encoder(direction)}/{jsonable_encoder(type)}",
-            base_url=self._client_wrapper.get_environment().http,
-            method="POST",
-            json={
-                "entry": entry,
-                "reason": reason,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    PodListEntry,
-                    construct_type(
-                        type_=PodListEntry,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise ValidationError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ValidationErrorResponse,
-                        construct_type(
-                            type_=ValidationErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def list(
         self,
@@ -446,6 +377,75 @@ class AsyncRawListsClient:
                         ErrorResponse,
                         construct_type(
                             type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def create(
+        self,
+        pod_id: PodId,
+        direction: Direction,
+        type: ListType,
+        *,
+        entry: str,
+        reason: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[PodListEntry]:
+        """
+        Parameters
+        ----------
+        pod_id : PodId
+
+        direction : Direction
+
+        type : ListType
+
+        entry : str
+            Email address or domain to add.
+
+        reason : typing.Optional[str]
+            Reason for adding the entry.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[PodListEntry]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/pods/{jsonable_encoder(pod_id)}/lists/{jsonable_encoder(direction)}/{jsonable_encoder(type)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "entry": entry,
+                "reason": reason,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    PodListEntry,
+                    construct_type(
+                        type_=PodListEntry,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

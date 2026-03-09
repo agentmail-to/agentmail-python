@@ -31,53 +31,6 @@ class ListsClient:
         """
         return self._raw_client
 
-    def create(
-        self,
-        direction: Direction,
-        type: ListType,
-        *,
-        entry: str,
-        reason: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListEntry:
-        """
-        Parameters
-        ----------
-        direction : Direction
-
-        type : ListType
-
-        entry : str
-            Email address or domain to add.
-
-        reason : typing.Optional[str]
-            Reason for adding the entry.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ListEntry
-
-        Examples
-        --------
-        from agentmail import AgentMail
-
-        client = AgentMail(
-            api_key="YOUR_API_KEY",
-        )
-        client.lists.create(
-            direction="send",
-            type="allow",
-            entry="entry",
-        )
-        """
-        _response = self._raw_client.create(
-            direction, type, entry=entry, reason=reason, request_options=request_options
-        )
-        return _response.data
-
     def list(
         self,
         direction: Direction,
@@ -163,6 +116,53 @@ class ListsClient:
         _response = self._raw_client.get(direction, type, entry, request_options=request_options)
         return _response.data
 
+    def create(
+        self,
+        direction: Direction,
+        type: ListType,
+        *,
+        entry: str,
+        reason: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ListEntry:
+        """
+        Parameters
+        ----------
+        direction : Direction
+
+        type : ListType
+
+        entry : str
+            Email address or domain to add.
+
+        reason : typing.Optional[str]
+            Reason for adding the entry.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListEntry
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.lists.create(
+            direction="send",
+            type="allow",
+            entry="entry",
+        )
+        """
+        _response = self._raw_client.create(
+            direction, type, entry=entry, reason=reason, request_options=request_options
+        )
+        return _response.data
+
     def delete(
         self,
         direction: Direction,
@@ -219,61 +219,6 @@ class AsyncListsClient:
         AsyncRawListsClient
         """
         return self._raw_client
-
-    async def create(
-        self,
-        direction: Direction,
-        type: ListType,
-        *,
-        entry: str,
-        reason: typing.Optional[str] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListEntry:
-        """
-        Parameters
-        ----------
-        direction : Direction
-
-        type : ListType
-
-        entry : str
-            Email address or domain to add.
-
-        reason : typing.Optional[str]
-            Reason for adding the entry.
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        ListEntry
-
-        Examples
-        --------
-        import asyncio
-
-        from agentmail import AsyncAgentMail
-
-        client = AsyncAgentMail(
-            api_key="YOUR_API_KEY",
-        )
-
-
-        async def main() -> None:
-            await client.lists.create(
-                direction="send",
-                type="allow",
-                entry="entry",
-            )
-
-
-        asyncio.run(main())
-        """
-        _response = await self._raw_client.create(
-            direction, type, entry=entry, reason=reason, request_options=request_options
-        )
-        return _response.data
 
     async def list(
         self,
@@ -374,6 +319,61 @@ class AsyncListsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get(direction, type, entry, request_options=request_options)
+        return _response.data
+
+    async def create(
+        self,
+        direction: Direction,
+        type: ListType,
+        *,
+        entry: str,
+        reason: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ListEntry:
+        """
+        Parameters
+        ----------
+        direction : Direction
+
+        type : ListType
+
+        entry : str
+            Email address or domain to add.
+
+        reason : typing.Optional[str]
+            Reason for adding the entry.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListEntry
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.lists.create(
+                direction="send",
+                type="allow",
+                entry="entry",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create(
+            direction, type, entry=entry, reason=reason, request_options=request_options
+        )
         return _response.data
 
     async def delete(

@@ -130,6 +130,76 @@ class RawWebhooksClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def create(
+        self,
+        *,
+        url: Url,
+        event_types: EventTypes,
+        pod_ids: typing.Optional[PodIds] = OMIT,
+        inbox_ids: typing.Optional[InboxIds] = OMIT,
+        client_id: typing.Optional[ClientId] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[Webhook]:
+        """
+        Parameters
+        ----------
+        url : Url
+
+        event_types : EventTypes
+
+        pod_ids : typing.Optional[PodIds]
+
+        inbox_ids : typing.Optional[InboxIds]
+
+        client_id : typing.Optional[ClientId]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[Webhook]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v0/webhooks",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "url": url,
+                "event_types": event_types,
+                "pod_ids": pod_ids,
+                "inbox_ids": inbox_ids,
+                "client_id": client_id,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Webhook,
+                    construct_type(
+                        type_=Webhook,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def update(
         self,
         webhook_id: WebhookId,
@@ -198,76 +268,6 @@ class RawWebhooksClient:
                         ),
                     ),
                 )
-            if _response.status_code == 400:
-                raise ValidationError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ValidationErrorResponse,
-                        construct_type(
-                            type_=ValidationErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    def create(
-        self,
-        *,
-        url: Url,
-        event_types: EventTypes,
-        pod_ids: typing.Optional[PodIds] = OMIT,
-        inbox_ids: typing.Optional[InboxIds] = OMIT,
-        client_id: typing.Optional[ClientId] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[Webhook]:
-        """
-        Parameters
-        ----------
-        url : Url
-
-        event_types : EventTypes
-
-        pod_ids : typing.Optional[PodIds]
-
-        inbox_ids : typing.Optional[InboxIds]
-
-        client_id : typing.Optional[ClientId]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        HttpResponse[Webhook]
-        """
-        _response = self._client_wrapper.httpx_client.request(
-            "v0/webhooks",
-            base_url=self._client_wrapper.get_environment().http,
-            method="POST",
-            json={
-                "url": url,
-                "event_types": event_types,
-                "pod_ids": pod_ids,
-                "inbox_ids": inbox_ids,
-                "client_id": client_id,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    Webhook,
-                    construct_type(
-                        type_=Webhook,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return HttpResponse(response=_response, data=_data)
             if _response.status_code == 400:
                 raise ValidationError(
                     headers=dict(_response.headers),
@@ -426,6 +426,76 @@ class AsyncRawWebhooksClient:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    async def create(
+        self,
+        *,
+        url: Url,
+        event_types: EventTypes,
+        pod_ids: typing.Optional[PodIds] = OMIT,
+        inbox_ids: typing.Optional[InboxIds] = OMIT,
+        client_id: typing.Optional[ClientId] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[Webhook]:
+        """
+        Parameters
+        ----------
+        url : Url
+
+        event_types : EventTypes
+
+        pod_ids : typing.Optional[PodIds]
+
+        inbox_ids : typing.Optional[InboxIds]
+
+        client_id : typing.Optional[ClientId]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[Webhook]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v0/webhooks",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "url": url,
+                "event_types": event_types,
+                "pod_ids": pod_ids,
+                "inbox_ids": inbox_ids,
+                "client_id": client_id,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Webhook,
+                    construct_type(
+                        type_=Webhook,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     async def update(
         self,
         webhook_id: WebhookId,
@@ -494,76 +564,6 @@ class AsyncRawWebhooksClient:
                         ),
                     ),
                 )
-            if _response.status_code == 400:
-                raise ValidationError(
-                    headers=dict(_response.headers),
-                    body=typing.cast(
-                        ValidationErrorResponse,
-                        construct_type(
-                            type_=ValidationErrorResponse,  # type: ignore
-                            object_=_response.json(),
-                        ),
-                    ),
-                )
-            _response_json = _response.json()
-        except JSONDecodeError:
-            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
-
-    async def create(
-        self,
-        *,
-        url: Url,
-        event_types: EventTypes,
-        pod_ids: typing.Optional[PodIds] = OMIT,
-        inbox_ids: typing.Optional[InboxIds] = OMIT,
-        client_id: typing.Optional[ClientId] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[Webhook]:
-        """
-        Parameters
-        ----------
-        url : Url
-
-        event_types : EventTypes
-
-        pod_ids : typing.Optional[PodIds]
-
-        inbox_ids : typing.Optional[InboxIds]
-
-        client_id : typing.Optional[ClientId]
-
-        request_options : typing.Optional[RequestOptions]
-            Request-specific configuration.
-
-        Returns
-        -------
-        AsyncHttpResponse[Webhook]
-        """
-        _response = await self._client_wrapper.httpx_client.request(
-            "v0/webhooks",
-            base_url=self._client_wrapper.get_environment().http,
-            method="POST",
-            json={
-                "url": url,
-                "event_types": event_types,
-                "pod_ids": pod_ids,
-                "inbox_ids": inbox_ids,
-                "client_id": client_id,
-            },
-            request_options=request_options,
-            omit=OMIT,
-        )
-        try:
-            if 200 <= _response.status_code < 300:
-                _data = typing.cast(
-                    Webhook,
-                    construct_type(
-                        type_=Webhook,  # type: ignore
-                        object_=_response.json(),
-                    ),
-                )
-                return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 400:
                 raise ValidationError(
                     headers=dict(_response.headers),

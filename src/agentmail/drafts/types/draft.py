@@ -7,7 +7,6 @@ import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from ...inboxes.types.inbox_id import InboxId
-from ...threads.types.thread_id import ThreadId
 from .draft_attachments import DraftAttachments
 from .draft_bcc import DraftBcc
 from .draft_cc import DraftCc
@@ -28,7 +27,6 @@ from .draft_updated_at import DraftUpdatedAt
 
 class Draft(UncheckedBaseModel):
     inbox_id: InboxId
-    thread_id: ThreadId
     draft_id: DraftId
     client_id: typing.Optional[DraftClientId] = None
     labels: DraftLabels

@@ -32,13 +32,13 @@ class PodsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._raw_client = RawPodsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
-        self._api_keys: typing.Optional[ApiKeysClient] = None
-        self._domains: typing.Optional[DomainsClient] = None
         self._inboxes: typing.Optional[InboxesClient] = None
         self._threads: typing.Optional[ThreadsClient] = None
         self._drafts: typing.Optional[DraftsClient] = None
+        self._domains: typing.Optional[DomainsClient] = None
         self._lists: typing.Optional[ListsClient] = None
         self._metrics: typing.Optional[MetricsClient] = None
+        self._api_keys: typing.Optional[ApiKeysClient] = None
 
     @property
     def with_raw_response(self) -> RawPodsClient:
@@ -177,22 +177,6 @@ class PodsClient:
         return _response.data
 
     @property
-    def api_keys(self):
-        if self._api_keys is None:
-            from .api_keys.client import ApiKeysClient  # noqa: E402
-
-            self._api_keys = ApiKeysClient(client_wrapper=self._client_wrapper)
-        return self._api_keys
-
-    @property
-    def domains(self):
-        if self._domains is None:
-            from .domains.client import DomainsClient  # noqa: E402
-
-            self._domains = DomainsClient(client_wrapper=self._client_wrapper)
-        return self._domains
-
-    @property
     def inboxes(self):
         if self._inboxes is None:
             from .inboxes.client import InboxesClient  # noqa: E402
@@ -217,6 +201,14 @@ class PodsClient:
         return self._drafts
 
     @property
+    def domains(self):
+        if self._domains is None:
+            from .domains.client import DomainsClient  # noqa: E402
+
+            self._domains = DomainsClient(client_wrapper=self._client_wrapper)
+        return self._domains
+
+    @property
     def lists(self):
         if self._lists is None:
             from .lists.client import ListsClient  # noqa: E402
@@ -232,18 +224,26 @@ class PodsClient:
             self._metrics = MetricsClient(client_wrapper=self._client_wrapper)
         return self._metrics
 
+    @property
+    def api_keys(self):
+        if self._api_keys is None:
+            from .api_keys.client import ApiKeysClient  # noqa: E402
+
+            self._api_keys = ApiKeysClient(client_wrapper=self._client_wrapper)
+        return self._api_keys
+
 
 class AsyncPodsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._raw_client = AsyncRawPodsClient(client_wrapper=client_wrapper)
         self._client_wrapper = client_wrapper
-        self._api_keys: typing.Optional[AsyncApiKeysClient] = None
-        self._domains: typing.Optional[AsyncDomainsClient] = None
         self._inboxes: typing.Optional[AsyncInboxesClient] = None
         self._threads: typing.Optional[AsyncThreadsClient] = None
         self._drafts: typing.Optional[AsyncDraftsClient] = None
+        self._domains: typing.Optional[AsyncDomainsClient] = None
         self._lists: typing.Optional[AsyncListsClient] = None
         self._metrics: typing.Optional[AsyncMetricsClient] = None
+        self._api_keys: typing.Optional[AsyncApiKeysClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawPodsClient:
@@ -414,22 +414,6 @@ class AsyncPodsClient:
         return _response.data
 
     @property
-    def api_keys(self):
-        if self._api_keys is None:
-            from .api_keys.client import AsyncApiKeysClient  # noqa: E402
-
-            self._api_keys = AsyncApiKeysClient(client_wrapper=self._client_wrapper)
-        return self._api_keys
-
-    @property
-    def domains(self):
-        if self._domains is None:
-            from .domains.client import AsyncDomainsClient  # noqa: E402
-
-            self._domains = AsyncDomainsClient(client_wrapper=self._client_wrapper)
-        return self._domains
-
-    @property
     def inboxes(self):
         if self._inboxes is None:
             from .inboxes.client import AsyncInboxesClient  # noqa: E402
@@ -454,6 +438,14 @@ class AsyncPodsClient:
         return self._drafts
 
     @property
+    def domains(self):
+        if self._domains is None:
+            from .domains.client import AsyncDomainsClient  # noqa: E402
+
+            self._domains = AsyncDomainsClient(client_wrapper=self._client_wrapper)
+        return self._domains
+
+    @property
     def lists(self):
         if self._lists is None:
             from .lists.client import AsyncListsClient  # noqa: E402
@@ -468,3 +460,11 @@ class AsyncPodsClient:
 
             self._metrics = AsyncMetricsClient(client_wrapper=self._client_wrapper)
         return self._metrics
+
+    @property
+    def api_keys(self):
+        if self._api_keys is None:
+            from .api_keys.client import AsyncApiKeysClient  # noqa: E402
+
+            self._api_keys = AsyncApiKeysClient(client_wrapper=self._client_wrapper)
+        return self._api_keys

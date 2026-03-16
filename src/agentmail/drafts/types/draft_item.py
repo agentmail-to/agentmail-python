@@ -10,6 +10,7 @@ from .draft_attachments import DraftAttachments
 from .draft_bcc import DraftBcc
 from .draft_cc import DraftCc
 from .draft_id import DraftId
+from .draft_in_reply_to import DraftInReplyTo
 from .draft_labels import DraftLabels
 from .draft_preview import DraftPreview
 from .draft_send_at import DraftSendAt
@@ -29,6 +30,7 @@ class DraftItem(UncheckedBaseModel):
     subject: typing.Optional[DraftSubject] = None
     preview: typing.Optional[DraftPreview] = None
     attachments: typing.Optional[DraftAttachments] = None
+    in_reply_to: typing.Optional[DraftInReplyTo] = None
     send_status: typing.Optional[DraftSendStatus] = None
     send_at: typing.Optional[DraftSendAt] = None
     updated_at: DraftUpdatedAt

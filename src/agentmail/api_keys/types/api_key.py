@@ -21,6 +21,11 @@ class ApiKey(UncheckedBaseModel):
     Pod ID the api key is scoped to. If set, the key can only access resources within this pod.
     """
 
+    inbox_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Inbox ID the api key is scoped to. If set, the key can only access resources within this inbox.
+    """
+
     used_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
     Time at which api key was last used.

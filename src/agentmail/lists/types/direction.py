@@ -2,4 +2,4 @@
 
 import typing
 
-Direction = typing.Union[typing.Literal["send", "receive"], typing.Any]
+Direction = typing.Union[typing.Literal["send", "receive", "reply"], typing.Any]

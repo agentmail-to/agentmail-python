@@ -17,7 +17,9 @@ from .types.inbox_id import InboxId
 from .types.list_inboxes_response import ListInboxesResponse
 
 if typing.TYPE_CHECKING:
+    from .api_keys.client import ApiKeysClient, AsyncApiKeysClient
     from .drafts.client import AsyncDraftsClient, DraftsClient
+    from .lists.client import AsyncListsClient, ListsClient
     from .messages.client import AsyncMessagesClient, MessagesClient
     from .metrics.client import AsyncMetricsClient, MetricsClient
     from .threads.client import AsyncThreadsClient, ThreadsClient
@@ -32,7 +34,9 @@ class InboxesClient:
         self._threads: typing.Optional[ThreadsClient] = None
         self._messages: typing.Optional[MessagesClient] = None
         self._drafts: typing.Optional[DraftsClient] = None
+        self._lists: typing.Optional[ListsClient] = None
         self._metrics: typing.Optional[MetricsClient] = None
+        self._api_keys: typing.Optional[ApiKeysClient] = None
 
     @property
     def with_raw_response(self) -> RawInboxesClient:
@@ -224,12 +228,28 @@ class InboxesClient:
         return self._drafts
 
     @property
+    def lists(self):
+        if self._lists is None:
+            from .lists.client import ListsClient  # noqa: E402
+
+            self._lists = ListsClient(client_wrapper=self._client_wrapper)
+        return self._lists
+
+    @property
     def metrics(self):
         if self._metrics is None:
             from .metrics.client import MetricsClient  # noqa: E402
 
             self._metrics = MetricsClient(client_wrapper=self._client_wrapper)
         return self._metrics
+
+    @property
+    def api_keys(self):
+        if self._api_keys is None:
+            from .api_keys.client import ApiKeysClient  # noqa: E402
+
+            self._api_keys = ApiKeysClient(client_wrapper=self._client_wrapper)
+        return self._api_keys
 
 
 class AsyncInboxesClient:
@@ -239,7 +259,9 @@ class AsyncInboxesClient:
         self._threads: typing.Optional[AsyncThreadsClient] = None
         self._messages: typing.Optional[AsyncMessagesClient] = None
         self._drafts: typing.Optional[AsyncDraftsClient] = None
+        self._lists: typing.Optional[AsyncListsClient] = None
         self._metrics: typing.Optional[AsyncMetricsClient] = None
+        self._api_keys: typing.Optional[AsyncApiKeysClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawInboxesClient:
@@ -471,9 +493,25 @@ class AsyncInboxesClient:
         return self._drafts
 
     @property
+    def lists(self):
+        if self._lists is None:
+            from .lists.client import AsyncListsClient  # noqa: E402
+
+            self._lists = AsyncListsClient(client_wrapper=self._client_wrapper)
+        return self._lists
+
+    @property
     def metrics(self):
         if self._metrics is None:
             from .metrics.client import AsyncMetricsClient  # noqa: E402
 
             self._metrics = AsyncMetricsClient(client_wrapper=self._client_wrapper)
         return self._metrics
+
+    @property
+    def api_keys(self):
+        if self._api_keys is None:
+            from .api_keys.client import AsyncApiKeysClient  # noqa: E402
+
+            self._api_keys = AsyncApiKeysClient(client_wrapper=self._client_wrapper)
+        return self._api_keys

@@ -25,6 +25,11 @@ class CreateApiKeyResponse(UncheckedBaseModel):
     Pod ID the api key is scoped to.
     """
 
+    inbox_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Inbox ID the api key is scoped to.
+    """
+
     created_at: CreatedAt
 
     if IS_PYDANTIC_V2:

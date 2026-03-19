@@ -97,11 +97,11 @@ class ApiKeysClient:
         _response = self._raw_client.create(name=name, request_options=request_options)
         return _response.data
 
-    def delete(self, api_key: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(self, api_key_id: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
-        api_key : ApiKeyId
+        api_key_id : ApiKeyId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -118,10 +118,10 @@ class ApiKeysClient:
             api_key="YOUR_API_KEY",
         )
         client.api_keys.delete(
-            api_key="api_key",
+            api_key_id="api_key_id",
         )
         """
-        _response = self._raw_client.delete(api_key, request_options=request_options)
+        _response = self._raw_client.delete(api_key_id, request_options=request_options)
         return _response.data
 
 
@@ -223,11 +223,11 @@ class AsyncApiKeysClient:
         _response = await self._raw_client.create(name=name, request_options=request_options)
         return _response.data
 
-    async def delete(self, api_key: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def delete(self, api_key_id: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters
         ----------
-        api_key : ApiKeyId
+        api_key_id : ApiKeyId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -249,11 +249,11 @@ class AsyncApiKeysClient:
 
         async def main() -> None:
             await client.api_keys.delete(
-                api_key="api_key",
+                api_key_id="api_key_id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.delete(api_key, request_options=request_options)
+        _response = await self._raw_client.delete(api_key_id, request_options=request_options)
         return _response.data

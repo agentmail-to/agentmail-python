@@ -1052,7 +1052,7 @@ client = AgentMail(
     api_key="YOUR_API_KEY",
 )
 client.api_keys.delete(
-    api_key="api_key",
+    api_key_id="api_key_id",
 )
 
 ```
@@ -1069,7 +1069,7 @@ client.api_keys.delete(
 <dl>
 <dd>
 
-**api_key:** `ApiKeyId` 
+**api_key_id:** `ApiKeyId` 
     
 </dd>
 </dl>
@@ -1887,7 +1887,7 @@ client = AgentMail(
 )
 client.inboxes.api_keys.delete(
     inbox_id="inbox_id",
-    api_key="api_key",
+    api_key_id="api_key_id",
 )
 
 ```
@@ -1912,7 +1912,7 @@ client.inboxes.api_keys.delete(
 <dl>
 <dd>
 
-**api_key:** `ApiKeyId` 
+**api_key_id:** `ApiKeyId` 
     
 </dd>
 </dl>
@@ -4990,7 +4990,7 @@ client = AgentMail(
 )
 client.pods.api_keys.delete(
     pod_id="pod_id",
-    api_key="api_key",
+    api_key_id="api_key_id",
 )
 
 ```
@@ -5015,7 +5015,7 @@ client.pods.api_keys.delete(
 <dl>
 <dd>
 
-**api_key:** `ApiKeyId` 
+**api_key_id:** `ApiKeyId` 
     
 </dd>
 </dl>

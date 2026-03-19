@@ -103,14 +103,14 @@ class ApiKeysClient:
         return _response.data
 
     def delete(
-        self, inbox_id: InboxId, api_key: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None
+        self, inbox_id: InboxId, api_key_id: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Parameters
         ----------
         inbox_id : InboxId
 
-        api_key : ApiKeyId
+        api_key_id : ApiKeyId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -128,10 +128,10 @@ class ApiKeysClient:
         )
         client.inboxes.api_keys.delete(
             inbox_id="inbox_id",
-            api_key="api_key",
+            api_key_id="api_key_id",
         )
         """
-        _response = self._raw_client.delete(inbox_id, api_key, request_options=request_options)
+        _response = self._raw_client.delete(inbox_id, api_key_id, request_options=request_options)
         return _response.data
 
 
@@ -239,14 +239,14 @@ class AsyncApiKeysClient:
         return _response.data
 
     async def delete(
-        self, inbox_id: InboxId, api_key: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None
+        self, inbox_id: InboxId, api_key_id: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Parameters
         ----------
         inbox_id : InboxId
 
-        api_key : ApiKeyId
+        api_key_id : ApiKeyId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -269,11 +269,11 @@ class AsyncApiKeysClient:
         async def main() -> None:
             await client.inboxes.api_keys.delete(
                 inbox_id="inbox_id",
-                api_key="api_key",
+                api_key_id="api_key_id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.delete(inbox_id, api_key, request_options=request_options)
+        _response = await self._raw_client.delete(inbox_id, api_key_id, request_options=request_options)
         return _response.data

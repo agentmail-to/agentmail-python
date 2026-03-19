@@ -9,6 +9,7 @@ if typing.TYPE_CHECKING:
     from .client_id import ClientId
     from .create_inbox_request import CreateInboxRequest
     from .display_name import DisplayName
+    from .email import Email
     from .inbox import Inbox
     from .inbox_id import InboxId
     from .list_inboxes_response import ListInboxesResponse
@@ -17,6 +18,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ClientId": ".client_id",
     "CreateInboxRequest": ".create_inbox_request",
     "DisplayName": ".display_name",
+    "Email": ".email",
     "Inbox": ".inbox",
     "InboxId": ".inbox_id",
     "ListInboxesResponse": ".list_inboxes_response",
@@ -49,6 +51,7 @@ __all__ = [
     "ClientId",
     "CreateInboxRequest",
     "DisplayName",
+    "Email",
     "Inbox",
     "InboxId",
     "ListInboxesResponse",

@@ -9,12 +9,14 @@ from ...core.unchecked_base_model import UncheckedBaseModel
 from ...pods.types.pod_id import PodId
 from .client_id import ClientId
 from .display_name import DisplayName
+from .email import Email
 from .inbox_id import InboxId
 
 
 class Inbox(UncheckedBaseModel):
     pod_id: PodId
     inbox_id: InboxId
+    email: Email
     display_name: typing.Optional[DisplayName] = None
     client_id: typing.Optional[ClientId] = None
     updated_at: dt.datetime = pydantic.Field()

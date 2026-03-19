@@ -131,12 +131,12 @@ class RawApiKeysClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
-        self, api_key: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None
+        self, api_key_id: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
         Parameters
         ----------
-        api_key : ApiKeyId
+        api_key_id : ApiKeyId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -146,7 +146,7 @@ class RawApiKeysClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/api-keys/{jsonable_encoder(api_key)}",
+            f"v0/api-keys/{jsonable_encoder(api_key_id)}",
             base_url=self._client_wrapper.get_environment().http,
             method="DELETE",
             request_options=request_options,
@@ -277,12 +277,12 @@ class AsyncRawApiKeysClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
-        self, api_key: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None
+        self, api_key_id: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
         Parameters
         ----------
-        api_key : ApiKeyId
+        api_key_id : ApiKeyId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -292,7 +292,7 @@ class AsyncRawApiKeysClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/api-keys/{jsonable_encoder(api_key)}",
+            f"v0/api-keys/{jsonable_encoder(api_key_id)}",
             base_url=self._client_wrapper.get_environment().http,
             method="DELETE",
             request_options=request_options,

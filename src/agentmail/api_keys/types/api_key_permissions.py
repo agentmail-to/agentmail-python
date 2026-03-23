@@ -12,177 +12,177 @@ class ApiKeyPermissions(UncheckedBaseModel):
     Granular permissions for the API key. When ommitted all permissions are granted. Otherwise, only permissions set to true are granted.
     """
 
-    read_inbox: typing.Optional[bool] = pydantic.Field(default=None)
+    inbox_read: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Read inbox details.
     """
 
-    create_inbox: typing.Optional[bool] = pydantic.Field(default=None)
+    inbox_create: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Create new inboxes.
     """
 
-    update_inbox: typing.Optional[bool] = pydantic.Field(default=None)
+    inbox_update: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Update inbox settings.
     """
 
-    delete_inbox: typing.Optional[bool] = pydantic.Field(default=None)
+    inbox_delete: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Delete inboxes.
     """
 
-    read_thread: typing.Optional[bool] = pydantic.Field(default=None)
+    thread_read: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Read threads.
     """
 
-    delete_thread: typing.Optional[bool] = pydantic.Field(default=None)
+    thread_delete: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Delete threads.
     """
 
-    read_message: typing.Optional[bool] = pydantic.Field(default=None)
+    message_read: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Read messages.
     """
 
-    send_message: typing.Optional[bool] = pydantic.Field(default=None)
+    message_send: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Send messages.
     """
 
-    update_message: typing.Optional[bool] = pydantic.Field(default=None)
+    message_update: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Update message labels.
     """
 
-    read_spam: typing.Optional[bool] = pydantic.Field(default=None)
+    label_spam_read: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Access messages labeled spam.
     """
 
-    read_blocked: typing.Optional[bool] = pydantic.Field(default=None)
+    label_blocked_read: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Access messages labeled blocked.
     """
 
-    read_trash: typing.Optional[bool] = pydantic.Field(default=None)
+    label_trash_read: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Access messages labeled trash.
     """
 
-    read_draft: typing.Optional[bool] = pydantic.Field(default=None)
+    draft_read: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Read drafts.
     """
 
-    create_draft: typing.Optional[bool] = pydantic.Field(default=None)
+    draft_create: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Create drafts.
     """
 
-    update_draft: typing.Optional[bool] = pydantic.Field(default=None)
+    draft_update: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Update drafts.
     """
 
-    delete_draft: typing.Optional[bool] = pydantic.Field(default=None)
+    draft_delete: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Delete drafts.
     """
 
-    send_draft: typing.Optional[bool] = pydantic.Field(default=None)
+    draft_send: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Send drafts.
     """
 
-    read_webhook: typing.Optional[bool] = pydantic.Field(default=None)
+    webhook_read: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Read webhook configurations.
     """
 
-    create_webhook: typing.Optional[bool] = pydantic.Field(default=None)
+    webhook_create: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Create webhooks.
     """
 
-    update_webhook: typing.Optional[bool] = pydantic.Field(default=None)
+    webhook_update: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Update webhooks.
     """
 
-    delete_webhook: typing.Optional[bool] = pydantic.Field(default=None)
+    webhook_delete: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Delete webhooks.
     """
 
-    read_domain: typing.Optional[bool] = pydantic.Field(default=None)
+    domain_read: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Read domain details.
     """
 
-    create_domain: typing.Optional[bool] = pydantic.Field(default=None)
+    domain_create: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Create domains.
     """
 
-    update_domain: typing.Optional[bool] = pydantic.Field(default=None)
+    domain_update: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Update domains.
     """
 
-    delete_domain: typing.Optional[bool] = pydantic.Field(default=None)
+    domain_delete: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Delete domains.
     """
 
-    read_list_entry: typing.Optional[bool] = pydantic.Field(default=None)
+    list_entry_read: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Read list entries.
     """
 
-    create_list_entry: typing.Optional[bool] = pydantic.Field(default=None)
+    list_entry_create: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Create list entries.
     """
 
-    delete_list_entry: typing.Optional[bool] = pydantic.Field(default=None)
+    list_entry_delete: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Delete list entries.
     """
 
-    read_metrics: typing.Optional[bool] = pydantic.Field(default=None)
+    metrics_read: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Read metrics.
     """
 
-    read_api_key: typing.Optional[bool] = pydantic.Field(default=None)
+    api_key_read: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Read API keys.
     """
 
-    create_api_key: typing.Optional[bool] = pydantic.Field(default=None)
+    api_key_create: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Create API keys.
     """
 
-    delete_api_key: typing.Optional[bool] = pydantic.Field(default=None)
+    api_key_delete: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Delete API keys.
     """
 
-    read_pod: typing.Optional[bool] = pydantic.Field(default=None)
+    pod_read: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Read pods.
     """
 
-    create_pod: typing.Optional[bool] = pydantic.Field(default=None)
+    pod_create: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Create pods.
     """
 
-    delete_pod: typing.Optional[bool] = pydantic.Field(default=None)
+    pod_delete: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Delete pods.
     """

@@ -7,6 +7,7 @@ import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from .api_key_id import ApiKeyId
+from .api_key_permissions import ApiKeyPermissions
 from .created_at import CreatedAt
 from .name import Name
 from .prefix import Prefix
@@ -31,6 +32,7 @@ class ApiKey(UncheckedBaseModel):
     Time at which api key was last used.
     """
 
+    permissions: typing.Optional[ApiKeyPermissions] = None
     created_at: CreatedAt
 
     if IS_PYDANTIC_V2:

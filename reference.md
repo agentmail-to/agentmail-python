@@ -1021,6 +1021,14 @@ client.api_keys.create(
 <dl>
 <dd>
 
+**permissions:** `typing.Optional[ApiKeyPermissions]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -1848,6 +1856,14 @@ client.inboxes.api_keys.create(
 <dd>
 
 **name:** `Name` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**permissions:** `typing.Optional[ApiKeyPermissions]` 
     
 </dd>
 </dl>
@@ -4951,6 +4967,14 @@ client.pods.api_keys.create(
 <dd>
 
 **name:** `Name` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**permissions:** `typing.Optional[ApiKeyPermissions]` 
     
 </dd>
 </dl>

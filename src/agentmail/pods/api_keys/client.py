@@ -3,6 +3,7 @@
 import typing
 
 from ...api_keys.types.api_key_id import ApiKeyId
+from ...api_keys.types.api_key_permissions import ApiKeyPermissions
 from ...api_keys.types.create_api_key_response import CreateApiKeyResponse
 from ...api_keys.types.list_api_keys_response import ListApiKeysResponse
 from ...api_keys.types.name import Name
@@ -71,7 +72,12 @@ class ApiKeysClient:
         return _response.data
 
     def create(
-        self, pod_id: PodId, *, name: Name, request_options: typing.Optional[RequestOptions] = None
+        self,
+        pod_id: PodId,
+        *,
+        name: Name,
+        permissions: typing.Optional[ApiKeyPermissions] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateApiKeyResponse:
         """
         Parameters
@@ -79,6 +85,8 @@ class ApiKeysClient:
         pod_id : PodId
 
         name : Name
+
+        permissions : typing.Optional[ApiKeyPermissions]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -99,7 +107,7 @@ class ApiKeysClient:
             name="name",
         )
         """
-        _response = self._raw_client.create(pod_id, name=name, request_options=request_options)
+        _response = self._raw_client.create(pod_id, name=name, permissions=permissions, request_options=request_options)
         return _response.data
 
     def delete(
@@ -199,7 +207,12 @@ class AsyncApiKeysClient:
         return _response.data
 
     async def create(
-        self, pod_id: PodId, *, name: Name, request_options: typing.Optional[RequestOptions] = None
+        self,
+        pod_id: PodId,
+        *,
+        name: Name,
+        permissions: typing.Optional[ApiKeyPermissions] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateApiKeyResponse:
         """
         Parameters
@@ -207,6 +220,8 @@ class AsyncApiKeysClient:
         pod_id : PodId
 
         name : Name
+
+        permissions : typing.Optional[ApiKeyPermissions]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -235,7 +250,9 @@ class AsyncApiKeysClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create(pod_id, name=name, request_options=request_options)
+        _response = await self._raw_client.create(
+            pod_id, name=name, permissions=permissions, request_options=request_options
+        )
         return _response.data
 
     async def delete(

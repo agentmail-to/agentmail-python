@@ -9,6 +9,7 @@ if typing.TYPE_CHECKING:
     from .types import (
         ApiKey,
         ApiKeyId,
+        ApiKeyPermissions,
         CreateApiKeyRequest,
         CreateApiKeyResponse,
         CreatedAt,
@@ -19,6 +20,7 @@ if typing.TYPE_CHECKING:
 _dynamic_imports: typing.Dict[str, str] = {
     "ApiKey": ".types",
     "ApiKeyId": ".types",
+    "ApiKeyPermissions": ".types",
     "CreateApiKeyRequest": ".types",
     "CreateApiKeyResponse": ".types",
     "CreatedAt": ".types",
@@ -52,6 +54,7 @@ def __dir__():
 __all__ = [
     "ApiKey",
     "ApiKeyId",
+    "ApiKeyPermissions",
     "CreateApiKeyRequest",
     "CreateApiKeyResponse",
     "CreatedAt",

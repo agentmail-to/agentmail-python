@@ -8,6 +8,7 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .api_key import ApiKey
     from .api_key_id import ApiKeyId
+    from .api_key_permissions import ApiKeyPermissions
     from .create_api_key_request import CreateApiKeyRequest
     from .create_api_key_response import CreateApiKeyResponse
     from .created_at import CreatedAt
@@ -17,6 +18,7 @@ if typing.TYPE_CHECKING:
 _dynamic_imports: typing.Dict[str, str] = {
     "ApiKey": ".api_key",
     "ApiKeyId": ".api_key_id",
+    "ApiKeyPermissions": ".api_key_permissions",
     "CreateApiKeyRequest": ".create_api_key_request",
     "CreateApiKeyResponse": ".create_api_key_response",
     "CreatedAt": ".created_at",
@@ -50,6 +52,7 @@ def __dir__():
 __all__ = [
     "ApiKey",
     "ApiKeyId",
+    "ApiKeyPermissions",
     "CreateApiKeyRequest",
     "CreateApiKeyResponse",
     "CreatedAt",

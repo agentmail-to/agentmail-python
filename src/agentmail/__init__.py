@@ -43,6 +43,7 @@ if typing.TYPE_CHECKING:
     from .api_keys import (
         ApiKey,
         ApiKeyId,
+        ApiKeyPermissions,
         CreateApiKeyRequest,
         CreateApiKeyResponse,
         CreatedAt,
@@ -214,6 +215,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentMailEnvironment": ".environment",
     "ApiKey": ".api_keys",
     "ApiKeyId": ".api_keys",
+    "ApiKeyPermissions": ".api_keys",
     "Ascending": ".types",
     "AsyncAgentMail": ".client",
     "Attachment": ".attachments",
@@ -423,6 +425,7 @@ __all__ = [
     "AgentMailEnvironment",
     "ApiKey",
     "ApiKeyId",
+    "ApiKeyPermissions",
     "Ascending",
     "AsyncAgentMail",
     "Attachment",

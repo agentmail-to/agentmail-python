@@ -25,6 +25,7 @@ if typing.TYPE_CHECKING:
     )
     from .errors import IsTakenError, NotFoundError, ValidationError
     from . import (
+        agent,
         api_keys,
         attachments,
         domains,
@@ -40,6 +41,7 @@ if typing.TYPE_CHECKING:
         webhooks,
         websockets,
     )
+    from .agent import AgentSignupRequest, AgentSignupResponse, AgentVerifyRequest, AgentVerifyResponse
     from .api_keys import (
         ApiKey,
         ApiKeyId,
@@ -213,6 +215,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "After": ".types",
     "AgentMail": ".client",
     "AgentMailEnvironment": ".environment",
+    "AgentSignupRequest": ".agent",
+    "AgentSignupResponse": ".agent",
+    "AgentVerifyRequest": ".agent",
+    "AgentVerifyResponse": ".agent",
     "ApiKey": ".api_keys",
     "ApiKeyId": ".api_keys",
     "ApiKeyPermissions": ".api_keys",
@@ -380,6 +386,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "VerificationRecord": ".domains",
     "VerificationStatus": ".domains",
     "__version__": ".version",
+    "agent": ".agent",
     "api_keys": ".api_keys",
     "attachments": ".attachments",
     "domains": ".domains",
@@ -423,6 +430,10 @@ __all__ = [
     "After",
     "AgentMail",
     "AgentMailEnvironment",
+    "AgentSignupRequest",
+    "AgentSignupResponse",
+    "AgentVerifyRequest",
+    "AgentVerifyResponse",
     "ApiKey",
     "ApiKeyId",
     "ApiKeyPermissions",
@@ -590,6 +601,7 @@ __all__ = [
     "VerificationRecord",
     "VerificationStatus",
     "__version__",
+    "agent",
     "api_keys",
     "attachments",
     "domains",

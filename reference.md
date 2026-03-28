@@ -906,6 +906,164 @@ client.webhooks.delete(
 </dl>
 </details>
 
+## Agent
+<details><summary><code>client.agent.<a href="src/agentmail/agent/client.py">sign_up</a>(...) -&gt; AsyncHttpResponse[AgentSignupResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new agent organization with an inbox and API key. A 6-digit OTP is sent to the human's email for verification.
+
+This endpoint is idempotent. Calling it again with the same `human_email` will rotate the API key and resend the OTP if expired.
+
+The returned API key has limited permissions until the organization is verified via the verify endpoint.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.agent.sign_up(
+    human_email="human_email",
+    username="username",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**human_email:** `str` — Email address of the human who owns the agent. A 6-digit OTP will be sent to this address.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**username:** `str` — Username for the auto-created inbox (e.g. "my-agent" creates my-agent@agentmail.to).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agent.<a href="src/agentmail/agent/client.py">verify</a>(...) -&gt; AsyncHttpResponse[AgentVerifyResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Verify an agent organization using the 6-digit OTP sent to the human's email during sign-up.
+
+On success, the organization is upgraded from `agent_unverified` to `agent_verified`, the send allowlist is removed, and free plan entitlements are applied.
+
+The OTP expires after 24 hours and allows a maximum of 10 attempts.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.agent.verify(
+    otp_code="otp_code",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**otp_code:** `str` — 6-digit verification code sent to the human's email address.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ApiKeys
 <details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListApiKeysResponse]</code></summary>
 <dl>

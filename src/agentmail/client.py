@@ -6,12 +6,12 @@ import os
 import typing
 
 import httpx
-from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.logging import LogConfig, Logger
 from .environment import AgentMailEnvironment
 
 if typing.TYPE_CHECKING:
+    from .agent.client import AgentClient, AsyncAgentClient
     from .api_keys.client import ApiKeysClient, AsyncApiKeysClient
     from .domains.client import AsyncDomainsClient, DomainsClient
     from .drafts.client import AsyncDraftsClient, DraftsClient
@@ -79,10 +79,6 @@ class AgentMail:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
-        if api_key is None:
-            raise ApiError(
-                body="The client must be instantiated be either passing in api_key or setting AGENTMAIL_API_KEY"
-            )
         self._client_wrapper = SyncClientWrapper(
             environment=environment,
             api_key=api_key,
@@ -98,6 +94,7 @@ class AgentMail:
         self._inboxes: typing.Optional[InboxesClient] = None
         self._pods: typing.Optional[PodsClient] = None
         self._webhooks: typing.Optional[WebhooksClient] = None
+        self._agent: typing.Optional[AgentClient] = None
         self._api_keys: typing.Optional[ApiKeysClient] = None
         self._domains: typing.Optional[DomainsClient] = None
         self._drafts: typing.Optional[DraftsClient] = None
@@ -130,6 +127,14 @@ class AgentMail:
 
             self._webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
         return self._webhooks
+
+    @property
+    def agent(self):
+        if self._agent is None:
+            from .agent.client import AgentClient  # noqa: E402
+
+            self._agent = AgentClient(client_wrapper=self._client_wrapper)
+        return self._agent
 
     @property
     def api_keys(self):
@@ -250,10 +255,6 @@ class AsyncAgentMail:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
-        if api_key is None:
-            raise ApiError(
-                body="The client must be instantiated be either passing in api_key or setting AGENTMAIL_API_KEY"
-            )
         self._client_wrapper = AsyncClientWrapper(
             environment=environment,
             api_key=api_key,
@@ -269,6 +270,7 @@ class AsyncAgentMail:
         self._inboxes: typing.Optional[AsyncInboxesClient] = None
         self._pods: typing.Optional[AsyncPodsClient] = None
         self._webhooks: typing.Optional[AsyncWebhooksClient] = None
+        self._agent: typing.Optional[AsyncAgentClient] = None
         self._api_keys: typing.Optional[AsyncApiKeysClient] = None
         self._domains: typing.Optional[AsyncDomainsClient] = None
         self._drafts: typing.Optional[AsyncDraftsClient] = None
@@ -301,6 +303,14 @@ class AsyncAgentMail:
 
             self._webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
         return self._webhooks
+
+    @property
+    def agent(self):
+        if self._agent is None:
+            from .agent.client import AsyncAgentClient  # noqa: E402
+
+            self._agent = AsyncAgentClient(client_wrapper=self._client_wrapper)
+        return self._agent
 
     @property
     def api_keys(self):

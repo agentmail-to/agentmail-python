@@ -12,7 +12,7 @@ class BaseClientWrapper:
     def __init__(
         self,
         *,
-        api_key: typing.Union[str, typing.Callable[[], str]],
+        api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         environment: AgentMailEnvironment,
         timeout: typing.Optional[float] = None,
@@ -28,19 +28,21 @@ class BaseClientWrapper:
         import platform
 
         headers: typing.Dict[str, str] = {
-            "User-Agent": "agentmail/0.4.12",
+            "User-Agent": "agentmail/0.4.13",
             "X-Fern-Language": "Python",
             "X-Fern-Runtime": f"python/{platform.python_version()}",
             "X-Fern-Platform": f"{platform.system().lower()}/{platform.release()}",
             "X-Fern-SDK-Name": "agentmail",
-            "X-Fern-SDK-Version": "0.4.12",
+            "X-Fern-SDK-Version": "0.4.13",
             **(self.get_custom_headers() or {}),
         }
-        headers["Authorization"] = f"Bearer {self._get_api_key()}"
+        api_key = self._get_api_key()
+        if api_key is not None:
+            headers["Authorization"] = f"Bearer {api_key}"
         return headers
 
-    def _get_api_key(self) -> str:
-        if isinstance(self._api_key, str):
+    def _get_api_key(self) -> typing.Optional[str]:
+        if isinstance(self._api_key, str) or self._api_key is None:
             return self._api_key
         else:
             return self._api_key()
@@ -59,7 +61,7 @@ class SyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
-        api_key: typing.Union[str, typing.Callable[[], str]],
+        api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         environment: AgentMailEnvironment,
         timeout: typing.Optional[float] = None,
@@ -79,7 +81,7 @@ class AsyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
-        api_key: typing.Union[str, typing.Callable[[], str]],
+        api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
         environment: AgentMailEnvironment,
         timeout: typing.Optional[float] = None,

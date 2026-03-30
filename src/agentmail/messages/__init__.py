@@ -43,6 +43,7 @@ if typing.TYPE_CHECKING:
         SendMessageResponse,
         SendMessageTo,
         UpdateMessageRequest,
+        UpdateMessageResponse,
     )
     from .errors import MessageRejectedError
 _dynamic_imports: typing.Dict[str, str] = {
@@ -83,6 +84,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SendMessageResponse": ".types",
     "SendMessageTo": ".types",
     "UpdateMessageRequest": ".types",
+    "UpdateMessageResponse": ".types",
 }
 
 
@@ -145,4 +147,5 @@ __all__ = [
     "SendMessageResponse",
     "SendMessageTo",
     "UpdateMessageRequest",
+    "UpdateMessageResponse",
 ]

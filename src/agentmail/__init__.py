@@ -23,7 +23,7 @@ if typing.TYPE_CHECKING:
         PageToken,
         ValidationErrorResponse,
     )
-    from .errors import IsTakenError, NotFoundError, ValidationError
+    from .errors import IsTakenError, NotFoundError, UnprocessableError, ValidationError
     from . import (
         agent,
         api_keys,
@@ -175,6 +175,7 @@ if typing.TYPE_CHECKING:
         SendMessageResponse,
         SendMessageTo,
         UpdateMessageRequest,
+        UpdateMessageResponse,
     )
     from .metrics import (
         Descending,
@@ -207,6 +208,8 @@ if typing.TYPE_CHECKING:
         ThreadSubject,
         ThreadTimestamp,
         ThreadUpdatedAt,
+        UpdateThreadRequest,
+        UpdateThreadResponse,
     )
     from .version import __version__
     from .websockets import Error, Subscribe, Subscribed
@@ -378,9 +381,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ThreadTimestamp": ".threads",
     "ThreadUpdatedAt": ".threads",
     "Timestamp": ".events",
+    "UnprocessableError": ".errors",
     "UpdateDomainRequest": ".domains",
     "UpdateDraftRequest": ".drafts",
     "UpdateMessageRequest": ".messages",
+    "UpdateMessageResponse": ".messages",
+    "UpdateThreadRequest": ".threads",
+    "UpdateThreadResponse": ".threads",
     "ValidationError": ".errors",
     "ValidationErrorResponse": ".types",
     "VerificationRecord": ".domains",
@@ -593,9 +600,13 @@ __all__ = [
     "ThreadTimestamp",
     "ThreadUpdatedAt",
     "Timestamp",
+    "UnprocessableError",
     "UpdateDomainRequest",
     "UpdateDraftRequest",
     "UpdateMessageRequest",
+    "UpdateMessageResponse",
+    "UpdateThreadRequest",
+    "UpdateThreadResponse",
     "ValidationError",
     "ValidationErrorResponse",
     "VerificationRecord",

@@ -13,9 +13,12 @@ from ...core.jsonable_encoder import jsonable_encoder
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...errors.not_found_error import NotFoundError
+from ...errors.unprocessable_error import UnprocessableError
+from ...errors.validation_error import ValidationError
 from ...threads.types.list_threads_response import ListThreadsResponse
 from ...threads.types.thread import Thread
 from ...threads.types.thread_id import ThreadId
+from ...threads.types.update_thread_response import UpdateThreadResponse
 from ...types.after import After
 from ...types.ascending import Ascending
 from ...types.before import Before
@@ -26,7 +29,11 @@ from ...types.include_trash import IncludeTrash
 from ...types.labels import Labels
 from ...types.limit import Limit
 from ...types.page_token import PageToken
+from ...types.validation_error_response import ValidationErrorResponse
 from ..types.inbox_id import InboxId
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class RawThreadsClient:
@@ -212,6 +219,96 @@ class RawThreadsClient:
                 return HttpResponse(response=_response, data=_data)
             if _response.status_code == 404:
                 raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def update(
+        self,
+        inbox_id: InboxId,
+        thread_id: ThreadId,
+        *,
+        add_labels: typing.Optional[typing.Sequence[str]] = OMIT,
+        remove_labels: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[UpdateThreadResponse]:
+        """
+        Updates thread labels. Cannot add or remove system labels (sent, received, bounced, etc.). Rejects requests with a `422` for threads with 100 or more messages.
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        thread_id : ThreadId
+
+        add_labels : typing.Optional[typing.Sequence[str]]
+            Labels to add to thread. Cannot be system labels.
+
+        remove_labels : typing.Optional[typing.Sequence[str]]
+            Labels to remove from thread. Cannot be system labels. Takes priority over `add_labels` (in the event of duplicate labels passed in).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[UpdateThreadResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads/{jsonable_encoder(thread_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="PATCH",
+            json={
+                "add_labels": add_labels,
+                "remove_labels": remove_labels,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    UpdateThreadResponse,
+                    construct_type(
+                        type_=UpdateThreadResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
@@ -465,6 +562,96 @@ class AsyncRawThreadsClient:
                 return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 404:
                 raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def update(
+        self,
+        inbox_id: InboxId,
+        thread_id: ThreadId,
+        *,
+        add_labels: typing.Optional[typing.Sequence[str]] = OMIT,
+        remove_labels: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[UpdateThreadResponse]:
+        """
+        Updates thread labels. Cannot add or remove system labels (sent, received, bounced, etc.). Rejects requests with a `422` for threads with 100 or more messages.
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        thread_id : ThreadId
+
+        add_labels : typing.Optional[typing.Sequence[str]]
+            Labels to add to thread. Cannot be system labels.
+
+        remove_labels : typing.Optional[typing.Sequence[str]]
+            Labels to remove from thread. Cannot be system labels. Takes priority over `add_labels` (in the event of duplicate labels passed in).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[UpdateThreadResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads/{jsonable_encoder(thread_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="PATCH",
+            json={
+                "add_labels": add_labels,
+                "remove_labels": remove_labels,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    UpdateThreadResponse,
+                    construct_type(
+                        type_=UpdateThreadResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,

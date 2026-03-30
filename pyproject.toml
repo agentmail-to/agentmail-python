@@ -4,7 +4,7 @@ dynamic = ["version"]
 
 [tool.poetry]
 name = "agentmail"
-version = "0.4.13"
+version = "0.4.14"
 description = ""
 readme = "README.md"
 authors = []
@@ -88,3 +88,9 @@ section-order = ["future", "standard-library", "third-party", "first-party"]
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+description = "The email inbox API for AI agents. Send, receive, reply, and manage threaded email conversations programmatically."
+authors = ["AgentMail <support@agentmail.cc>"]
+keywords = ["email", "ai", "agent", "inbox", "api", "email-api", "ai-agent", "llm", "langchain", "crewai", "autonomous-agent", "agentmail"]
+license = "MIT"
+homepage = "https://agentmail.to"

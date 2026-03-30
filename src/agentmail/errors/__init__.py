@@ -8,10 +8,12 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .is_taken_error import IsTakenError
     from .not_found_error import NotFoundError
+    from .unprocessable_error import UnprocessableError
     from .validation_error import ValidationError
 _dynamic_imports: typing.Dict[str, str] = {
     "IsTakenError": ".is_taken_error",
     "NotFoundError": ".not_found_error",
+    "UnprocessableError": ".unprocessable_error",
     "ValidationError": ".validation_error",
 }
 
@@ -37,4 +39,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["IsTakenError", "NotFoundError", "ValidationError"]
+__all__ = ["IsTakenError", "NotFoundError", "UnprocessableError", "ValidationError"]

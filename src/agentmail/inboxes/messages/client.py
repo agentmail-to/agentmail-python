@@ -22,6 +22,7 @@ from ...messages.types.send_message_headers import SendMessageHeaders
 from ...messages.types.send_message_reply_to import SendMessageReplyTo
 from ...messages.types.send_message_response import SendMessageResponse
 from ...messages.types.send_message_to import SendMessageTo
+from ...messages.types.update_message_response import UpdateMessageResponse
 from ...types.after import After
 from ...types.ascending import Ascending
 from ...types.before import Before
@@ -238,7 +239,7 @@ class MessagesClient:
         add_labels: typing.Optional[typing.Sequence[str]] = OMIT,
         remove_labels: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Message:
+    ) -> UpdateMessageResponse:
         """
         Parameters
         ----------
@@ -257,7 +258,7 @@ class MessagesClient:
 
         Returns
         -------
-        Message
+        UpdateMessageResponse
 
         Examples
         --------
@@ -808,7 +809,7 @@ class AsyncMessagesClient:
         add_labels: typing.Optional[typing.Sequence[str]] = OMIT,
         remove_labels: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> Message:
+    ) -> UpdateMessageResponse:
         """
         Parameters
         ----------
@@ -827,7 +828,7 @@ class AsyncMessagesClient:
 
         Returns
         -------
-        Message
+        UpdateMessageResponse
 
         Examples
         --------

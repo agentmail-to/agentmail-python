@@ -32,6 +32,7 @@ from ...messages.types.send_message_headers import SendMessageHeaders
 from ...messages.types.send_message_reply_to import SendMessageReplyTo
 from ...messages.types.send_message_response import SendMessageResponse
 from ...messages.types.send_message_to import SendMessageTo
+from ...messages.types.update_message_response import UpdateMessageResponse
 from ...types.after import After
 from ...types.ascending import Ascending
 from ...types.before import Before
@@ -303,7 +304,7 @@ class RawMessagesClient:
         add_labels: typing.Optional[typing.Sequence[str]] = OMIT,
         remove_labels: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[Message]:
+    ) -> HttpResponse[UpdateMessageResponse]:
         """
         Parameters
         ----------
@@ -322,7 +323,7 @@ class RawMessagesClient:
 
         Returns
         -------
-        HttpResponse[Message]
+        HttpResponse[UpdateMessageResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}",
@@ -338,9 +339,9 @@ class RawMessagesClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    Message,
+                    UpdateMessageResponse,
                     construct_type(
-                        type_=Message,  # type: ignore
+                        type_=UpdateMessageResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1102,7 +1103,7 @@ class AsyncRawMessagesClient:
         add_labels: typing.Optional[typing.Sequence[str]] = OMIT,
         remove_labels: typing.Optional[typing.Sequence[str]] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[Message]:
+    ) -> AsyncHttpResponse[UpdateMessageResponse]:
         """
         Parameters
         ----------
@@ -1121,7 +1122,7 @@ class AsyncRawMessagesClient:
 
         Returns
         -------
-        AsyncHttpResponse[Message]
+        AsyncHttpResponse[UpdateMessageResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}",
@@ -1137,9 +1138,9 @@ class AsyncRawMessagesClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    Message,
+                    UpdateMessageResponse,
                     construct_type(
-                        type_=Message,  # type: ignore
+                        type_=UpdateMessageResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

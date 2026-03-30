@@ -3458,7 +3458,7 @@ client.inboxes.messages.get_raw(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">update</a>(...) -&gt; AsyncHttpResponse[Message]</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">update</a>(...) -&gt; AsyncHttpResponse[UpdateMessageResponse]</code></summary>
 <dl>
 <dd>
 
@@ -4432,6 +4432,101 @@ client.inboxes.threads.get_attachment(
 <dd>
 
 **attachment_id:** `AttachmentId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">update</a>(...) -&gt; AsyncHttpResponse[UpdateThreadResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates thread labels. Cannot add or remove system labels (sent, received, bounced, etc.). Rejects requests with a `422` for threads with 100 or more messages.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.inboxes.threads.update(
+    inbox_id="inbox_id",
+    thread_id="thread_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**thread_id:** `ThreadId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**add_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to add to thread. Cannot be system labels.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**remove_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to remove from thread. Cannot be system labels. Takes priority over `add_labels` (in the event of duplicate labels passed in).
     
 </dd>
 </dl>
@@ -7043,6 +7138,101 @@ client.pods.threads.get_attachment(
 </dl>
 </details>
 
+<details><summary><code>client.pods.threads.<a href="src/agentmail/pods/threads/client.py">update</a>(...) -&gt; AsyncHttpResponse[UpdateThreadResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates thread labels. Cannot add or remove system labels (sent, received, bounced, etc.). Rejects requests with a `422` for threads with 100 or more messages.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.pods.threads.update(
+    pod_id="pod_id",
+    thread_id="thread_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**thread_id:** `ThreadId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**add_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to add to thread. Cannot be system labels.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**remove_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to remove from thread. Cannot be system labels. Takes priority over `add_labels` (in the event of duplicate labels passed in).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.pods.threads.<a href="src/agentmail/pods/threads/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
 <dl>
 <dd>
@@ -7351,6 +7541,92 @@ client.threads.get_attachment(
 <dd>
 
 **attachment_id:** `AttachmentId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">update</a>(...) -&gt; AsyncHttpResponse[UpdateThreadResponse]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates thread labels. Cannot add or remove system labels (sent, received, bounced, etc.). Rejects requests with a `422` for threads with 100 or more messages.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+
+client = AgentMail(
+    api_key="YOUR_API_KEY",
+)
+client.threads.update(
+    thread_id="thread_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**thread_id:** `ThreadId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**add_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to add to thread. Cannot be system labels.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**remove_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to remove from thread. Cannot be system labels. Takes priority over `add_labels` (in the event of duplicate labels passed in).
     
 </dd>
 </dl>

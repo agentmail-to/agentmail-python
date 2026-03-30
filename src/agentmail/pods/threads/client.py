@@ -9,6 +9,7 @@ from ...core.request_options import RequestOptions
 from ...threads.types.list_threads_response import ListThreadsResponse
 from ...threads.types.thread import Thread
 from ...threads.types.thread_id import ThreadId
+from ...threads.types.update_thread_response import UpdateThreadResponse
 from ...types.after import After
 from ...types.ascending import Ascending
 from ...types.before import Before
@@ -20,6 +21,9 @@ from ...types.limit import Limit
 from ...types.page_token import PageToken
 from ..types.pod_id import PodId
 from .raw_client import AsyncRawThreadsClient, RawThreadsClient
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class ThreadsClient:
@@ -178,6 +182,54 @@ class ThreadsClient:
         )
         """
         _response = self._raw_client.get_attachment(pod_id, thread_id, attachment_id, request_options=request_options)
+        return _response.data
+
+    def update(
+        self,
+        pod_id: PodId,
+        thread_id: ThreadId,
+        *,
+        add_labels: typing.Optional[typing.Sequence[str]] = OMIT,
+        remove_labels: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> UpdateThreadResponse:
+        """
+        Updates thread labels. Cannot add or remove system labels (sent, received, bounced, etc.). Rejects requests with a `422` for threads with 100 or more messages.
+
+        Parameters
+        ----------
+        pod_id : PodId
+
+        thread_id : ThreadId
+
+        add_labels : typing.Optional[typing.Sequence[str]]
+            Labels to add to thread. Cannot be system labels.
+
+        remove_labels : typing.Optional[typing.Sequence[str]]
+            Labels to remove from thread. Cannot be system labels. Takes priority over `add_labels` (in the event of duplicate labels passed in).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UpdateThreadResponse
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.pods.threads.update(
+            pod_id="pod_id",
+            thread_id="thread_id",
+        )
+        """
+        _response = self._raw_client.update(
+            pod_id, thread_id, add_labels=add_labels, remove_labels=remove_labels, request_options=request_options
+        )
         return _response.data
 
     def delete(
@@ -404,6 +456,62 @@ class AsyncThreadsClient:
         """
         _response = await self._raw_client.get_attachment(
             pod_id, thread_id, attachment_id, request_options=request_options
+        )
+        return _response.data
+
+    async def update(
+        self,
+        pod_id: PodId,
+        thread_id: ThreadId,
+        *,
+        add_labels: typing.Optional[typing.Sequence[str]] = OMIT,
+        remove_labels: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> UpdateThreadResponse:
+        """
+        Updates thread labels. Cannot add or remove system labels (sent, received, bounced, etc.). Rejects requests with a `422` for threads with 100 or more messages.
+
+        Parameters
+        ----------
+        pod_id : PodId
+
+        thread_id : ThreadId
+
+        add_labels : typing.Optional[typing.Sequence[str]]
+            Labels to add to thread. Cannot be system labels.
+
+        remove_labels : typing.Optional[typing.Sequence[str]]
+            Labels to remove from thread. Cannot be system labels. Takes priority over `add_labels` (in the event of duplicate labels passed in).
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        UpdateThreadResponse
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.pods.threads.update(
+                pod_id="pod_id",
+                thread_id="thread_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update(
+            pod_id, thread_id, add_labels=add_labels, remove_labels=remove_labels, request_options=request_options
         )
         return _response.data
 

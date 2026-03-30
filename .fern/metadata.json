@@ -7,7 +7,8 @@
     "pydantic_config": {
       "skip_validation": true
     },
-    "should_generate_websocket_clients": true
+    "should_generate_websocket_clients": true,
+    "pyproject_toml": "description = \"The email inbox API for AI agents. Send, receive, reply, and manage threaded email conversations programmatically.\"\nauthors = [\"AgentMail <support@agentmail.cc>\"]\nkeywords = [\"email\", \"ai\", \"agent\", \"inbox\", \"api\", \"email-api\", \"ai-agent\", \"llm\", \"langchain\", \"crewai\", \"autonomous-agent\", \"agentmail\"]\nlicense = \"MIT\"\nhomepage = \"https://agentmail.to\"\n"
   },
-  "sdkVersion": "0.4.13"
+  "sdkVersion": "0.4.14"
 }

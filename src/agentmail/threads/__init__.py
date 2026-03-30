@@ -25,6 +25,8 @@ if typing.TYPE_CHECKING:
         ThreadSubject,
         ThreadTimestamp,
         ThreadUpdatedAt,
+        UpdateThreadRequest,
+        UpdateThreadResponse,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "ListThreadsResponse": ".types",
@@ -45,6 +47,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ThreadSubject": ".types",
     "ThreadTimestamp": ".types",
     "ThreadUpdatedAt": ".types",
+    "UpdateThreadRequest": ".types",
+    "UpdateThreadResponse": ".types",
 }
 
 
@@ -88,4 +92,6 @@ __all__ = [
     "ThreadSubject",
     "ThreadTimestamp",
     "ThreadUpdatedAt",
+    "UpdateThreadRequest",
+    "UpdateThreadResponse",
 ]

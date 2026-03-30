@@ -24,6 +24,8 @@ if typing.TYPE_CHECKING:
     from .thread_subject import ThreadSubject
     from .thread_timestamp import ThreadTimestamp
     from .thread_updated_at import ThreadUpdatedAt
+    from .update_thread_request import UpdateThreadRequest
+    from .update_thread_response import UpdateThreadResponse
 _dynamic_imports: typing.Dict[str, str] = {
     "ListThreadsResponse": ".list_threads_response",
     "Thread": ".thread",
@@ -43,6 +45,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ThreadSubject": ".thread_subject",
     "ThreadTimestamp": ".thread_timestamp",
     "ThreadUpdatedAt": ".thread_updated_at",
+    "UpdateThreadRequest": ".update_thread_request",
+    "UpdateThreadResponse": ".update_thread_response",
 }
 
 
@@ -86,4 +90,6 @@ __all__ = [
     "ThreadSubject",
     "ThreadTimestamp",
     "ThreadUpdatedAt",
+    "UpdateThreadRequest",
+    "UpdateThreadResponse",
 ]

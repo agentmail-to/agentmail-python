@@ -7,10 +7,11 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
 from ..errors.not_found_error import NotFoundError
-from ..errors.validation_error import ValidationError
+from ..errors.validation_error import ValidationError as errors_validation_error_ValidationError
 from ..events.types.event_types import EventTypes
 from ..events.types.inbox_ids import InboxIds
 from ..events.types.pod_ids import PodIds
@@ -24,6 +25,7 @@ from .types.list_webhooks_response import ListWebhooksResponse
 from .types.url import Url
 from .types.webhook import Webhook
 from .types.webhook_id import WebhookId
+from pydantic import ValidationError as pydantic_ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -81,6 +83,10 @@ class RawWebhooksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -128,6 +134,10 @@ class RawWebhooksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def create(
@@ -185,7 +195,7 @@ class RawWebhooksClient:
                 )
                 return HttpResponse(response=_response, data=_data)
             if _response.status_code == 400:
-                raise ValidationError(
+                raise errors_validation_error_ValidationError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ValidationErrorResponse,
@@ -198,6 +208,10 @@ class RawWebhooksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
@@ -269,7 +283,7 @@ class RawWebhooksClient:
                     ),
                 )
             if _response.status_code == 400:
-                raise ValidationError(
+                raise errors_validation_error_ValidationError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ValidationErrorResponse,
@@ -282,6 +296,10 @@ class RawWebhooksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -322,6 +340,10 @@ class RawWebhooksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -377,6 +399,10 @@ class AsyncRawWebhooksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -424,6 +450,10 @@ class AsyncRawWebhooksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def create(
@@ -481,7 +511,7 @@ class AsyncRawWebhooksClient:
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 400:
-                raise ValidationError(
+                raise errors_validation_error_ValidationError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ValidationErrorResponse,
@@ -494,6 +524,10 @@ class AsyncRawWebhooksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
@@ -565,7 +599,7 @@ class AsyncRawWebhooksClient:
                     ),
                 )
             if _response.status_code == 400:
-                raise ValidationError(
+                raise errors_validation_error_ValidationError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ValidationErrorResponse,
@@ -578,6 +612,10 @@ class AsyncRawWebhooksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -618,4 +656,8 @@ class AsyncRawWebhooksClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

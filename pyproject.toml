@@ -4,7 +4,7 @@ dynamic = ["version"]
 
 [tool.poetry]
 name = "agentmail"
-version = "0.4.14"
+version = "0.4.15"
 description = ""
 readme = "README.md"
 authors = []

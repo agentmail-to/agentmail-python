@@ -1,6 +1,6 @@
 # Reference
 ## Inboxes
-<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListInboxesResponse]</code></summary>
+<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">list</a>(...) -> ListInboxesResponse</code></summary>
 <dl>
 <dd>
 
@@ -14,10 +14,13 @@
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.list()
 
 ```
@@ -70,7 +73,7 @@ client.inboxes.list()
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">get</a>(...) -&gt; AsyncHttpResponse[Inbox]</code></summary>
+<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">get</a>(...) -> Inbox</code></summary>
 <dl>
 <dd>
 
@@ -84,10 +87,13 @@ client.inboxes.list()
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.get(
     inbox_id="inbox_id",
 )
@@ -126,7 +132,7 @@ client.inboxes.get(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">create</a>(...) -&gt; AsyncHttpResponse[Inbox]</code></summary>
+<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">create</a>(...) -> Inbox</code></summary>
 <dl>
 <dd>
 
@@ -140,10 +146,13 @@ client.inboxes.get(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.create()
 
 ```
@@ -180,7 +189,7 @@ client.inboxes.create()
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">update</a>(...) -&gt; AsyncHttpResponse[Inbox]</code></summary>
+<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">update</a>(...) -> Inbox</code></summary>
 <dl>
 <dd>
 
@@ -194,10 +203,13 @@ client.inboxes.create()
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.update(
     inbox_id="inbox_id",
     display_name="display_name",
@@ -225,7 +237,7 @@ client.inboxes.update(
 <dl>
 <dd>
 
-**display_name:** `DisplayName` 
+**request:** `UpdateInboxRequest` 
     
 </dd>
 </dl>
@@ -245,7 +257,7 @@ client.inboxes.update(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -259,10 +271,13 @@ client.inboxes.update(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.delete(
     inbox_id="inbox_id",
 )
@@ -302,7 +317,7 @@ client.inboxes.delete(
 </details>
 
 ## Pods
-<details><summary><code>client.pods.<a href="src/agentmail/pods/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListPodsResponse]</code></summary>
+<details><summary><code>client.pods.<a href="src/agentmail/pods/client.py">list</a>(...) -> ListPodsResponse</code></summary>
 <dl>
 <dd>
 
@@ -316,10 +331,13 @@ client.inboxes.delete(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.list()
 
 ```
@@ -372,7 +390,7 @@ client.pods.list()
 </dl>
 </details>
 
-<details><summary><code>client.pods.<a href="src/agentmail/pods/client.py">get</a>(...) -&gt; AsyncHttpResponse[Pod]</code></summary>
+<details><summary><code>client.pods.<a href="src/agentmail/pods/client.py">get</a>(...) -> Pod</code></summary>
 <dl>
 <dd>
 
@@ -386,10 +404,13 @@ client.pods.list()
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.get(
     pod_id="pod_id",
 )
@@ -428,7 +449,7 @@ client.pods.get(
 </dl>
 </details>
 
-<details><summary><code>client.pods.<a href="src/agentmail/pods/client.py">create</a>(...) -&gt; AsyncHttpResponse[Pod]</code></summary>
+<details><summary><code>client.pods.<a href="src/agentmail/pods/client.py">create</a>(...) -> Pod</code></summary>
 <dl>
 <dd>
 
@@ -442,10 +463,13 @@ client.pods.get(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.create()
 
 ```
@@ -462,15 +486,7 @@ client.pods.create()
 <dl>
 <dd>
 
-**name:** `typing.Optional[Name]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[ClientId]` 
+**request:** `CreatePodRequest` 
     
 </dd>
 </dl>
@@ -490,7 +506,7 @@ client.pods.create()
 </dl>
 </details>
 
-<details><summary><code>client.pods.<a href="src/agentmail/pods/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.pods.<a href="src/agentmail/pods/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -504,10 +520,13 @@ client.pods.create()
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.delete(
     pod_id="pod_id",
 )
@@ -547,7 +566,7 @@ client.pods.delete(
 </details>
 
 ## Webhooks
-<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListWebhooksResponse]</code></summary>
+<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">list</a>(...) -> ListWebhooksResponse</code></summary>
 <dl>
 <dd>
 
@@ -561,10 +580,13 @@ client.pods.delete(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.webhooks.list()
 
 ```
@@ -617,7 +639,7 @@ client.webhooks.list()
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">get</a>(...) -&gt; AsyncHttpResponse[Webhook]</code></summary>
+<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">get</a>(...) -> Webhook</code></summary>
 <dl>
 <dd>
 
@@ -631,10 +653,13 @@ client.webhooks.list()
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.webhooks.get(
     webhook_id="webhook_id",
 )
@@ -673,7 +698,7 @@ client.webhooks.get(
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">create</a>(...) -&gt; AsyncHttpResponse[Webhook]</code></summary>
+<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">create</a>(...) -> Webhook</code></summary>
 <dl>
 <dd>
 
@@ -687,13 +712,19 @@ client.webhooks.get(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.webhooks.create(
     url="url",
-    event_types=["message.received", "message.received"],
+    event_types=[
+        "message.received",
+        "message.received"
+    ],
 )
 
 ```
@@ -710,39 +741,7 @@ client.webhooks.create(
 <dl>
 <dd>
 
-**url:** `Url` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**event_types:** `EventTypes` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**pod_ids:** `typing.Optional[PodIds]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**inbox_ids:** `typing.Optional[InboxIds]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[ClientId]` 
+**request:** `CreateWebhookRequest` 
     
 </dd>
 </dl>
@@ -762,7 +761,7 @@ client.webhooks.create(
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">update</a>(...) -&gt; AsyncHttpResponse[Webhook]</code></summary>
+<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">update</a>(...) -> Webhook</code></summary>
 <dl>
 <dd>
 
@@ -776,10 +775,13 @@ client.webhooks.create(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.webhooks.update(
     webhook_id="webhook_id",
 )
@@ -806,31 +808,7 @@ client.webhooks.update(
 <dl>
 <dd>
 
-**add_inbox_ids:** `typing.Optional[InboxIds]` — Inbox IDs to subscribe to the webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**remove_inbox_ids:** `typing.Optional[InboxIds]` — Inbox IDs to unsubscribe from the webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**add_pod_ids:** `typing.Optional[PodIds]` — Pod IDs to subscribe to the webhook.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**remove_pod_ids:** `typing.Optional[PodIds]` — Pod IDs to unsubscribe from the webhook.
+**request:** `UpdateWebhookRequest` 
     
 </dd>
 </dl>
@@ -850,7 +828,7 @@ client.webhooks.update(
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -864,10 +842,13 @@ client.webhooks.update(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.webhooks.delete(
     webhook_id="webhook_id",
 )
@@ -907,7 +888,7 @@ client.webhooks.delete(
 </details>
 
 ## Agent
-<details><summary><code>client.agent.<a href="src/agentmail/agent/client.py">sign_up</a>(...) -&gt; AsyncHttpResponse[AgentSignupResponse]</code></summary>
+<details><summary><code>client.agent.<a href="src/agentmail/agent/client.py">sign_up</a>(...) -> AgentSignupResponse</code></summary>
 <dl>
 <dd>
 
@@ -939,10 +920,13 @@ The returned API key has limited permissions until the organization is verified 
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.agent.sign_up(
     human_email="human_email",
     username="username",
@@ -962,15 +946,7 @@ client.agent.sign_up(
 <dl>
 <dd>
 
-**human_email:** `str` — Email address of the human who owns the agent. A 6-digit OTP will be sent to this address.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**username:** `str` — Username for the auto-created inbox (e.g. "my-agent" creates my-agent@agentmail.to).
+**request:** `AgentSignupRequest` 
     
 </dd>
 </dl>
@@ -990,7 +966,7 @@ client.agent.sign_up(
 </dl>
 </details>
 
-<details><summary><code>client.agent.<a href="src/agentmail/agent/client.py">verify</a>(...) -&gt; AsyncHttpResponse[AgentVerifyResponse]</code></summary>
+<details><summary><code>client.agent.<a href="src/agentmail/agent/client.py">verify</a>(...) -> AgentVerifyResponse</code></summary>
 <dl>
 <dd>
 
@@ -1022,10 +998,13 @@ The OTP expires after 24 hours and allows a maximum of 10 attempts.
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.agent.verify(
     otp_code="otp_code",
 )
@@ -1044,7 +1023,7 @@ client.agent.verify(
 <dl>
 <dd>
 
-**otp_code:** `str` — 6-digit verification code sent to the human's email address.
+**request:** `AgentVerifyRequest` 
     
 </dd>
 </dl>
@@ -1065,7 +1044,7 @@ client.agent.verify(
 </details>
 
 ## ApiKeys
-<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListApiKeysResponse]</code></summary>
+<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">list</a>(...) -> ListApiKeysResponse</code></summary>
 <dl>
 <dd>
 
@@ -1079,10 +1058,13 @@ client.agent.verify(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.api_keys.list()
 
 ```
@@ -1135,7 +1117,7 @@ client.api_keys.list()
 </dl>
 </details>
 
-<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">create</a>(...) -&gt; AsyncHttpResponse[CreateApiKeyResponse]</code></summary>
+<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">create</a>(...) -> CreateApiKeyResponse</code></summary>
 <dl>
 <dd>
 
@@ -1149,10 +1131,13 @@ client.api_keys.list()
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.api_keys.create(
     name="name",
 )
@@ -1171,15 +1156,7 @@ client.api_keys.create(
 <dl>
 <dd>
 
-**name:** `Name` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**permissions:** `typing.Optional[ApiKeyPermissions]` 
+**request:** `CreateApiKeyRequest` 
     
 </dd>
 </dl>
@@ -1199,7 +1176,7 @@ client.api_keys.create(
 </dl>
 </details>
 
-<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1213,10 +1190,13 @@ client.api_keys.create(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.api_keys.delete(
     api_key_id="api_key_id",
 )
@@ -1256,7 +1236,7 @@ client.api_keys.delete(
 </details>
 
 ## Domains
-<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListDomainsResponse]</code></summary>
+<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">list</a>(...) -> ListDomainsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1270,10 +1250,13 @@ client.api_keys.delete(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.domains.list()
 
 ```
@@ -1326,7 +1309,7 @@ client.domains.list()
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">get</a>(...) -&gt; AsyncHttpResponse[Domain]</code></summary>
+<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">get</a>(...) -> Domain</code></summary>
 <dl>
 <dd>
 
@@ -1340,10 +1323,13 @@ client.domains.list()
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.domains.get(
     domain_id="domain_id",
 )
@@ -1382,7 +1368,7 @@ client.domains.get(
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">get_zone_file</a>(...) -&gt; typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]</code></summary>
+<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">get_zone_file</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -1396,10 +1382,13 @@ client.domains.get(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.domains.get_zone_file(
     domain_id="domain_id",
 )
@@ -1426,7 +1415,7 @@ client.domains.get_zone_file(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -1438,7 +1427,7 @@ client.domains.get_zone_file(
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">create</a>(...) -&gt; AsyncHttpResponse[Domain]</code></summary>
+<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">create</a>(...) -> Domain</code></summary>
 <dl>
 <dd>
 
@@ -1452,10 +1441,13 @@ client.domains.get_zone_file(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.domains.create(
     domain="domain",
     feedback_enabled=True,
@@ -1475,15 +1467,7 @@ client.domains.create(
 <dl>
 <dd>
 
-**domain:** `DomainName` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**feedback_enabled:** `FeedbackEnabled` 
+**request:** `CreateDomainRequest` 
     
 </dd>
 </dl>
@@ -1503,7 +1487,7 @@ client.domains.create(
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">update</a>(...) -&gt; AsyncHttpResponse[Domain]</code></summary>
+<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">update</a>(...) -> Domain</code></summary>
 <dl>
 <dd>
 
@@ -1517,10 +1501,13 @@ client.domains.create(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.domains.update(
     domain_id="domain_id",
 )
@@ -1547,7 +1534,7 @@ client.domains.update(
 <dl>
 <dd>
 
-**feedback_enabled:** `typing.Optional[FeedbackEnabled]` 
+**request:** `UpdateDomainRequest` 
     
 </dd>
 </dl>
@@ -1567,7 +1554,7 @@ client.domains.update(
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1581,10 +1568,13 @@ client.domains.update(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.domains.delete(
     domain_id="domain_id",
 )
@@ -1623,7 +1613,7 @@ client.domains.delete(
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">verify</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">verify</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1637,10 +1627,13 @@ client.domains.delete(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.domains.verify(
     domain_id="domain_id",
 )
@@ -1680,7 +1673,7 @@ client.domains.verify(
 </details>
 
 ## Drafts
-<details><summary><code>client.drafts.<a href="src/agentmail/drafts/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListDraftsResponse]</code></summary>
+<details><summary><code>client.drafts.<a href="src/agentmail/drafts/client.py">list</a>(...) -> ListDraftsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1694,10 +1687,13 @@ client.domains.verify(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.drafts.list()
 
 ```
@@ -1774,7 +1770,7 @@ client.drafts.list()
 </dl>
 </details>
 
-<details><summary><code>client.drafts.<a href="src/agentmail/drafts/client.py">get</a>(...) -&gt; AsyncHttpResponse[Draft]</code></summary>
+<details><summary><code>client.drafts.<a href="src/agentmail/drafts/client.py">get</a>(...) -> Draft</code></summary>
 <dl>
 <dd>
 
@@ -1788,10 +1784,13 @@ client.drafts.list()
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.drafts.get(
     draft_id="draft_id",
 )
@@ -1830,7 +1829,7 @@ client.drafts.get(
 </dl>
 </details>
 
-<details><summary><code>client.drafts.<a href="src/agentmail/drafts/client.py">get_attachment</a>(...) -&gt; AsyncHttpResponse[AttachmentResponse]</code></summary>
+<details><summary><code>client.drafts.<a href="src/agentmail/drafts/client.py">get_attachment</a>(...) -> AttachmentResponse</code></summary>
 <dl>
 <dd>
 
@@ -1844,10 +1843,13 @@ client.drafts.get(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.drafts.get_attachment(
     draft_id="draft_id",
     attachment_id="attachment_id",
@@ -1896,7 +1898,7 @@ client.drafts.get_attachment(
 </details>
 
 ## Inboxes ApiKeys
-<details><summary><code>client.inboxes.api_keys.<a href="src/agentmail/inboxes/api_keys/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListApiKeysResponse]</code></summary>
+<details><summary><code>client.inboxes.api_keys.<a href="src/agentmail/inboxes/api_keys/client.py">list</a>(...) -> ListApiKeysResponse</code></summary>
 <dl>
 <dd>
 
@@ -1910,10 +1912,13 @@ client.drafts.get_attachment(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.api_keys.list(
     inbox_id="inbox_id",
 )
@@ -1968,7 +1973,7 @@ client.inboxes.api_keys.list(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.api_keys.<a href="src/agentmail/inboxes/api_keys/client.py">create</a>(...) -&gt; AsyncHttpResponse[CreateApiKeyResponse]</code></summary>
+<details><summary><code>client.inboxes.api_keys.<a href="src/agentmail/inboxes/api_keys/client.py">create</a>(...) -> CreateApiKeyResponse</code></summary>
 <dl>
 <dd>
 
@@ -1982,10 +1987,13 @@ client.inboxes.api_keys.list(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.api_keys.create(
     inbox_id="inbox_id",
     name="name",
@@ -2013,15 +2021,7 @@ client.inboxes.api_keys.create(
 <dl>
 <dd>
 
-**name:** `Name` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**permissions:** `typing.Optional[ApiKeyPermissions]` 
+**request:** `CreateApiKeyRequest` 
     
 </dd>
 </dl>
@@ -2041,7 +2041,7 @@ client.inboxes.api_keys.create(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.api_keys.<a href="src/agentmail/inboxes/api_keys/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.inboxes.api_keys.<a href="src/agentmail/inboxes/api_keys/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2055,10 +2055,13 @@ client.inboxes.api_keys.create(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.api_keys.delete(
     inbox_id="inbox_id",
     api_key_id="api_key_id",
@@ -2107,7 +2110,7 @@ client.inboxes.api_keys.delete(
 </details>
 
 ## Inboxes Drafts
-<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListDraftsResponse]</code></summary>
+<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">list</a>(...) -> ListDraftsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2121,10 +2124,13 @@ client.inboxes.api_keys.delete(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.drafts.list(
     inbox_id="inbox_id",
 )
@@ -2211,7 +2217,7 @@ client.inboxes.drafts.list(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">get</a>(...) -&gt; AsyncHttpResponse[Draft]</code></summary>
+<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">get</a>(...) -> Draft</code></summary>
 <dl>
 <dd>
 
@@ -2225,10 +2231,13 @@ client.inboxes.drafts.list(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.drafts.get(
     inbox_id="inbox_id",
     draft_id="draft_id",
@@ -2276,7 +2285,7 @@ client.inboxes.drafts.get(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">get_attachment</a>(...) -&gt; AsyncHttpResponse[AttachmentResponse]</code></summary>
+<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">get_attachment</a>(...) -> AttachmentResponse</code></summary>
 <dl>
 <dd>
 
@@ -2290,10 +2299,13 @@ client.inboxes.drafts.get(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.drafts.get_attachment(
     inbox_id="inbox_id",
     draft_id="draft_id",
@@ -2350,7 +2362,7 @@ client.inboxes.drafts.get_attachment(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">create</a>(...) -&gt; AsyncHttpResponse[Draft]</code></summary>
+<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">create</a>(...) -> Draft</code></summary>
 <dl>
 <dd>
 
@@ -2364,10 +2376,13 @@ client.inboxes.drafts.get_attachment(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.drafts.create(
     inbox_id="inbox_id",
 )
@@ -2394,95 +2409,7 @@ client.inboxes.drafts.create(
 <dl>
 <dd>
 
-**labels:** `typing.Optional[DraftLabels]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**reply_to:** `typing.Optional[DraftReplyTo]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**to:** `typing.Optional[DraftTo]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**cc:** `typing.Optional[DraftCc]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bcc:** `typing.Optional[DraftBcc]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**subject:** `typing.Optional[DraftSubject]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**text:** `typing.Optional[DraftText]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**html:** `typing.Optional[DraftHtml]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**attachments:** `typing.Optional[typing.Sequence[SendAttachment]]` — Attachments to include in draft.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**in_reply_to:** `typing.Optional[DraftInReplyTo]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**send_at:** `typing.Optional[DraftSendAt]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[DraftClientId]` 
+**request:** `CreateDraftRequest` 
     
 </dd>
 </dl>
@@ -2502,7 +2429,7 @@ client.inboxes.drafts.create(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">update</a>(...) -&gt; AsyncHttpResponse[Draft]</code></summary>
+<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">update</a>(...) -> Draft</code></summary>
 <dl>
 <dd>
 
@@ -2516,10 +2443,13 @@ client.inboxes.drafts.create(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.drafts.update(
     inbox_id="inbox_id",
     draft_id="draft_id",
@@ -2555,63 +2485,7 @@ client.inboxes.drafts.update(
 <dl>
 <dd>
 
-**reply_to:** `typing.Optional[DraftReplyTo]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**to:** `typing.Optional[DraftTo]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**cc:** `typing.Optional[DraftCc]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bcc:** `typing.Optional[DraftBcc]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**subject:** `typing.Optional[DraftSubject]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**text:** `typing.Optional[DraftText]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**html:** `typing.Optional[DraftHtml]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**send_at:** `typing.Optional[DraftSendAt]` 
+**request:** `UpdateDraftRequest` 
     
 </dd>
 </dl>
@@ -2631,7 +2505,7 @@ client.inboxes.drafts.update(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2645,10 +2519,13 @@ client.inboxes.drafts.update(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.drafts.delete(
     inbox_id="inbox_id",
     draft_id="draft_id",
@@ -2696,7 +2573,7 @@ client.inboxes.drafts.delete(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">send</a>(...) -&gt; AsyncHttpResponse[SendMessageResponse]</code></summary>
+<details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">send</a>(...) -> SendMessageResponse</code></summary>
 <dl>
 <dd>
 
@@ -2710,10 +2587,13 @@ client.inboxes.drafts.delete(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.drafts.send(
     inbox_id="inbox_id",
     draft_id="draft_id",
@@ -2749,15 +2629,7 @@ client.inboxes.drafts.send(
 <dl>
 <dd>
 
-**add_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to add to message.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**remove_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to remove from message.
+**request:** `UpdateMessageRequest` 
     
 </dd>
 </dl>
@@ -2778,7 +2650,7 @@ client.inboxes.drafts.send(
 </details>
 
 ## Inboxes Lists
-<details><summary><code>client.inboxes.lists.<a href="src/agentmail/inboxes/lists/client.py">list</a>(...) -&gt; AsyncHttpResponse[PodListListEntriesResponse]</code></summary>
+<details><summary><code>client.inboxes.lists.<a href="src/agentmail/inboxes/lists/client.py">list</a>(...) -> PodListListEntriesResponse</code></summary>
 <dl>
 <dd>
 
@@ -2792,10 +2664,13 @@ client.inboxes.drafts.send(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.lists.list(
     inbox_id="inbox_id",
     direction="send",
@@ -2868,7 +2743,7 @@ client.inboxes.lists.list(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.lists.<a href="src/agentmail/inboxes/lists/client.py">get</a>(...) -&gt; AsyncHttpResponse[PodListEntry]</code></summary>
+<details><summary><code>client.inboxes.lists.<a href="src/agentmail/inboxes/lists/client.py">get</a>(...) -> PodListEntry</code></summary>
 <dl>
 <dd>
 
@@ -2882,10 +2757,13 @@ client.inboxes.lists.list(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.lists.get(
     inbox_id="inbox_id",
     direction="send",
@@ -2951,7 +2829,7 @@ client.inboxes.lists.get(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.lists.<a href="src/agentmail/inboxes/lists/client.py">create</a>(...) -&gt; AsyncHttpResponse[PodListEntry]</code></summary>
+<details><summary><code>client.inboxes.lists.<a href="src/agentmail/inboxes/lists/client.py">create</a>(...) -> PodListEntry</code></summary>
 <dl>
 <dd>
 
@@ -2965,10 +2843,13 @@ client.inboxes.lists.get(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.lists.create(
     inbox_id="inbox_id",
     direction="send",
@@ -3014,15 +2895,7 @@ client.inboxes.lists.create(
 <dl>
 <dd>
 
-**entry:** `str` — Email address or domain to add.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**reason:** `typing.Optional[str]` — Reason for adding the entry.
+**request:** `CreateListEntryRequest` 
     
 </dd>
 </dl>
@@ -3042,7 +2915,7 @@ client.inboxes.lists.create(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.lists.<a href="src/agentmail/inboxes/lists/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.inboxes.lists.<a href="src/agentmail/inboxes/lists/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -3056,10 +2929,13 @@ client.inboxes.lists.create(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.lists.delete(
     inbox_id="inbox_id",
     direction="send",
@@ -3126,7 +3002,7 @@ client.inboxes.lists.delete(
 </details>
 
 ## Inboxes Messages
-<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListMessagesResponse]</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">list</a>(...) -> ListMessagesResponse</code></summary>
 <dl>
 <dd>
 
@@ -3140,10 +3016,13 @@ client.inboxes.lists.delete(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.messages.list(
     inbox_id="inbox_id",
 )
@@ -3254,7 +3133,7 @@ client.inboxes.messages.list(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">get</a>(...) -&gt; AsyncHttpResponse[Message]</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">get</a>(...) -> Message</code></summary>
 <dl>
 <dd>
 
@@ -3268,10 +3147,13 @@ client.inboxes.messages.list(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.messages.get(
     inbox_id="inbox_id",
     message_id="message_id",
@@ -3319,7 +3201,7 @@ client.inboxes.messages.get(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">get_attachment</a>(...) -&gt; AsyncHttpResponse[AttachmentResponse]</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">get_attachment</a>(...) -> AttachmentResponse</code></summary>
 <dl>
 <dd>
 
@@ -3333,10 +3215,13 @@ client.inboxes.messages.get(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.messages.get_attachment(
     inbox_id="inbox_id",
     message_id="message_id",
@@ -3393,7 +3278,7 @@ client.inboxes.messages.get_attachment(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">get_raw</a>(...) -&gt; AsyncHttpResponse[RawMessageResponse]</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">get_raw</a>(...) -> RawMessageResponse</code></summary>
 <dl>
 <dd>
 
@@ -3407,10 +3292,13 @@ client.inboxes.messages.get_attachment(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.messages.get_raw(
     inbox_id="inbox_id",
     message_id="message_id",
@@ -3458,7 +3346,7 @@ client.inboxes.messages.get_raw(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">update</a>(...) -&gt; AsyncHttpResponse[UpdateMessageResponse]</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">update</a>(...) -> UpdateMessageResponse</code></summary>
 <dl>
 <dd>
 
@@ -3472,10 +3360,13 @@ client.inboxes.messages.get_raw(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.messages.update(
     inbox_id="inbox_id",
     message_id="message_id",
@@ -3511,15 +3402,7 @@ client.inboxes.messages.update(
 <dl>
 <dd>
 
-**add_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to add to message.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**remove_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to remove from message.
+**request:** `UpdateMessageRequest` 
     
 </dd>
 </dl>
@@ -3539,7 +3422,7 @@ client.inboxes.messages.update(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">send</a>(...) -&gt; AsyncHttpResponse[SendMessageResponse]</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">send</a>(...) -> SendMessageResponse</code></summary>
 <dl>
 <dd>
 
@@ -3553,10 +3436,13 @@ client.inboxes.messages.update(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.messages.send(
     inbox_id="inbox_id",
 )
@@ -3583,79 +3469,7 @@ client.inboxes.messages.send(
 <dl>
 <dd>
 
-**labels:** `typing.Optional[MessageLabels]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**reply_to:** `typing.Optional[SendMessageReplyTo]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**to:** `typing.Optional[SendMessageTo]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**cc:** `typing.Optional[SendMessageCc]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bcc:** `typing.Optional[SendMessageBcc]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**subject:** `typing.Optional[MessageSubject]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**text:** `typing.Optional[MessageText]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**html:** `typing.Optional[MessageHtml]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**attachments:** `typing.Optional[SendMessageAttachments]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**headers:** `typing.Optional[SendMessageHeaders]` 
+**request:** `SendMessageRequest` 
     
 </dd>
 </dl>
@@ -3675,7 +3489,7 @@ client.inboxes.messages.send(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">reply</a>(...) -&gt; AsyncHttpResponse[SendMessageResponse]</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">reply</a>(...) -> SendMessageResponse</code></summary>
 <dl>
 <dd>
 
@@ -3689,10 +3503,13 @@ client.inboxes.messages.send(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.messages.reply(
     inbox_id="inbox_id",
     message_id="message_id",
@@ -3728,79 +3545,7 @@ client.inboxes.messages.reply(
 <dl>
 <dd>
 
-**labels:** `typing.Optional[MessageLabels]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**reply_to:** `typing.Optional[SendMessageReplyTo]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**to:** `typing.Optional[SendMessageTo]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**cc:** `typing.Optional[SendMessageCc]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bcc:** `typing.Optional[SendMessageBcc]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**reply_all:** `typing.Optional[ReplyAll]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**text:** `typing.Optional[MessageText]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**html:** `typing.Optional[MessageHtml]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**attachments:** `typing.Optional[SendMessageAttachments]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**headers:** `typing.Optional[SendMessageHeaders]` 
+**request:** `ReplyToMessageRequest` 
     
 </dd>
 </dl>
@@ -3820,7 +3565,7 @@ client.inboxes.messages.reply(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">reply_all</a>(...) -&gt; AsyncHttpResponse[SendMessageResponse]</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">reply_all</a>(...) -> SendMessageResponse</code></summary>
 <dl>
 <dd>
 
@@ -3834,10 +3579,13 @@ client.inboxes.messages.reply(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.messages.reply_all(
     inbox_id="inbox_id",
     message_id="message_id",
@@ -3873,47 +3621,7 @@ client.inboxes.messages.reply_all(
 <dl>
 <dd>
 
-**labels:** `typing.Optional[MessageLabels]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**reply_to:** `typing.Optional[SendMessageReplyTo]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**text:** `typing.Optional[MessageText]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**html:** `typing.Optional[MessageHtml]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**attachments:** `typing.Optional[SendMessageAttachments]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**headers:** `typing.Optional[SendMessageHeaders]` 
+**request:** `ReplyAllMessageRequest` 
     
 </dd>
 </dl>
@@ -3933,7 +3641,7 @@ client.inboxes.messages.reply_all(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">forward</a>(...) -&gt; AsyncHttpResponse[SendMessageResponse]</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">forward</a>(...) -> SendMessageResponse</code></summary>
 <dl>
 <dd>
 
@@ -3947,10 +3655,13 @@ client.inboxes.messages.reply_all(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.messages.forward(
     inbox_id="inbox_id",
     message_id="message_id",
@@ -3986,79 +3697,7 @@ client.inboxes.messages.forward(
 <dl>
 <dd>
 
-**labels:** `typing.Optional[MessageLabels]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**reply_to:** `typing.Optional[SendMessageReplyTo]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**to:** `typing.Optional[SendMessageTo]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**cc:** `typing.Optional[SendMessageCc]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**bcc:** `typing.Optional[SendMessageBcc]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**subject:** `typing.Optional[MessageSubject]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**text:** `typing.Optional[MessageText]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**html:** `typing.Optional[MessageHtml]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**attachments:** `typing.Optional[SendMessageAttachments]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**headers:** `typing.Optional[SendMessageHeaders]` 
+**request:** `SendMessageRequest` 
     
 </dd>
 </dl>
@@ -4079,7 +3718,7 @@ client.inboxes.messages.forward(
 </details>
 
 ## Inboxes Metrics
-<details><summary><code>client.inboxes.metrics.<a href="src/agentmail/inboxes/metrics/client.py">query</a>(...) -&gt; AsyncHttpResponse[QueryMetricsResponse]</code></summary>
+<details><summary><code>client.inboxes.metrics.<a href="src/agentmail/inboxes/metrics/client.py">query</a>(...) -> QueryMetricsResponse</code></summary>
 <dl>
 <dd>
 
@@ -4093,10 +3732,13 @@ client.inboxes.messages.forward(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.metrics.query(
     inbox_id="inbox_id",
 )
@@ -4184,7 +3826,7 @@ client.inboxes.metrics.query(
 </details>
 
 ## Inboxes Threads
-<details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListThreadsResponse]</code></summary>
+<details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">list</a>(...) -> ListThreadsResponse</code></summary>
 <dl>
 <dd>
 
@@ -4198,10 +3840,13 @@ client.inboxes.metrics.query(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.threads.list(
     inbox_id="inbox_id",
 )
@@ -4312,7 +3957,7 @@ client.inboxes.threads.list(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">get</a>(...) -&gt; AsyncHttpResponse[Thread]</code></summary>
+<details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">get</a>(...) -> Thread</code></summary>
 <dl>
 <dd>
 
@@ -4326,10 +3971,13 @@ client.inboxes.threads.list(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.threads.get(
     inbox_id="inbox_id",
     thread_id="thread_id",
@@ -4377,7 +4025,7 @@ client.inboxes.threads.get(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">get_attachment</a>(...) -&gt; AsyncHttpResponse[AttachmentResponse]</code></summary>
+<details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">get_attachment</a>(...) -> AttachmentResponse</code></summary>
 <dl>
 <dd>
 
@@ -4391,10 +4039,13 @@ client.inboxes.threads.get(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.threads.get_attachment(
     inbox_id="inbox_id",
     thread_id="thread_id",
@@ -4451,7 +4102,7 @@ client.inboxes.threads.get_attachment(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">update</a>(...) -&gt; AsyncHttpResponse[UpdateThreadResponse]</code></summary>
+<details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">update</a>(...) -> UpdateThreadResponse</code></summary>
 <dl>
 <dd>
 
@@ -4479,10 +4130,13 @@ Updates thread labels. Cannot add or remove system labels (sent, received, bounc
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.threads.update(
     inbox_id="inbox_id",
     thread_id="thread_id",
@@ -4518,15 +4172,7 @@ client.inboxes.threads.update(
 <dl>
 <dd>
 
-**add_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to add to thread. Cannot be system labels.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**remove_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to remove from thread. Cannot be system labels. Takes priority over `add_labels` (in the event of duplicate labels passed in).
+**request:** `UpdateThreadRequest` 
     
 </dd>
 </dl>
@@ -4546,7 +4192,7 @@ client.inboxes.threads.update(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -4574,10 +4220,13 @@ Moves the thread to trash by adding a trash label to all messages. If the thread
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.inboxes.threads.delete(
     inbox_id="inbox_id",
     thread_id="thread_id",
@@ -4634,7 +4283,7 @@ client.inboxes.threads.delete(
 </details>
 
 ## Lists
-<details><summary><code>client.lists.<a href="src/agentmail/lists/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListListEntriesResponse]</code></summary>
+<details><summary><code>client.lists.<a href="src/agentmail/lists/client.py">list</a>(...) -> ListListEntriesResponse</code></summary>
 <dl>
 <dd>
 
@@ -4648,10 +4297,13 @@ client.inboxes.threads.delete(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.lists.list(
     direction="send",
     type="allow",
@@ -4715,7 +4367,7 @@ client.lists.list(
 </dl>
 </details>
 
-<details><summary><code>client.lists.<a href="src/agentmail/lists/client.py">get</a>(...) -&gt; AsyncHttpResponse[ListEntry]</code></summary>
+<details><summary><code>client.lists.<a href="src/agentmail/lists/client.py">get</a>(...) -> ListEntry</code></summary>
 <dl>
 <dd>
 
@@ -4729,10 +4381,13 @@ client.lists.list(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.lists.get(
     direction="send",
     type="allow",
@@ -4789,7 +4444,7 @@ client.lists.get(
 </dl>
 </details>
 
-<details><summary><code>client.lists.<a href="src/agentmail/lists/client.py">create</a>(...) -&gt; AsyncHttpResponse[ListEntry]</code></summary>
+<details><summary><code>client.lists.<a href="src/agentmail/lists/client.py">create</a>(...) -> ListEntry</code></summary>
 <dl>
 <dd>
 
@@ -4803,10 +4458,13 @@ client.lists.get(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.lists.create(
     direction="send",
     type="allow",
@@ -4843,15 +4501,7 @@ client.lists.create(
 <dl>
 <dd>
 
-**entry:** `str` — Email address or domain to add.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**reason:** `typing.Optional[str]` — Reason for adding the entry.
+**request:** `CreateListEntryRequest` 
     
 </dd>
 </dl>
@@ -4871,7 +4521,7 @@ client.lists.create(
 </dl>
 </details>
 
-<details><summary><code>client.lists.<a href="src/agentmail/lists/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.lists.<a href="src/agentmail/lists/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -4885,10 +4535,13 @@ client.lists.create(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.lists.delete(
     direction="send",
     type="allow",
@@ -4946,7 +4599,7 @@ client.lists.delete(
 </details>
 
 ## Metrics
-<details><summary><code>client.metrics.<a href="src/agentmail/metrics/client.py">query</a>(...) -&gt; AsyncHttpResponse[QueryMetricsResponse]</code></summary>
+<details><summary><code>client.metrics.<a href="src/agentmail/metrics/client.py">query</a>(...) -> QueryMetricsResponse</code></summary>
 <dl>
 <dd>
 
@@ -4960,10 +4613,13 @@ client.lists.delete(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.metrics.query()
 
 ```
@@ -5041,7 +4697,7 @@ client.metrics.query()
 </details>
 
 ## Organizations
-<details><summary><code>client.organizations.<a href="src/agentmail/organizations/client.py">get</a>() -&gt; AsyncHttpResponse[Organization]</code></summary>
+<details><summary><code>client.organizations.<a href="src/agentmail/organizations/client.py">get</a>() -> Organization</code></summary>
 <dl>
 <dd>
 
@@ -5069,10 +4725,13 @@ Get the current organization.
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.organizations.get()
 
 ```
@@ -5102,7 +4761,7 @@ client.organizations.get()
 </details>
 
 ## Pods ApiKeys
-<details><summary><code>client.pods.api_keys.<a href="src/agentmail/pods/api_keys/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListApiKeysResponse]</code></summary>
+<details><summary><code>client.pods.api_keys.<a href="src/agentmail/pods/api_keys/client.py">list</a>(...) -> ListApiKeysResponse</code></summary>
 <dl>
 <dd>
 
@@ -5116,10 +4775,13 @@ client.organizations.get()
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.api_keys.list(
     pod_id="pod_id",
 )
@@ -5174,7 +4836,7 @@ client.pods.api_keys.list(
 </dl>
 </details>
 
-<details><summary><code>client.pods.api_keys.<a href="src/agentmail/pods/api_keys/client.py">create</a>(...) -&gt; AsyncHttpResponse[CreateApiKeyResponse]</code></summary>
+<details><summary><code>client.pods.api_keys.<a href="src/agentmail/pods/api_keys/client.py">create</a>(...) -> CreateApiKeyResponse</code></summary>
 <dl>
 <dd>
 
@@ -5188,10 +4850,13 @@ client.pods.api_keys.list(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.api_keys.create(
     pod_id="pod_id",
     name="name",
@@ -5219,15 +4884,7 @@ client.pods.api_keys.create(
 <dl>
 <dd>
 
-**name:** `Name` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**permissions:** `typing.Optional[ApiKeyPermissions]` 
+**request:** `CreateApiKeyRequest` 
     
 </dd>
 </dl>
@@ -5247,7 +4904,7 @@ client.pods.api_keys.create(
 </dl>
 </details>
 
-<details><summary><code>client.pods.api_keys.<a href="src/agentmail/pods/api_keys/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.pods.api_keys.<a href="src/agentmail/pods/api_keys/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -5261,10 +4918,13 @@ client.pods.api_keys.create(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.api_keys.delete(
     pod_id="pod_id",
     api_key_id="api_key_id",
@@ -5313,7 +4973,7 @@ client.pods.api_keys.delete(
 </details>
 
 ## Pods Domains
-<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListDomainsResponse]</code></summary>
+<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">list</a>(...) -> ListDomainsResponse</code></summary>
 <dl>
 <dd>
 
@@ -5327,10 +4987,13 @@ client.pods.api_keys.delete(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.domains.list(
     pod_id="pod_id",
 )
@@ -5393,7 +5056,7 @@ client.pods.domains.list(
 </dl>
 </details>
 
-<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">get</a>(...) -&gt; AsyncHttpResponse[Domain]</code></summary>
+<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">get</a>(...) -> Domain</code></summary>
 <dl>
 <dd>
 
@@ -5407,10 +5070,13 @@ client.pods.domains.list(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.domains.get(
     pod_id="pod_id",
     domain_id="domain_id",
@@ -5458,7 +5124,7 @@ client.pods.domains.get(
 </dl>
 </details>
 
-<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">get_zone_file</a>(...) -&gt; typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]</code></summary>
+<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">get_zone_file</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -5472,10 +5138,13 @@ client.pods.domains.get(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.domains.get_zone_file(
     pod_id="pod_id",
     domain_id="domain_id",
@@ -5511,7 +5180,7 @@ client.pods.domains.get_zone_file(
 <dl>
 <dd>
 
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration. You can pass in configuration such as `chunk_size`, and more to customize the request and response.
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
 </dl>
@@ -5523,7 +5192,7 @@ client.pods.domains.get_zone_file(
 </dl>
 </details>
 
-<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">create</a>(...) -&gt; AsyncHttpResponse[Domain]</code></summary>
+<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">create</a>(...) -> Domain</code></summary>
 <dl>
 <dd>
 
@@ -5537,10 +5206,13 @@ client.pods.domains.get_zone_file(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.domains.create(
     pod_id="pod_id",
     domain="domain",
@@ -5569,15 +5241,7 @@ client.pods.domains.create(
 <dl>
 <dd>
 
-**domain:** `DomainName` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**feedback_enabled:** `FeedbackEnabled` 
+**request:** `CreateDomainRequest` 
     
 </dd>
 </dl>
@@ -5597,7 +5261,7 @@ client.pods.domains.create(
 </dl>
 </details>
 
-<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">update</a>(...) -&gt; AsyncHttpResponse[Domain]</code></summary>
+<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">update</a>(...) -> Domain</code></summary>
 <dl>
 <dd>
 
@@ -5611,10 +5275,13 @@ client.pods.domains.create(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.domains.update(
     pod_id="pod_id",
     domain_id="domain_id",
@@ -5650,7 +5317,7 @@ client.pods.domains.update(
 <dl>
 <dd>
 
-**feedback_enabled:** `typing.Optional[FeedbackEnabled]` 
+**request:** `UpdateDomainRequest` 
     
 </dd>
 </dl>
@@ -5670,7 +5337,7 @@ client.pods.domains.update(
 </dl>
 </details>
 
-<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -5684,10 +5351,13 @@ client.pods.domains.update(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.domains.delete(
     pod_id="pod_id",
     domain_id="domain_id",
@@ -5735,7 +5405,7 @@ client.pods.domains.delete(
 </dl>
 </details>
 
-<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">verify</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">verify</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -5749,10 +5419,13 @@ client.pods.domains.delete(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.domains.verify(
     pod_id="pod_id",
     domain_id="domain_id",
@@ -5801,7 +5474,7 @@ client.pods.domains.verify(
 </details>
 
 ## Pods Drafts
-<details><summary><code>client.pods.drafts.<a href="src/agentmail/pods/drafts/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListDraftsResponse]</code></summary>
+<details><summary><code>client.pods.drafts.<a href="src/agentmail/pods/drafts/client.py">list</a>(...) -> ListDraftsResponse</code></summary>
 <dl>
 <dd>
 
@@ -5815,10 +5488,13 @@ client.pods.domains.verify(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.drafts.list(
     pod_id="pod_id",
 )
@@ -5905,7 +5581,7 @@ client.pods.drafts.list(
 </dl>
 </details>
 
-<details><summary><code>client.pods.drafts.<a href="src/agentmail/pods/drafts/client.py">get</a>(...) -&gt; AsyncHttpResponse[Draft]</code></summary>
+<details><summary><code>client.pods.drafts.<a href="src/agentmail/pods/drafts/client.py">get</a>(...) -> Draft</code></summary>
 <dl>
 <dd>
 
@@ -5919,10 +5595,13 @@ client.pods.drafts.list(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.drafts.get(
     pod_id="pod_id",
     draft_id="draft_id",
@@ -5970,7 +5649,7 @@ client.pods.drafts.get(
 </dl>
 </details>
 
-<details><summary><code>client.pods.drafts.<a href="src/agentmail/pods/drafts/client.py">get_attachment</a>(...) -&gt; AsyncHttpResponse[AttachmentResponse]</code></summary>
+<details><summary><code>client.pods.drafts.<a href="src/agentmail/pods/drafts/client.py">get_attachment</a>(...) -> AttachmentResponse</code></summary>
 <dl>
 <dd>
 
@@ -5984,10 +5663,13 @@ client.pods.drafts.get(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.drafts.get_attachment(
     pod_id="pod_id",
     draft_id="draft_id",
@@ -6045,7 +5727,7 @@ client.pods.drafts.get_attachment(
 </details>
 
 ## Pods Inboxes
-<details><summary><code>client.pods.inboxes.<a href="src/agentmail/pods/inboxes/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListInboxesResponse]</code></summary>
+<details><summary><code>client.pods.inboxes.<a href="src/agentmail/pods/inboxes/client.py">list</a>(...) -> ListInboxesResponse</code></summary>
 <dl>
 <dd>
 
@@ -6059,10 +5741,13 @@ client.pods.drafts.get_attachment(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.inboxes.list(
     pod_id="pod_id",
 )
@@ -6125,7 +5810,7 @@ client.pods.inboxes.list(
 </dl>
 </details>
 
-<details><summary><code>client.pods.inboxes.<a href="src/agentmail/pods/inboxes/client.py">get</a>(...) -&gt; AsyncHttpResponse[Inbox]</code></summary>
+<details><summary><code>client.pods.inboxes.<a href="src/agentmail/pods/inboxes/client.py">get</a>(...) -> Inbox</code></summary>
 <dl>
 <dd>
 
@@ -6139,10 +5824,13 @@ client.pods.inboxes.list(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.inboxes.get(
     pod_id="pod_id",
     inbox_id="inbox_id",
@@ -6190,7 +5878,7 @@ client.pods.inboxes.get(
 </dl>
 </details>
 
-<details><summary><code>client.pods.inboxes.<a href="src/agentmail/pods/inboxes/client.py">create</a>(...) -&gt; AsyncHttpResponse[Inbox]</code></summary>
+<details><summary><code>client.pods.inboxes.<a href="src/agentmail/pods/inboxes/client.py">create</a>(...) -> Inbox</code></summary>
 <dl>
 <dd>
 
@@ -6204,10 +5892,13 @@ client.pods.inboxes.get(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.inboxes.create(
     pod_id="pod_id",
 )
@@ -6234,31 +5925,7 @@ client.pods.inboxes.create(
 <dl>
 <dd>
 
-**username:** `typing.Optional[str]` — Username of address. Randomly generated if not specified.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**domain:** `typing.Optional[str]` — Domain of address. Must be verified domain. Defaults to `agentmail.to`.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**display_name:** `typing.Optional[DisplayName]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**client_id:** `typing.Optional[ClientId]` 
+**request:** `CreateInboxRequest` 
     
 </dd>
 </dl>
@@ -6278,7 +5945,7 @@ client.pods.inboxes.create(
 </dl>
 </details>
 
-<details><summary><code>client.pods.inboxes.<a href="src/agentmail/pods/inboxes/client.py">update</a>(...) -&gt; AsyncHttpResponse[Inbox]</code></summary>
+<details><summary><code>client.pods.inboxes.<a href="src/agentmail/pods/inboxes/client.py">update</a>(...) -> Inbox</code></summary>
 <dl>
 <dd>
 
@@ -6292,10 +5959,13 @@ client.pods.inboxes.create(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.inboxes.update(
     pod_id="pod_id",
     inbox_id="inbox_id",
@@ -6332,7 +6002,7 @@ client.pods.inboxes.update(
 <dl>
 <dd>
 
-**display_name:** `DisplayName` 
+**request:** `UpdateInboxRequest` 
     
 </dd>
 </dl>
@@ -6352,7 +6022,7 @@ client.pods.inboxes.update(
 </dl>
 </details>
 
-<details><summary><code>client.pods.inboxes.<a href="src/agentmail/pods/inboxes/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.pods.inboxes.<a href="src/agentmail/pods/inboxes/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -6366,10 +6036,13 @@ client.pods.inboxes.update(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.inboxes.delete(
     pod_id="pod_id",
     inbox_id="inbox_id",
@@ -6418,7 +6091,7 @@ client.pods.inboxes.delete(
 </details>
 
 ## Pods Lists
-<details><summary><code>client.pods.lists.<a href="src/agentmail/pods/lists/client.py">list</a>(...) -&gt; AsyncHttpResponse[PodListListEntriesResponse]</code></summary>
+<details><summary><code>client.pods.lists.<a href="src/agentmail/pods/lists/client.py">list</a>(...) -> PodListListEntriesResponse</code></summary>
 <dl>
 <dd>
 
@@ -6432,10 +6105,13 @@ client.pods.inboxes.delete(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.lists.list(
     pod_id="pod_id",
     direction="send",
@@ -6508,7 +6184,7 @@ client.pods.lists.list(
 </dl>
 </details>
 
-<details><summary><code>client.pods.lists.<a href="src/agentmail/pods/lists/client.py">get</a>(...) -&gt; AsyncHttpResponse[PodListEntry]</code></summary>
+<details><summary><code>client.pods.lists.<a href="src/agentmail/pods/lists/client.py">get</a>(...) -> PodListEntry</code></summary>
 <dl>
 <dd>
 
@@ -6522,10 +6198,13 @@ client.pods.lists.list(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.lists.get(
     pod_id="pod_id",
     direction="send",
@@ -6591,7 +6270,7 @@ client.pods.lists.get(
 </dl>
 </details>
 
-<details><summary><code>client.pods.lists.<a href="src/agentmail/pods/lists/client.py">create</a>(...) -&gt; AsyncHttpResponse[PodListEntry]</code></summary>
+<details><summary><code>client.pods.lists.<a href="src/agentmail/pods/lists/client.py">create</a>(...) -> PodListEntry</code></summary>
 <dl>
 <dd>
 
@@ -6605,10 +6284,13 @@ client.pods.lists.get(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.lists.create(
     pod_id="pod_id",
     direction="send",
@@ -6654,15 +6336,7 @@ client.pods.lists.create(
 <dl>
 <dd>
 
-**entry:** `str` — Email address or domain to add.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**reason:** `typing.Optional[str]` — Reason for adding the entry.
+**request:** `CreateListEntryRequest` 
     
 </dd>
 </dl>
@@ -6682,7 +6356,7 @@ client.pods.lists.create(
 </dl>
 </details>
 
-<details><summary><code>client.pods.lists.<a href="src/agentmail/pods/lists/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.pods.lists.<a href="src/agentmail/pods/lists/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -6696,10 +6370,13 @@ client.pods.lists.create(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.lists.delete(
     pod_id="pod_id",
     direction="send",
@@ -6766,7 +6443,7 @@ client.pods.lists.delete(
 </details>
 
 ## Pods Metrics
-<details><summary><code>client.pods.metrics.<a href="src/agentmail/pods/metrics/client.py">query</a>(...) -&gt; AsyncHttpResponse[QueryMetricsResponse]</code></summary>
+<details><summary><code>client.pods.metrics.<a href="src/agentmail/pods/metrics/client.py">query</a>(...) -> QueryMetricsResponse</code></summary>
 <dl>
 <dd>
 
@@ -6780,10 +6457,13 @@ client.pods.lists.delete(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.metrics.query(
     pod_id="pod_id",
 )
@@ -6871,7 +6551,7 @@ client.pods.metrics.query(
 </details>
 
 ## Pods Threads
-<details><summary><code>client.pods.threads.<a href="src/agentmail/pods/threads/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListThreadsResponse]</code></summary>
+<details><summary><code>client.pods.threads.<a href="src/agentmail/pods/threads/client.py">list</a>(...) -> ListThreadsResponse</code></summary>
 <dl>
 <dd>
 
@@ -6885,10 +6565,13 @@ client.pods.metrics.query(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.threads.list(
     pod_id="pod_id",
 )
@@ -6999,7 +6682,7 @@ client.pods.threads.list(
 </dl>
 </details>
 
-<details><summary><code>client.pods.threads.<a href="src/agentmail/pods/threads/client.py">get</a>(...) -&gt; AsyncHttpResponse[Thread]</code></summary>
+<details><summary><code>client.pods.threads.<a href="src/agentmail/pods/threads/client.py">get</a>(...) -> Thread</code></summary>
 <dl>
 <dd>
 
@@ -7013,10 +6696,13 @@ client.pods.threads.list(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.threads.get(
     pod_id="pod_id",
     thread_id="thread_id",
@@ -7064,7 +6750,7 @@ client.pods.threads.get(
 </dl>
 </details>
 
-<details><summary><code>client.pods.threads.<a href="src/agentmail/pods/threads/client.py">get_attachment</a>(...) -&gt; AsyncHttpResponse[AttachmentResponse]</code></summary>
+<details><summary><code>client.pods.threads.<a href="src/agentmail/pods/threads/client.py">get_attachment</a>(...) -> AttachmentResponse</code></summary>
 <dl>
 <dd>
 
@@ -7078,10 +6764,13 @@ client.pods.threads.get(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.threads.get_attachment(
     pod_id="pod_id",
     thread_id="thread_id",
@@ -7138,7 +6827,7 @@ client.pods.threads.get_attachment(
 </dl>
 </details>
 
-<details><summary><code>client.pods.threads.<a href="src/agentmail/pods/threads/client.py">update</a>(...) -&gt; AsyncHttpResponse[UpdateThreadResponse]</code></summary>
+<details><summary><code>client.pods.threads.<a href="src/agentmail/pods/threads/client.py">update</a>(...) -> UpdateThreadResponse</code></summary>
 <dl>
 <dd>
 
@@ -7166,10 +6855,13 @@ Updates thread labels. Cannot add or remove system labels (sent, received, bounc
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.threads.update(
     pod_id="pod_id",
     thread_id="thread_id",
@@ -7205,15 +6897,7 @@ client.pods.threads.update(
 <dl>
 <dd>
 
-**add_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to add to thread. Cannot be system labels.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**remove_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to remove from thread. Cannot be system labels. Takes priority over `add_labels` (in the event of duplicate labels passed in).
+**request:** `UpdateThreadRequest` 
     
 </dd>
 </dl>
@@ -7233,7 +6917,7 @@ client.pods.threads.update(
 </dl>
 </details>
 
-<details><summary><code>client.pods.threads.<a href="src/agentmail/pods/threads/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.pods.threads.<a href="src/agentmail/pods/threads/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -7261,10 +6945,13 @@ Moves the thread to trash by adding a trash label to all messages. If the thread
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.pods.threads.delete(
     pod_id="pod_id",
     thread_id="thread_id",
@@ -7321,7 +7008,7 @@ client.pods.threads.delete(
 </details>
 
 ## Threads
-<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">list</a>(...) -&gt; AsyncHttpResponse[ListThreadsResponse]</code></summary>
+<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">list</a>(...) -> ListThreadsResponse</code></summary>
 <dl>
 <dd>
 
@@ -7335,10 +7022,13 @@ client.pods.threads.delete(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.threads.list()
 
 ```
@@ -7439,7 +7129,7 @@ client.threads.list()
 </dl>
 </details>
 
-<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">get</a>(...) -&gt; AsyncHttpResponse[Thread]</code></summary>
+<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">get</a>(...) -> Thread</code></summary>
 <dl>
 <dd>
 
@@ -7453,10 +7143,13 @@ client.threads.list()
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.threads.get(
     thread_id="thread_id",
 )
@@ -7495,7 +7188,7 @@ client.threads.get(
 </dl>
 </details>
 
-<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">get_attachment</a>(...) -&gt; AsyncHttpResponse[AttachmentResponse]</code></summary>
+<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">get_attachment</a>(...) -> AttachmentResponse</code></summary>
 <dl>
 <dd>
 
@@ -7509,10 +7202,13 @@ client.threads.get(
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.threads.get_attachment(
     thread_id="thread_id",
     attachment_id="attachment_id",
@@ -7560,7 +7256,7 @@ client.threads.get_attachment(
 </dl>
 </details>
 
-<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">update</a>(...) -&gt; AsyncHttpResponse[UpdateThreadResponse]</code></summary>
+<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">update</a>(...) -> UpdateThreadResponse</code></summary>
 <dl>
 <dd>
 
@@ -7588,10 +7284,13 @@ Updates thread labels. Cannot add or remove system labels (sent, received, bounc
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.threads.update(
     thread_id="thread_id",
 )
@@ -7618,15 +7317,7 @@ client.threads.update(
 <dl>
 <dd>
 
-**add_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to add to thread. Cannot be system labels.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**remove_labels:** `typing.Optional[typing.Sequence[str]]` — Labels to remove from thread. Cannot be system labels. Takes priority over `add_labels` (in the event of duplicate labels passed in).
+**request:** `UpdateThreadRequest` 
     
 </dd>
 </dl>
@@ -7646,7 +7337,7 @@ client.threads.update(
 </dl>
 </details>
 
-<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">delete</a>(...) -&gt; AsyncHttpResponse[None]</code></summary>
+<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -7674,10 +7365,13 @@ Moves the thread to trash by adding a trash label to all messages. If the thread
 
 ```python
 from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
 )
+
 client.threads.delete(
     thread_id="thread_id",
 )

@@ -8,9 +8,10 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.datetime_utils import serialize_datetime
 from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.jsonable_encoder import jsonable_encoder
+from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
-from ...errors.validation_error import ValidationError
+from ...errors.validation_error import ValidationError as errors_validation_error_ValidationError
 from ...metrics.types.descending import Descending
 from ...metrics.types.end import End
 from ...metrics.types.metric_event_types import MetricEventTypes
@@ -20,6 +21,7 @@ from ...metrics.types.query_metrics_response import QueryMetricsResponse
 from ...metrics.types.start import Start
 from ...types.validation_error_response import ValidationErrorResponse
 from ..types.pod_id import PodId
+from pydantic import ValidationError as pydantic_ValidationError
 
 
 class RawMetricsClient:
@@ -87,7 +89,7 @@ class RawMetricsClient:
                 )
                 return HttpResponse(response=_response, data=_data)
             if _response.status_code == 400:
-                raise ValidationError(
+                raise errors_validation_error_ValidationError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ValidationErrorResponse,
@@ -100,6 +102,10 @@ class RawMetricsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -168,7 +174,7 @@ class AsyncRawMetricsClient:
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 400:
-                raise ValidationError(
+                raise errors_validation_error_ValidationError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ValidationErrorResponse,
@@ -181,4 +187,8 @@ class AsyncRawMetricsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

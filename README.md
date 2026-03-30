@@ -38,8 +38,9 @@ Instantiate and use the client with the following:
 from agentmail import AgentMail
 
 client = AgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
 )
+
 client.inboxes.create()
 ```
 
@@ -53,7 +54,7 @@ import asyncio
 from agentmail import AsyncAgentMail
 
 client = AsyncAgentMail(
-    api_key="YOUR_API_KEY",
+    api_key="<token>",
 )
 
 
@@ -89,9 +90,7 @@ The `.with_raw_response` property returns a "raw" client that can be used to acc
 ```python
 from agentmail import AgentMail
 
-client = AgentMail(
-    ...,
-)
+client = AgentMail(...)
 response = client.inboxes.with_raw_response.create(...)
 print(response.headers)  # access the response headers
 print(response.status_code)  # access the response status code
@@ -123,14 +122,9 @@ client.inboxes.create(..., request_options={
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```python
-
 from agentmail import AgentMail
 
-client = AgentMail(
-    ...,
-    timeout=20.0,
-)
-
+client = AgentMail(..., timeout=20.0)
 
 # Override timeout for a specific method
 client.inboxes.create(..., request_options={
@@ -171,53 +165,27 @@ The SDK supports both sync and async websocket connections for real-time, low-la
 You can either iterate through the returned `SocketClient` to process messages as they arrive, or attach handlers to respond to specific events.
 
 ```python
-
-# Connect to the websocket (Sync)
-import threading
-
 from agentmail import AgentMail
 
 client = AgentMail(...)
 
+# Connect to the websocket (Sync)
 with client.websockets.connect(...) as socket:
     # Iterate over the messages as they arrive
-    for message in socket
+    for message in socket:
         print(message)
 
     # Or, attach handlers to specific events
-    socket.on(EventType.OPEN, lambda _: print("open"))
     socket.on(EventType.MESSAGE, lambda message: print("received message", message))
-    socket.on(EventType.CLOSE, lambda _: print("close"))
-    socket.on(EventType.ERROR, lambda error: print("error", error))
 
-
-    # Start the listening loop in a background thread
-    listener_thread = threading.Thread(target=socket.start_listening, daemon=True)
-    listener_thread.start()
-```
-
-```python
-
-# Connect to the websocket (Async)
 import asyncio
-
 from agentmail import AsyncAgentMail
 
 client = AsyncAgentMail(...)
 
+# Connect to the websocket (Async)
 async with client.websockets.connect(...) as socket:
-    # Iterate over the messages as they arrive
-    async for message in socket
+    async for message in socket:
         print(message)
-
-    # Or, attach handlers to specific events
-    socket.on(EventType.OPEN, lambda _: print("open"))
-    socket.on(EventType.MESSAGE, lambda message: print("received message", message))
-    socket.on(EventType.CLOSE, lambda _: print("close"))
-    socket.on(EventType.ERROR, lambda error: print("error", error))
-
-
-    # Start listening for events in an asyncio task
-    listen_task = asyncio.create_task(socket.start_listening())
 ```
 

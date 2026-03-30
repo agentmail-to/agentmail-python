@@ -1,7 +1,7 @@
 {
-  "cliVersion": "4.3.0",
+  "cliVersion": "4.48.1",
   "generatorName": "fernapi/fern-python-sdk",
-  "generatorVersion": "4.59.3",
+  "generatorVersion": "4.64.1",
   "generatorConfig": {
     "client_class_name": "AgentMail",
     "pydantic_config": {
@@ -10,5 +10,6 @@
     "should_generate_websocket_clients": true,
     "pyproject_toml": "description = \"The email inbox API for AI agents. Send, receive, reply, and manage threaded email conversations programmatically.\"\nauthors = [\"AgentMail <support@agentmail.cc>\"]\nkeywords = [\"email\", \"ai\", \"agent\", \"inbox\", \"api\", \"email-api\", \"ai-agent\", \"llm\", \"langchain\", \"crewai\", \"autonomous-agent\", \"agentmail\"]\nlicense = \"MIT\"\nhomepage = \"https://agentmail.to\"\n"
   },
-  "sdkVersion": "0.4.14"
+  "originGitCommit": "4bfe1d419beb1931c56d02e32ba7a3e02c2162ab",
+  "sdkVersion": "0.4.15"
 }

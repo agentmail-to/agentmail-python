@@ -8,6 +8,7 @@ from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.jsonable_encoder import jsonable_encoder
+from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
 from ...domains.types.domain import Domain
@@ -16,13 +17,14 @@ from ...domains.types.domain_name import DomainName
 from ...domains.types.feedback_enabled import FeedbackEnabled
 from ...domains.types.list_domains_response import ListDomainsResponse
 from ...errors.not_found_error import NotFoundError
-from ...errors.validation_error import ValidationError
+from ...errors.validation_error import ValidationError as errors_validation_error_ValidationError
 from ...types.ascending import Ascending
 from ...types.error_response import ErrorResponse
 from ...types.limit import Limit
 from ...types.page_token import PageToken
 from ...types.validation_error_response import ValidationErrorResponse
 from ..types.pod_id import PodId
+from pydantic import ValidationError as pydantic_ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -94,6 +96,10 @@ class RawDomainsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
@@ -143,6 +149,10 @@ class RawDomainsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     @contextlib.contextmanager
@@ -194,6 +204,13 @@ class RawDomainsClient:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
                     )
+                except pydantic_ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
+                    )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield _stream()
@@ -244,7 +261,7 @@ class RawDomainsClient:
                 )
                 return HttpResponse(response=_response, data=_data)
             if _response.status_code == 400:
-                raise ValidationError(
+                raise errors_validation_error_ValidationError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ValidationErrorResponse,
@@ -257,6 +274,10 @@ class RawDomainsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
@@ -317,6 +338,10 @@ class RawDomainsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
@@ -359,6 +384,10 @@ class RawDomainsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def verify(
@@ -401,6 +430,10 @@ class RawDomainsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
@@ -470,6 +503,10 @@ class AsyncRawDomainsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
@@ -519,6 +556,10 @@ class AsyncRawDomainsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     @contextlib.asynccontextmanager
@@ -571,6 +612,13 @@ class AsyncRawDomainsClient:
                     raise ApiError(
                         status_code=_response.status_code, headers=dict(_response.headers), body=_response.text
                     )
+                except pydantic_ValidationError as e:
+                    raise ParsingError(
+                        status_code=_response.status_code,
+                        headers=dict(_response.headers),
+                        body=_response.json(),
+                        cause=e,
+                    )
                 raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
             yield await _stream()
@@ -621,7 +669,7 @@ class AsyncRawDomainsClient:
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 400:
-                raise ValidationError(
+                raise errors_validation_error_ValidationError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ValidationErrorResponse,
@@ -634,6 +682,10 @@ class AsyncRawDomainsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
@@ -694,6 +746,10 @@ class AsyncRawDomainsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
@@ -736,6 +792,10 @@ class AsyncRawDomainsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def verify(
@@ -778,4 +838,8 @@ class AsyncRawDomainsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)

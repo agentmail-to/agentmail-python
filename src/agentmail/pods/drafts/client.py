@@ -47,6 +47,11 @@ class DraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListDraftsResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:drafts list --pod-id <pod_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -97,6 +102,11 @@ class DraftsClient:
         self, pod_id: PodId, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Draft:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:drafts get --pod-id <pod_id> --draft-id <draft_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -134,6 +144,11 @@ class DraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AttachmentResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:drafts get-attachment --pod-id <pod_id> --draft-id <draft_id> --attachment-id <attachment_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -194,6 +209,11 @@ class AsyncDraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListDraftsResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:drafts list --pod-id <pod_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -252,6 +272,11 @@ class AsyncDraftsClient:
         self, pod_id: PodId, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Draft:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:drafts get --pod-id <pod_id> --draft-id <draft_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -297,6 +322,11 @@ class AsyncDraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AttachmentResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:drafts get-attachment --pod-id <pod_id> --draft-id <draft_id> --attachment-id <attachment_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId

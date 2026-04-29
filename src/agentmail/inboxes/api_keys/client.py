@@ -42,6 +42,11 @@ class ApiKeysClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListApiKeysResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:api-keys list --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -75,16 +80,21 @@ class ApiKeysClient:
         self,
         inbox_id: InboxId,
         *,
-        name: Name,
+        name: typing.Optional[Name] = OMIT,
         permissions: typing.Optional[ApiKeyPermissions] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateApiKeyResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:api-keys create --inbox-id <inbox_id> --name "My Key"
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
 
-        name : Name
+        name : typing.Optional[Name]
 
         permissions : typing.Optional[ApiKeyPermissions]
 
@@ -104,7 +114,6 @@ class ApiKeysClient:
         )
         client.inboxes.api_keys.create(
             inbox_id="inbox_id",
-            name="name",
         )
         """
         _response = self._raw_client.create(
@@ -116,6 +125,11 @@ class ApiKeysClient:
         self, inbox_id: InboxId, api_key_id: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:api-keys delete --inbox-id <inbox_id> --api-key-id <api_key_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -169,6 +183,11 @@ class AsyncApiKeysClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListApiKeysResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:api-keys list --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -212,16 +231,21 @@ class AsyncApiKeysClient:
         self,
         inbox_id: InboxId,
         *,
-        name: Name,
+        name: typing.Optional[Name] = OMIT,
         permissions: typing.Optional[ApiKeyPermissions] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateApiKeyResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:api-keys create --inbox-id <inbox_id> --name "My Key"
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
 
-        name : Name
+        name : typing.Optional[Name]
 
         permissions : typing.Optional[ApiKeyPermissions]
 
@@ -246,7 +270,6 @@ class AsyncApiKeysClient:
         async def main() -> None:
             await client.inboxes.api_keys.create(
                 inbox_id="inbox_id",
-                name="name",
             )
 
 
@@ -261,6 +284,11 @@ class AsyncApiKeysClient:
         self, inbox_id: InboxId, api_key_id: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:api-keys delete --inbox-id <inbox_id> --api-key-id <api_key_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId

@@ -8,11 +8,16 @@ from ...core.unchecked_base_model import UncheckedBaseModel
 from ...messages.types.message import Message
 from ...threads.types.thread_item import ThreadItem
 from .event_id import EventId
+from .message_received_event_type import MessageReceivedEventType
 
 
 class MessageReceivedEvent(UncheckedBaseModel):
+    """
+    A message was received. Spam, blocked, and unauthenticated received-message events use the same payload shape with different `event_type` values.
+    """
+
     type: typing.Literal["event"] = "event"
-    event_type: typing.Literal["message.received"] = "message.received"
+    event_type: MessageReceivedEventType
     event_id: EventId
     message: Message
     thread: ThreadItem

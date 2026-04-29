@@ -42,6 +42,11 @@ class RawApiKeysClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListApiKeysResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:api-keys list --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -101,16 +106,21 @@ class RawApiKeysClient:
         self,
         inbox_id: InboxId,
         *,
-        name: Name,
+        name: typing.Optional[Name] = OMIT,
         permissions: typing.Optional[ApiKeyPermissions] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[CreateApiKeyResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:api-keys create --inbox-id <inbox_id> --name "My Key"
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
 
-        name : Name
+        name : typing.Optional[Name]
 
         permissions : typing.Optional[ApiKeyPermissions]
 
@@ -179,6 +189,11 @@ class RawApiKeysClient:
         self, inbox_id: InboxId, api_key_id: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:api-keys delete --inbox-id <inbox_id> --api-key-id <api_key_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -235,6 +250,11 @@ class AsyncRawApiKeysClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListApiKeysResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:api-keys list --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -294,16 +314,21 @@ class AsyncRawApiKeysClient:
         self,
         inbox_id: InboxId,
         *,
-        name: Name,
+        name: typing.Optional[Name] = OMIT,
         permissions: typing.Optional[ApiKeyPermissions] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[CreateApiKeyResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:api-keys create --inbox-id <inbox_id> --name "My Key"
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
 
-        name : Name
+        name : typing.Optional[Name]
 
         permissions : typing.Optional[ApiKeyPermissions]
 
@@ -372,6 +397,11 @@ class AsyncRawApiKeysClient:
         self, inbox_id: InboxId, api_key_id: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:api-keys delete --inbox-id <inbox_id> --api-key-id <api_key_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId

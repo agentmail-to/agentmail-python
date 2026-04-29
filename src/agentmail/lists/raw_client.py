@@ -40,6 +40,11 @@ class RawListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListListEntriesResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail lists list --direction <direction> --type <type>
+        ```
+
         Parameters
         ----------
         direction : Direction
@@ -95,6 +100,11 @@ class RawListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListEntry]:
         """
+        **CLI:**
+        ```bash
+        agentmail lists get --direction <direction> --type <type> --entry <entry>
+        ```
+
         Parameters
         ----------
         direction : Direction
@@ -157,6 +167,11 @@ class RawListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListEntry]:
         """
+        **CLI:**
+        ```bash
+        agentmail lists create --direction <direction> --type <type> --entry user@example.com
+        ```
+
         Parameters
         ----------
         direction : Direction
@@ -226,6 +241,11 @@ class RawListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail lists delete --direction <direction> --type <type> --entry <entry>
+        ```
+
         Parameters
         ----------
         direction : Direction
@@ -286,6 +306,11 @@ class AsyncRawListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListListEntriesResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail lists list --direction <direction> --type <type>
+        ```
+
         Parameters
         ----------
         direction : Direction
@@ -341,6 +366,11 @@ class AsyncRawListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListEntry]:
         """
+        **CLI:**
+        ```bash
+        agentmail lists get --direction <direction> --type <type> --entry <entry>
+        ```
+
         Parameters
         ----------
         direction : Direction
@@ -403,6 +433,11 @@ class AsyncRawListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListEntry]:
         """
+        **CLI:**
+        ```bash
+        agentmail lists create --direction <direction> --type <type> --entry user@example.com
+        ```
+
         Parameters
         ----------
         direction : Direction
@@ -472,6 +507,11 @@ class AsyncRawListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail lists delete --direction <direction> --type <type> --entry <entry>
+        ```
+
         Parameters
         ----------
         direction : Direction

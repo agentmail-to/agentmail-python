@@ -5,6 +5,9 @@ import typing
 EventType = typing.Union[
     typing.Literal[
         "message.received",
+        "message.received.spam",
+        "message.received.blocked",
+        "message.received.unauthenticated",
         "message.sent",
         "message.delivered",
         "message.bounced",

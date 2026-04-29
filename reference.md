@@ -4,6 +4,23 @@
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes list
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -77,6 +94,23 @@ client.inboxes.list()
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes get --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -136,6 +170,23 @@ client.inboxes.get(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes create --display-name "My Agent" --username myagent --domain agentmail.to
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -192,6 +243,23 @@ client.inboxes.create()
 <details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">update</a>(...) -> Inbox</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes update --inbox-id <inbox_id> --display-name "Updated Name"
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -261,6 +329,23 @@ client.inboxes.update(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes delete --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -320,6 +405,23 @@ client.inboxes.delete(
 <details><summary><code>client.pods.<a href="src/agentmail/pods/client.py">list</a>(...) -> ListPodsResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods list
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -394,6 +496,23 @@ client.pods.list()
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods get --pod-id <pod_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -453,6 +572,23 @@ client.pods.get(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods create --client-id my-pod
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -509,6 +645,23 @@ client.pods.create()
 <details><summary><code>client.pods.<a href="src/agentmail/pods/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods delete --pod-id <pod_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -569,6 +722,23 @@ client.pods.delete(
 <details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">list</a>(...) -> ListWebhooksResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail webhooks list
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -643,6 +813,23 @@ client.webhooks.list()
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail webhooks get --webhook-id <webhook_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -701,6 +888,23 @@ client.webhooks.get(
 <details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">create</a>(...) -> Webhook</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail webhooks create --url https://example.com/webhook --event-type message.received
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -764,6 +968,23 @@ client.webhooks.create(
 <details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">update</a>(...) -> Webhook</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail webhooks update --webhook-id <webhook_id> --add-inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -831,6 +1052,23 @@ client.webhooks.update(
 <details><summary><code>client.webhooks.<a href="src/agentmail/webhooks/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail webhooks delete --webhook-id <webhook_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -900,11 +1138,18 @@ client.webhooks.delete(
 <dl>
 <dd>
 
-Create a new agent organization with an inbox and API key. A 6-digit OTP is sent to the human's email for verification.
+Create a new agent organization with an inbox and API key. This endpoint is for signing up for the first time. If you've already signed up, you're all set — just use your existing API key.
+
+A 6-digit OTP is sent to the human's email for verification.
 
 This endpoint is idempotent. Calling it again with the same `human_email` will rotate the API key and resend the OTP if expired.
 
 The returned API key has limited permissions until the organization is verified via the verify endpoint.
+
+**CLI:**
+```bash
+agentmail agent sign-up --human-email user@example.com --username my-agent
+```
 </dd>
 </dl>
 </dd>
@@ -983,6 +1228,11 @@ Verify an agent organization using the 6-digit OTP sent to the human's email dur
 On success, the organization is upgraded from `agent_unverified` to `agent_verified`, the send allowlist is removed, and free plan entitlements are applied.
 
 The OTP expires after 24 hours and allows a maximum of 10 attempts.
+
+**CLI:**
+```bash
+agentmail agent verify --otp-code 123456
+```
 </dd>
 </dl>
 </dd>
@@ -1047,6 +1297,23 @@ client.agent.verify(
 <details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">list</a>(...) -> ListApiKeysResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail api-keys list
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1121,6 +1388,23 @@ client.api_keys.list()
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail api-keys create --name "My Key"
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -1138,9 +1422,7 @@ client = AgentMail(
     environment=AgentMailEnvironment.PROD,
 )
 
-client.api_keys.create(
-    name="name",
-)
+client.api_keys.create()
 
 ```
 </dd>
@@ -1179,6 +1461,23 @@ client.api_keys.create(
 <details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail api-keys delete --api-key-id <api_key_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1239,6 +1538,23 @@ client.api_keys.delete(
 <details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">list</a>(...) -> ListDomainsResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail domains list
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1313,6 +1629,23 @@ client.domains.list()
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail domains get --domain-id <domain_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -1371,6 +1704,23 @@ client.domains.get(
 <details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">get_zone_file</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail domains get-zone-file --domain-id <domain_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1431,6 +1781,23 @@ client.domains.get_zone_file(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail domains create --domain example.com
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -1490,6 +1857,23 @@ client.domains.create(
 <details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">update</a>(...) -> Domain</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail domains update --domain-id <domain_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1558,6 +1942,23 @@ client.domains.update(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail domains delete --domain-id <domain_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -1616,6 +2017,23 @@ client.domains.delete(
 <details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">verify</a>(...)</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail domains verify --domain-id <domain_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1676,6 +2094,23 @@ client.domains.verify(
 <details><summary><code>client.drafts.<a href="src/agentmail/drafts/client.py">list</a>(...) -> ListDraftsResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail drafts list
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1774,6 +2209,23 @@ client.drafts.list()
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail drafts get --draft-id <draft_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -1832,6 +2284,23 @@ client.drafts.get(
 <details><summary><code>client.drafts.<a href="src/agentmail/drafts/client.py">get_attachment</a>(...) -> AttachmentResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail drafts get-attachment --draft-id <draft_id> --attachment-id <attachment_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1901,6 +2370,23 @@ client.drafts.get_attachment(
 <details><summary><code>client.inboxes.api_keys.<a href="src/agentmail/inboxes/api_keys/client.py">list</a>(...) -> ListApiKeysResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:api-keys list --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1977,6 +2463,23 @@ client.inboxes.api_keys.list(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:api-keys create --inbox-id <inbox_id> --name "My Key"
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -1996,7 +2499,6 @@ client = AgentMail(
 
 client.inboxes.api_keys.create(
     inbox_id="inbox_id",
-    name="name",
 )
 
 ```
@@ -2044,6 +2546,23 @@ client.inboxes.api_keys.create(
 <details><summary><code>client.inboxes.api_keys.<a href="src/agentmail/inboxes/api_keys/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:api-keys delete --inbox-id <inbox_id> --api-key-id <api_key_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -2113,6 +2632,23 @@ client.inboxes.api_keys.delete(
 <details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">list</a>(...) -> ListDraftsResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:drafts list --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -2221,6 +2757,23 @@ client.inboxes.drafts.list(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:drafts get --inbox-id <inbox_id> --draft-id <draft_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -2288,6 +2841,23 @@ client.inboxes.drafts.get(
 <details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">get_attachment</a>(...) -> AttachmentResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:drafts get-attachment --inbox-id <inbox_id> --draft-id <draft_id> --attachment-id <attachment_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -2366,6 +2936,23 @@ client.inboxes.drafts.get_attachment(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:drafts create --inbox-id <inbox_id> --to recipient@example.com --subject "Draft subject" --text "Draft body"
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -2432,6 +3019,23 @@ client.inboxes.drafts.create(
 <details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">update</a>(...) -> Draft</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:drafts update --inbox-id <inbox_id> --draft-id <draft_id> --subject "Updated subject"
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -2509,6 +3113,23 @@ client.inboxes.drafts.update(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:drafts delete --inbox-id <inbox_id> --draft-id <draft_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -2576,6 +3197,23 @@ client.inboxes.drafts.delete(
 <details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">send</a>(...) -> SendMessageResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:drafts send --inbox-id <inbox_id> --draft-id <draft_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -2649,10 +3287,130 @@ client.inboxes.drafts.send(
 </dl>
 </details>
 
+## Inboxes Events
+<details><summary><code>client.inboxes.events.<a href="src/agentmail/inboxes/events/client.py">list</a>(...) -> ListInboxEventsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List label change events for an inbox. Returns events in reverse chronological order by default. Use for IMAP UID projection or audit logging.
+
+**CLI:**
+```bash
+agentmail inboxes:events list --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.events.list(
+    inbox_id="inbox_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[Limit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ascending:** `typing.Optional[Ascending]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inboxes Lists
 <details><summary><code>client.inboxes.lists.<a href="src/agentmail/inboxes/lists/client.py">list</a>(...) -> PodListListEntriesResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:lists list --inbox-id <inbox_id> --direction <direction> --type <type>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -2747,6 +3505,23 @@ client.inboxes.lists.list(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:lists get --inbox-id <inbox_id> --direction <direction> --type <type> --entry <entry>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -2832,6 +3607,23 @@ client.inboxes.lists.get(
 <details><summary><code>client.inboxes.lists.<a href="src/agentmail/inboxes/lists/client.py">create</a>(...) -> PodListEntry</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:lists create --inbox-id <inbox_id> --direction <direction> --type <type> --entry user@example.com
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -2919,6 +3711,23 @@ client.inboxes.lists.create(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:lists delete --inbox-id <inbox_id> --direction <direction> --type <type> --entry <entry>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -3005,6 +3814,23 @@ client.inboxes.lists.delete(
 <details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">list</a>(...) -> ListMessagesResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:messages list --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -3137,6 +3963,23 @@ client.inboxes.messages.list(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:messages get --inbox-id <inbox_id> --message-id <message_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -3204,6 +4047,23 @@ client.inboxes.messages.get(
 <details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">get_attachment</a>(...) -> AttachmentResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:messages get-attachment --inbox-id <inbox_id> --message-id <message_id> --attachment-id <attachment_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -3282,6 +4142,23 @@ client.inboxes.messages.get_attachment(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:messages get-raw --inbox-id <inbox_id> --message-id <message_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -3349,6 +4226,23 @@ client.inboxes.messages.get_raw(
 <details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">update</a>(...) -> UpdateMessageResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:messages update --inbox-id <inbox_id> --message-id <message_id> --add-label read --remove-label unread
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -3422,9 +4316,113 @@ client.inboxes.messages.update(
 </dl>
 </details>
 
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Permanently deletes a message.
+
+**CLI:**
+```bash
+agentmail inboxes:messages delete --inbox-id <inbox_id> --message-id <message_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.messages.delete(
+    inbox_id="inbox_id",
+    message_id="message_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**message_id:** `MessageId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">send</a>(...) -> SendMessageResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:messages send --inbox-id <inbox_id> --to recipient@example.com --subject "Hello" --text "Body"
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -3492,6 +4490,23 @@ client.inboxes.messages.send(
 <details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">reply</a>(...) -> SendMessageResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:messages reply --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -3569,6 +4584,23 @@ client.inboxes.messages.reply(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:messages reply-all --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -3644,6 +4676,23 @@ client.inboxes.messages.reply_all(
 <details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">forward</a>(...) -> SendMessageResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:messages forward --inbox-id <inbox_id> --message-id <message_id> --to recipient@example.com
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -3721,6 +4770,23 @@ client.inboxes.messages.forward(
 <details><summary><code>client.inboxes.metrics.<a href="src/agentmail/inboxes/metrics/client.py">query</a>(...) -> QueryMetricsResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:metrics query --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -3829,6 +4895,23 @@ client.inboxes.metrics.query(
 <details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">list</a>(...) -> ListThreadsResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:threads list --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -3961,6 +5044,23 @@ client.inboxes.threads.list(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:threads get --inbox-id <inbox_id> --thread-id <thread_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -4028,6 +5128,23 @@ client.inboxes.threads.get(
 <details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">get_attachment</a>(...) -> AttachmentResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:threads get-attachment --inbox-id <inbox_id> --thread-id <thread_id> --attachment-id <attachment_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -4205,6 +5322,11 @@ client.inboxes.threads.update(
 <dd>
 
 Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+
+**CLI:**
+```bash
+agentmail inboxes:threads delete --inbox-id <inbox_id> --thread-id <thread_id>
+```
 </dd>
 </dl>
 </dd>
@@ -4286,6 +5408,23 @@ client.inboxes.threads.delete(
 <details><summary><code>client.lists.<a href="src/agentmail/lists/client.py">list</a>(...) -> ListListEntriesResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail lists list --direction <direction> --type <type>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -4371,6 +5510,23 @@ client.lists.list(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail lists get --direction <direction> --type <type> --entry <entry>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -4447,6 +5603,23 @@ client.lists.get(
 <details><summary><code>client.lists.<a href="src/agentmail/lists/client.py">create</a>(...) -> ListEntry</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail lists create --direction <direction> --type <type> --entry user@example.com
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -4525,6 +5698,23 @@ client.lists.create(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail lists delete --direction <direction> --type <type> --entry <entry>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -4602,6 +5792,23 @@ client.lists.delete(
 <details><summary><code>client.metrics.<a href="src/agentmail/metrics/client.py">query</a>(...) -> QueryMetricsResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail metrics list
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -4709,7 +5916,12 @@ client.metrics.query()
 <dl>
 <dd>
 
-Get the current organization.
+Returns the organization for the authenticated API key (usage limits, counts, and billing metadata).
+
+**CLI:**
+```bash
+agentmail organizations get
+```
 </dd>
 </dl>
 </dd>
@@ -4764,6 +5976,23 @@ client.organizations.get()
 <details><summary><code>client.pods.api_keys.<a href="src/agentmail/pods/api_keys/client.py">list</a>(...) -> ListApiKeysResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:api-keys list --pod-id <pod_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -4840,6 +6069,23 @@ client.pods.api_keys.list(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:api-keys create --pod-id <pod_id> --name "My Key"
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -4859,7 +6105,6 @@ client = AgentMail(
 
 client.pods.api_keys.create(
     pod_id="pod_id",
-    name="name",
 )
 
 ```
@@ -4907,6 +6152,23 @@ client.pods.api_keys.create(
 <details><summary><code>client.pods.api_keys.<a href="src/agentmail/pods/api_keys/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:api-keys delete --pod-id <pod_id> --api-key-id <api_key_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -4976,6 +6238,23 @@ client.pods.api_keys.delete(
 <details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">list</a>(...) -> ListDomainsResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:domains list --pod-id <pod_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -5060,6 +6339,23 @@ client.pods.domains.list(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:domains get --pod-id <pod_id> --domain-id <domain_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -5127,6 +6423,23 @@ client.pods.domains.get(
 <details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">get_zone_file</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:domains get-zone-file --pod-id <pod_id> --domain-id <domain_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -5196,6 +6509,23 @@ client.pods.domains.get_zone_file(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:domains create --pod-id <pod_id> --domain example.com
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -5264,6 +6594,23 @@ client.pods.domains.create(
 <details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">update</a>(...) -> Domain</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:domains update --pod-id <pod_id> --domain-id <domain_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -5341,6 +6688,23 @@ client.pods.domains.update(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:domains delete --pod-id <pod_id> --domain-id <domain_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -5408,6 +6772,23 @@ client.pods.domains.delete(
 <details><summary><code>client.pods.domains.<a href="src/agentmail/pods/domains/client.py">verify</a>(...)</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:domains verify --pod-id <pod_id> --domain-id <domain_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -5477,6 +6858,23 @@ client.pods.domains.verify(
 <details><summary><code>client.pods.drafts.<a href="src/agentmail/pods/drafts/client.py">list</a>(...) -> ListDraftsResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:drafts list --pod-id <pod_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -5585,6 +6983,23 @@ client.pods.drafts.list(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:drafts get --pod-id <pod_id> --draft-id <draft_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -5652,6 +7067,23 @@ client.pods.drafts.get(
 <details><summary><code>client.pods.drafts.<a href="src/agentmail/pods/drafts/client.py">get_attachment</a>(...) -> AttachmentResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:drafts get-attachment --pod-id <pod_id> --draft-id <draft_id> --attachment-id <attachment_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -5730,6 +7162,23 @@ client.pods.drafts.get_attachment(
 <details><summary><code>client.pods.inboxes.<a href="src/agentmail/pods/inboxes/client.py">list</a>(...) -> ListInboxesResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:inboxes list --pod-id <pod_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -5814,6 +7263,23 @@ client.pods.inboxes.list(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:inboxes get --pod-id <pod_id> --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -5882,6 +7348,23 @@ client.pods.inboxes.get(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:inboxes create --pod-id <pod_id> --username myagent --domain example.com
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -5948,6 +7431,23 @@ client.pods.inboxes.create(
 <details><summary><code>client.pods.inboxes.<a href="src/agentmail/pods/inboxes/client.py">update</a>(...) -> Inbox</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:inboxes update --pod-id <pod_id> --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -6026,6 +7526,23 @@ client.pods.inboxes.update(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:inboxes delete --pod-id <pod_id> --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -6094,6 +7611,23 @@ client.pods.inboxes.delete(
 <details><summary><code>client.pods.lists.<a href="src/agentmail/pods/lists/client.py">list</a>(...) -> PodListListEntriesResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:lists list --pod-id <pod_id> --direction <direction> --type <type>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -6188,6 +7722,23 @@ client.pods.lists.list(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:lists get --pod-id <pod_id> --direction <direction> --type <type> --entry <entry>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -6273,6 +7824,23 @@ client.pods.lists.get(
 <details><summary><code>client.pods.lists.<a href="src/agentmail/pods/lists/client.py">create</a>(...) -> PodListEntry</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:lists create --pod-id <pod_id> --direction <direction> --type <type> --entry user@example.com
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -6360,6 +7928,23 @@ client.pods.lists.create(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:lists delete --pod-id <pod_id> --direction <direction> --type <type> --entry <entry>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -6446,6 +8031,23 @@ client.pods.lists.delete(
 <details><summary><code>client.pods.metrics.<a href="src/agentmail/pods/metrics/client.py">query</a>(...) -> QueryMetricsResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:metrics query --pod-id <pod_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -6554,6 +8156,23 @@ client.pods.metrics.query(
 <details><summary><code>client.pods.threads.<a href="src/agentmail/pods/threads/client.py">list</a>(...) -> ListThreadsResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:threads list --pod-id <pod_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -6686,6 +8305,23 @@ client.pods.threads.list(
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:threads get --pod-id <pod_id> --thread-id <thread_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -6753,6 +8389,23 @@ client.pods.threads.get(
 <details><summary><code>client.pods.threads.<a href="src/agentmail/pods/threads/client.py">get_attachment</a>(...) -> AttachmentResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:threads get-attachment --pod-id <pod_id> --thread-id <thread_id> --attachment-id <attachment_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -6930,6 +8583,11 @@ client.pods.threads.update(
 <dd>
 
 Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+
+**CLI:**
+```bash
+agentmail pods:threads delete --pod-id <pod_id> --thread-id <thread_id>
+```
 </dd>
 </dl>
 </dd>
@@ -7011,6 +8669,23 @@ client.pods.threads.delete(
 <details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">list</a>(...) -> ListThreadsResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail threads list
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -7133,6 +8808,23 @@ client.threads.list()
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail threads get --thread-id <thread_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -7191,6 +8883,23 @@ client.threads.get(
 <details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">get_attachment</a>(...) -> AttachmentResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail threads get-attachment --thread-id <thread_id> --attachment-id <attachment_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -7350,6 +9059,11 @@ client.threads.update(
 <dd>
 
 Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+
+**CLI:**
+```bash
+agentmail threads delete --thread-id <thread_id>
+```
 </dd>
 </dl>
 </dd>

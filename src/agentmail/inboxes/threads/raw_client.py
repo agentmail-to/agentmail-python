@@ -58,6 +58,11 @@ class RawThreadsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListThreadsResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:threads list --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -138,6 +143,11 @@ class RawThreadsClient:
         self, inbox_id: InboxId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Thread]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:threads get --inbox-id <inbox_id> --thread-id <thread_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -196,6 +206,11 @@ class RawThreadsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AttachmentResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:threads get-attachment --inbox-id <inbox_id> --thread-id <thread_id> --attachment-id <attachment_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -352,6 +367,11 @@ class RawThreadsClient:
         """
         Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
 
+        **CLI:**
+        ```bash
+        agentmail inboxes:threads delete --inbox-id <inbox_id> --thread-id <thread_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -421,6 +441,11 @@ class AsyncRawThreadsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListThreadsResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:threads list --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -501,6 +526,11 @@ class AsyncRawThreadsClient:
         self, inbox_id: InboxId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Thread]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:threads get --inbox-id <inbox_id> --thread-id <thread_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -559,6 +589,11 @@ class AsyncRawThreadsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AttachmentResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:threads get-attachment --inbox-id <inbox_id> --thread-id <thread_id> --attachment-id <attachment_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -714,6 +749,11 @@ class AsyncRawThreadsClient:
     ) -> AsyncHttpResponse[None]:
         """
         Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+
+        **CLI:**
+        ```bash
+        agentmail inboxes:threads delete --inbox-id <inbox_id> --thread-id <thread_id>
+        ```
 
         Parameters
         ----------

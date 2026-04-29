@@ -43,6 +43,11 @@ class MetricsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> QueryMetricsResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:metrics query --pod-id <pod_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -118,6 +123,11 @@ class AsyncMetricsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> QueryMetricsResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:metrics query --pod-id <pod_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId

@@ -10,7 +10,7 @@ from .name import Name
 
 
 class CreateApiKeyRequest(UncheckedBaseModel):
-    name: Name
+    name: typing.Optional[Name] = None
     permissions: typing.Optional[ApiKeyPermissions] = None
 
     if IS_PYDANTIC_V2:

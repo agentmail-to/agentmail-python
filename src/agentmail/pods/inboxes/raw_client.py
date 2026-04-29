@@ -43,6 +43,11 @@ class RawInboxesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListInboxesResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:inboxes list --pod-id <pod_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -105,6 +110,11 @@ class RawInboxesClient:
         self, pod_id: PodId, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Inbox]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:inboxes get --pod-id <pod_id> --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -165,6 +175,11 @@ class RawInboxesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Inbox]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:inboxes create --pod-id <pod_id> --username myagent --domain example.com
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -238,6 +253,11 @@ class RawInboxesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Inbox]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:inboxes update --pod-id <pod_id> --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -297,6 +317,11 @@ class RawInboxesClient:
         self, pod_id: PodId, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:inboxes delete --pod-id <pod_id> --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -354,6 +379,11 @@ class AsyncRawInboxesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListInboxesResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:inboxes list --pod-id <pod_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -416,6 +446,11 @@ class AsyncRawInboxesClient:
         self, pod_id: PodId, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Inbox]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:inboxes get --pod-id <pod_id> --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -476,6 +511,11 @@ class AsyncRawInboxesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Inbox]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:inboxes create --pod-id <pod_id> --username myagent --domain example.com
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -549,6 +589,11 @@ class AsyncRawInboxesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Inbox]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:inboxes update --pod-id <pod_id> --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -608,6 +653,11 @@ class AsyncRawInboxesClient:
         self, pod_id: PodId, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:inboxes delete --pod-id <pod_id> --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId

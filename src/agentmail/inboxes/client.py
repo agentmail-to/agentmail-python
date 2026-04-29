@@ -19,6 +19,7 @@ from .types.list_inboxes_response import ListInboxesResponse
 if typing.TYPE_CHECKING:
     from .api_keys.client import ApiKeysClient, AsyncApiKeysClient
     from .drafts.client import AsyncDraftsClient, DraftsClient
+    from .events.client import AsyncEventsClient, EventsClient
     from .lists.client import AsyncListsClient, ListsClient
     from .messages.client import AsyncMessagesClient, MessagesClient
     from .metrics.client import AsyncMetricsClient, MetricsClient
@@ -36,6 +37,7 @@ class InboxesClient:
         self._drafts: typing.Optional[DraftsClient] = None
         self._lists: typing.Optional[ListsClient] = None
         self._metrics: typing.Optional[MetricsClient] = None
+        self._events: typing.Optional[EventsClient] = None
         self._api_keys: typing.Optional[ApiKeysClient] = None
 
     @property
@@ -58,6 +60,11 @@ class InboxesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListInboxesResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes list
+        ```
+
         Parameters
         ----------
         limit : typing.Optional[Limit]
@@ -89,6 +96,11 @@ class InboxesClient:
 
     def get(self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None) -> Inbox:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes get --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -121,6 +133,11 @@ class InboxesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Inbox:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes create --display-name "My Agent" --username myagent --domain agentmail.to
+        ```
+
         Parameters
         ----------
         request : typing.Optional[CreateInboxRequest]
@@ -148,6 +165,11 @@ class InboxesClient:
         self, inbox_id: InboxId, *, display_name: DisplayName, request_options: typing.Optional[RequestOptions] = None
     ) -> Inbox:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes update --inbox-id <inbox_id> --display-name "Updated Name"
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -178,6 +200,11 @@ class InboxesClient:
 
     def delete(self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes delete --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -244,6 +271,14 @@ class InboxesClient:
         return self._metrics
 
     @property
+    def events(self):
+        if self._events is None:
+            from .events.client import EventsClient  # noqa: E402
+
+            self._events = EventsClient(client_wrapper=self._client_wrapper)
+        return self._events
+
+    @property
     def api_keys(self):
         if self._api_keys is None:
             from .api_keys.client import ApiKeysClient  # noqa: E402
@@ -261,6 +296,7 @@ class AsyncInboxesClient:
         self._drafts: typing.Optional[AsyncDraftsClient] = None
         self._lists: typing.Optional[AsyncListsClient] = None
         self._metrics: typing.Optional[AsyncMetricsClient] = None
+        self._events: typing.Optional[AsyncEventsClient] = None
         self._api_keys: typing.Optional[AsyncApiKeysClient] = None
 
     @property
@@ -283,6 +319,11 @@ class AsyncInboxesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListInboxesResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes list
+        ```
+
         Parameters
         ----------
         limit : typing.Optional[Limit]
@@ -322,6 +363,11 @@ class AsyncInboxesClient:
 
     async def get(self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None) -> Inbox:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes get --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -362,6 +408,11 @@ class AsyncInboxesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Inbox:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes create --display-name "My Agent" --username myagent --domain agentmail.to
+        ```
+
         Parameters
         ----------
         request : typing.Optional[CreateInboxRequest]
@@ -397,6 +448,11 @@ class AsyncInboxesClient:
         self, inbox_id: InboxId, *, display_name: DisplayName, request_options: typing.Optional[RequestOptions] = None
     ) -> Inbox:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes update --inbox-id <inbox_id> --display-name "Updated Name"
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -435,6 +491,11 @@ class AsyncInboxesClient:
 
     async def delete(self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes delete --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -507,6 +568,14 @@ class AsyncInboxesClient:
 
             self._metrics = AsyncMetricsClient(client_wrapper=self._client_wrapper)
         return self._metrics
+
+    @property
+    def events(self):
+        if self._events is None:
+            from .events.client import AsyncEventsClient  # noqa: E402
+
+            self._events = AsyncEventsClient(client_wrapper=self._client_wrapper)
+        return self._events
 
     @property
     def api_keys(self):

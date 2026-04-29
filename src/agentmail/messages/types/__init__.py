@@ -41,6 +41,7 @@ if typing.TYPE_CHECKING:
     from .send_message_request import SendMessageRequest
     from .send_message_response import SendMessageResponse
     from .send_message_to import SendMessageTo
+    from .update_message_labels import UpdateMessageLabels
     from .update_message_request import UpdateMessageRequest
     from .update_message_response import UpdateMessageResponse
 _dynamic_imports: typing.Dict[str, str] = {
@@ -79,6 +80,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SendMessageRequest": ".send_message_request",
     "SendMessageResponse": ".send_message_response",
     "SendMessageTo": ".send_message_to",
+    "UpdateMessageLabels": ".update_message_labels",
     "UpdateMessageRequest": ".update_message_request",
     "UpdateMessageResponse": ".update_message_response",
 }
@@ -141,6 +143,7 @@ __all__ = [
     "SendMessageRequest",
     "SendMessageResponse",
     "SendMessageTo",
+    "UpdateMessageLabels",
     "UpdateMessageRequest",
     "UpdateMessageResponse",
 ]

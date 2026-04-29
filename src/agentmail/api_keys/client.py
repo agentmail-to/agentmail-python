@@ -42,6 +42,11 @@ class ApiKeysClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListApiKeysResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail api-keys list
+        ```
+
         Parameters
         ----------
         limit : typing.Optional[Limit]
@@ -74,14 +79,19 @@ class ApiKeysClient:
     def create(
         self,
         *,
-        name: Name,
+        name: typing.Optional[Name] = OMIT,
         permissions: typing.Optional[ApiKeyPermissions] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateApiKeyResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail api-keys create --name "My Key"
+        ```
+
         Parameters
         ----------
-        name : Name
+        name : typing.Optional[Name]
 
         permissions : typing.Optional[ApiKeyPermissions]
 
@@ -99,15 +109,18 @@ class ApiKeysClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.api_keys.create(
-            name="name",
-        )
+        client.api_keys.create()
         """
         _response = self._raw_client.create(name=name, permissions=permissions, request_options=request_options)
         return _response.data
 
     def delete(self, api_key_id: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        **CLI:**
+        ```bash
+        agentmail api-keys delete --api-key-id <api_key_id>
+        ```
+
         Parameters
         ----------
         api_key_id : ApiKeyId
@@ -158,6 +171,11 @@ class AsyncApiKeysClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListApiKeysResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail api-keys list
+        ```
+
         Parameters
         ----------
         limit : typing.Optional[Limit]
@@ -198,14 +216,19 @@ class AsyncApiKeysClient:
     async def create(
         self,
         *,
-        name: Name,
+        name: typing.Optional[Name] = OMIT,
         permissions: typing.Optional[ApiKeyPermissions] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateApiKeyResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail api-keys create --name "My Key"
+        ```
+
         Parameters
         ----------
-        name : Name
+        name : typing.Optional[Name]
 
         permissions : typing.Optional[ApiKeyPermissions]
 
@@ -228,9 +251,7 @@ class AsyncApiKeysClient:
 
 
         async def main() -> None:
-            await client.api_keys.create(
-                name="name",
-            )
+            await client.api_keys.create()
 
 
         asyncio.run(main())
@@ -240,6 +261,11 @@ class AsyncApiKeysClient:
 
     async def delete(self, api_key_id: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        **CLI:**
+        ```bash
+        agentmail api-keys delete --api-key-id <api_key_id>
+        ```
+
         Parameters
         ----------
         api_key_id : ApiKeyId

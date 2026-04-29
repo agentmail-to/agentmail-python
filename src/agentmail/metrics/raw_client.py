@@ -38,6 +38,11 @@ class RawMetricsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[QueryMetricsResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail metrics list
+        ```
+
         Parameters
         ----------
         event_types : typing.Optional[MetricEventTypes]
@@ -120,6 +125,11 @@ class AsyncRawMetricsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[QueryMetricsResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail metrics list
+        ```
+
         Parameters
         ----------
         event_types : typing.Optional[MetricEventTypes]

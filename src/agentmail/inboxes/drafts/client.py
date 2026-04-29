@@ -22,6 +22,7 @@ from ...drafts.types.draft_text import DraftText
 from ...drafts.types.draft_to import DraftTo
 from ...drafts.types.list_drafts_response import ListDraftsResponse
 from ...messages.types.send_message_response import SendMessageResponse
+from ...messages.types.update_message_labels import UpdateMessageLabels
 from ...types.after import After
 from ...types.ascending import Ascending
 from ...types.before import Before
@@ -63,6 +64,11 @@ class DraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListDraftsResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts list --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -113,6 +119,11 @@ class DraftsClient:
         self, inbox_id: InboxId, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Draft:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts get --inbox-id <inbox_id> --draft-id <draft_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -150,6 +161,11 @@ class DraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AttachmentResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts get-attachment --inbox-id <inbox_id> --draft-id <draft_id> --attachment-id <attachment_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -200,6 +216,11 @@ class DraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Draft:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts create --inbox-id <inbox_id> --to recipient@example.com --subject "Draft subject" --text "Draft body"
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -281,6 +302,11 @@ class DraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Draft:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts update --inbox-id <inbox_id> --draft-id <draft_id> --subject "Updated subject"
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -341,6 +367,11 @@ class DraftsClient:
         self, inbox_id: InboxId, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts delete --inbox-id <inbox_id> --draft-id <draft_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -374,22 +405,27 @@ class DraftsClient:
         inbox_id: InboxId,
         draft_id: DraftId,
         *,
-        add_labels: typing.Optional[typing.Sequence[str]] = OMIT,
-        remove_labels: typing.Optional[typing.Sequence[str]] = OMIT,
+        add_labels: typing.Optional[UpdateMessageLabels] = OMIT,
+        remove_labels: typing.Optional[UpdateMessageLabels] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts send --inbox-id <inbox_id> --draft-id <draft_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
 
         draft_id : DraftId
 
-        add_labels : typing.Optional[typing.Sequence[str]]
-            Labels to add to message.
+        add_labels : typing.Optional[UpdateMessageLabels]
+            Label or labels to add to message.
 
-        remove_labels : typing.Optional[typing.Sequence[str]]
-            Labels to remove from message.
+        remove_labels : typing.Optional[UpdateMessageLabels]
+            Label or labels to remove from message.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -444,6 +480,11 @@ class AsyncDraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListDraftsResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts list --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -502,6 +543,11 @@ class AsyncDraftsClient:
         self, inbox_id: InboxId, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> Draft:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts get --inbox-id <inbox_id> --draft-id <draft_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -547,6 +593,11 @@ class AsyncDraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AttachmentResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts get-attachment --inbox-id <inbox_id> --draft-id <draft_id> --attachment-id <attachment_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -607,6 +658,11 @@ class AsyncDraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Draft:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts create --inbox-id <inbox_id> --to recipient@example.com --subject "Draft subject" --text "Draft body"
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -696,6 +752,11 @@ class AsyncDraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Draft:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts update --inbox-id <inbox_id> --draft-id <draft_id> --subject "Updated subject"
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -764,6 +825,11 @@ class AsyncDraftsClient:
         self, inbox_id: InboxId, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts delete --inbox-id <inbox_id> --draft-id <draft_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -805,22 +871,27 @@ class AsyncDraftsClient:
         inbox_id: InboxId,
         draft_id: DraftId,
         *,
-        add_labels: typing.Optional[typing.Sequence[str]] = OMIT,
-        remove_labels: typing.Optional[typing.Sequence[str]] = OMIT,
+        add_labels: typing.Optional[UpdateMessageLabels] = OMIT,
+        remove_labels: typing.Optional[UpdateMessageLabels] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts send --inbox-id <inbox_id> --draft-id <draft_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
 
         draft_id : DraftId
 
-        add_labels : typing.Optional[typing.Sequence[str]]
-            Labels to add to message.
+        add_labels : typing.Optional[UpdateMessageLabels]
+            Label or labels to add to message.
 
-        remove_labels : typing.Optional[typing.Sequence[str]]
-            Labels to remove from message.
+        remove_labels : typing.Optional[UpdateMessageLabels]
+            Label or labels to remove from message.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

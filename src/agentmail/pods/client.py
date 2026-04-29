@@ -60,6 +60,11 @@ class PodsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListPodsResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail pods list
+        ```
+
         Parameters
         ----------
         limit : typing.Optional[Limit]
@@ -91,6 +96,11 @@ class PodsClient:
 
     def get(self, pod_id: PodId, *, request_options: typing.Optional[RequestOptions] = None) -> Pod:
         """
+        **CLI:**
+        ```bash
+        agentmail pods get --pod-id <pod_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -124,6 +134,11 @@ class PodsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Pod:
         """
+        **CLI:**
+        ```bash
+        agentmail pods create --client-id my-pod
+        ```
+
         Parameters
         ----------
         name : typing.Optional[Name]
@@ -151,6 +166,11 @@ class PodsClient:
 
     def delete(self, pod_id: PodId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        **CLI:**
+        ```bash
+        agentmail pods delete --pod-id <pod_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -265,6 +285,11 @@ class AsyncPodsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListPodsResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail pods list
+        ```
+
         Parameters
         ----------
         limit : typing.Optional[Limit]
@@ -304,6 +329,11 @@ class AsyncPodsClient:
 
     async def get(self, pod_id: PodId, *, request_options: typing.Optional[RequestOptions] = None) -> Pod:
         """
+        **CLI:**
+        ```bash
+        agentmail pods get --pod-id <pod_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -345,6 +375,11 @@ class AsyncPodsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Pod:
         """
+        **CLI:**
+        ```bash
+        agentmail pods create --client-id my-pod
+        ```
+
         Parameters
         ----------
         name : typing.Optional[Name]
@@ -380,6 +415,11 @@ class AsyncPodsClient:
 
     async def delete(self, pod_id: PodId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        **CLI:**
+        ```bash
+        agentmail pods delete --pod-id <pod_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId

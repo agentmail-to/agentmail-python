@@ -43,6 +43,11 @@ class ListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PodListListEntriesResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:lists list --inbox-id <inbox_id> --direction <direction> --type <type>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -90,6 +95,11 @@ class ListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PodListEntry:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:lists get --inbox-id <inbox_id> --direction <direction> --type <type> --entry <entry>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -136,6 +146,11 @@ class ListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PodListEntry:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:lists create --inbox-id <inbox_id> --direction <direction> --type <type> --entry user@example.com
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -186,6 +201,11 @@ class ListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:lists delete --inbox-id <inbox_id> --direction <direction> --type <type> --entry <entry>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -248,6 +268,11 @@ class AsyncListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PodListListEntriesResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:lists list --inbox-id <inbox_id> --direction <direction> --type <type>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -303,6 +328,11 @@ class AsyncListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PodListEntry:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:lists get --inbox-id <inbox_id> --direction <direction> --type <type> --entry <entry>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -357,6 +387,11 @@ class AsyncListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PodListEntry:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:lists create --inbox-id <inbox_id> --direction <direction> --type <type> --entry user@example.com
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -415,6 +450,11 @@ class AsyncListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:lists delete --inbox-id <inbox_id> --direction <direction> --type <type> --entry <entry>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId

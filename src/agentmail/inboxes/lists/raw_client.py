@@ -42,6 +42,11 @@ class RawListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PodListListEntriesResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:lists list --inbox-id <inbox_id> --direction <direction> --type <type>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -100,6 +105,11 @@ class RawListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PodListEntry]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:lists get --inbox-id <inbox_id> --direction <direction> --type <type> --entry <entry>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -165,6 +175,11 @@ class RawListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PodListEntry]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:lists create --inbox-id <inbox_id> --direction <direction> --type <type> --entry user@example.com
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -237,6 +252,11 @@ class RawListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:lists delete --inbox-id <inbox_id> --direction <direction> --type <type> --entry <entry>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -300,6 +320,11 @@ class AsyncRawListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PodListListEntriesResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:lists list --inbox-id <inbox_id> --direction <direction> --type <type>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -358,6 +383,11 @@ class AsyncRawListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PodListEntry]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:lists get --inbox-id <inbox_id> --direction <direction> --type <type> --entry <entry>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -423,6 +453,11 @@ class AsyncRawListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PodListEntry]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:lists create --inbox-id <inbox_id> --direction <direction> --type <type> --entry user@example.com
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -495,6 +530,11 @@ class AsyncRawListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:lists delete --inbox-id <inbox_id> --direction <direction> --type <type> --entry <entry>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId

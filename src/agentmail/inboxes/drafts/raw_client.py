@@ -33,6 +33,7 @@ from ...errors.not_found_error import NotFoundError
 from ...errors.validation_error import ValidationError as errors_validation_error_ValidationError
 from ...messages.errors.message_rejected_error import MessageRejectedError
 from ...messages.types.send_message_response import SendMessageResponse
+from ...messages.types.update_message_labels import UpdateMessageLabels
 from ...types.after import After
 from ...types.ascending import Ascending
 from ...types.before import Before
@@ -65,6 +66,11 @@ class RawDraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListDraftsResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts list --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -136,6 +142,11 @@ class RawDraftsClient:
         self, inbox_id: InboxId, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Draft]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts get --inbox-id <inbox_id> --draft-id <draft_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -194,6 +205,11 @@ class RawDraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AttachmentResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts get-attachment --inbox-id <inbox_id> --draft-id <draft_id> --attachment-id <attachment_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -264,6 +280,11 @@ class RawDraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Draft]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts create --inbox-id <inbox_id> --to recipient@example.com --subject "Draft subject" --text "Draft body"
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -369,6 +390,11 @@ class RawDraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Draft]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts update --inbox-id <inbox_id> --draft-id <draft_id> --subject "Updated subject"
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -449,6 +475,11 @@ class RawDraftsClient:
         self, inbox_id: InboxId, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts delete --inbox-id <inbox_id> --draft-id <draft_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -496,22 +527,27 @@ class RawDraftsClient:
         inbox_id: InboxId,
         draft_id: DraftId,
         *,
-        add_labels: typing.Optional[typing.Sequence[str]] = OMIT,
-        remove_labels: typing.Optional[typing.Sequence[str]] = OMIT,
+        add_labels: typing.Optional[UpdateMessageLabels] = OMIT,
+        remove_labels: typing.Optional[UpdateMessageLabels] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SendMessageResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts send --inbox-id <inbox_id> --draft-id <draft_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
 
         draft_id : DraftId
 
-        add_labels : typing.Optional[typing.Sequence[str]]
-            Labels to add to message.
+        add_labels : typing.Optional[UpdateMessageLabels]
+            Label or labels to add to message.
 
-        remove_labels : typing.Optional[typing.Sequence[str]]
-            Labels to remove from message.
+        remove_labels : typing.Optional[UpdateMessageLabels]
+            Label or labels to remove from message.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -525,8 +561,12 @@ class RawDraftsClient:
             base_url=self._client_wrapper.get_environment().http,
             method="POST",
             json={
-                "add_labels": add_labels,
-                "remove_labels": remove_labels,
+                "add_labels": convert_and_respect_annotation_metadata(
+                    object_=add_labels, annotation=UpdateMessageLabels, direction="write"
+                ),
+                "remove_labels": convert_and_respect_annotation_metadata(
+                    object_=remove_labels, annotation=UpdateMessageLabels, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -601,6 +641,11 @@ class AsyncRawDraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListDraftsResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts list --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -672,6 +717,11 @@ class AsyncRawDraftsClient:
         self, inbox_id: InboxId, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Draft]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts get --inbox-id <inbox_id> --draft-id <draft_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -730,6 +780,11 @@ class AsyncRawDraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AttachmentResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts get-attachment --inbox-id <inbox_id> --draft-id <draft_id> --attachment-id <attachment_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -800,6 +855,11 @@ class AsyncRawDraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Draft]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts create --inbox-id <inbox_id> --to recipient@example.com --subject "Draft subject" --text "Draft body"
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -905,6 +965,11 @@ class AsyncRawDraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Draft]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts update --inbox-id <inbox_id> --draft-id <draft_id> --subject "Updated subject"
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -985,6 +1050,11 @@ class AsyncRawDraftsClient:
         self, inbox_id: InboxId, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts delete --inbox-id <inbox_id> --draft-id <draft_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -1032,22 +1102,27 @@ class AsyncRawDraftsClient:
         inbox_id: InboxId,
         draft_id: DraftId,
         *,
-        add_labels: typing.Optional[typing.Sequence[str]] = OMIT,
-        remove_labels: typing.Optional[typing.Sequence[str]] = OMIT,
+        add_labels: typing.Optional[UpdateMessageLabels] = OMIT,
+        remove_labels: typing.Optional[UpdateMessageLabels] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SendMessageResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:drafts send --inbox-id <inbox_id> --draft-id <draft_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
 
         draft_id : DraftId
 
-        add_labels : typing.Optional[typing.Sequence[str]]
-            Labels to add to message.
+        add_labels : typing.Optional[UpdateMessageLabels]
+            Label or labels to add to message.
 
-        remove_labels : typing.Optional[typing.Sequence[str]]
-            Labels to remove from message.
+        remove_labels : typing.Optional[UpdateMessageLabels]
+            Label or labels to remove from message.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1061,8 +1136,12 @@ class AsyncRawDraftsClient:
             base_url=self._client_wrapper.get_environment().http,
             method="POST",
             json={
-                "add_labels": add_labels,
-                "remove_labels": remove_labels,
+                "add_labels": convert_and_respect_annotation_metadata(
+                    object_=add_labels, annotation=UpdateMessageLabels, direction="write"
+                ),
+                "remove_labels": convert_and_respect_annotation_metadata(
+                    object_=remove_labels, annotation=UpdateMessageLabels, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,

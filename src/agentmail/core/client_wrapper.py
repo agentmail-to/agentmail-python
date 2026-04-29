@@ -28,12 +28,12 @@ class BaseClientWrapper:
         import platform
 
         headers: typing.Dict[str, str] = {
-            "User-Agent": "agentmail/0.4.15",
+            "User-Agent": "agentmail/0.5.0",
             "X-Fern-Language": "Python",
             "X-Fern-Runtime": f"python/{platform.python_version()}",
             "X-Fern-Platform": f"{platform.system().lower()}/{platform.release()}",
             "X-Fern-SDK-Name": "agentmail",
-            "X-Fern-SDK-Version": "0.4.15",
+            "X-Fern-SDK-Version": "0.5.0",
             **(self.get_custom_headers() or {}),
         }
         api_key = self._get_api_key()

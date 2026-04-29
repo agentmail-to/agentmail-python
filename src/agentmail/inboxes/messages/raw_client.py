@@ -33,6 +33,7 @@ from ...messages.types.send_message_headers import SendMessageHeaders
 from ...messages.types.send_message_reply_to import SendMessageReplyTo
 from ...messages.types.send_message_response import SendMessageResponse
 from ...messages.types.send_message_to import SendMessageTo
+from ...messages.types.update_message_labels import UpdateMessageLabels
 from ...messages.types.update_message_response import UpdateMessageResponse
 from ...types.after import After
 from ...types.ascending import Ascending
@@ -72,6 +73,11 @@ class RawMessagesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListMessagesResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages list --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -152,6 +158,11 @@ class RawMessagesClient:
         self, inbox_id: InboxId, message_id: MessageId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Message]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages get --inbox-id <inbox_id> --message-id <message_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -210,6 +221,11 @@ class RawMessagesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AttachmentResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages get-attachment --inbox-id <inbox_id> --message-id <message_id> --attachment-id <attachment_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -265,6 +281,11 @@ class RawMessagesClient:
         self, inbox_id: InboxId, message_id: MessageId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[RawMessageResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages get-raw --inbox-id <inbox_id> --message-id <message_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -319,22 +340,27 @@ class RawMessagesClient:
         inbox_id: InboxId,
         message_id: MessageId,
         *,
-        add_labels: typing.Optional[typing.Sequence[str]] = OMIT,
-        remove_labels: typing.Optional[typing.Sequence[str]] = OMIT,
+        add_labels: typing.Optional[UpdateMessageLabels] = OMIT,
+        remove_labels: typing.Optional[UpdateMessageLabels] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[UpdateMessageResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages update --inbox-id <inbox_id> --message-id <message_id> --add-label read --remove-label unread
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
 
         message_id : MessageId
 
-        add_labels : typing.Optional[typing.Sequence[str]]
-            Labels to add to message.
+        add_labels : typing.Optional[UpdateMessageLabels]
+            Label or labels to add to message.
 
-        remove_labels : typing.Optional[typing.Sequence[str]]
-            Labels to remove from message.
+        remove_labels : typing.Optional[UpdateMessageLabels]
+            Label or labels to remove from message.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -348,8 +374,12 @@ class RawMessagesClient:
             base_url=self._client_wrapper.get_environment().http,
             method="PATCH",
             json={
-                "add_labels": add_labels,
-                "remove_labels": remove_labels,
+                "add_labels": convert_and_respect_annotation_metadata(
+                    object_=add_labels, annotation=UpdateMessageLabels, direction="write"
+                ),
+                "remove_labels": convert_and_respect_annotation_metadata(
+                    object_=remove_labels, annotation=UpdateMessageLabels, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -395,6 +425,59 @@ class RawMessagesClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def delete(
+        self, inbox_id: InboxId, message_id: MessageId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[None]:
+        """
+        Permanently deletes a message.
+
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages delete --inbox-id <inbox_id> --message-id <message_id>
+        ```
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_id : MessageId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def send(
         self,
         inbox_id: InboxId,
@@ -412,6 +495,11 @@ class RawMessagesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SendMessageResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages send --inbox-id <inbox_id> --to recipient@example.com --subject "Hello" --text "Body"
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -538,6 +626,11 @@ class RawMessagesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SendMessageResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages reply --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -662,6 +755,11 @@ class RawMessagesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SendMessageResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages reply-all --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -776,6 +874,11 @@ class RawMessagesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SendMessageResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages forward --inbox-id <inbox_id> --message-id <message_id> --to recipient@example.com
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -907,6 +1010,11 @@ class AsyncRawMessagesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListMessagesResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages list --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -987,6 +1095,11 @@ class AsyncRawMessagesClient:
         self, inbox_id: InboxId, message_id: MessageId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Message]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages get --inbox-id <inbox_id> --message-id <message_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -1045,6 +1158,11 @@ class AsyncRawMessagesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AttachmentResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages get-attachment --inbox-id <inbox_id> --message-id <message_id> --attachment-id <attachment_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -1100,6 +1218,11 @@ class AsyncRawMessagesClient:
         self, inbox_id: InboxId, message_id: MessageId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[RawMessageResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages get-raw --inbox-id <inbox_id> --message-id <message_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -1154,22 +1277,27 @@ class AsyncRawMessagesClient:
         inbox_id: InboxId,
         message_id: MessageId,
         *,
-        add_labels: typing.Optional[typing.Sequence[str]] = OMIT,
-        remove_labels: typing.Optional[typing.Sequence[str]] = OMIT,
+        add_labels: typing.Optional[UpdateMessageLabels] = OMIT,
+        remove_labels: typing.Optional[UpdateMessageLabels] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[UpdateMessageResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages update --inbox-id <inbox_id> --message-id <message_id> --add-label read --remove-label unread
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
 
         message_id : MessageId
 
-        add_labels : typing.Optional[typing.Sequence[str]]
-            Labels to add to message.
+        add_labels : typing.Optional[UpdateMessageLabels]
+            Label or labels to add to message.
 
-        remove_labels : typing.Optional[typing.Sequence[str]]
-            Labels to remove from message.
+        remove_labels : typing.Optional[UpdateMessageLabels]
+            Label or labels to remove from message.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -1183,8 +1311,12 @@ class AsyncRawMessagesClient:
             base_url=self._client_wrapper.get_environment().http,
             method="PATCH",
             json={
-                "add_labels": add_labels,
-                "remove_labels": remove_labels,
+                "add_labels": convert_and_respect_annotation_metadata(
+                    object_=add_labels, annotation=UpdateMessageLabels, direction="write"
+                ),
+                "remove_labels": convert_and_respect_annotation_metadata(
+                    object_=remove_labels, annotation=UpdateMessageLabels, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -1230,6 +1362,59 @@ class AsyncRawMessagesClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    async def delete(
+        self, inbox_id: InboxId, message_id: MessageId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[None]:
+        """
+        Permanently deletes a message.
+
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages delete --inbox-id <inbox_id> --message-id <message_id>
+        ```
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_id : MessageId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     async def send(
         self,
         inbox_id: InboxId,
@@ -1247,6 +1432,11 @@ class AsyncRawMessagesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SendMessageResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages send --inbox-id <inbox_id> --to recipient@example.com --subject "Hello" --text "Body"
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -1373,6 +1563,11 @@ class AsyncRawMessagesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SendMessageResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages reply --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -1497,6 +1692,11 @@ class AsyncRawMessagesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SendMessageResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages reply-all --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -1611,6 +1811,11 @@ class AsyncRawMessagesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SendMessageResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages forward --inbox-id <inbox_id> --message-id <message_id> --to recipient@example.com
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId

@@ -5,18 +5,19 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
-from .update_message_labels import UpdateMessageLabels
+from ...types.count import Count
+from ...types.limit import Limit
+from ...types.page_token import PageToken
+from .inbox_event import InboxEvent
 
 
-class UpdateMessageRequest(UncheckedBaseModel):
-    add_labels: typing.Optional[UpdateMessageLabels] = pydantic.Field(default=None)
+class ListInboxEventsResponse(UncheckedBaseModel):
+    count: Count
+    limit: typing.Optional[Limit] = None
+    next_page_token: typing.Optional[PageToken] = None
+    events: typing.List[InboxEvent] = pydantic.Field()
     """
-    Label or labels to add to message.
-    """
-
-    remove_labels: typing.Optional[UpdateMessageLabels] = pydantic.Field(default=None)
-    """
-    Label or labels to remove from message.
+    Ordered by `event_id` descending.
     """
 
     if IS_PYDANTIC_V2:

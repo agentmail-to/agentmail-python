@@ -43,6 +43,11 @@ class RawDraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListDraftsResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail drafts list
+        ```
+
         Parameters
         ----------
         limit : typing.Optional[Limit]
@@ -110,6 +115,11 @@ class RawDraftsClient:
 
     def get(self, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Draft]:
         """
+        **CLI:**
+        ```bash
+        agentmail drafts get --draft-id <draft_id>
+        ```
+
         Parameters
         ----------
         draft_id : DraftId
@@ -161,6 +171,11 @@ class RawDraftsClient:
         self, draft_id: DraftId, attachment_id: AttachmentId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[AttachmentResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail drafts get-attachment --draft-id <draft_id> --attachment-id <attachment_id>
+        ```
+
         Parameters
         ----------
         draft_id : DraftId
@@ -227,6 +242,11 @@ class AsyncRawDraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListDraftsResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail drafts list
+        ```
+
         Parameters
         ----------
         limit : typing.Optional[Limit]
@@ -296,6 +316,11 @@ class AsyncRawDraftsClient:
         self, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Draft]:
         """
+        **CLI:**
+        ```bash
+        agentmail drafts get --draft-id <draft_id>
+        ```
+
         Parameters
         ----------
         draft_id : DraftId
@@ -347,6 +372,11 @@ class AsyncRawDraftsClient:
         self, draft_id: DraftId, attachment_id: AttachmentId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[AttachmentResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail drafts get-attachment --draft-id <draft_id> --attachment-id <attachment_id>
+        ```
+
         Parameters
         ----------
         draft_id : DraftId

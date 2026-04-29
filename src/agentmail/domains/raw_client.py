@@ -42,6 +42,11 @@ class RawDomainsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListDomainsResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail domains list
+        ```
+
         Parameters
         ----------
         limit : typing.Optional[Limit]
@@ -91,6 +96,11 @@ class RawDomainsClient:
         self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Domain]:
         """
+        **CLI:**
+        ```bash
+        agentmail domains get --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         domain_id : DomainId
@@ -143,6 +153,11 @@ class RawDomainsClient:
         self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
+        **CLI:**
+        ```bash
+        agentmail domains get-zone-file --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         domain_id : DomainId
@@ -204,6 +219,11 @@ class RawDomainsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Domain]:
         """
+        **CLI:**
+        ```bash
+        agentmail domains create --domain example.com
+        ```
+
         Parameters
         ----------
         domain : DomainName
@@ -266,6 +286,11 @@ class RawDomainsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Domain]:
         """
+        **CLI:**
+        ```bash
+        agentmail domains update --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         domain_id : DomainId
@@ -323,6 +348,11 @@ class RawDomainsClient:
         self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail domains delete --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         domain_id : DomainId
@@ -367,6 +397,11 @@ class RawDomainsClient:
         self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail domains verify --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         domain_id : DomainId
@@ -421,6 +456,11 @@ class AsyncRawDomainsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListDomainsResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail domains list
+        ```
+
         Parameters
         ----------
         limit : typing.Optional[Limit]
@@ -470,6 +510,11 @@ class AsyncRawDomainsClient:
         self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Domain]:
         """
+        **CLI:**
+        ```bash
+        agentmail domains get --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         domain_id : DomainId
@@ -522,6 +567,11 @@ class AsyncRawDomainsClient:
         self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """
+        **CLI:**
+        ```bash
+        agentmail domains get-zone-file --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         domain_id : DomainId
@@ -584,6 +634,11 @@ class AsyncRawDomainsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Domain]:
         """
+        **CLI:**
+        ```bash
+        agentmail domains create --domain example.com
+        ```
+
         Parameters
         ----------
         domain : DomainName
@@ -646,6 +701,11 @@ class AsyncRawDomainsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Domain]:
         """
+        **CLI:**
+        ```bash
+        agentmail domains update --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         domain_id : DomainId
@@ -703,6 +763,11 @@ class AsyncRawDomainsClient:
         self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail domains delete --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         domain_id : DomainId
@@ -747,6 +812,11 @@ class AsyncRawDomainsClient:
         self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail domains verify --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         domain_id : DomainId

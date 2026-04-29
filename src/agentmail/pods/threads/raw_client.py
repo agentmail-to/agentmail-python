@@ -58,6 +58,11 @@ class RawThreadsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListThreadsResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:threads list --pod-id <pod_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -138,6 +143,11 @@ class RawThreadsClient:
         self, pod_id: PodId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Thread]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:threads get --pod-id <pod_id> --thread-id <thread_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -196,6 +206,11 @@ class RawThreadsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AttachmentResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:threads get-attachment --pod-id <pod_id> --thread-id <thread_id> --attachment-id <attachment_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -352,6 +367,11 @@ class RawThreadsClient:
         """
         Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
 
+        **CLI:**
+        ```bash
+        agentmail pods:threads delete --pod-id <pod_id> --thread-id <thread_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -421,6 +441,11 @@ class AsyncRawThreadsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListThreadsResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:threads list --pod-id <pod_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -501,6 +526,11 @@ class AsyncRawThreadsClient:
         self, pod_id: PodId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Thread]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:threads get --pod-id <pod_id> --thread-id <thread_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -559,6 +589,11 @@ class AsyncRawThreadsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AttachmentResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:threads get-attachment --pod-id <pod_id> --thread-id <thread_id> --attachment-id <attachment_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -714,6 +749,11 @@ class AsyncRawThreadsClient:
     ) -> AsyncHttpResponse[None]:
         """
         Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+
+        **CLI:**
+        ```bash
+        agentmail pods:threads delete --pod-id <pod_id> --thread-id <thread_id>
+        ```
 
         Parameters
         ----------

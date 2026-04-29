@@ -45,6 +45,11 @@ class RawDraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListDraftsResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:drafts list --pod-id <pod_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -116,6 +121,11 @@ class RawDraftsClient:
         self, pod_id: PodId, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Draft]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:drafts get --pod-id <pod_id> --draft-id <draft_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -174,6 +184,11 @@ class RawDraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AttachmentResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:drafts get-attachment --pod-id <pod_id> --draft-id <draft_id> --attachment-id <attachment_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -243,6 +258,11 @@ class AsyncRawDraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListDraftsResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:drafts list --pod-id <pod_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -314,6 +334,11 @@ class AsyncRawDraftsClient:
         self, pod_id: PodId, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Draft]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:drafts get --pod-id <pod_id> --draft-id <draft_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -372,6 +397,11 @@ class AsyncRawDraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AttachmentResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:drafts get-attachment --pod-id <pod_id> --draft-id <draft_id> --attachment-id <attachment_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId

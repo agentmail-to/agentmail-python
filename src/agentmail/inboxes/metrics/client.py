@@ -43,6 +43,11 @@ class MetricsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> QueryMetricsResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:metrics query --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -118,6 +123,11 @@ class AsyncMetricsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> QueryMetricsResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes:metrics query --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId

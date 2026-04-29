@@ -31,11 +31,18 @@ class AgentClient:
         self, *, human_email: str, username: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AgentSignupResponse:
         """
-        Create a new agent organization with an inbox and API key. A 6-digit OTP is sent to the human's email for verification.
+        Create a new agent organization with an inbox and API key. This endpoint is for signing up for the first time. If you've already signed up, you're all set — just use your existing API key.
+
+        A 6-digit OTP is sent to the human's email for verification.
 
         This endpoint is idempotent. Calling it again with the same `human_email` will rotate the API key and resend the OTP if expired.
 
         The returned API key has limited permissions until the organization is verified via the verify endpoint.
+
+        **CLI:**
+        ```bash
+        agentmail agent sign-up --human-email user@example.com --username my-agent
+        ```
 
         Parameters
         ----------
@@ -76,6 +83,11 @@ class AgentClient:
         On success, the organization is upgraded from `agent_unverified` to `agent_verified`, the send allowlist is removed, and free plan entitlements are applied.
 
         The OTP expires after 24 hours and allows a maximum of 10 attempts.
+
+        **CLI:**
+        ```bash
+        agentmail agent verify --otp-code 123456
+        ```
 
         Parameters
         ----------
@@ -123,11 +135,18 @@ class AsyncAgentClient:
         self, *, human_email: str, username: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AgentSignupResponse:
         """
-        Create a new agent organization with an inbox and API key. A 6-digit OTP is sent to the human's email for verification.
+        Create a new agent organization with an inbox and API key. This endpoint is for signing up for the first time. If you've already signed up, you're all set — just use your existing API key.
+
+        A 6-digit OTP is sent to the human's email for verification.
 
         This endpoint is idempotent. Calling it again with the same `human_email` will rotate the API key and resend the OTP if expired.
 
         The returned API key has limited permissions until the organization is verified via the verify endpoint.
+
+        **CLI:**
+        ```bash
+        agentmail agent sign-up --human-email user@example.com --username my-agent
+        ```
 
         Parameters
         ----------
@@ -178,6 +197,11 @@ class AsyncAgentClient:
         On success, the organization is upgraded from `agent_unverified` to `agent_verified`, the send allowlist is removed, and free plan entitlements are applied.
 
         The OTP expires after 24 hours and allows a maximum of 10 attempts.
+
+        **CLI:**
+        ```bash
+        agentmail agent verify --otp-code 123456
+        ```
 
         Parameters
         ----------

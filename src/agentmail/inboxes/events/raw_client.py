@@ -5,101 +5,87 @@ from json.decoder import JSONDecodeError
 
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ...core.datetime_utils import serialize_datetime
 from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.unchecked_base_model import construct_type
-from ...errors.validation_error import ValidationError as errors_validation_error_ValidationError
-from ...metrics.types.descending import Descending
-from ...metrics.types.end import End
-from ...metrics.types.metric_event_types import MetricEventTypes
-from ...metrics.types.metric_limit import MetricLimit
-from ...metrics.types.period import Period
-from ...metrics.types.query_metrics_response import QueryMetricsResponse
-from ...metrics.types.start import Start
-from ...types.validation_error_response import ValidationErrorResponse
-from ..types.pod_id import PodId
-from pydantic import ValidationError as pydantic_ValidationError
+from ...errors.not_found_error import NotFoundError
+from ...inbox_events.types.list_inbox_events_response import ListInboxEventsResponse
+from ...types.ascending import Ascending
+from ...types.error_response import ErrorResponse
+from ...types.limit import Limit
+from ...types.page_token import PageToken
+from ..types.inbox_id import InboxId
+from pydantic import ValidationError
 
 
-class RawMetricsClient:
+class RawEventsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def query(
+    def list(
         self,
-        pod_id: PodId,
+        inbox_id: InboxId,
         *,
-        event_types: typing.Optional[MetricEventTypes] = None,
-        start: typing.Optional[Start] = None,
-        end: typing.Optional[End] = None,
-        period: typing.Optional[Period] = None,
-        limit: typing.Optional[MetricLimit] = None,
-        descending: typing.Optional[Descending] = None,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[QueryMetricsResponse]:
+    ) -> HttpResponse[ListInboxEventsResponse]:
         """
+        List label change events for an inbox. Returns events in reverse chronological order by default. Use for IMAP UID projection or audit logging.
+
         **CLI:**
         ```bash
-        agentmail pods:metrics query --pod-id <pod_id>
+        agentmail inboxes:events list --inbox-id <inbox_id>
         ```
 
         Parameters
         ----------
-        pod_id : PodId
+        inbox_id : InboxId
 
-        event_types : typing.Optional[MetricEventTypes]
+        limit : typing.Optional[Limit]
 
-        start : typing.Optional[Start]
+        page_token : typing.Optional[PageToken]
 
-        end : typing.Optional[End]
-
-        period : typing.Optional[Period]
-
-        limit : typing.Optional[MetricLimit]
-
-        descending : typing.Optional[Descending]
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[QueryMetricsResponse]
+        HttpResponse[ListInboxEventsResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/pods/{jsonable_encoder(pod_id)}/metrics",
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/events",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
-                "event_types": event_types,
-                "start": serialize_datetime(start) if start is not None else None,
-                "end": serialize_datetime(end) if end is not None else None,
-                "period": period,
                 "limit": limit,
-                "descending": descending,
+                "page_token": page_token,
+                "ascending": ascending,
             },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    QueryMetricsResponse,
+                    ListInboxEventsResponse,
                     construct_type(
-                        type_=QueryMetricsResponse,  # type: ignore
+                        type_=ListInboxEventsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise errors_validation_error_ValidationError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ValidationErrorResponse,
+                        ErrorResponse,
                         construct_type(
-                            type_=ValidationErrorResponse,  # type: ignore
+                            type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -107,89 +93,79 @@ class RawMetricsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except pydantic_ValidationError as e:
+        except ValidationError as e:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
-class AsyncRawMetricsClient:
+class AsyncRawEventsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def query(
+    async def list(
         self,
-        pod_id: PodId,
+        inbox_id: InboxId,
         *,
-        event_types: typing.Optional[MetricEventTypes] = None,
-        start: typing.Optional[Start] = None,
-        end: typing.Optional[End] = None,
-        period: typing.Optional[Period] = None,
-        limit: typing.Optional[MetricLimit] = None,
-        descending: typing.Optional[Descending] = None,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        ascending: typing.Optional[Ascending] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[QueryMetricsResponse]:
+    ) -> AsyncHttpResponse[ListInboxEventsResponse]:
         """
+        List label change events for an inbox. Returns events in reverse chronological order by default. Use for IMAP UID projection or audit logging.
+
         **CLI:**
         ```bash
-        agentmail pods:metrics query --pod-id <pod_id>
+        agentmail inboxes:events list --inbox-id <inbox_id>
         ```
 
         Parameters
         ----------
-        pod_id : PodId
+        inbox_id : InboxId
 
-        event_types : typing.Optional[MetricEventTypes]
+        limit : typing.Optional[Limit]
 
-        start : typing.Optional[Start]
+        page_token : typing.Optional[PageToken]
 
-        end : typing.Optional[End]
-
-        period : typing.Optional[Period]
-
-        limit : typing.Optional[MetricLimit]
-
-        descending : typing.Optional[Descending]
+        ascending : typing.Optional[Ascending]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[QueryMetricsResponse]
+        AsyncHttpResponse[ListInboxEventsResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/pods/{jsonable_encoder(pod_id)}/metrics",
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/events",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
-                "event_types": event_types,
-                "start": serialize_datetime(start) if start is not None else None,
-                "end": serialize_datetime(end) if end is not None else None,
-                "period": period,
                 "limit": limit,
-                "descending": descending,
+                "page_token": page_token,
+                "ascending": ascending,
             },
             request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    QueryMetricsResponse,
+                    ListInboxEventsResponse,
                     construct_type(
-                        type_=QueryMetricsResponse,  # type: ignore
+                        type_=ListInboxEventsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
-            if _response.status_code == 400:
-                raise errors_validation_error_ValidationError(
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
-                        ValidationErrorResponse,
+                        ErrorResponse,
                         construct_type(
-                            type_=ValidationErrorResponse,  # type: ignore
+                            type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -197,7 +173,7 @@ class AsyncRawMetricsClient:
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
-        except pydantic_ValidationError as e:
+        except ValidationError as e:
             raise ParsingError(
                 status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
             )

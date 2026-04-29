@@ -45,6 +45,11 @@ class DraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListDraftsResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail drafts list
+        ```
+
         Parameters
         ----------
         limit : typing.Optional[Limit]
@@ -88,6 +93,11 @@ class DraftsClient:
 
     def get(self, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None) -> Draft:
         """
+        **CLI:**
+        ```bash
+        agentmail drafts get --draft-id <draft_id>
+        ```
+
         Parameters
         ----------
         draft_id : DraftId
@@ -117,6 +127,11 @@ class DraftsClient:
         self, draft_id: DraftId, attachment_id: AttachmentId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AttachmentResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail drafts get-attachment --draft-id <draft_id> --attachment-id <attachment_id>
+        ```
+
         Parameters
         ----------
         draft_id : DraftId
@@ -173,6 +188,11 @@ class AsyncDraftsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListDraftsResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail drafts list
+        ```
+
         Parameters
         ----------
         limit : typing.Optional[Limit]
@@ -224,6 +244,11 @@ class AsyncDraftsClient:
 
     async def get(self, draft_id: DraftId, *, request_options: typing.Optional[RequestOptions] = None) -> Draft:
         """
+        **CLI:**
+        ```bash
+        agentmail drafts get --draft-id <draft_id>
+        ```
+
         Parameters
         ----------
         draft_id : DraftId
@@ -261,6 +286,11 @@ class AsyncDraftsClient:
         self, draft_id: DraftId, attachment_id: AttachmentId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AttachmentResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail drafts get-attachment --draft-id <draft_id> --attachment-id <attachment_id>
+        ```
+
         Parameters
         ----------
         draft_id : DraftId

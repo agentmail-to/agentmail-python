@@ -42,6 +42,11 @@ class ApiKeysClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListApiKeysResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:api-keys list --pod-id <pod_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -75,16 +80,21 @@ class ApiKeysClient:
         self,
         pod_id: PodId,
         *,
-        name: Name,
+        name: typing.Optional[Name] = OMIT,
         permissions: typing.Optional[ApiKeyPermissions] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateApiKeyResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:api-keys create --pod-id <pod_id> --name "My Key"
+        ```
+
         Parameters
         ----------
         pod_id : PodId
 
-        name : Name
+        name : typing.Optional[Name]
 
         permissions : typing.Optional[ApiKeyPermissions]
 
@@ -104,7 +114,6 @@ class ApiKeysClient:
         )
         client.pods.api_keys.create(
             pod_id="pod_id",
-            name="name",
         )
         """
         _response = self._raw_client.create(pod_id, name=name, permissions=permissions, request_options=request_options)
@@ -114,6 +123,11 @@ class ApiKeysClient:
         self, pod_id: PodId, api_key_id: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:api-keys delete --pod-id <pod_id> --api-key-id <api_key_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -167,6 +181,11 @@ class AsyncApiKeysClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListApiKeysResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:api-keys list --pod-id <pod_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -210,16 +229,21 @@ class AsyncApiKeysClient:
         self,
         pod_id: PodId,
         *,
-        name: Name,
+        name: typing.Optional[Name] = OMIT,
         permissions: typing.Optional[ApiKeyPermissions] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateApiKeyResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:api-keys create --pod-id <pod_id> --name "My Key"
+        ```
+
         Parameters
         ----------
         pod_id : PodId
 
-        name : Name
+        name : typing.Optional[Name]
 
         permissions : typing.Optional[ApiKeyPermissions]
 
@@ -244,7 +268,6 @@ class AsyncApiKeysClient:
         async def main() -> None:
             await client.pods.api_keys.create(
                 pod_id="pod_id",
-                name="name",
             )
 
 
@@ -259,6 +282,11 @@ class AsyncApiKeysClient:
         self, pod_id: PodId, api_key_id: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:api-keys delete --pod-id <pod_id> --api-key-id <api_key_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId

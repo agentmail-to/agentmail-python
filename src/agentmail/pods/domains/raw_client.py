@@ -44,6 +44,11 @@ class RawDomainsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListDomainsResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:domains list --pod-id <pod_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -106,6 +111,11 @@ class RawDomainsClient:
         self, pod_id: PodId, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Domain]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:domains get --pod-id <pod_id> --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -160,6 +170,11 @@ class RawDomainsClient:
         self, pod_id: PodId, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Iterator[HttpResponse[typing.Iterator[bytes]]]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:domains get-zone-file --pod-id <pod_id> --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -224,6 +239,11 @@ class RawDomainsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Domain]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:domains create --pod-id <pod_id> --domain example.com
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -289,6 +309,11 @@ class RawDomainsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Domain]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:domains update --pod-id <pod_id> --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -348,6 +373,11 @@ class RawDomainsClient:
         self, pod_id: PodId, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:domains delete --pod-id <pod_id> --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -394,6 +424,11 @@ class RawDomainsClient:
         self, pod_id: PodId, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:domains verify --pod-id <pod_id> --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -451,6 +486,11 @@ class AsyncRawDomainsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListDomainsResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:domains list --pod-id <pod_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -513,6 +553,11 @@ class AsyncRawDomainsClient:
         self, pod_id: PodId, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Domain]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:domains get --pod-id <pod_id> --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -567,6 +612,11 @@ class AsyncRawDomainsClient:
         self, pod_id: PodId, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.AsyncIterator[AsyncHttpResponse[typing.AsyncIterator[bytes]]]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:domains get-zone-file --pod-id <pod_id> --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -632,6 +682,11 @@ class AsyncRawDomainsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Domain]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:domains create --pod-id <pod_id> --domain example.com
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -697,6 +752,11 @@ class AsyncRawDomainsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Domain]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:domains update --pod-id <pod_id> --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -756,6 +816,11 @@ class AsyncRawDomainsClient:
         self, pod_id: PodId, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:domains delete --pod-id <pod_id> --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -802,6 +867,11 @@ class AsyncRawDomainsClient:
         self, pod_id: PodId, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:domains verify --pod-id <pod_id> --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId

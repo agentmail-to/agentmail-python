@@ -41,6 +41,11 @@ class MetricsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> QueryMetricsResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail metrics list
+        ```
+
         Parameters
         ----------
         event_types : typing.Optional[MetricEventTypes]
@@ -110,6 +115,11 @@ class AsyncMetricsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> QueryMetricsResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail metrics list
+        ```
+
         Parameters
         ----------
         event_types : typing.Optional[MetricEventTypes]

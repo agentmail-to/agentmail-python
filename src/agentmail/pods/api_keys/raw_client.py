@@ -42,6 +42,11 @@ class RawApiKeysClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListApiKeysResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:api-keys list --pod-id <pod_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -101,16 +106,21 @@ class RawApiKeysClient:
         self,
         pod_id: PodId,
         *,
-        name: Name,
+        name: typing.Optional[Name] = OMIT,
         permissions: typing.Optional[ApiKeyPermissions] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[CreateApiKeyResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:api-keys create --pod-id <pod_id> --name "My Key"
+        ```
+
         Parameters
         ----------
         pod_id : PodId
 
-        name : Name
+        name : typing.Optional[Name]
 
         permissions : typing.Optional[ApiKeyPermissions]
 
@@ -179,6 +189,11 @@ class RawApiKeysClient:
         self, pod_id: PodId, api_key_id: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:api-keys delete --pod-id <pod_id> --api-key-id <api_key_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -235,6 +250,11 @@ class AsyncRawApiKeysClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListApiKeysResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:api-keys list --pod-id <pod_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -294,16 +314,21 @@ class AsyncRawApiKeysClient:
         self,
         pod_id: PodId,
         *,
-        name: Name,
+        name: typing.Optional[Name] = OMIT,
         permissions: typing.Optional[ApiKeyPermissions] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[CreateApiKeyResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:api-keys create --pod-id <pod_id> --name "My Key"
+        ```
+
         Parameters
         ----------
         pod_id : PodId
 
-        name : Name
+        name : typing.Optional[Name]
 
         permissions : typing.Optional[ApiKeyPermissions]
 
@@ -372,6 +397,11 @@ class AsyncRawApiKeysClient:
         self, pod_id: PodId, api_key_id: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:api-keys delete --pod-id <pod_id> --api-key-id <api_key_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId

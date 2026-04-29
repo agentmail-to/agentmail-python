@@ -44,6 +44,11 @@ class RawWebhooksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListWebhooksResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail webhooks list
+        ```
+
         Parameters
         ----------
         limit : typing.Optional[Limit]
@@ -93,6 +98,11 @@ class RawWebhooksClient:
         self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Webhook]:
         """
+        **CLI:**
+        ```bash
+        agentmail webhooks get --webhook-id <webhook_id>
+        ```
+
         Parameters
         ----------
         webhook_id : WebhookId
@@ -151,6 +161,11 @@ class RawWebhooksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Webhook]:
         """
+        **CLI:**
+        ```bash
+        agentmail webhooks create --url https://example.com/webhook --event-type message.received
+        ```
+
         Parameters
         ----------
         url : Url
@@ -225,6 +240,11 @@ class RawWebhooksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Webhook]:
         """
+        **CLI:**
+        ```bash
+        agentmail webhooks update --webhook-id <webhook_id> --add-inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         webhook_id : WebhookId
@@ -306,6 +326,11 @@ class RawWebhooksClient:
         self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail webhooks delete --webhook-id <webhook_id>
+        ```
+
         Parameters
         ----------
         webhook_id : WebhookId
@@ -360,6 +385,11 @@ class AsyncRawWebhooksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListWebhooksResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail webhooks list
+        ```
+
         Parameters
         ----------
         limit : typing.Optional[Limit]
@@ -409,6 +439,11 @@ class AsyncRawWebhooksClient:
         self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Webhook]:
         """
+        **CLI:**
+        ```bash
+        agentmail webhooks get --webhook-id <webhook_id>
+        ```
+
         Parameters
         ----------
         webhook_id : WebhookId
@@ -467,6 +502,11 @@ class AsyncRawWebhooksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Webhook]:
         """
+        **CLI:**
+        ```bash
+        agentmail webhooks create --url https://example.com/webhook --event-type message.received
+        ```
+
         Parameters
         ----------
         url : Url
@@ -541,6 +581,11 @@ class AsyncRawWebhooksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Webhook]:
         """
+        **CLI:**
+        ```bash
+        agentmail webhooks update --webhook-id <webhook_id> --add-inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         webhook_id : WebhookId
@@ -622,6 +667,11 @@ class AsyncRawWebhooksClient:
         self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail webhooks delete --webhook-id <webhook_id>
+        ```
+
         Parameters
         ----------
         webhook_id : WebhookId

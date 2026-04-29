@@ -42,6 +42,11 @@ class RawListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PodListListEntriesResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:lists list --pod-id <pod_id> --direction <direction> --type <type>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -100,6 +105,11 @@ class RawListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PodListEntry]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:lists get --pod-id <pod_id> --direction <direction> --type <type> --entry <entry>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -165,6 +175,11 @@ class RawListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[PodListEntry]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:lists create --pod-id <pod_id> --direction <direction> --type <type> --entry user@example.com
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -237,6 +252,11 @@ class RawListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:lists delete --pod-id <pod_id> --direction <direction> --type <type> --entry <entry>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -300,6 +320,11 @@ class AsyncRawListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PodListListEntriesResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:lists list --pod-id <pod_id> --direction <direction> --type <type>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -358,6 +383,11 @@ class AsyncRawListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PodListEntry]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:lists get --pod-id <pod_id> --direction <direction> --type <type> --entry <entry>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -423,6 +453,11 @@ class AsyncRawListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[PodListEntry]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:lists create --pod-id <pod_id> --direction <direction> --type <type> --entry user@example.com
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -495,6 +530,11 @@ class AsyncRawListsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods:lists delete --pod-id <pod_id> --direction <direction> --type <type> --entry <entry>
+        ```
+
         Parameters
         ----------
         pod_id : PodId

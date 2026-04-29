@@ -42,6 +42,11 @@ class RawApiKeysClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListApiKeysResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail api-keys list
+        ```
+
         Parameters
         ----------
         limit : typing.Optional[Limit]
@@ -90,14 +95,19 @@ class RawApiKeysClient:
     def create(
         self,
         *,
-        name: Name,
+        name: typing.Optional[Name] = OMIT,
         permissions: typing.Optional[ApiKeyPermissions] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[CreateApiKeyResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail api-keys create --name "My Key"
+        ```
+
         Parameters
         ----------
-        name : Name
+        name : typing.Optional[Name]
 
         permissions : typing.Optional[ApiKeyPermissions]
 
@@ -155,6 +165,11 @@ class RawApiKeysClient:
         self, api_key_id: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail api-keys delete --api-key-id <api_key_id>
+        ```
+
         Parameters
         ----------
         api_key_id : ApiKeyId
@@ -209,6 +224,11 @@ class AsyncRawApiKeysClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListApiKeysResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail api-keys list
+        ```
+
         Parameters
         ----------
         limit : typing.Optional[Limit]
@@ -257,14 +277,19 @@ class AsyncRawApiKeysClient:
     async def create(
         self,
         *,
-        name: Name,
+        name: typing.Optional[Name] = OMIT,
         permissions: typing.Optional[ApiKeyPermissions] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[CreateApiKeyResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail api-keys create --name "My Key"
+        ```
+
         Parameters
         ----------
-        name : Name
+        name : typing.Optional[Name]
 
         permissions : typing.Optional[ApiKeyPermissions]
 
@@ -322,6 +347,11 @@ class AsyncRawApiKeysClient:
         self, api_key_id: ApiKeyId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail api-keys delete --api-key-id <api_key_id>
+        ```
+
         Parameters
         ----------
         api_key_id : ApiKeyId

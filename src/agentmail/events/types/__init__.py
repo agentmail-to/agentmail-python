@@ -18,6 +18,7 @@ if typing.TYPE_CHECKING:
     from .message_complained_event import MessageComplainedEvent
     from .message_delivered_event import MessageDeliveredEvent
     from .message_received_event import MessageReceivedEvent
+    from .message_received_event_type import MessageReceivedEventType
     from .message_rejected_event import MessageRejectedEvent
     from .message_sent_event import MessageSentEvent
     from .pod_ids import PodIds
@@ -38,6 +39,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MessageComplainedEvent": ".message_complained_event",
     "MessageDeliveredEvent": ".message_delivered_event",
     "MessageReceivedEvent": ".message_received_event",
+    "MessageReceivedEventType": ".message_received_event_type",
     "MessageRejectedEvent": ".message_rejected_event",
     "MessageSentEvent": ".message_sent_event",
     "PodIds": ".pod_ids",
@@ -82,6 +84,7 @@ __all__ = [
     "MessageComplainedEvent",
     "MessageDeliveredEvent",
     "MessageReceivedEvent",
+    "MessageReceivedEventType",
     "MessageRejectedEvent",
     "MessageSentEvent",
     "PodIds",

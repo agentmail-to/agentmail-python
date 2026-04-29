@@ -11,14 +11,12 @@ from .client_id import ClientId
 from .domain_id import DomainId
 from .domain_name import DomainName
 from .feedback_enabled import FeedbackEnabled
-from .status import Status
 
 
 class DomainItem(UncheckedBaseModel):
     pod_id: typing.Optional[PodId] = None
     domain_id: DomainId
     domain: DomainName
-    status: Status
     feedback_enabled: FeedbackEnabled
     client_id: typing.Optional[ClientId] = None
     updated_at: dt.datetime = pydantic.Field()

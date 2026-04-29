@@ -42,6 +42,7 @@ if typing.TYPE_CHECKING:
         SendMessageRequest,
         SendMessageResponse,
         SendMessageTo,
+        UpdateMessageLabels,
         UpdateMessageRequest,
         UpdateMessageResponse,
     )
@@ -83,6 +84,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SendMessageRequest": ".types",
     "SendMessageResponse": ".types",
     "SendMessageTo": ".types",
+    "UpdateMessageLabels": ".types",
     "UpdateMessageRequest": ".types",
     "UpdateMessageResponse": ".types",
 }
@@ -146,6 +148,7 @@ __all__ = [
     "SendMessageRequest",
     "SendMessageResponse",
     "SendMessageTo",
+    "UpdateMessageLabels",
     "UpdateMessageRequest",
     "UpdateMessageResponse",
 ]

@@ -41,6 +41,11 @@ class RawPodsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListPodsResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods list
+        ```
+
         Parameters
         ----------
         limit : typing.Optional[Limit]
@@ -88,6 +93,11 @@ class RawPodsClient:
 
     def get(self, pod_id: PodId, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Pod]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods get --pod-id <pod_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -143,6 +153,11 @@ class RawPodsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Pod]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods create --client-id my-pod
+        ```
+
         Parameters
         ----------
         name : typing.Optional[Name]
@@ -199,6 +214,11 @@ class RawPodsClient:
 
     def delete(self, pod_id: PodId, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods delete --pod-id <pod_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -253,6 +273,11 @@ class AsyncRawPodsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListPodsResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods list
+        ```
+
         Parameters
         ----------
         limit : typing.Optional[Limit]
@@ -302,6 +327,11 @@ class AsyncRawPodsClient:
         self, pod_id: PodId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Pod]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods get --pod-id <pod_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId
@@ -357,6 +387,11 @@ class AsyncRawPodsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Pod]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods create --client-id my-pod
+        ```
+
         Parameters
         ----------
         name : typing.Optional[Name]
@@ -415,6 +450,11 @@ class AsyncRawPodsClient:
         self, pod_id: PodId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail pods delete --pod-id <pod_id>
+        ```
+
         Parameters
         ----------
         pod_id : PodId

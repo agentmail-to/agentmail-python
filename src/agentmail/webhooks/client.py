@@ -45,6 +45,11 @@ class WebhooksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListWebhooksResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail webhooks list
+        ```
+
         Parameters
         ----------
         limit : typing.Optional[Limit]
@@ -76,6 +81,11 @@ class WebhooksClient:
 
     def get(self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None) -> Webhook:
         """
+        **CLI:**
+        ```bash
+        agentmail webhooks get --webhook-id <webhook_id>
+        ```
+
         Parameters
         ----------
         webhook_id : WebhookId
@@ -112,6 +122,11 @@ class WebhooksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Webhook:
         """
+        **CLI:**
+        ```bash
+        agentmail webhooks create --url https://example.com/webhook --event-type message.received
+        ```
+
         Parameters
         ----------
         url : Url
@@ -164,6 +179,11 @@ class WebhooksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Webhook:
         """
+        **CLI:**
+        ```bash
+        agentmail webhooks update --webhook-id <webhook_id> --add-inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         webhook_id : WebhookId
@@ -210,6 +230,11 @@ class WebhooksClient:
 
     def delete(self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        **CLI:**
+        ```bash
+        agentmail webhooks delete --webhook-id <webhook_id>
+        ```
+
         Parameters
         ----------
         webhook_id : WebhookId
@@ -260,6 +285,11 @@ class AsyncWebhooksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListWebhooksResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail webhooks list
+        ```
+
         Parameters
         ----------
         limit : typing.Optional[Limit]
@@ -299,6 +329,11 @@ class AsyncWebhooksClient:
 
     async def get(self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None) -> Webhook:
         """
+        **CLI:**
+        ```bash
+        agentmail webhooks get --webhook-id <webhook_id>
+        ```
+
         Parameters
         ----------
         webhook_id : WebhookId
@@ -343,6 +378,11 @@ class AsyncWebhooksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Webhook:
         """
+        **CLI:**
+        ```bash
+        agentmail webhooks create --url https://example.com/webhook --event-type message.received
+        ```
+
         Parameters
         ----------
         url : Url
@@ -403,6 +443,11 @@ class AsyncWebhooksClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Webhook:
         """
+        **CLI:**
+        ```bash
+        agentmail webhooks update --webhook-id <webhook_id> --add-inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         webhook_id : WebhookId
@@ -457,6 +502,11 @@ class AsyncWebhooksClient:
 
     async def delete(self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        **CLI:**
+        ```bash
+        agentmail webhooks delete --webhook-id <webhook_id>
+        ```
+
         Parameters
         ----------
         webhook_id : WebhookId

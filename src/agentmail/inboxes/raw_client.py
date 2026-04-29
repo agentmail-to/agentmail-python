@@ -42,6 +42,11 @@ class RawInboxesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListInboxesResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes list
+        ```
+
         Parameters
         ----------
         limit : typing.Optional[Limit]
@@ -89,6 +94,11 @@ class RawInboxesClient:
 
     def get(self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Inbox]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes get --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -143,6 +153,11 @@ class RawInboxesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Inbox]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes create --display-name "My Agent" --username myagent --domain agentmail.to
+        ```
+
         Parameters
         ----------
         request : typing.Optional[CreateInboxRequest]
@@ -198,6 +213,11 @@ class RawInboxesClient:
         self, inbox_id: InboxId, *, display_name: DisplayName, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Inbox]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes update --inbox-id <inbox_id> --display-name "Updated Name"
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -255,6 +275,11 @@ class RawInboxesClient:
         self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes delete --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -309,6 +334,11 @@ class AsyncRawInboxesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListInboxesResponse]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes list
+        ```
+
         Parameters
         ----------
         limit : typing.Optional[Limit]
@@ -358,6 +388,11 @@ class AsyncRawInboxesClient:
         self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Inbox]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes get --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -412,6 +447,11 @@ class AsyncRawInboxesClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Inbox]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes create --display-name "My Agent" --username myagent --domain agentmail.to
+        ```
+
         Parameters
         ----------
         request : typing.Optional[CreateInboxRequest]
@@ -467,6 +507,11 @@ class AsyncRawInboxesClient:
         self, inbox_id: InboxId, *, display_name: DisplayName, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Inbox]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes update --inbox-id <inbox_id> --display-name "Updated Name"
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId
@@ -524,6 +569,11 @@ class AsyncRawInboxesClient:
         self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
+        **CLI:**
+        ```bash
+        agentmail inboxes delete --inbox-id <inbox_id>
+        ```
+
         Parameters
         ----------
         inbox_id : InboxId

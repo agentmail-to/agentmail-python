@@ -19,7 +19,12 @@ class RawOrganizationsClient:
 
     def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[Organization]:
         """
-        Get the current organization.
+        Returns the organization for the authenticated API key (usage limits, counts, and billing metadata).
+
+        **CLI:**
+        ```bash
+        agentmail organizations get
+        ```
 
         Parameters
         ----------
@@ -62,7 +67,12 @@ class AsyncRawOrganizationsClient:
 
     async def get(self, *, request_options: typing.Optional[RequestOptions] = None) -> AsyncHttpResponse[Organization]:
         """
-        Get the current organization.
+        Returns the organization for the authenticated API key (usage limits, counts, and billing metadata).
+
+        **CLI:**
+        ```bash
+        agentmail organizations get
+        ```
 
         Parameters
         ----------

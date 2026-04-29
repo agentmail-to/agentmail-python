@@ -42,6 +42,11 @@ class DomainsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListDomainsResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail domains list
+        ```
+
         Parameters
         ----------
         limit : typing.Optional[Limit]
@@ -73,6 +78,11 @@ class DomainsClient:
 
     def get(self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> Domain:
         """
+        **CLI:**
+        ```bash
+        agentmail domains get --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         domain_id : DomainId
@@ -102,6 +112,11 @@ class DomainsClient:
         self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Iterator[bytes]:
         """
+        **CLI:**
+        ```bash
+        agentmail domains get-zone-file --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         domain_id : DomainId
@@ -135,6 +150,11 @@ class DomainsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Domain:
         """
+        **CLI:**
+        ```bash
+        agentmail domains create --domain example.com
+        ```
+
         Parameters
         ----------
         domain : DomainName
@@ -173,6 +193,11 @@ class DomainsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Domain:
         """
+        **CLI:**
+        ```bash
+        agentmail domains update --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         domain_id : DomainId
@@ -204,6 +229,11 @@ class DomainsClient:
 
     def delete(self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        **CLI:**
+        ```bash
+        agentmail domains delete --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         domain_id : DomainId
@@ -231,6 +261,11 @@ class DomainsClient:
 
     def verify(self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        **CLI:**
+        ```bash
+        agentmail domains verify --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         domain_id : DomainId
@@ -281,6 +316,11 @@ class AsyncDomainsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListDomainsResponse:
         """
+        **CLI:**
+        ```bash
+        agentmail domains list
+        ```
+
         Parameters
         ----------
         limit : typing.Optional[Limit]
@@ -320,6 +360,11 @@ class AsyncDomainsClient:
 
     async def get(self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> Domain:
         """
+        **CLI:**
+        ```bash
+        agentmail domains get --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         domain_id : DomainId
@@ -357,6 +402,11 @@ class AsyncDomainsClient:
         self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.AsyncIterator[bytes]:
         """
+        **CLI:**
+        ```bash
+        agentmail domains get-zone-file --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         domain_id : DomainId
@@ -399,6 +449,11 @@ class AsyncDomainsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Domain:
         """
+        **CLI:**
+        ```bash
+        agentmail domains create --domain example.com
+        ```
+
         Parameters
         ----------
         domain : DomainName
@@ -445,6 +500,11 @@ class AsyncDomainsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Domain:
         """
+        **CLI:**
+        ```bash
+        agentmail domains update --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         domain_id : DomainId
@@ -484,6 +544,11 @@ class AsyncDomainsClient:
 
     async def delete(self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        **CLI:**
+        ```bash
+        agentmail domains delete --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         domain_id : DomainId
@@ -519,6 +584,11 @@ class AsyncDomainsClient:
 
     async def verify(self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        **CLI:**
+        ```bash
+        agentmail domains verify --domain-id <domain_id>
+        ```
+
         Parameters
         ----------
         domain_id : DomainId

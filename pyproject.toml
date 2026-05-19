@@ -5,10 +5,14 @@ dynamic = ["version"]
 [tool.poetry]
 name = "agentmail"
 version = "0.5.0"
-description = ""
+description = "The email inbox API for AI agents. Send, receive, reply, and manage threaded email conversations programmatically."
 readme = "README.md"
-authors = []
-keywords = []
+authors = ["AgentMail <support@agentmail.cc>"]
+keywords = ["email", "ai", "agent", "inbox", "api", "email-api", "ai-agent", "llm", "langchain", "crewai", "autonomous-agent", "agentmail", "webhooks", "two-way-email"]
+license = "MIT"
+homepage = "https://agentmail.to"
+documentation = "https://docs.agentmail.to"
+repository = "https://github.com/agentmail-to/agentmail-python"
 
 classifiers = [
     "Intended Audience :: Developers",
@@ -28,6 +32,8 @@ classifiers = [
     "Operating System :: POSIX :: Linux",
     "Operating System :: Microsoft :: Windows",
     "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Communications :: Email",
+    "License :: OSI Approved :: MIT License",
     "Typing :: Typed"
 ]
 packages = [
@@ -35,7 +41,10 @@ packages = [
 ]
 
 [tool.poetry.urls]
-Repository = 'https://github.com/agentmail-to/agentmail-python'
+Homepage = "https://agentmail.to"
+Documentation = "https://docs.agentmail.to"
+Repository = "https://github.com/agentmail-to/agentmail-python"
+Changelog = "https://github.com/agentmail-to/agentmail-python/releases"
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -88,9 +97,3 @@ section-order = ["future", "standard-library", "third-party", "first-party"]
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
-
-description = "The email inbox API for AI agents. Send, receive, reply, and manage threaded email conversations programmatically."
-authors = ["AgentMail <support@agentmail.cc>"]
-keywords = ["email", "ai", "agent", "inbox", "api", "email-api", "ai-agent", "llm", "langchain", "crewai", "autonomous-agent", "agentmail"]
-license = "MIT"
-homepage = "https://agentmail.to"

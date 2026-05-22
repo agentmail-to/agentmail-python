@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Compile
-        run: poetry run mypy .
+        run: poetry run mypy . --strict
   test:
     runs-on: ubuntu-latest
     steps:

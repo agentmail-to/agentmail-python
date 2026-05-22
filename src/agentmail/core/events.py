@@ -18,7 +18,7 @@ class EventEmitterMixin:
     """
 
     def __init__(self) -> None:
-        self._callbacks: typing.Dict[EventType, typing.List[typing.Callable]] = {}
+        self._callbacks: typing.Dict[EventType, typing.List[typing.Callable[..., typing.Any]]] = {}
 
     def on(self, event_name: EventType, callback: typing.Callable[[typing.Any], typing.Any]) -> None:
         if event_name not in self._callbacks:

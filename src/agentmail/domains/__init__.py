@@ -56,7 +56,7 @@ def __getattr__(attr_name: str) -> typing.Any:
         raise AttributeError(f"Failed to get {attr_name} from {module_name}: {e}") from e
 
 
-def __dir__():
+def __dir__() -> list[str]:
     lazy_attrs = list(_dynamic_imports.keys())
     return sorted(lazy_attrs)
 

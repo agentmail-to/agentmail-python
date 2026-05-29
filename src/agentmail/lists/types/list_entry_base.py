@@ -32,6 +32,11 @@ class ListEntryBase(UncheckedBaseModel):
     Time at which entry was created.
     """
 
+    read_only: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Whether the entry is read-only and cannot be deleted via the API.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

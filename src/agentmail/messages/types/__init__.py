@@ -7,6 +7,9 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .addresses import Addresses
+    from .batch_get_messages_message_ids import BatchGetMessagesMessageIds
+    from .batch_get_messages_request import BatchGetMessagesRequest
+    from .batch_get_messages_response import BatchGetMessagesResponse
     from .list_messages_response import ListMessagesResponse
     from .message import Message
     from .message_attachments import MessageAttachments
@@ -46,6 +49,9 @@ if typing.TYPE_CHECKING:
     from .update_message_response import UpdateMessageResponse
 _dynamic_imports: typing.Dict[str, str] = {
     "Addresses": ".addresses",
+    "BatchGetMessagesMessageIds": ".batch_get_messages_message_ids",
+    "BatchGetMessagesRequest": ".batch_get_messages_request",
+    "BatchGetMessagesResponse": ".batch_get_messages_response",
     "ListMessagesResponse": ".list_messages_response",
     "Message": ".message",
     "MessageAttachments": ".message_attachments",
@@ -109,6 +115,9 @@ def __dir__():
 
 __all__ = [
     "Addresses",
+    "BatchGetMessagesMessageIds",
+    "BatchGetMessagesRequest",
+    "BatchGetMessagesResponse",
     "ListMessagesResponse",
     "Message",
     "MessageAttachments",

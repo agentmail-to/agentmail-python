@@ -23,6 +23,7 @@ from .types.display_name import DisplayName
 from .types.inbox import Inbox
 from .types.inbox_id import InboxId
 from .types.list_inboxes_response import ListInboxesResponse
+from .types.metadata import Metadata
 from pydantic import ValidationError as pydantic_ValidationError
 
 # this is used as the default value for optional parameters
@@ -210,7 +211,12 @@ class RawInboxesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def update(
-        self, inbox_id: InboxId, *, display_name: DisplayName, request_options: typing.Optional[RequestOptions] = None
+        self,
+        inbox_id: InboxId,
+        *,
+        display_name: typing.Optional[DisplayName] = OMIT,
+        metadata: typing.Optional[Metadata] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Inbox]:
         """
         **CLI:**
@@ -222,7 +228,13 @@ class RawInboxesClient:
         ----------
         inbox_id : InboxId
 
-        display_name : DisplayName
+        display_name : typing.Optional[DisplayName]
+
+        metadata : typing.Optional[Metadata]
+            Metadata to merge into the inbox's existing metadata. Keys you include
+            are added or overwritten; keys you omit are left unchanged. To remove a
+            single key, send it with a null value. To clear all metadata, send
+            `metadata` as null. Provide at least one of `display_name` or `metadata`.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -237,6 +249,9 @@ class RawInboxesClient:
             method="PATCH",
             json={
                 "display_name": display_name,
+                "metadata": convert_and_respect_annotation_metadata(
+                    object_=metadata, annotation=Metadata, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -258,6 +273,17 @@ class RawInboxesClient:
                         ErrorResponse,
                         construct_type(
                             type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -504,7 +530,12 @@ class AsyncRawInboxesClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def update(
-        self, inbox_id: InboxId, *, display_name: DisplayName, request_options: typing.Optional[RequestOptions] = None
+        self,
+        inbox_id: InboxId,
+        *,
+        display_name: typing.Optional[DisplayName] = OMIT,
+        metadata: typing.Optional[Metadata] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Inbox]:
         """
         **CLI:**
@@ -516,7 +547,13 @@ class AsyncRawInboxesClient:
         ----------
         inbox_id : InboxId
 
-        display_name : DisplayName
+        display_name : typing.Optional[DisplayName]
+
+        metadata : typing.Optional[Metadata]
+            Metadata to merge into the inbox's existing metadata. Keys you include
+            are added or overwritten; keys you omit are left unchanged. To remove a
+            single key, send it with a null value. To clear all metadata, send
+            `metadata` as null. Provide at least one of `display_name` or `metadata`.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -531,6 +568,9 @@ class AsyncRawInboxesClient:
             method="PATCH",
             json={
                 "display_name": display_name,
+                "metadata": convert_and_respect_annotation_metadata(
+                    object_=metadata, annotation=Metadata, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -552,6 +592,17 @@ class AsyncRawInboxesClient:
                         ErrorResponse,
                         construct_type(
                             type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

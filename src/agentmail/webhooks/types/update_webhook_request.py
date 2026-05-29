@@ -5,6 +5,7 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
+from ...events.types.event_types import EventTypes
 from ...events.types.inbox_ids import InboxIds
 from ...events.types.pod_ids import PodIds
 
@@ -28,6 +29,16 @@ class UpdateWebhookRequest(UncheckedBaseModel):
     remove_pod_ids: typing.Optional[PodIds] = pydantic.Field(default=None)
     """
     Pod IDs to unsubscribe from the webhook.
+    """
+
+    event_types: typing.Optional[EventTypes] = pydantic.Field(default=None)
+    """
+    When you send a non-empty list, it replaces the webhook's subscribed event types in full (the same
+    "set the list" behavior as create). It is not a merge or diff: include every event type you want after
+    the update. Sending a one-element array means the webhook will only receive that one type afterward.
+    Omit this field or send an empty array to leave event types unchanged. Clearing all types with an empty
+    list is not supported. Subscribing to `message.received.spam`, `message.received.blocked`, or
+    `message.received.unauthenticated` requires the matching label permission on the API key.
     """
 
     if IS_PYDANTIC_V2:

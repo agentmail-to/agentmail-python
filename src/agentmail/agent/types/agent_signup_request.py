@@ -22,6 +22,20 @@ class AgentSignupRequest(UncheckedBaseModel):
     Username for the auto-created inbox (e.g. "my-agent" creates my-agent@agentmail.to).
     """
 
+    source: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The SDK, framework, or platform issuing this sign-up (e.g. `agentmail-python`, `agentmail-cli`, `agentmail-mcp`).
+    Identifies the caller — answers "who is signing up".
+    Max 2048 characters.
+    """
+
+    referrer: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    The channel that drove this sign-up — where the agent or its developer discovered AgentMail
+    (e.g. `agent.email`, a partner URL, a campaign tag). Answers "where did this sign-up come from".
+    Max 2048 characters.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

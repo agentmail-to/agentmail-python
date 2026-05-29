@@ -15,6 +15,7 @@ from .types.display_name import DisplayName
 from .types.inbox import Inbox
 from .types.inbox_id import InboxId
 from .types.list_inboxes_response import ListInboxesResponse
+from .types.metadata import Metadata
 
 if typing.TYPE_CHECKING:
     from .api_keys.client import ApiKeysClient, AsyncApiKeysClient
@@ -162,7 +163,12 @@ class InboxesClient:
         return _response.data
 
     def update(
-        self, inbox_id: InboxId, *, display_name: DisplayName, request_options: typing.Optional[RequestOptions] = None
+        self,
+        inbox_id: InboxId,
+        *,
+        display_name: typing.Optional[DisplayName] = OMIT,
+        metadata: typing.Optional[Metadata] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Inbox:
         """
         **CLI:**
@@ -174,7 +180,13 @@ class InboxesClient:
         ----------
         inbox_id : InboxId
 
-        display_name : DisplayName
+        display_name : typing.Optional[DisplayName]
+
+        metadata : typing.Optional[Metadata]
+            Metadata to merge into the inbox's existing metadata. Keys you include
+            are added or overwritten; keys you omit are left unchanged. To remove a
+            single key, send it with a null value. To clear all metadata, send
+            `metadata` as null. Provide at least one of `display_name` or `metadata`.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -192,10 +204,11 @@ class InboxesClient:
         )
         client.inboxes.update(
             inbox_id="inbox_id",
-            display_name="display_name",
         )
         """
-        _response = self._raw_client.update(inbox_id, display_name=display_name, request_options=request_options)
+        _response = self._raw_client.update(
+            inbox_id, display_name=display_name, metadata=metadata, request_options=request_options
+        )
         return _response.data
 
     def delete(self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
@@ -445,7 +458,12 @@ class AsyncInboxesClient:
         return _response.data
 
     async def update(
-        self, inbox_id: InboxId, *, display_name: DisplayName, request_options: typing.Optional[RequestOptions] = None
+        self,
+        inbox_id: InboxId,
+        *,
+        display_name: typing.Optional[DisplayName] = OMIT,
+        metadata: typing.Optional[Metadata] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Inbox:
         """
         **CLI:**
@@ -457,7 +475,13 @@ class AsyncInboxesClient:
         ----------
         inbox_id : InboxId
 
-        display_name : DisplayName
+        display_name : typing.Optional[DisplayName]
+
+        metadata : typing.Optional[Metadata]
+            Metadata to merge into the inbox's existing metadata. Keys you include
+            are added or overwritten; keys you omit are left unchanged. To remove a
+            single key, send it with a null value. To clear all metadata, send
+            `metadata` as null. Provide at least one of `display_name` or `metadata`.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -480,13 +504,14 @@ class AsyncInboxesClient:
         async def main() -> None:
             await client.inboxes.update(
                 inbox_id="inbox_id",
-                display_name="display_name",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.update(inbox_id, display_name=display_name, request_options=request_options)
+        _response = await self._raw_client.update(
+            inbox_id, display_name=display_name, metadata=metadata, request_options=request_options
+        )
         return _response.data
 
     async def delete(self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None) -> None:

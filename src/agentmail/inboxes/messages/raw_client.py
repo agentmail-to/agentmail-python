@@ -17,6 +17,8 @@ from ...core.unchecked_base_model import construct_type
 from ...errors.not_found_error import NotFoundError
 from ...errors.validation_error import ValidationError as errors_validation_error_ValidationError
 from ...messages.errors.message_rejected_error import MessageRejectedError
+from ...messages.types.batch_get_messages_message_ids import BatchGetMessagesMessageIds
+from ...messages.types.batch_get_messages_response import BatchGetMessagesResponse
 from ...messages.types.list_messages_response import ListMessagesResponse
 from ...messages.types.message import Message
 from ...messages.types.message_html import MessageHtml
@@ -42,6 +44,7 @@ from ...types.error_response import ErrorResponse
 from ...types.include_blocked import IncludeBlocked
 from ...types.include_spam import IncludeSpam
 from ...types.include_trash import IncludeTrash
+from ...types.include_unauthenticated import IncludeUnauthenticated
 from ...types.labels import Labels
 from ...types.limit import Limit
 from ...types.page_token import PageToken
@@ -69,6 +72,7 @@ class RawMessagesClient:
         ascending: typing.Optional[Ascending] = None,
         include_spam: typing.Optional[IncludeSpam] = None,
         include_blocked: typing.Optional[IncludeBlocked] = None,
+        include_unauthenticated: typing.Optional[IncludeUnauthenticated] = None,
         include_trash: typing.Optional[IncludeTrash] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListMessagesResponse]:
@@ -98,6 +102,8 @@ class RawMessagesClient:
 
         include_blocked : typing.Optional[IncludeBlocked]
 
+        include_unauthenticated : typing.Optional[IncludeUnauthenticated]
+
         include_trash : typing.Optional[IncludeTrash]
 
         request_options : typing.Optional[RequestOptions]
@@ -120,6 +126,7 @@ class RawMessagesClient:
                 "ascending": ascending,
                 "include_spam": include_spam,
                 "include_blocked": include_blocked,
+                "include_unauthenticated": include_unauthenticated,
                 "include_trash": include_trash,
             },
             request_options=request_options,
@@ -199,6 +206,76 @@ class RawMessagesClient:
                         ErrorResponse,
                         construct_type(
                             type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def batch_get(
+        self,
+        inbox_id: InboxId,
+        *,
+        message_ids: BatchGetMessagesMessageIds,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[BatchGetMessagesResponse]:
+        """
+        Fetch metadata for up to 500 messages in one request. Missing or
+        restricted IDs are silently omitted; compare `count` against `limit`
+        to detect misses.
+
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages batch-get --inbox-id <inbox_id> --message-id <id1> --message-id <id2>
+        ```
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_ids : BatchGetMessagesMessageIds
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[BatchGetMessagesResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/batch-get",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "message_ids": message_ids,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    BatchGetMessagesResponse,
+                    construct_type(
+                        type_=BatchGetMessagesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -1006,6 +1083,7 @@ class AsyncRawMessagesClient:
         ascending: typing.Optional[Ascending] = None,
         include_spam: typing.Optional[IncludeSpam] = None,
         include_blocked: typing.Optional[IncludeBlocked] = None,
+        include_unauthenticated: typing.Optional[IncludeUnauthenticated] = None,
         include_trash: typing.Optional[IncludeTrash] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListMessagesResponse]:
@@ -1035,6 +1113,8 @@ class AsyncRawMessagesClient:
 
         include_blocked : typing.Optional[IncludeBlocked]
 
+        include_unauthenticated : typing.Optional[IncludeUnauthenticated]
+
         include_trash : typing.Optional[IncludeTrash]
 
         request_options : typing.Optional[RequestOptions]
@@ -1057,6 +1137,7 @@ class AsyncRawMessagesClient:
                 "ascending": ascending,
                 "include_spam": include_spam,
                 "include_blocked": include_blocked,
+                "include_unauthenticated": include_unauthenticated,
                 "include_trash": include_trash,
             },
             request_options=request_options,
@@ -1136,6 +1217,76 @@ class AsyncRawMessagesClient:
                         ErrorResponse,
                         construct_type(
                             type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def batch_get(
+        self,
+        inbox_id: InboxId,
+        *,
+        message_ids: BatchGetMessagesMessageIds,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[BatchGetMessagesResponse]:
+        """
+        Fetch metadata for up to 500 messages in one request. Missing or
+        restricted IDs are silently omitted; compare `count` against `limit`
+        to detect misses.
+
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages batch-get --inbox-id <inbox_id> --message-id <id1> --message-id <id2>
+        ```
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_ids : BatchGetMessagesMessageIds
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[BatchGetMessagesResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/batch-get",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "message_ids": message_ids,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    BatchGetMessagesResponse,
+                    construct_type(
+                        type_=BatchGetMessagesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

@@ -6,6 +6,8 @@ from ...attachments.types.attachment_id import AttachmentId
 from ...attachments.types.attachment_response import AttachmentResponse
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
+from ...messages.types.batch_get_messages_message_ids import BatchGetMessagesMessageIds
+from ...messages.types.batch_get_messages_response import BatchGetMessagesResponse
 from ...messages.types.list_messages_response import ListMessagesResponse
 from ...messages.types.message import Message
 from ...messages.types.message_html import MessageHtml
@@ -30,6 +32,7 @@ from ...types.before import Before
 from ...types.include_blocked import IncludeBlocked
 from ...types.include_spam import IncludeSpam
 from ...types.include_trash import IncludeTrash
+from ...types.include_unauthenticated import IncludeUnauthenticated
 from ...types.labels import Labels
 from ...types.limit import Limit
 from ...types.page_token import PageToken
@@ -67,6 +70,7 @@ class MessagesClient:
         ascending: typing.Optional[Ascending] = None,
         include_spam: typing.Optional[IncludeSpam] = None,
         include_blocked: typing.Optional[IncludeBlocked] = None,
+        include_unauthenticated: typing.Optional[IncludeUnauthenticated] = None,
         include_trash: typing.Optional[IncludeTrash] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListMessagesResponse:
@@ -95,6 +99,8 @@ class MessagesClient:
         include_spam : typing.Optional[IncludeSpam]
 
         include_blocked : typing.Optional[IncludeBlocked]
+
+        include_unauthenticated : typing.Optional[IncludeUnauthenticated]
 
         include_trash : typing.Optional[IncludeTrash]
 
@@ -126,6 +132,7 @@ class MessagesClient:
             ascending=ascending,
             include_spam=include_spam,
             include_blocked=include_blocked,
+            include_unauthenticated=include_unauthenticated,
             include_trash=include_trash,
             request_options=request_options,
         )
@@ -166,6 +173,51 @@ class MessagesClient:
         )
         """
         _response = self._raw_client.get(inbox_id, message_id, request_options=request_options)
+        return _response.data
+
+    def batch_get(
+        self,
+        inbox_id: InboxId,
+        *,
+        message_ids: BatchGetMessagesMessageIds,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> BatchGetMessagesResponse:
+        """
+        Fetch metadata for up to 500 messages in one request. Missing or
+        restricted IDs are silently omitted; compare `count` against `limit`
+        to detect misses.
+
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages batch-get --inbox-id <inbox_id> --message-id <id1> --message-id <id2>
+        ```
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_ids : BatchGetMessagesMessageIds
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        BatchGetMessagesResponse
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.inboxes.messages.batch_get(
+            inbox_id="inbox_id",
+            message_ids=["message_ids", "message_ids"],
+        )
+        """
+        _response = self._raw_client.batch_get(inbox_id, message_ids=message_ids, request_options=request_options)
         return _response.data
 
     def get_attachment(
@@ -689,6 +741,7 @@ class AsyncMessagesClient:
         ascending: typing.Optional[Ascending] = None,
         include_spam: typing.Optional[IncludeSpam] = None,
         include_blocked: typing.Optional[IncludeBlocked] = None,
+        include_unauthenticated: typing.Optional[IncludeUnauthenticated] = None,
         include_trash: typing.Optional[IncludeTrash] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListMessagesResponse:
@@ -717,6 +770,8 @@ class AsyncMessagesClient:
         include_spam : typing.Optional[IncludeSpam]
 
         include_blocked : typing.Optional[IncludeBlocked]
+
+        include_unauthenticated : typing.Optional[IncludeUnauthenticated]
 
         include_trash : typing.Optional[IncludeTrash]
 
@@ -756,6 +811,7 @@ class AsyncMessagesClient:
             ascending=ascending,
             include_spam=include_spam,
             include_blocked=include_blocked,
+            include_unauthenticated=include_unauthenticated,
             include_trash=include_trash,
             request_options=request_options,
         )
@@ -804,6 +860,59 @@ class AsyncMessagesClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get(inbox_id, message_id, request_options=request_options)
+        return _response.data
+
+    async def batch_get(
+        self,
+        inbox_id: InboxId,
+        *,
+        message_ids: BatchGetMessagesMessageIds,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> BatchGetMessagesResponse:
+        """
+        Fetch metadata for up to 500 messages in one request. Missing or
+        restricted IDs are silently omitted; compare `count` against `limit`
+        to detect misses.
+
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages batch-get --inbox-id <inbox_id> --message-id <id1> --message-id <id2>
+        ```
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_ids : BatchGetMessagesMessageIds
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        BatchGetMessagesResponse
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.inboxes.messages.batch_get(
+                inbox_id="inbox_id",
+                message_ids=["message_ids", "message_ids"],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.batch_get(inbox_id, message_ids=message_ids, request_options=request_options)
         return _response.data
 
     async def get_attachment(

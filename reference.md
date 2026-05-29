@@ -280,7 +280,6 @@ client = AgentMail(
 
 client.inboxes.update(
     inbox_id="inbox_id",
-    display_name="display_name",
 )
 
 ```
@@ -977,6 +976,9 @@ client.webhooks.create(
 <dl>
 <dd>
 
+Update inbox or pod subscriptions, or replace the webhook's `event_types` in full when you pass a
+non-empty `event_types` array (see request field docs). Inbox and pod changes use add/remove lists.
+
 **CLI:**
 ```bash
 agentmail webhooks update --webhook-id <webhook_id> --add-inbox-id <inbox_id>
@@ -1227,7 +1229,7 @@ Verify an agent organization using the 6-digit OTP sent to the human's email dur
 
 On success, the organization is upgraded from `agent_unverified` to `agent_verified`, the send allowlist is removed, and free plan entitlements are applied.
 
-The OTP expires after 24 hours and allows a maximum of 10 attempts.
+The OTP expires after 24 hours and allows a maximum of 10 attempts. If you run into any difficulties receiving the OTP code, you can also create an account on [console.agentmail.to](https://console.agentmail.to) using the human email address you provided to verify your account.
 
 **CLI:**
 ```bash
@@ -3939,6 +3941,14 @@ client.inboxes.messages.list(
 <dl>
 <dd>
 
+**include_unauthenticated:** `typing.Optional[IncludeUnauthenticated]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **include_trash:** `typing.Optional[IncludeTrash]` 
     
 </dd>
@@ -4025,6 +4035,98 @@ client.inboxes.messages.get(
 <dd>
 
 **message_id:** `MessageId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">batch_get</a>(...) -> BatchGetMessagesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Fetch metadata for up to 500 messages in one request. Missing or
+restricted IDs are silently omitted; compare `count` against `limit`
+to detect misses.
+
+**CLI:**
+```bash
+agentmail inboxes:messages batch-get --inbox-id <inbox_id> --message-id <id1> --message-id <id2>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.messages.batch_get(
+    inbox_id="inbox_id",
+    message_ids=[
+        "message_ids",
+        "message_ids"
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `BatchGetMessagesRequest` 
     
 </dd>
 </dl>
@@ -5013,6 +5115,14 @@ client.inboxes.threads.list(
 <dd>
 
 **include_blocked:** `typing.Optional[IncludeBlocked]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_unauthenticated:** `typing.Optional[IncludeUnauthenticated]` 
     
 </dd>
 </dl>
@@ -7469,7 +7579,6 @@ client = AgentMail(
 client.pods.inboxes.update(
     pod_id="pod_id",
     inbox_id="inbox_id",
-    display_name="display_name",
 )
 
 ```
@@ -8281,6 +8390,14 @@ client.pods.threads.list(
 <dl>
 <dd>
 
+**include_unauthenticated:** `typing.Optional[IncludeUnauthenticated]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **include_trash:** `typing.Optional[IncludeTrash]` 
     
 </dd>
@@ -8777,6 +8894,14 @@ client.threads.list()
 <dd>
 
 **include_blocked:** `typing.Optional[IncludeBlocked]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_unauthenticated:** `typing.Optional[IncludeUnauthenticated]` 
     
 </dd>
 </dl>

@@ -24,7 +24,13 @@ class RawAgentClient:
         self._client_wrapper = client_wrapper
 
     def sign_up(
-        self, *, human_email: str, username: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        human_email: str,
+        username: str,
+        source: typing.Optional[str] = OMIT,
+        referrer: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[AgentSignupResponse]:
         """
         Create a new agent organization with an inbox and API key. This endpoint is for signing up for the first time. If you've already signed up, you're all set — just use your existing API key.
@@ -48,6 +54,16 @@ class RawAgentClient:
         username : str
             Username for the auto-created inbox (e.g. "my-agent" creates my-agent@agentmail.to).
 
+        source : typing.Optional[str]
+            The SDK, framework, or platform issuing this sign-up (e.g. `agentmail-python`, `agentmail-cli`, `agentmail-mcp`).
+            Identifies the caller — answers "who is signing up".
+            Max 2048 characters.
+
+        referrer : typing.Optional[str]
+            The channel that drove this sign-up — where the agent or its developer discovered AgentMail
+            (e.g. `agent.email`, a partner URL, a campaign tag). Answers "where did this sign-up come from".
+            Max 2048 characters.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -62,6 +78,8 @@ class RawAgentClient:
             json={
                 "human_email": human_email,
                 "username": username,
+                "source": source,
+                "referrer": referrer,
             },
             request_options=request_options,
             omit=OMIT,
@@ -104,7 +122,7 @@ class RawAgentClient:
 
         On success, the organization is upgraded from `agent_unverified` to `agent_verified`, the send allowlist is removed, and free plan entitlements are applied.
 
-        The OTP expires after 24 hours and allows a maximum of 10 attempts.
+        The OTP expires after 24 hours and allows a maximum of 10 attempts. If you run into any difficulties receiving the OTP code, you can also create an account on [console.agentmail.to](https://console.agentmail.to) using the human email address you provided to verify your account.
 
         **CLI:**
         ```bash
@@ -158,7 +176,13 @@ class AsyncRawAgentClient:
         self._client_wrapper = client_wrapper
 
     async def sign_up(
-        self, *, human_email: str, username: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        human_email: str,
+        username: str,
+        source: typing.Optional[str] = OMIT,
+        referrer: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[AgentSignupResponse]:
         """
         Create a new agent organization with an inbox and API key. This endpoint is for signing up for the first time. If you've already signed up, you're all set — just use your existing API key.
@@ -182,6 +206,16 @@ class AsyncRawAgentClient:
         username : str
             Username for the auto-created inbox (e.g. "my-agent" creates my-agent@agentmail.to).
 
+        source : typing.Optional[str]
+            The SDK, framework, or platform issuing this sign-up (e.g. `agentmail-python`, `agentmail-cli`, `agentmail-mcp`).
+            Identifies the caller — answers "who is signing up".
+            Max 2048 characters.
+
+        referrer : typing.Optional[str]
+            The channel that drove this sign-up — where the agent or its developer discovered AgentMail
+            (e.g. `agent.email`, a partner URL, a campaign tag). Answers "where did this sign-up come from".
+            Max 2048 characters.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -196,6 +230,8 @@ class AsyncRawAgentClient:
             json={
                 "human_email": human_email,
                 "username": username,
+                "source": source,
+                "referrer": referrer,
             },
             request_options=request_options,
             omit=OMIT,
@@ -238,7 +274,7 @@ class AsyncRawAgentClient:
 
         On success, the organization is upgraded from `agent_unverified` to `agent_verified`, the send allowlist is removed, and free plan entitlements are applied.
 
-        The OTP expires after 24 hours and allows a maximum of 10 attempts.
+        The OTP expires after 24 hours and allows a maximum of 10 attempts. If you run into any difficulties receiving the OTP code, you can also create an account on [console.agentmail.to](https://console.agentmail.to) using the human email address you provided to verify your account.
 
         **CLI:**
         ```bash

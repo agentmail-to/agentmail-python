@@ -14,7 +14,13 @@ from .url import Url
 
 class CreateWebhookRequest(UncheckedBaseModel):
     url: Url
-    event_types: EventTypes
+    event_types: EventTypes = pydantic.Field()
+    """
+    Full list of event types this webhook should receive. At least one type is required. Send every type you
+    want in this array (not incremental). See [Webhooks overview](https://docs.agentmail.to/webhooks-overview)
+    for spam, blocked, and unauthenticated events and required permissions.
+    """
+
     pod_ids: typing.Optional[PodIds] = None
     inbox_ids: typing.Optional[InboxIds] = None
     client_id: typing.Optional[ClientId] = None

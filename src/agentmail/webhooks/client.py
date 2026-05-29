@@ -132,6 +132,9 @@ class WebhooksClient:
         url : Url
 
         event_types : EventTypes
+            Full list of event types this webhook should receive. At least one type is required. Send every type you
+            want in this array (not incremental). See [Webhooks overview](https://docs.agentmail.to/webhooks-overview)
+            for spam, blocked, and unauthenticated events and required permissions.
 
         pod_ids : typing.Optional[PodIds]
 
@@ -176,9 +179,13 @@ class WebhooksClient:
         remove_inbox_ids: typing.Optional[InboxIds] = OMIT,
         add_pod_ids: typing.Optional[PodIds] = OMIT,
         remove_pod_ids: typing.Optional[PodIds] = OMIT,
+        event_types: typing.Optional[EventTypes] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Webhook:
         """
+        Update inbox or pod subscriptions, or replace the webhook's `event_types` in full when you pass a
+        non-empty `event_types` array (see request field docs). Inbox and pod changes use add/remove lists.
+
         **CLI:**
         ```bash
         agentmail webhooks update --webhook-id <webhook_id> --add-inbox-id <inbox_id>
@@ -199,6 +206,14 @@ class WebhooksClient:
 
         remove_pod_ids : typing.Optional[PodIds]
             Pod IDs to unsubscribe from the webhook.
+
+        event_types : typing.Optional[EventTypes]
+            When you send a non-empty list, it replaces the webhook's subscribed event types in full (the same
+            "set the list" behavior as create). It is not a merge or diff: include every event type you want after
+            the update. Sending a one-element array means the webhook will only receive that one type afterward.
+            Omit this field or send an empty array to leave event types unchanged. Clearing all types with an empty
+            list is not supported. Subscribing to `message.received.spam`, `message.received.blocked`, or
+            `message.received.unauthenticated` requires the matching label permission on the API key.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -224,6 +239,7 @@ class WebhooksClient:
             remove_inbox_ids=remove_inbox_ids,
             add_pod_ids=add_pod_ids,
             remove_pod_ids=remove_pod_ids,
+            event_types=event_types,
             request_options=request_options,
         )
         return _response.data
@@ -388,6 +404,9 @@ class AsyncWebhooksClient:
         url : Url
 
         event_types : EventTypes
+            Full list of event types this webhook should receive. At least one type is required. Send every type you
+            want in this array (not incremental). See [Webhooks overview](https://docs.agentmail.to/webhooks-overview)
+            for spam, blocked, and unauthenticated events and required permissions.
 
         pod_ids : typing.Optional[PodIds]
 
@@ -440,9 +459,13 @@ class AsyncWebhooksClient:
         remove_inbox_ids: typing.Optional[InboxIds] = OMIT,
         add_pod_ids: typing.Optional[PodIds] = OMIT,
         remove_pod_ids: typing.Optional[PodIds] = OMIT,
+        event_types: typing.Optional[EventTypes] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Webhook:
         """
+        Update inbox or pod subscriptions, or replace the webhook's `event_types` in full when you pass a
+        non-empty `event_types` array (see request field docs). Inbox and pod changes use add/remove lists.
+
         **CLI:**
         ```bash
         agentmail webhooks update --webhook-id <webhook_id> --add-inbox-id <inbox_id>
@@ -463,6 +486,14 @@ class AsyncWebhooksClient:
 
         remove_pod_ids : typing.Optional[PodIds]
             Pod IDs to unsubscribe from the webhook.
+
+        event_types : typing.Optional[EventTypes]
+            When you send a non-empty list, it replaces the webhook's subscribed event types in full (the same
+            "set the list" behavior as create). It is not a merge or diff: include every event type you want after
+            the update. Sending a one-element array means the webhook will only receive that one type afterward.
+            Omit this field or send an empty array to leave event types unchanged. Clearing all types with an empty
+            list is not supported. Subscribing to `message.received.spam`, `message.received.blocked`, or
+            `message.received.unauthenticated` requires the matching label permission on the API key.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -496,6 +527,7 @@ class AsyncWebhooksClient:
             remove_inbox_ids=remove_inbox_ids,
             add_pod_ids=add_pod_ids,
             remove_pod_ids=remove_pod_ids,
+            event_types=event_types,
             request_options=request_options,
         )
         return _response.data

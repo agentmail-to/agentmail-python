@@ -9,6 +9,7 @@ from ...core.http_response import AsyncHttpResponse, HttpResponse
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
+from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from ...errors.not_found_error import NotFoundError
 from ...errors.validation_error import ValidationError as errors_validation_error_ValidationError
@@ -17,6 +18,7 @@ from ...inboxes.types.display_name import DisplayName
 from ...inboxes.types.inbox import Inbox
 from ...inboxes.types.inbox_id import InboxId
 from ...inboxes.types.list_inboxes_response import ListInboxesResponse
+from ...inboxes.types.metadata import Metadata
 from ...types.ascending import Ascending
 from ...types.error_response import ErrorResponse
 from ...types.limit import Limit
@@ -172,6 +174,7 @@ class RawInboxesClient:
         domain: typing.Optional[str] = OMIT,
         display_name: typing.Optional[DisplayName] = OMIT,
         client_id: typing.Optional[ClientId] = OMIT,
+        metadata: typing.Optional[Metadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Inbox]:
         """
@@ -194,6 +197,9 @@ class RawInboxesClient:
 
         client_id : typing.Optional[ClientId]
 
+        metadata : typing.Optional[Metadata]
+            Custom metadata to attach to the inbox.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -210,6 +216,9 @@ class RawInboxesClient:
                 "domain": domain,
                 "display_name": display_name,
                 "client_id": client_id,
+                "metadata": convert_and_respect_annotation_metadata(
+                    object_=metadata, annotation=Metadata, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -249,7 +258,8 @@ class RawInboxesClient:
         pod_id: PodId,
         inbox_id: InboxId,
         *,
-        display_name: DisplayName,
+        display_name: typing.Optional[DisplayName] = OMIT,
+        metadata: typing.Optional[Metadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Inbox]:
         """
@@ -264,7 +274,13 @@ class RawInboxesClient:
 
         inbox_id : InboxId
 
-        display_name : DisplayName
+        display_name : typing.Optional[DisplayName]
+
+        metadata : typing.Optional[Metadata]
+            Metadata to merge into the inbox's existing metadata. Keys you include
+            are added or overwritten; keys you omit are left unchanged. To remove a
+            single key, send it with a null value. To clear all metadata, send
+            `metadata` as null. Provide at least one of `display_name` or `metadata`.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -279,6 +295,9 @@ class RawInboxesClient:
             method="PATCH",
             json={
                 "display_name": display_name,
+                "metadata": convert_and_respect_annotation_metadata(
+                    object_=metadata, annotation=Metadata, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -508,6 +527,7 @@ class AsyncRawInboxesClient:
         domain: typing.Optional[str] = OMIT,
         display_name: typing.Optional[DisplayName] = OMIT,
         client_id: typing.Optional[ClientId] = OMIT,
+        metadata: typing.Optional[Metadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Inbox]:
         """
@@ -530,6 +550,9 @@ class AsyncRawInboxesClient:
 
         client_id : typing.Optional[ClientId]
 
+        metadata : typing.Optional[Metadata]
+            Custom metadata to attach to the inbox.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -546,6 +569,9 @@ class AsyncRawInboxesClient:
                 "domain": domain,
                 "display_name": display_name,
                 "client_id": client_id,
+                "metadata": convert_and_respect_annotation_metadata(
+                    object_=metadata, annotation=Metadata, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,
@@ -585,7 +611,8 @@ class AsyncRawInboxesClient:
         pod_id: PodId,
         inbox_id: InboxId,
         *,
-        display_name: DisplayName,
+        display_name: typing.Optional[DisplayName] = OMIT,
+        metadata: typing.Optional[Metadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Inbox]:
         """
@@ -600,7 +627,13 @@ class AsyncRawInboxesClient:
 
         inbox_id : InboxId
 
-        display_name : DisplayName
+        display_name : typing.Optional[DisplayName]
+
+        metadata : typing.Optional[Metadata]
+            Metadata to merge into the inbox's existing metadata. Keys you include
+            are added or overwritten; keys you omit are left unchanged. To remove a
+            single key, send it with a null value. To clear all metadata, send
+            `metadata` as null. Provide at least one of `display_name` or `metadata`.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -615,6 +648,9 @@ class AsyncRawInboxesClient:
             method="PATCH",
             json={
                 "display_name": display_name,
+                "metadata": convert_and_respect_annotation_metadata(
+                    object_=metadata, annotation=Metadata, direction="write"
+                ),
             },
             request_options=request_options,
             omit=OMIT,

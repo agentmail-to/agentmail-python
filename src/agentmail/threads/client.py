@@ -12,6 +12,7 @@ from ..types.before import Before
 from ..types.include_blocked import IncludeBlocked
 from ..types.include_spam import IncludeSpam
 from ..types.include_trash import IncludeTrash
+from ..types.include_unauthenticated import IncludeUnauthenticated
 from ..types.labels import Labels
 from ..types.limit import Limit
 from ..types.page_token import PageToken
@@ -51,6 +52,7 @@ class ThreadsClient:
         ascending: typing.Optional[Ascending] = None,
         include_spam: typing.Optional[IncludeSpam] = None,
         include_blocked: typing.Optional[IncludeBlocked] = None,
+        include_unauthenticated: typing.Optional[IncludeUnauthenticated] = None,
         include_trash: typing.Optional[IncludeTrash] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
@@ -77,6 +79,8 @@ class ThreadsClient:
         include_spam : typing.Optional[IncludeSpam]
 
         include_blocked : typing.Optional[IncludeBlocked]
+
+        include_unauthenticated : typing.Optional[IncludeUnauthenticated]
 
         include_trash : typing.Optional[IncludeTrash]
 
@@ -105,6 +109,7 @@ class ThreadsClient:
             ascending=ascending,
             include_spam=include_spam,
             include_blocked=include_blocked,
+            include_unauthenticated=include_unauthenticated,
             include_trash=include_trash,
             request_options=request_options,
         )
@@ -297,6 +302,7 @@ class AsyncThreadsClient:
         ascending: typing.Optional[Ascending] = None,
         include_spam: typing.Optional[IncludeSpam] = None,
         include_blocked: typing.Optional[IncludeBlocked] = None,
+        include_unauthenticated: typing.Optional[IncludeUnauthenticated] = None,
         include_trash: typing.Optional[IncludeTrash] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
@@ -323,6 +329,8 @@ class AsyncThreadsClient:
         include_spam : typing.Optional[IncludeSpam]
 
         include_blocked : typing.Optional[IncludeBlocked]
+
+        include_unauthenticated : typing.Optional[IncludeUnauthenticated]
 
         include_trash : typing.Optional[IncludeTrash]
 
@@ -359,6 +367,7 @@ class AsyncThreadsClient:
             ascending=ascending,
             include_spam=include_spam,
             include_blocked=include_blocked,
+            include_unauthenticated=include_unauthenticated,
             include_trash=include_trash,
             request_options=request_options,
         )

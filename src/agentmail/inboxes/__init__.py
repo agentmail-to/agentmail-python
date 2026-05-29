@@ -14,6 +14,8 @@ if typing.TYPE_CHECKING:
         Inbox,
         InboxId,
         ListInboxesResponse,
+        Metadata,
+        MetadataValue,
         UpdateInboxRequest,
     )
     from . import api_keys, drafts, events, lists, messages, metrics, threads
@@ -25,6 +27,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Inbox": ".types",
     "InboxId": ".types",
     "ListInboxesResponse": ".types",
+    "Metadata": ".types",
+    "MetadataValue": ".types",
     "UpdateInboxRequest": ".types",
     "api_keys": ".api_keys",
     "drafts": ".drafts",
@@ -65,6 +69,8 @@ __all__ = [
     "Inbox",
     "InboxId",
     "ListInboxesResponse",
+    "Metadata",
+    "MetadataValue",
     "UpdateInboxRequest",
     "api_keys",
     "drafts",

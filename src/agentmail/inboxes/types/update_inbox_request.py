@@ -6,10 +6,18 @@ import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from .display_name import DisplayName
+from .metadata import Metadata
 
 
 class UpdateInboxRequest(UncheckedBaseModel):
-    display_name: DisplayName
+    display_name: typing.Optional[DisplayName] = None
+    metadata: typing.Optional[Metadata] = pydantic.Field(default=None)
+    """
+    Metadata to merge into the inbox's existing metadata. Keys you include
+    are added or overwritten; keys you omit are left unchanged. To remove a
+    single key, send it with a null value. To clear all metadata, send
+    `metadata` as null. Provide at least one of `display_name` or `metadata`.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

@@ -13,6 +13,8 @@ if typing.TYPE_CHECKING:
     from .inbox import Inbox
     from .inbox_id import InboxId
     from .list_inboxes_response import ListInboxesResponse
+    from .metadata import Metadata
+    from .metadata_value import MetadataValue
     from .update_inbox_request import UpdateInboxRequest
 _dynamic_imports: typing.Dict[str, str] = {
     "ClientId": ".client_id",
@@ -22,6 +24,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Inbox": ".inbox",
     "InboxId": ".inbox_id",
     "ListInboxesResponse": ".list_inboxes_response",
+    "Metadata": ".metadata",
+    "MetadataValue": ".metadata_value",
     "UpdateInboxRequest": ".update_inbox_request",
 }
 
@@ -55,5 +59,7 @@ __all__ = [
     "Inbox",
     "InboxId",
     "ListInboxesResponse",
+    "Metadata",
+    "MetadataValue",
     "UpdateInboxRequest",
 ]

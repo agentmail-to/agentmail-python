@@ -11,6 +11,7 @@ from .client_id import ClientId
 from .display_name import DisplayName
 from .email import Email
 from .inbox_id import InboxId
+from .metadata import Metadata
 
 
 class Inbox(UncheckedBaseModel):
@@ -19,6 +20,11 @@ class Inbox(UncheckedBaseModel):
     email: Email
     display_name: typing.Optional[DisplayName] = None
     client_id: typing.Optional[ClientId] = None
+    metadata: typing.Optional[Metadata] = pydantic.Field(default=None)
+    """
+    Custom metadata attached to the inbox.
+    """
+
     updated_at: dt.datetime = pydantic.Field()
     """
     Time at which inbox was last updated.

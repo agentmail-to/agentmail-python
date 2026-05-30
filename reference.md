@@ -304,7 +304,7 @@ client.inboxes.update(
 <dl>
 <dd>
 
-**request:** `UpdateInboxRequest` 
+**request:** `UpdateInboxRequest` — Expects an object; provide at least one of `display_name` or `metadata`.
     
 </dd>
 </dl>

@@ -10,6 +10,7 @@ from ...inboxes.types.inbox import Inbox
 from ...inboxes.types.inbox_id import InboxId
 from ...inboxes.types.list_inboxes_response import ListInboxesResponse
 from ...inboxes.types.metadata import Metadata
+from ...inboxes.types.update_metadata import UpdateMetadata
 from ...types.ascending import Ascending
 from ...types.limit import Limit
 from ...types.page_token import PageToken
@@ -189,7 +190,7 @@ class InboxesClient:
         inbox_id: InboxId,
         *,
         display_name: typing.Optional[DisplayName] = OMIT,
-        metadata: typing.Optional[Metadata] = OMIT,
+        metadata: typing.Optional[UpdateMetadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Inbox:
         """
@@ -206,11 +207,13 @@ class InboxesClient:
 
         display_name : typing.Optional[DisplayName]
 
-        metadata : typing.Optional[Metadata]
+        metadata : typing.Optional[UpdateMetadata]
             Metadata to merge into the inbox's existing metadata. Keys you include
             are added or overwritten; keys you omit are left unchanged. To remove a
             single key, send it with a null value. To clear all metadata, send
-            `metadata` as null. Provide at least one of `display_name` or `metadata`.
+            `metadata` as null. Sending an empty object is rejected; use null to
+            clear. Each update must include at least one of `display_name` or
+            `metadata`.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -467,7 +470,7 @@ class AsyncInboxesClient:
         inbox_id: InboxId,
         *,
         display_name: typing.Optional[DisplayName] = OMIT,
-        metadata: typing.Optional[Metadata] = OMIT,
+        metadata: typing.Optional[UpdateMetadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Inbox:
         """
@@ -484,11 +487,13 @@ class AsyncInboxesClient:
 
         display_name : typing.Optional[DisplayName]
 
-        metadata : typing.Optional[Metadata]
+        metadata : typing.Optional[UpdateMetadata]
             Metadata to merge into the inbox's existing metadata. Keys you include
             are added or overwritten; keys you omit are left unchanged. To remove a
             single key, send it with a null value. To clear all metadata, send
-            `metadata` as null. Provide at least one of `display_name` or `metadata`.
+            `metadata` as null. Sending an empty object is rejected; use null to
+            clear. Each update must include at least one of `display_name` or
+            `metadata`.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

@@ -16,6 +16,7 @@ if typing.TYPE_CHECKING:
     from .metadata import Metadata
     from .metadata_value import MetadataValue
     from .update_inbox_request import UpdateInboxRequest
+    from .update_metadata import UpdateMetadata
 _dynamic_imports: typing.Dict[str, str] = {
     "ClientId": ".client_id",
     "CreateInboxRequest": ".create_inbox_request",
@@ -27,6 +28,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Metadata": ".metadata",
     "MetadataValue": ".metadata_value",
     "UpdateInboxRequest": ".update_inbox_request",
+    "UpdateMetadata": ".update_metadata",
 }
 
 
@@ -62,4 +64,5 @@ __all__ = [
     "Metadata",
     "MetadataValue",
     "UpdateInboxRequest",
+    "UpdateMetadata",
 ]

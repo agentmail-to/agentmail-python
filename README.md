@@ -5,14 +5,15 @@
 
 Install with:
 ```bash
-pip install agentmail-python
+pip install agentmail
 ```
 
 Or clone and run:
 ```bash
 git clone https://github.com/agentmail-to/agentmail-python.git
 cd agentmail-python
-python setup.py install
+pip install -e .
+# or: pip install agentmail
 ```
 
 

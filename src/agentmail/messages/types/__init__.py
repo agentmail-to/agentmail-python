@@ -36,6 +36,9 @@ if typing.TYPE_CHECKING:
     from .reply_all import ReplyAll
     from .reply_all_message_request import ReplyAllMessageRequest
     from .reply_to_message_request import ReplyToMessageRequest
+    from .search_message_highlights import SearchMessageHighlights
+    from .search_message_item import SearchMessageItem
+    from .search_messages_response import SearchMessagesResponse
     from .send_message_attachments import SendMessageAttachments
     from .send_message_bcc import SendMessageBcc
     from .send_message_cc import SendMessageCc
@@ -78,6 +81,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ReplyAll": ".reply_all",
     "ReplyAllMessageRequest": ".reply_all_message_request",
     "ReplyToMessageRequest": ".reply_to_message_request",
+    "SearchMessageHighlights": ".search_message_highlights",
+    "SearchMessageItem": ".search_message_item",
+    "SearchMessagesResponse": ".search_messages_response",
     "SendMessageAttachments": ".send_message_attachments",
     "SendMessageBcc": ".send_message_bcc",
     "SendMessageCc": ".send_message_cc",
@@ -144,6 +150,9 @@ __all__ = [
     "ReplyAll",
     "ReplyAllMessageRequest",
     "ReplyToMessageRequest",
+    "SearchMessageHighlights",
+    "SearchMessageItem",
+    "SearchMessagesResponse",
     "SendMessageAttachments",
     "SendMessageBcc",
     "SendMessageCc",

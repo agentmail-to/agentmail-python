@@ -17,6 +17,7 @@ from ...messages.types.message_subject import MessageSubject
 from ...messages.types.message_text import MessageText
 from ...messages.types.raw_message_response import RawMessageResponse
 from ...messages.types.reply_all import ReplyAll
+from ...messages.types.search_messages_response import SearchMessagesResponse
 from ...messages.types.send_message_attachments import SendMessageAttachments
 from ...messages.types.send_message_bcc import SendMessageBcc
 from ...messages.types.send_message_cc import SendMessageCc
@@ -36,6 +37,7 @@ from ...types.include_unauthenticated import IncludeUnauthenticated
 from ...types.labels import Labels
 from ...types.limit import Limit
 from ...types.page_token import PageToken
+from ...types.query import Query
 from ..types.inbox_id import InboxId
 from .raw_client import AsyncRawMessagesClient, RawMessagesClient
 
@@ -72,9 +74,18 @@ class MessagesClient:
         include_blocked: typing.Optional[IncludeBlocked] = None,
         include_unauthenticated: typing.Optional[IncludeUnauthenticated] = None,
         include_trash: typing.Optional[IncludeTrash] = None,
+        from_: typing.Optional[typing.Sequence[str]] = None,
+        to: typing.Optional[typing.Sequence[str]] = None,
+        subject: typing.Optional[typing.Sequence[str]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListMessagesResponse:
         """
+        Lists messages in the inbox, most recent first. Pass `from`, `to`, or
+        `subject` to filter by substring. Filtered requests are served by
+        search, which caps `limit` at 100. For relevance-ranked full-text
+        search across sender, recipients, subject, and message body, use
+        `Search Messages`.
+
         **CLI:**
         ```bash
         agentmail inboxes:messages list --inbox-id <inbox_id>
@@ -103,6 +114,15 @@ class MessagesClient:
         include_unauthenticated : typing.Optional[IncludeUnauthenticated]
 
         include_trash : typing.Optional[IncludeTrash]
+
+        from_ : typing.Optional[typing.Sequence[str]]
+            Filter to messages whose sender contains this value (substring match). Repeatable; all values must match.
+
+        to : typing.Optional[typing.Sequence[str]]
+            Filter to messages whose recipients (to, cc, or bcc) contain this value (substring match). Repeatable; all values must match.
+
+        subject : typing.Optional[typing.Sequence[str]]
+            Filter to messages whose subject contains this value (substring match). Repeatable; all values must match.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -134,6 +154,70 @@ class MessagesClient:
             include_blocked=include_blocked,
             include_unauthenticated=include_unauthenticated,
             include_trash=include_trash,
+            from_=from_,
+            to=to,
+            subject=subject,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def search(
+        self,
+        inbox_id: InboxId,
+        *,
+        q: Query,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        before: typing.Optional[Before] = None,
+        after: typing.Optional[After] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SearchMessagesResponse:
+        """
+        Full-text search across messages in the inbox, ranked by relevance. The
+        query is matched against the sender, recipients, and subject (substring)
+        and the message body (tokenized full text). Spam, trash, blocked, and
+        unauthenticated messages are always excluded. `limit` cannot exceed 100.
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        q : Query
+
+        limit : typing.Optional[Limit]
+
+        page_token : typing.Optional[PageToken]
+
+        before : typing.Optional[Before]
+
+        after : typing.Optional[After]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SearchMessagesResponse
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.inboxes.messages.search(
+            inbox_id="inbox_id",
+            q="q",
+        )
+        """
+        _response = self._raw_client.search(
+            inbox_id,
+            q=q,
+            limit=limit,
+            page_token=page_token,
+            before=before,
+            after=after,
             request_options=request_options,
         )
         return _response.data
@@ -743,9 +827,18 @@ class AsyncMessagesClient:
         include_blocked: typing.Optional[IncludeBlocked] = None,
         include_unauthenticated: typing.Optional[IncludeUnauthenticated] = None,
         include_trash: typing.Optional[IncludeTrash] = None,
+        from_: typing.Optional[typing.Sequence[str]] = None,
+        to: typing.Optional[typing.Sequence[str]] = None,
+        subject: typing.Optional[typing.Sequence[str]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListMessagesResponse:
         """
+        Lists messages in the inbox, most recent first. Pass `from`, `to`, or
+        `subject` to filter by substring. Filtered requests are served by
+        search, which caps `limit` at 100. For relevance-ranked full-text
+        search across sender, recipients, subject, and message body, use
+        `Search Messages`.
+
         **CLI:**
         ```bash
         agentmail inboxes:messages list --inbox-id <inbox_id>
@@ -774,6 +867,15 @@ class AsyncMessagesClient:
         include_unauthenticated : typing.Optional[IncludeUnauthenticated]
 
         include_trash : typing.Optional[IncludeTrash]
+
+        from_ : typing.Optional[typing.Sequence[str]]
+            Filter to messages whose sender contains this value (substring match). Repeatable; all values must match.
+
+        to : typing.Optional[typing.Sequence[str]]
+            Filter to messages whose recipients (to, cc, or bcc) contain this value (substring match). Repeatable; all values must match.
+
+        subject : typing.Optional[typing.Sequence[str]]
+            Filter to messages whose subject contains this value (substring match). Repeatable; all values must match.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -813,6 +915,78 @@ class AsyncMessagesClient:
             include_blocked=include_blocked,
             include_unauthenticated=include_unauthenticated,
             include_trash=include_trash,
+            from_=from_,
+            to=to,
+            subject=subject,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def search(
+        self,
+        inbox_id: InboxId,
+        *,
+        q: Query,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        before: typing.Optional[Before] = None,
+        after: typing.Optional[After] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SearchMessagesResponse:
+        """
+        Full-text search across messages in the inbox, ranked by relevance. The
+        query is matched against the sender, recipients, and subject (substring)
+        and the message body (tokenized full text). Spam, trash, blocked, and
+        unauthenticated messages are always excluded. `limit` cannot exceed 100.
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        q : Query
+
+        limit : typing.Optional[Limit]
+
+        page_token : typing.Optional[PageToken]
+
+        before : typing.Optional[Before]
+
+        after : typing.Optional[After]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SearchMessagesResponse
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.inboxes.messages.search(
+                inbox_id="inbox_id",
+                q="q",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.search(
+            inbox_id,
+            q=q,
+            limit=limit,
+            page_token=page_token,
+            before=before,
+            after=after,
             request_options=request_options,
         )
         return _response.data

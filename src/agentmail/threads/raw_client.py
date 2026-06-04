@@ -27,8 +27,10 @@ from ..types.include_unauthenticated import IncludeUnauthenticated
 from ..types.labels import Labels
 from ..types.limit import Limit
 from ..types.page_token import PageToken
+from ..types.query import Query
 from ..types.validation_error_response import ValidationErrorResponse
 from .types.list_threads_response import ListThreadsResponse
+from .types.search_threads_response import SearchThreadsResponse
 from .types.thread import Thread
 from .types.thread_id import ThreadId
 from .types.update_thread_response import UpdateThreadResponse
@@ -55,9 +57,18 @@ class RawThreadsClient:
         include_blocked: typing.Optional[IncludeBlocked] = None,
         include_unauthenticated: typing.Optional[IncludeUnauthenticated] = None,
         include_trash: typing.Optional[IncludeTrash] = None,
+        senders: typing.Optional[typing.Sequence[str]] = None,
+        recipients: typing.Optional[typing.Sequence[str]] = None,
+        subject: typing.Optional[typing.Sequence[str]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListThreadsResponse]:
         """
+        Lists threads, most recent first. Pass `senders`, `recipients`, or
+        `subject` to filter by substring. Filtered requests are served by
+        search, which caps `limit` at 100. For relevance-ranked full-text
+        search across senders, recipients, subject, and message body, use
+        `Search Threads`.
+
         **CLI:**
         ```bash
         agentmail threads list
@@ -85,6 +96,15 @@ class RawThreadsClient:
 
         include_trash : typing.Optional[IncludeTrash]
 
+        senders : typing.Optional[typing.Sequence[str]]
+            Filter to threads whose senders contain this value (substring match). Repeatable; all values must match.
+
+        recipients : typing.Optional[typing.Sequence[str]]
+            Filter to threads whose recipients contain this value (substring match). Repeatable; all values must match.
+
+        subject : typing.Optional[typing.Sequence[str]]
+            Filter to threads whose subject contains this value (substring match). Repeatable; all values must match.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -107,6 +127,9 @@ class RawThreadsClient:
                 "include_blocked": include_blocked,
                 "include_unauthenticated": include_unauthenticated,
                 "include_trash": include_trash,
+                "senders": senders,
+                "recipients": recipients,
+                "subject": subject,
             },
             request_options=request_options,
         )
@@ -120,6 +143,96 @@ class RawThreadsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def search(
+        self,
+        *,
+        q: Query,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        before: typing.Optional[Before] = None,
+        after: typing.Optional[After] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[SearchThreadsResponse]:
+        """
+        Full-text search across threads in the organization, ranked by
+        relevance. The query is matched against senders, recipients, and
+        subject (substring) and the message body (tokenized full text). Spam,
+        trash, blocked, and unauthenticated threads are always excluded.
+        `limit` cannot exceed 100.
+
+        Parameters
+        ----------
+        q : Query
+
+        limit : typing.Optional[Limit]
+
+        page_token : typing.Optional[PageToken]
+
+        before : typing.Optional[Before]
+
+        after : typing.Optional[After]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[SearchThreadsResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v0/threads/search",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            params={
+                "q": q,
+                "limit": limit,
+                "page_token": page_token,
+                "before": serialize_datetime(before) if before is not None else None,
+                "after": serialize_datetime(after) if after is not None else None,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    SearchThreadsResponse,
+                    construct_type(
+                        type_=SearchThreadsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 404:
                 raise NotFoundError(
                     headers=dict(_response.headers),
@@ -428,9 +541,18 @@ class AsyncRawThreadsClient:
         include_blocked: typing.Optional[IncludeBlocked] = None,
         include_unauthenticated: typing.Optional[IncludeUnauthenticated] = None,
         include_trash: typing.Optional[IncludeTrash] = None,
+        senders: typing.Optional[typing.Sequence[str]] = None,
+        recipients: typing.Optional[typing.Sequence[str]] = None,
+        subject: typing.Optional[typing.Sequence[str]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListThreadsResponse]:
         """
+        Lists threads, most recent first. Pass `senders`, `recipients`, or
+        `subject` to filter by substring. Filtered requests are served by
+        search, which caps `limit` at 100. For relevance-ranked full-text
+        search across senders, recipients, subject, and message body, use
+        `Search Threads`.
+
         **CLI:**
         ```bash
         agentmail threads list
@@ -458,6 +580,15 @@ class AsyncRawThreadsClient:
 
         include_trash : typing.Optional[IncludeTrash]
 
+        senders : typing.Optional[typing.Sequence[str]]
+            Filter to threads whose senders contain this value (substring match). Repeatable; all values must match.
+
+        recipients : typing.Optional[typing.Sequence[str]]
+            Filter to threads whose recipients contain this value (substring match). Repeatable; all values must match.
+
+        subject : typing.Optional[typing.Sequence[str]]
+            Filter to threads whose subject contains this value (substring match). Repeatable; all values must match.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -480,6 +611,9 @@ class AsyncRawThreadsClient:
                 "include_blocked": include_blocked,
                 "include_unauthenticated": include_unauthenticated,
                 "include_trash": include_trash,
+                "senders": senders,
+                "recipients": recipients,
+                "subject": subject,
             },
             request_options=request_options,
         )
@@ -493,6 +627,96 @@ class AsyncRawThreadsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def search(
+        self,
+        *,
+        q: Query,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        before: typing.Optional[Before] = None,
+        after: typing.Optional[After] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[SearchThreadsResponse]:
+        """
+        Full-text search across threads in the organization, ranked by
+        relevance. The query is matched against senders, recipients, and
+        subject (substring) and the message body (tokenized full text). Spam,
+        trash, blocked, and unauthenticated threads are always excluded.
+        `limit` cannot exceed 100.
+
+        Parameters
+        ----------
+        q : Query
+
+        limit : typing.Optional[Limit]
+
+        page_token : typing.Optional[PageToken]
+
+        before : typing.Optional[Before]
+
+        after : typing.Optional[After]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[SearchThreadsResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v0/threads/search",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            params={
+                "q": q,
+                "limit": limit,
+                "page_token": page_token,
+                "before": serialize_datetime(before) if before is not None else None,
+                "after": serialize_datetime(after) if after is not None else None,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    SearchThreadsResponse,
+                    construct_type(
+                        type_=SearchThreadsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 404:
                 raise NotFoundError(
                     headers=dict(_response.headers),

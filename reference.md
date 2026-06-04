@@ -1536,6 +1536,75 @@ client.api_keys.delete(
 </dl>
 </details>
 
+## Auth
+<details><summary><code>client.auth.<a href="src/agentmail/auth/client.py">me</a>() -> Identity</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Returns the identity and scope of the authenticated credential. Useful when a client holds a pod-scoped or inbox-scoped API key and needs to discover the parent organization, pod, or inbox without prior knowledge.
+
+**CLI:**
+```bash
+agentmail auth me
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.auth.me()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Domains
 <details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">list</a>(...) -> ListDomainsResponse</code></summary>
 <dl>
@@ -3825,6 +3894,12 @@ client.inboxes.lists.delete(
 <dl>
 <dd>
 
+Lists messages in the inbox, most recent first. Pass `from`, `to`, or
+`subject` to filter by substring. Filtered requests are served by
+search, which caps `limit` at 100. For relevance-ranked full-text
+search across sender, recipients, subject, and message body, use
+`Search Messages`.
+
 **CLI:**
 ```bash
 agentmail inboxes:messages list --inbox-id <inbox_id>
@@ -3950,6 +4025,147 @@ client.inboxes.messages.list(
 <dd>
 
 **include_trash:** `typing.Optional[IncludeTrash]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `typing.Optional[typing.List[str]]` — Filter to messages whose sender contains this value (substring match). Repeatable; all values must match.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**to:** `typing.Optional[typing.List[str]]` — Filter to messages whose recipients (to, cc, or bcc) contain this value (substring match). Repeatable; all values must match.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**subject:** `typing.Optional[typing.List[str]]` — Filter to messages whose subject contains this value (substring match). Repeatable; all values must match.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">search</a>(...) -> SearchMessagesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Full-text search across messages in the inbox, ranked by relevance. The
+query is matched against the sender, recipients, and subject (substring)
+and the message body (tokenized full text). Spam, trash, blocked, and
+unauthenticated messages are always excluded. `limit` cannot exceed 100.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.messages.search(
+    inbox_id="inbox_id",
+    q="q",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**q:** `Query` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[Limit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**before:** `typing.Optional[Before]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**after:** `typing.Optional[After]` 
     
 </dd>
 </dl>
@@ -5006,6 +5222,11 @@ client.inboxes.metrics.query(
 <dl>
 <dd>
 
+Lists threads in the inbox, most recent first. Pass `senders`,
+`recipients`, or `subject` to filter by substring. Filtered requests are
+served by search, which caps `limit` at 100. For relevance-ranked
+full-text search, use `Search Threads`.
+
 **CLI:**
 ```bash
 agentmail inboxes:threads list --inbox-id <inbox_id>
@@ -5131,6 +5352,147 @@ client.inboxes.threads.list(
 <dd>
 
 **include_trash:** `typing.Optional[IncludeTrash]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**senders:** `typing.Optional[typing.List[str]]` — Filter to threads whose senders contain this value (substring match). Repeatable; all values must match.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recipients:** `typing.Optional[typing.List[str]]` — Filter to threads whose recipients contain this value (substring match). Repeatable; all values must match.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**subject:** `typing.Optional[typing.List[str]]` — Filter to threads whose subject contains this value (substring match). Repeatable; all values must match.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">search</a>(...) -> SearchThreadsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Full-text search across threads in the inbox, ranked by relevance. The
+query is matched against senders, recipients, and subject (substring)
+and the message body (tokenized full text). Spam, trash, blocked, and
+unauthenticated threads are always excluded. `limit` cannot exceed 100.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.threads.search(
+    inbox_id="inbox_id",
+    q="q",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**q:** `Query` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[Limit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**before:** `typing.Optional[Before]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**after:** `typing.Optional[After]` 
     
 </dd>
 </dl>
@@ -8274,6 +8636,11 @@ client.pods.metrics.query(
 <dl>
 <dd>
 
+Lists threads in the pod, most recent first. Pass `senders`,
+`recipients`, or `subject` to filter by substring. Filtered requests are
+served by search, which caps `limit` at 100. For relevance-ranked
+full-text search, use `Search Threads`.
+
 **CLI:**
 ```bash
 agentmail pods:threads list --pod-id <pod_id>
@@ -8399,6 +8766,147 @@ client.pods.threads.list(
 <dd>
 
 **include_trash:** `typing.Optional[IncludeTrash]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**senders:** `typing.Optional[typing.List[str]]` — Filter to threads whose senders contain this value (substring match). Repeatable; all values must match.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recipients:** `typing.Optional[typing.List[str]]` — Filter to threads whose recipients contain this value (substring match). Repeatable; all values must match.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**subject:** `typing.Optional[typing.List[str]]` — Filter to threads whose subject contains this value (substring match). Repeatable; all values must match.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.threads.<a href="src/agentmail/pods/threads/client.py">search</a>(...) -> SearchThreadsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Full-text search across threads in the pod, ranked by relevance. The
+query is matched against senders, recipients, and subject (substring)
+and the message body (tokenized full text). Spam, trash, blocked, and
+unauthenticated threads are always excluded. `limit` cannot exceed 100.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.pods.threads.search(
+    pod_id="pod_id",
+    q="q",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**q:** `Query` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[Limit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**before:** `typing.Optional[Before]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**after:** `typing.Optional[After]` 
     
 </dd>
 </dl>
@@ -8795,6 +9303,12 @@ client.pods.threads.delete(
 <dl>
 <dd>
 
+Lists threads, most recent first. Pass `senders`, `recipients`, or
+`subject` to filter by substring. Filtered requests are served by
+search, which caps `limit` at 100. For relevance-ranked full-text
+search across senders, recipients, subject, and message body, use
+`Search Threads`.
+
 **CLI:**
 ```bash
 agentmail threads list
@@ -8910,6 +9424,139 @@ client.threads.list()
 <dd>
 
 **include_trash:** `typing.Optional[IncludeTrash]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**senders:** `typing.Optional[typing.List[str]]` — Filter to threads whose senders contain this value (substring match). Repeatable; all values must match.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recipients:** `typing.Optional[typing.List[str]]` — Filter to threads whose recipients contain this value (substring match). Repeatable; all values must match.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**subject:** `typing.Optional[typing.List[str]]` — Filter to threads whose subject contains this value (substring match). Repeatable; all values must match.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">search</a>(...) -> SearchThreadsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Full-text search across threads in the organization, ranked by
+relevance. The query is matched against senders, recipients, and
+subject (substring) and the message body (tokenized full text). Spam,
+trash, blocked, and unauthenticated threads are always excluded.
+`limit` cannot exceed 100.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.threads.search(
+    q="q",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**q:** `Query` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[Limit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**before:** `typing.Optional[Before]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**after:** `typing.Optional[After]` 
     
 </dd>
 </dl>

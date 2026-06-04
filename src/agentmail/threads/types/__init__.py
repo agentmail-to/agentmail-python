@@ -7,6 +7,9 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .list_threads_response import ListThreadsResponse
+    from .search_thread_highlights import SearchThreadHighlights
+    from .search_thread_item import SearchThreadItem
+    from .search_threads_response import SearchThreadsResponse
     from .thread import Thread
     from .thread_attachments import ThreadAttachments
     from .thread_created_at import ThreadCreatedAt
@@ -28,6 +31,9 @@ if typing.TYPE_CHECKING:
     from .update_thread_response import UpdateThreadResponse
 _dynamic_imports: typing.Dict[str, str] = {
     "ListThreadsResponse": ".list_threads_response",
+    "SearchThreadHighlights": ".search_thread_highlights",
+    "SearchThreadItem": ".search_thread_item",
+    "SearchThreadsResponse": ".search_threads_response",
     "Thread": ".thread",
     "ThreadAttachments": ".thread_attachments",
     "ThreadCreatedAt": ".thread_created_at",
@@ -73,6 +79,9 @@ def __dir__():
 
 __all__ = [
     "ListThreadsResponse",
+    "SearchThreadHighlights",
+    "SearchThreadItem",
+    "SearchThreadsResponse",
     "Thread",
     "ThreadAttachments",
     "ThreadCreatedAt",

@@ -7,6 +7,7 @@ from ...attachments.types.attachment_response import AttachmentResponse
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...threads.types.list_threads_response import ListThreadsResponse
+from ...threads.types.search_threads_response import SearchThreadsResponse
 from ...threads.types.thread import Thread
 from ...threads.types.thread_id import ThreadId
 from ...threads.types.update_thread_response import UpdateThreadResponse
@@ -20,6 +21,7 @@ from ...types.include_unauthenticated import IncludeUnauthenticated
 from ...types.labels import Labels
 from ...types.limit import Limit
 from ...types.page_token import PageToken
+from ...types.query import Query
 from ..types.pod_id import PodId
 from .raw_client import AsyncRawThreadsClient, RawThreadsClient
 
@@ -56,9 +58,17 @@ class ThreadsClient:
         include_blocked: typing.Optional[IncludeBlocked] = None,
         include_unauthenticated: typing.Optional[IncludeUnauthenticated] = None,
         include_trash: typing.Optional[IncludeTrash] = None,
+        senders: typing.Optional[typing.Sequence[str]] = None,
+        recipients: typing.Optional[typing.Sequence[str]] = None,
+        subject: typing.Optional[typing.Sequence[str]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
         """
+        Lists threads in the pod, most recent first. Pass `senders`,
+        `recipients`, or `subject` to filter by substring. Filtered requests are
+        served by search, which caps `limit` at 100. For relevance-ranked
+        full-text search, use `Search Threads`.
+
         **CLI:**
         ```bash
         agentmail pods:threads list --pod-id <pod_id>
@@ -87,6 +97,15 @@ class ThreadsClient:
         include_unauthenticated : typing.Optional[IncludeUnauthenticated]
 
         include_trash : typing.Optional[IncludeTrash]
+
+        senders : typing.Optional[typing.Sequence[str]]
+            Filter to threads whose senders contain this value (substring match). Repeatable; all values must match.
+
+        recipients : typing.Optional[typing.Sequence[str]]
+            Filter to threads whose recipients contain this value (substring match). Repeatable; all values must match.
+
+        subject : typing.Optional[typing.Sequence[str]]
+            Filter to threads whose subject contains this value (substring match). Repeatable; all values must match.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -118,7 +137,65 @@ class ThreadsClient:
             include_blocked=include_blocked,
             include_unauthenticated=include_unauthenticated,
             include_trash=include_trash,
+            senders=senders,
+            recipients=recipients,
+            subject=subject,
             request_options=request_options,
+        )
+        return _response.data
+
+    def search(
+        self,
+        pod_id: PodId,
+        *,
+        q: Query,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        before: typing.Optional[Before] = None,
+        after: typing.Optional[After] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SearchThreadsResponse:
+        """
+        Full-text search across threads in the pod, ranked by relevance. The
+        query is matched against senders, recipients, and subject (substring)
+        and the message body (tokenized full text). Spam, trash, blocked, and
+        unauthenticated threads are always excluded. `limit` cannot exceed 100.
+
+        Parameters
+        ----------
+        pod_id : PodId
+
+        q : Query
+
+        limit : typing.Optional[Limit]
+
+        page_token : typing.Optional[PageToken]
+
+        before : typing.Optional[Before]
+
+        after : typing.Optional[After]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SearchThreadsResponse
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.pods.threads.search(
+            pod_id="pod_id",
+            q="q",
+        )
+        """
+        _response = self._raw_client.search(
+            pod_id, q=q, limit=limit, page_token=page_token, before=before, after=after, request_options=request_options
         )
         return _response.data
 
@@ -329,9 +406,17 @@ class AsyncThreadsClient:
         include_blocked: typing.Optional[IncludeBlocked] = None,
         include_unauthenticated: typing.Optional[IncludeUnauthenticated] = None,
         include_trash: typing.Optional[IncludeTrash] = None,
+        senders: typing.Optional[typing.Sequence[str]] = None,
+        recipients: typing.Optional[typing.Sequence[str]] = None,
+        subject: typing.Optional[typing.Sequence[str]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListThreadsResponse:
         """
+        Lists threads in the pod, most recent first. Pass `senders`,
+        `recipients`, or `subject` to filter by substring. Filtered requests are
+        served by search, which caps `limit` at 100. For relevance-ranked
+        full-text search, use `Search Threads`.
+
         **CLI:**
         ```bash
         agentmail pods:threads list --pod-id <pod_id>
@@ -360,6 +445,15 @@ class AsyncThreadsClient:
         include_unauthenticated : typing.Optional[IncludeUnauthenticated]
 
         include_trash : typing.Optional[IncludeTrash]
+
+        senders : typing.Optional[typing.Sequence[str]]
+            Filter to threads whose senders contain this value (substring match). Repeatable; all values must match.
+
+        recipients : typing.Optional[typing.Sequence[str]]
+            Filter to threads whose recipients contain this value (substring match). Repeatable; all values must match.
+
+        subject : typing.Optional[typing.Sequence[str]]
+            Filter to threads whose subject contains this value (substring match). Repeatable; all values must match.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -399,7 +493,73 @@ class AsyncThreadsClient:
             include_blocked=include_blocked,
             include_unauthenticated=include_unauthenticated,
             include_trash=include_trash,
+            senders=senders,
+            recipients=recipients,
+            subject=subject,
             request_options=request_options,
+        )
+        return _response.data
+
+    async def search(
+        self,
+        pod_id: PodId,
+        *,
+        q: Query,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        before: typing.Optional[Before] = None,
+        after: typing.Optional[After] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SearchThreadsResponse:
+        """
+        Full-text search across threads in the pod, ranked by relevance. The
+        query is matched against senders, recipients, and subject (substring)
+        and the message body (tokenized full text). Spam, trash, blocked, and
+        unauthenticated threads are always excluded. `limit` cannot exceed 100.
+
+        Parameters
+        ----------
+        pod_id : PodId
+
+        q : Query
+
+        limit : typing.Optional[Limit]
+
+        page_token : typing.Optional[PageToken]
+
+        before : typing.Optional[Before]
+
+        after : typing.Optional[After]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SearchThreadsResponse
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.pods.threads.search(
+                pod_id="pod_id",
+                q="q",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.search(
+            pod_id, q=q, limit=limit, page_token=page_token, before=before, after=after, request_options=request_options
         )
         return _response.data
 

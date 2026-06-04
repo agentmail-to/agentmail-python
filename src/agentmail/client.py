@@ -13,6 +13,7 @@ from .environment import AgentMailEnvironment
 if typing.TYPE_CHECKING:
     from .agent.client import AgentClient, AsyncAgentClient
     from .api_keys.client import ApiKeysClient, AsyncApiKeysClient
+    from .auth.client import AsyncAuthClient, AuthClient
     from .domains.client import AsyncDomainsClient, DomainsClient
     from .drafts.client import AsyncDraftsClient, DraftsClient
     from .inboxes.client import AsyncInboxesClient, InboxesClient
@@ -96,6 +97,7 @@ class AgentMail:
         self._webhooks: typing.Optional[WebhooksClient] = None
         self._agent: typing.Optional[AgentClient] = None
         self._api_keys: typing.Optional[ApiKeysClient] = None
+        self._auth: typing.Optional[AuthClient] = None
         self._domains: typing.Optional[DomainsClient] = None
         self._drafts: typing.Optional[DraftsClient] = None
         self._lists: typing.Optional[ListsClient] = None
@@ -143,6 +145,14 @@ class AgentMail:
 
             self._api_keys = ApiKeysClient(client_wrapper=self._client_wrapper)
         return self._api_keys
+
+    @property
+    def auth(self):
+        if self._auth is None:
+            from .auth.client import AuthClient  # noqa: E402
+
+            self._auth = AuthClient(client_wrapper=self._client_wrapper)
+        return self._auth
 
     @property
     def domains(self):
@@ -272,6 +282,7 @@ class AsyncAgentMail:
         self._webhooks: typing.Optional[AsyncWebhooksClient] = None
         self._agent: typing.Optional[AsyncAgentClient] = None
         self._api_keys: typing.Optional[AsyncApiKeysClient] = None
+        self._auth: typing.Optional[AsyncAuthClient] = None
         self._domains: typing.Optional[AsyncDomainsClient] = None
         self._drafts: typing.Optional[AsyncDraftsClient] = None
         self._lists: typing.Optional[AsyncListsClient] = None
@@ -319,6 +330,14 @@ class AsyncAgentMail:
 
             self._api_keys = AsyncApiKeysClient(client_wrapper=self._client_wrapper)
         return self._api_keys
+
+    @property
+    def auth(self):
+        if self._auth is None:
+            from .auth.client import AsyncAuthClient  # noqa: E402
+
+            self._auth = AsyncAuthClient(client_wrapper=self._client_wrapper)
+        return self._auth
 
     @property
     def domains(self):

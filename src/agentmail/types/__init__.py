@@ -21,6 +21,7 @@ if typing.TYPE_CHECKING:
     from .limit import Limit
     from .organization_id import OrganizationId
     from .page_token import PageToken
+    from .query import Query
     from .validation_error_response import ValidationErrorResponse
 _dynamic_imports: typing.Dict[str, str] = {
     "After": ".after",
@@ -38,6 +39,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Limit": ".limit",
     "OrganizationId": ".organization_id",
     "PageToken": ".page_token",
+    "Query": ".query",
     "ValidationErrorResponse": ".validation_error_response",
 }
 
@@ -79,5 +81,6 @@ __all__ = [
     "Limit",
     "OrganizationId",
     "PageToken",
+    "Query",
     "ValidationErrorResponse",
 ]

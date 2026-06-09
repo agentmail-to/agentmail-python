@@ -16,6 +16,7 @@ from ...domains.types.domain_id import DomainId
 from ...domains.types.domain_name import DomainName
 from ...domains.types.feedback_enabled import FeedbackEnabled
 from ...domains.types.list_domains_response import ListDomainsResponse
+from ...domains.types.subdomains_enabled import SubdomainsEnabled
 from ...errors.not_found_error import NotFoundError
 from ...errors.validation_error import ValidationError as errors_validation_error_ValidationError
 from ...types.ascending import Ascending
@@ -235,7 +236,8 @@ class RawDomainsClient:
         pod_id: PodId,
         *,
         domain: DomainName,
-        feedback_enabled: FeedbackEnabled,
+        feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
+        subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Domain]:
         """
@@ -250,7 +252,9 @@ class RawDomainsClient:
 
         domain : DomainName
 
-        feedback_enabled : FeedbackEnabled
+        feedback_enabled : typing.Optional[FeedbackEnabled]
+
+        subdomains_enabled : typing.Optional[SubdomainsEnabled]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -266,6 +270,7 @@ class RawDomainsClient:
             json={
                 "domain": domain,
                 "feedback_enabled": feedback_enabled,
+                "subdomains_enabled": subdomains_enabled,
             },
             request_options=request_options,
             omit=OMIT,
@@ -306,6 +311,7 @@ class RawDomainsClient:
         domain_id: DomainId,
         *,
         feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
+        subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Domain]:
         """
@@ -322,6 +328,8 @@ class RawDomainsClient:
 
         feedback_enabled : typing.Optional[FeedbackEnabled]
 
+        subdomains_enabled : typing.Optional[SubdomainsEnabled]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -335,6 +343,7 @@ class RawDomainsClient:
             method="PATCH",
             json={
                 "feedback_enabled": feedback_enabled,
+                "subdomains_enabled": subdomains_enabled,
             },
             request_options=request_options,
             omit=OMIT,
@@ -678,7 +687,8 @@ class AsyncRawDomainsClient:
         pod_id: PodId,
         *,
         domain: DomainName,
-        feedback_enabled: FeedbackEnabled,
+        feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
+        subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Domain]:
         """
@@ -693,7 +703,9 @@ class AsyncRawDomainsClient:
 
         domain : DomainName
 
-        feedback_enabled : FeedbackEnabled
+        feedback_enabled : typing.Optional[FeedbackEnabled]
+
+        subdomains_enabled : typing.Optional[SubdomainsEnabled]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -709,6 +721,7 @@ class AsyncRawDomainsClient:
             json={
                 "domain": domain,
                 "feedback_enabled": feedback_enabled,
+                "subdomains_enabled": subdomains_enabled,
             },
             request_options=request_options,
             omit=OMIT,
@@ -749,6 +762,7 @@ class AsyncRawDomainsClient:
         domain_id: DomainId,
         *,
         feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
+        subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Domain]:
         """
@@ -765,6 +779,8 @@ class AsyncRawDomainsClient:
 
         feedback_enabled : typing.Optional[FeedbackEnabled]
 
+        subdomains_enabled : typing.Optional[SubdomainsEnabled]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -778,6 +794,7 @@ class AsyncRawDomainsClient:
             method="PATCH",
             json={
                 "feedback_enabled": feedback_enabled,
+                "subdomains_enabled": subdomains_enabled,
             },
             request_options=request_options,
             omit=OMIT,

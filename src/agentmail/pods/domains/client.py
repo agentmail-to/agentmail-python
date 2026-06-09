@@ -9,6 +9,7 @@ from ...domains.types.domain_id import DomainId
 from ...domains.types.domain_name import DomainName
 from ...domains.types.feedback_enabled import FeedbackEnabled
 from ...domains.types.list_domains_response import ListDomainsResponse
+from ...domains.types.subdomains_enabled import SubdomainsEnabled
 from ...types.ascending import Ascending
 from ...types.limit import Limit
 from ...types.page_token import PageToken
@@ -161,7 +162,8 @@ class DomainsClient:
         pod_id: PodId,
         *,
         domain: DomainName,
-        feedback_enabled: FeedbackEnabled,
+        feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
+        subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Domain:
         """
@@ -176,7 +178,9 @@ class DomainsClient:
 
         domain : DomainName
 
-        feedback_enabled : FeedbackEnabled
+        feedback_enabled : typing.Optional[FeedbackEnabled]
+
+        subdomains_enabled : typing.Optional[SubdomainsEnabled]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -195,11 +199,14 @@ class DomainsClient:
         client.pods.domains.create(
             pod_id="pod_id",
             domain="domain",
-            feedback_enabled=True,
         )
         """
         _response = self._raw_client.create(
-            pod_id, domain=domain, feedback_enabled=feedback_enabled, request_options=request_options
+            pod_id,
+            domain=domain,
+            feedback_enabled=feedback_enabled,
+            subdomains_enabled=subdomains_enabled,
+            request_options=request_options,
         )
         return _response.data
 
@@ -209,6 +216,7 @@ class DomainsClient:
         domain_id: DomainId,
         *,
         feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
+        subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Domain:
         """
@@ -224,6 +232,8 @@ class DomainsClient:
         domain_id : DomainId
 
         feedback_enabled : typing.Optional[FeedbackEnabled]
+
+        subdomains_enabled : typing.Optional[SubdomainsEnabled]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -245,7 +255,11 @@ class DomainsClient:
         )
         """
         _response = self._raw_client.update(
-            pod_id, domain_id, feedback_enabled=feedback_enabled, request_options=request_options
+            pod_id,
+            domain_id,
+            feedback_enabled=feedback_enabled,
+            subdomains_enabled=subdomains_enabled,
+            request_options=request_options,
         )
         return _response.data
 
@@ -491,7 +505,8 @@ class AsyncDomainsClient:
         pod_id: PodId,
         *,
         domain: DomainName,
-        feedback_enabled: FeedbackEnabled,
+        feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
+        subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Domain:
         """
@@ -506,7 +521,9 @@ class AsyncDomainsClient:
 
         domain : DomainName
 
-        feedback_enabled : FeedbackEnabled
+        feedback_enabled : typing.Optional[FeedbackEnabled]
+
+        subdomains_enabled : typing.Optional[SubdomainsEnabled]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -530,14 +547,17 @@ class AsyncDomainsClient:
             await client.pods.domains.create(
                 pod_id="pod_id",
                 domain="domain",
-                feedback_enabled=True,
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
-            pod_id, domain=domain, feedback_enabled=feedback_enabled, request_options=request_options
+            pod_id,
+            domain=domain,
+            feedback_enabled=feedback_enabled,
+            subdomains_enabled=subdomains_enabled,
+            request_options=request_options,
         )
         return _response.data
 
@@ -547,6 +567,7 @@ class AsyncDomainsClient:
         domain_id: DomainId,
         *,
         feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
+        subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Domain:
         """
@@ -562,6 +583,8 @@ class AsyncDomainsClient:
         domain_id : DomainId
 
         feedback_enabled : typing.Optional[FeedbackEnabled]
+
+        subdomains_enabled : typing.Optional[SubdomainsEnabled]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -591,7 +614,11 @@ class AsyncDomainsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.update(
-            pod_id, domain_id, feedback_enabled=feedback_enabled, request_options=request_options
+            pod_id,
+            domain_id,
+            feedback_enabled=feedback_enabled,
+            subdomains_enabled=subdomains_enabled,
+            request_options=request_options,
         )
         return _response.data
 

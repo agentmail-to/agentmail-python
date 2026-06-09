@@ -7,11 +7,13 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from .domain_name import DomainName
 from .feedback_enabled import FeedbackEnabled
+from .subdomains_enabled import SubdomainsEnabled
 
 
 class CreateDomainRequest(UncheckedBaseModel):
     domain: DomainName
-    feedback_enabled: FeedbackEnabled
+    feedback_enabled: typing.Optional[FeedbackEnabled] = None
+    subdomains_enabled: typing.Optional[SubdomainsEnabled] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

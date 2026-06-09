@@ -18,7 +18,9 @@ class CreateInboxRequest(UncheckedBaseModel):
 
     domain: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Domain of address. Must be verified domain. Defaults to `agentmail.to`.
+    Domain of address. Must be a verified domain, or any subdomain of a
+    verified domain that has subdomains enabled (e.g., `bot.example.com`).
+    Defaults to `agentmail.to`.
     """
 
     display_name: typing.Optional[DisplayName] = None

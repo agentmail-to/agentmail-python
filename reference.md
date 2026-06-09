@@ -1888,7 +1888,6 @@ client = AgentMail(
 
 client.domains.create(
     domain="domain",
-    feedback_enabled=True,
 )
 
 ```
@@ -7018,7 +7017,6 @@ client = AgentMail(
 client.pods.domains.create(
     pod_id="pod_id",
     domain="domain",
-    feedback_enabled=True,
 )
 
 ```

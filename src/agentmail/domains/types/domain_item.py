@@ -11,6 +11,7 @@ from .client_id import ClientId
 from .domain_id import DomainId
 from .domain_name import DomainName
 from .feedback_enabled import FeedbackEnabled
+from .subdomains_enabled import SubdomainsEnabled
 
 
 class DomainItem(UncheckedBaseModel):
@@ -18,6 +19,7 @@ class DomainItem(UncheckedBaseModel):
     domain_id: DomainId
     domain: DomainName
     feedback_enabled: FeedbackEnabled
+    subdomains_enabled: SubdomainsEnabled
     client_id: typing.Optional[ClientId] = None
     updated_at: dt.datetime = pydantic.Field()
     """

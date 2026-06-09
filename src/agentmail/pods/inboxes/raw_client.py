@@ -12,6 +12,7 @@ from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
 from ...errors.not_found_error import NotFoundError
+from ...errors.unprocessable_error import UnprocessableError
 from ...errors.validation_error import ValidationError as errors_validation_error_ValidationError
 from ...inboxes.types.client_id import ClientId
 from ...inboxes.types.display_name import DisplayName
@@ -192,7 +193,9 @@ class RawInboxesClient:
             Username of address. Randomly generated if not specified.
 
         domain : typing.Optional[str]
-            Domain of address. Must be verified domain. Defaults to `agentmail.to`.
+            Domain of address. Must be a verified domain, or any subdomain of a
+            verified domain that has subdomains enabled (e.g., `bot.example.com`).
+            Defaults to `agentmail.to`.
 
         display_name : typing.Optional[DisplayName]
 
@@ -241,6 +244,17 @@ class RawInboxesClient:
                         ValidationErrorResponse,
                         construct_type(
                             type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -547,7 +561,9 @@ class AsyncRawInboxesClient:
             Username of address. Randomly generated if not specified.
 
         domain : typing.Optional[str]
-            Domain of address. Must be verified domain. Defaults to `agentmail.to`.
+            Domain of address. Must be a verified domain, or any subdomain of a
+            verified domain that has subdomains enabled (e.g., `bot.example.com`).
+            Defaults to `agentmail.to`.
 
         display_name : typing.Optional[DisplayName]
 
@@ -596,6 +612,17 @@ class AsyncRawInboxesClient:
                         ValidationErrorResponse,
                         construct_type(
                             type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

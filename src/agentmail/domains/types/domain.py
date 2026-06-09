@@ -12,6 +12,7 @@ from .domain_id import DomainId
 from .domain_name import DomainName
 from .feedback_enabled import FeedbackEnabled
 from .status import Status
+from .subdomains_enabled import SubdomainsEnabled
 from .verification_record import VerificationRecord
 
 
@@ -21,9 +22,11 @@ class Domain(UncheckedBaseModel):
     domain: DomainName
     status: Status
     feedback_enabled: FeedbackEnabled
+    subdomains_enabled: SubdomainsEnabled
     records: typing.List[VerificationRecord] = pydantic.Field()
     """
-    A list of DNS records required to verify the domain.
+    A list of DNS records required to verify the domain. Includes a
+    wildcard MX record (`*.<domain>`) when `subdomains_enabled` is true.
     """
 
     client_id: typing.Optional[ClientId] = None

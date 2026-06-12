@@ -18,7 +18,9 @@ from .types.metric_event_types import MetricEventTypes
 from .types.metric_limit import MetricLimit
 from .types.period import Period
 from .types.query_metrics_response import QueryMetricsResponse
+from .types.query_usage_response import QueryUsageResponse
 from .types.start import Start
+from .types.usage_types import UsageTypes
 from pydantic import ValidationError as pydantic_ValidationError
 
 
@@ -26,7 +28,7 @@ class RawMetricsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def query(
+    def query_events(
         self,
         *,
         event_types: typing.Optional[MetricEventTypes] = None,
@@ -38,6 +40,12 @@ class RawMetricsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[QueryMetricsResponse]:
         """
+        Counts of email events (sent, delivered, bounced, etc.) over time for
+        the organization. Defaults to the last 24 hours; `start` must be within
+        the last 90 days, and a future `end` is clamped to now. Omit `period`
+        for individual event counts, or set it to sum counts into buckets of
+        that many seconds.
+
         **CLI:**
         ```bash
         agentmail metrics list
@@ -65,7 +73,7 @@ class RawMetricsClient:
         HttpResponse[QueryMetricsResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v0/metrics",
+            "v0/metrics/events",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
@@ -108,12 +116,95 @@ class RawMetricsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def query_usage(
+        self,
+        *,
+        usage_types: typing.Optional[UsageTypes] = None,
+        start: typing.Optional[Start] = None,
+        end: typing.Optional[End] = None,
+        period: typing.Optional[Period] = None,
+        limit: typing.Optional[MetricLimit] = None,
+        descending: typing.Optional[Descending] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[QueryUsageResponse]:
+        """
+        Cumulative usage series for the organization. Each point is the running
+        total of the usage type at that timestamp, not the change within the
+        bucket. Defaults to the last 24 hours; `start` must be within the last
+        90 days, and a future `end` is clamped to now. The range divided by
+        `period` must not exceed 1000 buckets.
+
+        Parameters
+        ----------
+        usage_types : typing.Optional[UsageTypes]
+
+        start : typing.Optional[Start]
+
+        end : typing.Optional[End]
+
+        period : typing.Optional[Period]
+
+        limit : typing.Optional[MetricLimit]
+
+        descending : typing.Optional[Descending]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[QueryUsageResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v0/metrics/usage",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            params={
+                "usage_types": usage_types,
+                "start": serialize_datetime(start) if start is not None else None,
+                "end": serialize_datetime(end) if end is not None else None,
+                "period": period,
+                "limit": limit,
+                "descending": descending,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    QueryUsageResponse,
+                    construct_type(
+                        type_=QueryUsageResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawMetricsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def query(
+    async def query_events(
         self,
         *,
         event_types: typing.Optional[MetricEventTypes] = None,
@@ -125,6 +216,12 @@ class AsyncRawMetricsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[QueryMetricsResponse]:
         """
+        Counts of email events (sent, delivered, bounced, etc.) over time for
+        the organization. Defaults to the last 24 hours; `start` must be within
+        the last 90 days, and a future `end` is clamped to now. Omit `period`
+        for individual event counts, or set it to sum counts into buckets of
+        that many seconds.
+
         **CLI:**
         ```bash
         agentmail metrics list
@@ -152,7 +249,7 @@ class AsyncRawMetricsClient:
         AsyncHttpResponse[QueryMetricsResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v0/metrics",
+            "v0/metrics/events",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
@@ -171,6 +268,89 @@ class AsyncRawMetricsClient:
                     QueryMetricsResponse,
                     construct_type(
                         type_=QueryMetricsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def query_usage(
+        self,
+        *,
+        usage_types: typing.Optional[UsageTypes] = None,
+        start: typing.Optional[Start] = None,
+        end: typing.Optional[End] = None,
+        period: typing.Optional[Period] = None,
+        limit: typing.Optional[MetricLimit] = None,
+        descending: typing.Optional[Descending] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[QueryUsageResponse]:
+        """
+        Cumulative usage series for the organization. Each point is the running
+        total of the usage type at that timestamp, not the change within the
+        bucket. Defaults to the last 24 hours; `start` must be within the last
+        90 days, and a future `end` is clamped to now. The range divided by
+        `period` must not exceed 1000 buckets.
+
+        Parameters
+        ----------
+        usage_types : typing.Optional[UsageTypes]
+
+        start : typing.Optional[Start]
+
+        end : typing.Optional[End]
+
+        period : typing.Optional[Period]
+
+        limit : typing.Optional[MetricLimit]
+
+        descending : typing.Optional[Descending]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[QueryUsageResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v0/metrics/usage",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            params={
+                "usage_types": usage_types,
+                "start": serialize_datetime(start) if start is not None else None,
+                "end": serialize_datetime(end) if end is not None else None,
+                "period": period,
+                "limit": limit,
+                "descending": descending,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    QueryUsageResponse,
+                    construct_type(
+                        type_=QueryUsageResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

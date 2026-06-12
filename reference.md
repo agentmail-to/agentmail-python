@@ -4361,6 +4361,101 @@ client.inboxes.messages.batch_get(
 </dl>
 </details>
 
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">batch_update</a>(...) -> BatchUpdateMessagesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Apply one label change to up to 50 messages in a single request. The
+same add_labels and remove_labels apply to every message id, and at
+least one of them must be provided. The update is atomic: either all
+resolved messages are updated or none are. Missing or restricted ids
+are silently excluded; compare `count` against `limit` to detect
+exclusions.
+
+**CLI:**
+```bash
+agentmail inboxes:messages batch-update --inbox-id <inbox_id> --message-id <id1> --message-id <id2> --add-label read --remove-label unread
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.messages.batch_update(
+    inbox_id="inbox_id",
+    message_ids=[
+        "message_ids",
+        "message_ids"
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `BatchUpdateMessagesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">get_attachment</a>(...) -> AttachmentResponse</code></summary>
 <dl>
 <dd>
@@ -5084,7 +5179,7 @@ client.inboxes.messages.forward(
 </details>
 
 ## Inboxes Metrics
-<details><summary><code>client.inboxes.metrics.<a href="src/agentmail/inboxes/metrics/client.py">query</a>(...) -> QueryMetricsResponse</code></summary>
+<details><summary><code>client.inboxes.metrics.<a href="src/agentmail/inboxes/metrics/client.py">query_events</a>(...) -> QueryMetricsResponse</code></summary>
 <dl>
 <dd>
 
@@ -5095,6 +5190,12 @@ client.inboxes.messages.forward(
 
 <dl>
 <dd>
+
+Counts of email events (sent, delivered, bounced, etc.) over time for
+the inbox. Defaults to the last 24 hours; `start` must be within the
+last 90 days, and a future `end` is clamped to now. Omit `period` for
+individual event counts, or set it to sum counts into buckets of that
+many seconds.
 
 **CLI:**
 ```bash
@@ -5122,7 +5223,7 @@ client = AgentMail(
     environment=AgentMailEnvironment.PROD,
 )
 
-client.inboxes.metrics.query(
+client.inboxes.metrics.query_events(
     inbox_id="inbox_id",
 )
 
@@ -5149,6 +5250,133 @@ client.inboxes.metrics.query(
 <dd>
 
 **event_types:** `typing.Optional[MetricEventTypes]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start:** `typing.Optional[Start]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end:** `typing.Optional[End]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**period:** `typing.Optional[Period]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[MetricLimit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**descending:** `typing.Optional[Descending]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.metrics.<a href="src/agentmail/inboxes/metrics/client.py">query_usage</a>(...) -> QueryUsageResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cumulative usage series for the inbox. Each point is the running total
+of the usage type at that timestamp, not the change within the bucket.
+Inbox-scoped queries carry `storage_bytes`, `message_count`, and
+`thread_count`; requested types that don't apply to the scope are
+ignored. Defaults to the last 24 hours; `start` must be within the
+last 90 days, and a future `end` is clamped to now. The range divided
+by `period` must not exceed 1000 buckets.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.metrics.query_usage(
+    inbox_id="inbox_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**usage_types:** `typing.Optional[UsageTypes]` 
     
 </dd>
 </dl>
@@ -6260,7 +6488,7 @@ client.lists.delete(
 </details>
 
 ## Metrics
-<details><summary><code>client.metrics.<a href="src/agentmail/metrics/client.py">query</a>(...) -> QueryMetricsResponse</code></summary>
+<details><summary><code>client.metrics.<a href="src/agentmail/metrics/client.py">query_events</a>(...) -> QueryMetricsResponse</code></summary>
 <dl>
 <dd>
 
@@ -6271,6 +6499,12 @@ client.lists.delete(
 
 <dl>
 <dd>
+
+Counts of email events (sent, delivered, bounced, etc.) over time for
+the organization. Defaults to the last 24 hours; `start` must be within
+the last 90 days, and a future `end` is clamped to now. Omit `period`
+for individual event counts, or set it to sum counts into buckets of
+that many seconds.
 
 **CLI:**
 ```bash
@@ -6298,7 +6532,7 @@ client = AgentMail(
     environment=AgentMailEnvironment.PROD,
 )
 
-client.metrics.query()
+client.metrics.query_events()
 
 ```
 </dd>
@@ -6315,6 +6549,121 @@ client.metrics.query()
 <dd>
 
 **event_types:** `typing.Optional[MetricEventTypes]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start:** `typing.Optional[Start]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end:** `typing.Optional[End]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**period:** `typing.Optional[Period]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[MetricLimit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**descending:** `typing.Optional[Descending]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.metrics.<a href="src/agentmail/metrics/client.py">query_usage</a>(...) -> QueryUsageResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cumulative usage series for the organization. Each point is the running
+total of the usage type at that timestamp, not the change within the
+bucket. Defaults to the last 24 hours; `start` must be within the last
+90 days, and a future `end` is clamped to now. The range divided by
+`period` must not exceed 1000 buckets.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.metrics.query_usage()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**usage_types:** `typing.Optional[UsageTypes]` 
     
 </dd>
 </dl>
@@ -8497,7 +8846,7 @@ client.pods.lists.delete(
 </details>
 
 ## Pods Metrics
-<details><summary><code>client.pods.metrics.<a href="src/agentmail/pods/metrics/client.py">query</a>(...) -> QueryMetricsResponse</code></summary>
+<details><summary><code>client.pods.metrics.<a href="src/agentmail/pods/metrics/client.py">query_events</a>(...) -> QueryMetricsResponse</code></summary>
 <dl>
 <dd>
 
@@ -8508,6 +8857,12 @@ client.pods.lists.delete(
 
 <dl>
 <dd>
+
+Counts of email events (sent, delivered, bounced, etc.) over time for
+the pod. Defaults to the last 24 hours; `start` must be within the last
+90 days, and a future `end` is clamped to now. Omit `period` for
+individual event counts, or set it to sum counts into buckets of that
+many seconds.
 
 **CLI:**
 ```bash
@@ -8535,7 +8890,7 @@ client = AgentMail(
     environment=AgentMailEnvironment.PROD,
 )
 
-client.pods.metrics.query(
+client.pods.metrics.query_events(
     pod_id="pod_id",
 )
 
@@ -8562,6 +8917,133 @@ client.pods.metrics.query(
 <dd>
 
 **event_types:** `typing.Optional[MetricEventTypes]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start:** `typing.Optional[Start]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end:** `typing.Optional[End]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**period:** `typing.Optional[Period]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[MetricLimit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**descending:** `typing.Optional[Descending]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.metrics.<a href="src/agentmail/pods/metrics/client.py">query_usage</a>(...) -> QueryUsageResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cumulative usage series for the pod. Each point is the running total of
+the usage type at that timestamp, not the change within the bucket.
+Pod-scoped queries carry every usage type except `pod_count`; requested
+types that don't apply to the scope are ignored. Defaults to the last
+24 hours; `start` must be within the last 90 days, and a future `end`
+is clamped to now. The range divided by `period` must not exceed 1000
+buckets.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.pods.metrics.query_usage(
+    pod_id="pod_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**usage_types:** `typing.Optional[UsageTypes]` 
     
 </dd>
 </dl>

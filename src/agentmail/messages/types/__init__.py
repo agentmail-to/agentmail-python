@@ -10,6 +10,9 @@ if typing.TYPE_CHECKING:
     from .batch_get_messages_message_ids import BatchGetMessagesMessageIds
     from .batch_get_messages_request import BatchGetMessagesRequest
     from .batch_get_messages_response import BatchGetMessagesResponse
+    from .batch_update_messages_message_ids import BatchUpdateMessagesMessageIds
+    from .batch_update_messages_request import BatchUpdateMessagesRequest
+    from .batch_update_messages_response import BatchUpdateMessagesResponse
     from .list_messages_response import ListMessagesResponse
     from .message import Message
     from .message_attachments import MessageAttachments
@@ -55,6 +58,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BatchGetMessagesMessageIds": ".batch_get_messages_message_ids",
     "BatchGetMessagesRequest": ".batch_get_messages_request",
     "BatchGetMessagesResponse": ".batch_get_messages_response",
+    "BatchUpdateMessagesMessageIds": ".batch_update_messages_message_ids",
+    "BatchUpdateMessagesRequest": ".batch_update_messages_request",
+    "BatchUpdateMessagesResponse": ".batch_update_messages_response",
     "ListMessagesResponse": ".list_messages_response",
     "Message": ".message",
     "MessageAttachments": ".message_attachments",
@@ -124,6 +130,9 @@ __all__ = [
     "BatchGetMessagesMessageIds",
     "BatchGetMessagesRequest",
     "BatchGetMessagesResponse",
+    "BatchUpdateMessagesMessageIds",
+    "BatchUpdateMessagesRequest",
+    "BatchUpdateMessagesResponse",
     "ListMessagesResponse",
     "Message",
     "MessageAttachments",

@@ -4,13 +4,16 @@ import typing
 
 MetricEventType = typing.Union[
     typing.Literal[
+        "message.received",
+        "message.received.spam",
+        "message.received.blocked",
+        "message.received.unauthenticated",
         "message.sent",
         "message.delivered",
         "message.bounced",
-        "message.delayed",
-        "message.rejected",
         "message.complained",
-        "message.received",
+        "message.rejected",
+        "domain.verified",
     ],
     typing.Any,
 ]

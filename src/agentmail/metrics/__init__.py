@@ -15,7 +15,11 @@ if typing.TYPE_CHECKING:
         MetricLimit,
         Period,
         QueryMetricsResponse,
+        QueryUsageResponse,
         Start,
+        UsagePoint,
+        UsageType,
+        UsageTypes,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "Descending": ".types",
@@ -26,7 +30,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MetricLimit": ".types",
     "Period": ".types",
     "QueryMetricsResponse": ".types",
+    "QueryUsageResponse": ".types",
     "Start": ".types",
+    "UsagePoint": ".types",
+    "UsageType": ".types",
+    "UsageTypes": ".types",
 }
 
 
@@ -60,5 +68,9 @@ __all__ = [
     "MetricLimit",
     "Period",
     "QueryMetricsResponse",
+    "QueryUsageResponse",
     "Start",
+    "UsagePoint",
+    "UsageType",
+    "UsageTypes",
 ]

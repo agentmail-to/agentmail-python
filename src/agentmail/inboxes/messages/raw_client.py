@@ -19,6 +19,8 @@ from ...errors.validation_error import ValidationError as errors_validation_erro
 from ...messages.errors.message_rejected_error import MessageRejectedError
 from ...messages.types.batch_get_messages_message_ids import BatchGetMessagesMessageIds
 from ...messages.types.batch_get_messages_response import BatchGetMessagesResponse
+from ...messages.types.batch_update_messages_message_ids import BatchUpdateMessagesMessageIds
+from ...messages.types.batch_update_messages_response import BatchUpdateMessagesResponse
 from ...messages.types.list_messages_response import ListMessagesResponse
 from ...messages.types.message import Message
 from ...messages.types.message_html import MessageHtml
@@ -380,6 +382,93 @@ class RawMessagesClient:
                     BatchGetMessagesResponse,
                     construct_type(
                         type_=BatchGetMessagesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def batch_update(
+        self,
+        inbox_id: InboxId,
+        *,
+        message_ids: BatchUpdateMessagesMessageIds,
+        add_labels: typing.Optional[UpdateMessageLabels] = OMIT,
+        remove_labels: typing.Optional[UpdateMessageLabels] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[BatchUpdateMessagesResponse]:
+        """
+        Apply one label change to up to 50 messages in a single request. The
+        same add_labels and remove_labels apply to every message id, and at
+        least one of them must be provided. The update is atomic: either all
+        resolved messages are updated or none are. Missing or restricted ids
+        are silently excluded; compare `count` against `limit` to detect
+        exclusions.
+
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages batch-update --inbox-id <inbox_id> --message-id <id1> --message-id <id2> --add-label read --remove-label unread
+        ```
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_ids : BatchUpdateMessagesMessageIds
+
+        add_labels : typing.Optional[UpdateMessageLabels]
+            Label or labels to add to every message.
+
+        remove_labels : typing.Optional[UpdateMessageLabels]
+            Label or labels to remove from every message.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[BatchUpdateMessagesResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/batch-update",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "message_ids": message_ids,
+                "add_labels": convert_and_respect_annotation_metadata(
+                    object_=add_labels, annotation=UpdateMessageLabels, direction="write"
+                ),
+                "remove_labels": convert_and_respect_annotation_metadata(
+                    object_=remove_labels, annotation=UpdateMessageLabels, direction="write"
+                ),
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    BatchUpdateMessagesResponse,
+                    construct_type(
+                        type_=BatchUpdateMessagesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1504,6 +1593,93 @@ class AsyncRawMessagesClient:
                     BatchGetMessagesResponse,
                     construct_type(
                         type_=BatchGetMessagesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def batch_update(
+        self,
+        inbox_id: InboxId,
+        *,
+        message_ids: BatchUpdateMessagesMessageIds,
+        add_labels: typing.Optional[UpdateMessageLabels] = OMIT,
+        remove_labels: typing.Optional[UpdateMessageLabels] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[BatchUpdateMessagesResponse]:
+        """
+        Apply one label change to up to 50 messages in a single request. The
+        same add_labels and remove_labels apply to every message id, and at
+        least one of them must be provided. The update is atomic: either all
+        resolved messages are updated or none are. Missing or restricted ids
+        are silently excluded; compare `count` against `limit` to detect
+        exclusions.
+
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages batch-update --inbox-id <inbox_id> --message-id <id1> --message-id <id2> --add-label read --remove-label unread
+        ```
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_ids : BatchUpdateMessagesMessageIds
+
+        add_labels : typing.Optional[UpdateMessageLabels]
+            Label or labels to add to every message.
+
+        remove_labels : typing.Optional[UpdateMessageLabels]
+            Label or labels to remove from every message.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[BatchUpdateMessagesResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/batch-update",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "message_ids": message_ids,
+                "add_labels": convert_and_respect_annotation_metadata(
+                    object_=add_labels, annotation=UpdateMessageLabels, direction="write"
+                ),
+                "remove_labels": convert_and_respect_annotation_metadata(
+                    object_=remove_labels, annotation=UpdateMessageLabels, direction="write"
+                ),
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    BatchUpdateMessagesResponse,
+                    construct_type(
+                        type_=BatchUpdateMessagesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

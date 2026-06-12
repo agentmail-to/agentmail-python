@@ -8,6 +8,8 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...messages.types.batch_get_messages_message_ids import BatchGetMessagesMessageIds
 from ...messages.types.batch_get_messages_response import BatchGetMessagesResponse
+from ...messages.types.batch_update_messages_message_ids import BatchUpdateMessagesMessageIds
+from ...messages.types.batch_update_messages_response import BatchUpdateMessagesResponse
 from ...messages.types.list_messages_response import ListMessagesResponse
 from ...messages.types.message import Message
 from ...messages.types.message_html import MessageHtml
@@ -302,6 +304,68 @@ class MessagesClient:
         )
         """
         _response = self._raw_client.batch_get(inbox_id, message_ids=message_ids, request_options=request_options)
+        return _response.data
+
+    def batch_update(
+        self,
+        inbox_id: InboxId,
+        *,
+        message_ids: BatchUpdateMessagesMessageIds,
+        add_labels: typing.Optional[UpdateMessageLabels] = OMIT,
+        remove_labels: typing.Optional[UpdateMessageLabels] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> BatchUpdateMessagesResponse:
+        """
+        Apply one label change to up to 50 messages in a single request. The
+        same add_labels and remove_labels apply to every message id, and at
+        least one of them must be provided. The update is atomic: either all
+        resolved messages are updated or none are. Missing or restricted ids
+        are silently excluded; compare `count` against `limit` to detect
+        exclusions.
+
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages batch-update --inbox-id <inbox_id> --message-id <id1> --message-id <id2> --add-label read --remove-label unread
+        ```
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_ids : BatchUpdateMessagesMessageIds
+
+        add_labels : typing.Optional[UpdateMessageLabels]
+            Label or labels to add to every message.
+
+        remove_labels : typing.Optional[UpdateMessageLabels]
+            Label or labels to remove from every message.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        BatchUpdateMessagesResponse
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.inboxes.messages.batch_update(
+            inbox_id="inbox_id",
+            message_ids=["message_ids", "message_ids"],
+        )
+        """
+        _response = self._raw_client.batch_update(
+            inbox_id,
+            message_ids=message_ids,
+            add_labels=add_labels,
+            remove_labels=remove_labels,
+            request_options=request_options,
+        )
         return _response.data
 
     def get_attachment(
@@ -1087,6 +1151,76 @@ class AsyncMessagesClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.batch_get(inbox_id, message_ids=message_ids, request_options=request_options)
+        return _response.data
+
+    async def batch_update(
+        self,
+        inbox_id: InboxId,
+        *,
+        message_ids: BatchUpdateMessagesMessageIds,
+        add_labels: typing.Optional[UpdateMessageLabels] = OMIT,
+        remove_labels: typing.Optional[UpdateMessageLabels] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> BatchUpdateMessagesResponse:
+        """
+        Apply one label change to up to 50 messages in a single request. The
+        same add_labels and remove_labels apply to every message id, and at
+        least one of them must be provided. The update is atomic: either all
+        resolved messages are updated or none are. Missing or restricted ids
+        are silently excluded; compare `count` against `limit` to detect
+        exclusions.
+
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages batch-update --inbox-id <inbox_id> --message-id <id1> --message-id <id2> --add-label read --remove-label unread
+        ```
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_ids : BatchUpdateMessagesMessageIds
+
+        add_labels : typing.Optional[UpdateMessageLabels]
+            Label or labels to add to every message.
+
+        remove_labels : typing.Optional[UpdateMessageLabels]
+            Label or labels to remove from every message.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        BatchUpdateMessagesResponse
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.inboxes.messages.batch_update(
+                inbox_id="inbox_id",
+                message_ids=["message_ids", "message_ids"],
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.batch_update(
+            inbox_id,
+            message_ids=message_ids,
+            add_labels=add_labels,
+            remove_labels=remove_labels,
+            request_options=request_options,
+        )
         return _response.data
 
     async def get_attachment(

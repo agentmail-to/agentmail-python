@@ -11,7 +11,9 @@ from .types.metric_event_types import MetricEventTypes
 from .types.metric_limit import MetricLimit
 from .types.period import Period
 from .types.query_metrics_response import QueryMetricsResponse
+from .types.query_usage_response import QueryUsageResponse
 from .types.start import Start
+from .types.usage_types import UsageTypes
 
 
 class MetricsClient:
@@ -29,7 +31,7 @@ class MetricsClient:
         """
         return self._raw_client
 
-    def query(
+    def query_events(
         self,
         *,
         event_types: typing.Optional[MetricEventTypes] = None,
@@ -41,6 +43,12 @@ class MetricsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> QueryMetricsResponse:
         """
+        Counts of email events (sent, delivered, bounced, etc.) over time for
+        the organization. Defaults to the last 24 hours; `start` must be within
+        the last 90 days, and a future `end` is clamped to now. Omit `period`
+        for individual event counts, or set it to sum counts into buckets of
+        that many seconds.
+
         **CLI:**
         ```bash
         agentmail metrics list
@@ -74,10 +82,69 @@ class MetricsClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.metrics.query()
+        client.metrics.query_events()
         """
-        _response = self._raw_client.query(
+        _response = self._raw_client.query_events(
             event_types=event_types,
+            start=start,
+            end=end,
+            period=period,
+            limit=limit,
+            descending=descending,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def query_usage(
+        self,
+        *,
+        usage_types: typing.Optional[UsageTypes] = None,
+        start: typing.Optional[Start] = None,
+        end: typing.Optional[End] = None,
+        period: typing.Optional[Period] = None,
+        limit: typing.Optional[MetricLimit] = None,
+        descending: typing.Optional[Descending] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> QueryUsageResponse:
+        """
+        Cumulative usage series for the organization. Each point is the running
+        total of the usage type at that timestamp, not the change within the
+        bucket. Defaults to the last 24 hours; `start` must be within the last
+        90 days, and a future `end` is clamped to now. The range divided by
+        `period` must not exceed 1000 buckets.
+
+        Parameters
+        ----------
+        usage_types : typing.Optional[UsageTypes]
+
+        start : typing.Optional[Start]
+
+        end : typing.Optional[End]
+
+        period : typing.Optional[Period]
+
+        limit : typing.Optional[MetricLimit]
+
+        descending : typing.Optional[Descending]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        QueryUsageResponse
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.metrics.query_usage()
+        """
+        _response = self._raw_client.query_usage(
+            usage_types=usage_types,
             start=start,
             end=end,
             period=period,
@@ -103,7 +170,7 @@ class AsyncMetricsClient:
         """
         return self._raw_client
 
-    async def query(
+    async def query_events(
         self,
         *,
         event_types: typing.Optional[MetricEventTypes] = None,
@@ -115,6 +182,12 @@ class AsyncMetricsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> QueryMetricsResponse:
         """
+        Counts of email events (sent, delivered, bounced, etc.) over time for
+        the organization. Defaults to the last 24 hours; `start` must be within
+        the last 90 days, and a future `end` is clamped to now. Omit `period`
+        for individual event counts, or set it to sum counts into buckets of
+        that many seconds.
+
         **CLI:**
         ```bash
         agentmail metrics list
@@ -153,13 +226,80 @@ class AsyncMetricsClient:
 
 
         async def main() -> None:
-            await client.metrics.query()
+            await client.metrics.query_events()
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.query(
+        _response = await self._raw_client.query_events(
             event_types=event_types,
+            start=start,
+            end=end,
+            period=period,
+            limit=limit,
+            descending=descending,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def query_usage(
+        self,
+        *,
+        usage_types: typing.Optional[UsageTypes] = None,
+        start: typing.Optional[Start] = None,
+        end: typing.Optional[End] = None,
+        period: typing.Optional[Period] = None,
+        limit: typing.Optional[MetricLimit] = None,
+        descending: typing.Optional[Descending] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> QueryUsageResponse:
+        """
+        Cumulative usage series for the organization. Each point is the running
+        total of the usage type at that timestamp, not the change within the
+        bucket. Defaults to the last 24 hours; `start` must be within the last
+        90 days, and a future `end` is clamped to now. The range divided by
+        `period` must not exceed 1000 buckets.
+
+        Parameters
+        ----------
+        usage_types : typing.Optional[UsageTypes]
+
+        start : typing.Optional[Start]
+
+        end : typing.Optional[End]
+
+        period : typing.Optional[Period]
+
+        limit : typing.Optional[MetricLimit]
+
+        descending : typing.Optional[Descending]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        QueryUsageResponse
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.metrics.query_usage()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.query_usage(
+            usage_types=usage_types,
             start=start,
             end=end,
             period=period,

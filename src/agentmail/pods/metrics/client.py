@@ -10,7 +10,9 @@ from ...metrics.types.metric_event_types import MetricEventTypes
 from ...metrics.types.metric_limit import MetricLimit
 from ...metrics.types.period import Period
 from ...metrics.types.query_metrics_response import QueryMetricsResponse
+from ...metrics.types.query_usage_response import QueryUsageResponse
 from ...metrics.types.start import Start
+from ...metrics.types.usage_types import UsageTypes
 from ..types.pod_id import PodId
 from .raw_client import AsyncRawMetricsClient, RawMetricsClient
 
@@ -30,7 +32,7 @@ class MetricsClient:
         """
         return self._raw_client
 
-    def query(
+    def query_events(
         self,
         pod_id: PodId,
         *,
@@ -43,6 +45,12 @@ class MetricsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> QueryMetricsResponse:
         """
+        Counts of email events (sent, delivered, bounced, etc.) over time for
+        the pod. Defaults to the last 24 hours; `start` must be within the last
+        90 days, and a future `end` is clamped to now. Omit `period` for
+        individual event counts, or set it to sum counts into buckets of that
+        many seconds.
+
         **CLI:**
         ```bash
         agentmail pods:metrics query --pod-id <pod_id>
@@ -78,13 +86,80 @@ class MetricsClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.pods.metrics.query(
+        client.pods.metrics.query_events(
             pod_id="pod_id",
         )
         """
-        _response = self._raw_client.query(
+        _response = self._raw_client.query_events(
             pod_id,
             event_types=event_types,
+            start=start,
+            end=end,
+            period=period,
+            limit=limit,
+            descending=descending,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def query_usage(
+        self,
+        pod_id: PodId,
+        *,
+        usage_types: typing.Optional[UsageTypes] = None,
+        start: typing.Optional[Start] = None,
+        end: typing.Optional[End] = None,
+        period: typing.Optional[Period] = None,
+        limit: typing.Optional[MetricLimit] = None,
+        descending: typing.Optional[Descending] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> QueryUsageResponse:
+        """
+        Cumulative usage series for the pod. Each point is the running total of
+        the usage type at that timestamp, not the change within the bucket.
+        Pod-scoped queries carry every usage type except `pod_count`; requested
+        types that don't apply to the scope are ignored. Defaults to the last
+        24 hours; `start` must be within the last 90 days, and a future `end`
+        is clamped to now. The range divided by `period` must not exceed 1000
+        buckets.
+
+        Parameters
+        ----------
+        pod_id : PodId
+
+        usage_types : typing.Optional[UsageTypes]
+
+        start : typing.Optional[Start]
+
+        end : typing.Optional[End]
+
+        period : typing.Optional[Period]
+
+        limit : typing.Optional[MetricLimit]
+
+        descending : typing.Optional[Descending]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        QueryUsageResponse
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.pods.metrics.query_usage(
+            pod_id="pod_id",
+        )
+        """
+        _response = self._raw_client.query_usage(
+            pod_id,
+            usage_types=usage_types,
             start=start,
             end=end,
             period=period,
@@ -110,7 +185,7 @@ class AsyncMetricsClient:
         """
         return self._raw_client
 
-    async def query(
+    async def query_events(
         self,
         pod_id: PodId,
         *,
@@ -123,6 +198,12 @@ class AsyncMetricsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> QueryMetricsResponse:
         """
+        Counts of email events (sent, delivered, bounced, etc.) over time for
+        the pod. Defaults to the last 24 hours; `start` must be within the last
+        90 days, and a future `end` is clamped to now. Omit `period` for
+        individual event counts, or set it to sum counts into buckets of that
+        many seconds.
+
         **CLI:**
         ```bash
         agentmail pods:metrics query --pod-id <pod_id>
@@ -163,16 +244,91 @@ class AsyncMetricsClient:
 
 
         async def main() -> None:
-            await client.pods.metrics.query(
+            await client.pods.metrics.query_events(
                 pod_id="pod_id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.query(
+        _response = await self._raw_client.query_events(
             pod_id,
             event_types=event_types,
+            start=start,
+            end=end,
+            period=period,
+            limit=limit,
+            descending=descending,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def query_usage(
+        self,
+        pod_id: PodId,
+        *,
+        usage_types: typing.Optional[UsageTypes] = None,
+        start: typing.Optional[Start] = None,
+        end: typing.Optional[End] = None,
+        period: typing.Optional[Period] = None,
+        limit: typing.Optional[MetricLimit] = None,
+        descending: typing.Optional[Descending] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> QueryUsageResponse:
+        """
+        Cumulative usage series for the pod. Each point is the running total of
+        the usage type at that timestamp, not the change within the bucket.
+        Pod-scoped queries carry every usage type except `pod_count`; requested
+        types that don't apply to the scope are ignored. Defaults to the last
+        24 hours; `start` must be within the last 90 days, and a future `end`
+        is clamped to now. The range divided by `period` must not exceed 1000
+        buckets.
+
+        Parameters
+        ----------
+        pod_id : PodId
+
+        usage_types : typing.Optional[UsageTypes]
+
+        start : typing.Optional[Start]
+
+        end : typing.Optional[End]
+
+        period : typing.Optional[Period]
+
+        limit : typing.Optional[MetricLimit]
+
+        descending : typing.Optional[Descending]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        QueryUsageResponse
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.pods.metrics.query_usage(
+                pod_id="pod_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.query_usage(
+            pod_id,
+            usage_types=usage_types,
             start=start,
             end=end,
             period=period,

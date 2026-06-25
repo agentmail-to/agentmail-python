@@ -4,20 +4,18 @@ import typing
 
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
-from ...events.types.pod_ids import PodIds
-from .update_pod_webhook_request import UpdatePodWebhookRequest
+from ...events.types.inbox_ids import InboxIds
+from .create_inbox_webhook_request import CreateInboxWebhookRequest
 
 
-class UpdateWebhookRequest(UpdatePodWebhookRequest):
-    add_pod_ids: typing.Optional[PodIds] = pydantic.Field(default=None)
+class CreatePodWebhookRequest(CreateInboxWebhookRequest):
     """
-    Pod IDs to subscribe to the webhook.
+    Create a webhook scoped to a pod. The pod comes from the path, so `pod_ids` is not accepted.
+    Optionally pass `inbox_ids` to narrow the webhook to specific inboxes within the pod; omit to
+    receive events for the whole pod.
     """
 
-    remove_pod_ids: typing.Optional[PodIds] = pydantic.Field(default=None)
-    """
-    Pod IDs to unsubscribe from the webhook.
-    """
+    inbox_ids: typing.Optional[InboxIds] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

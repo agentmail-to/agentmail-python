@@ -7,16 +7,28 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .client_id import ClientId
+    from .create_inbox_webhook_request import CreateInboxWebhookRequest
+    from .create_pod_webhook_request import CreatePodWebhookRequest
+    from .create_webhook_event_types import CreateWebhookEventTypes
     from .create_webhook_request import CreateWebhookRequest
     from .list_webhooks_response import ListWebhooksResponse
+    from .update_inbox_webhook_request import UpdateInboxWebhookRequest
+    from .update_pod_webhook_request import UpdatePodWebhookRequest
+    from .update_webhook_event_types import UpdateWebhookEventTypes
     from .update_webhook_request import UpdateWebhookRequest
     from .url import Url
     from .webhook import Webhook
     from .webhook_id import WebhookId
 _dynamic_imports: typing.Dict[str, str] = {
     "ClientId": ".client_id",
+    "CreateInboxWebhookRequest": ".create_inbox_webhook_request",
+    "CreatePodWebhookRequest": ".create_pod_webhook_request",
+    "CreateWebhookEventTypes": ".create_webhook_event_types",
     "CreateWebhookRequest": ".create_webhook_request",
     "ListWebhooksResponse": ".list_webhooks_response",
+    "UpdateInboxWebhookRequest": ".update_inbox_webhook_request",
+    "UpdatePodWebhookRequest": ".update_pod_webhook_request",
+    "UpdateWebhookEventTypes": ".update_webhook_event_types",
     "UpdateWebhookRequest": ".update_webhook_request",
     "Url": ".url",
     "Webhook": ".webhook",
@@ -47,8 +59,14 @@ def __dir__():
 
 __all__ = [
     "ClientId",
+    "CreateInboxWebhookRequest",
+    "CreatePodWebhookRequest",
+    "CreateWebhookEventTypes",
     "CreateWebhookRequest",
     "ListWebhooksResponse",
+    "UpdateInboxWebhookRequest",
+    "UpdatePodWebhookRequest",
+    "UpdateWebhookEventTypes",
     "UpdateWebhookRequest",
     "Url",
     "Webhook",

@@ -2,21 +2,20 @@
 
 import typing
 
-from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.request_options import RequestOptions
-from ..events.types.inbox_ids import InboxIds
-from ..events.types.pod_ids import PodIds
-from ..types.ascending import Ascending
-from ..types.limit import Limit
-from ..types.page_token import PageToken
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.request_options import RequestOptions
+from ...types.ascending import Ascending
+from ...types.limit import Limit
+from ...types.page_token import PageToken
+from ...webhooks.types.client_id import ClientId
+from ...webhooks.types.create_webhook_event_types import CreateWebhookEventTypes
+from ...webhooks.types.list_webhooks_response import ListWebhooksResponse
+from ...webhooks.types.update_webhook_event_types import UpdateWebhookEventTypes
+from ...webhooks.types.url import Url
+from ...webhooks.types.webhook import Webhook
+from ...webhooks.types.webhook_id import WebhookId
+from ..types.inbox_id import InboxId
 from .raw_client import AsyncRawWebhooksClient, RawWebhooksClient
-from .types.client_id import ClientId
-from .types.create_webhook_event_types import CreateWebhookEventTypes
-from .types.list_webhooks_response import ListWebhooksResponse
-from .types.update_webhook_event_types import UpdateWebhookEventTypes
-from .types.url import Url
-from .types.webhook import Webhook
-from .types.webhook_id import WebhookId
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -39,6 +38,7 @@ class WebhooksClient:
 
     def list(
         self,
+        inbox_id: InboxId,
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
@@ -48,11 +48,13 @@ class WebhooksClient:
         """
         **CLI:**
         ```bash
-        agentmail webhooks list
+        agentmail inboxes:webhooks list --inbox-id <inbox_id>
         ```
 
         Parameters
         ----------
+        inbox_id : InboxId
+
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
@@ -73,22 +75,28 @@ class WebhooksClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.webhooks.list()
+        client.inboxes.webhooks.list(
+            inbox_id="inbox_id",
+        )
         """
         _response = self._raw_client.list(
-            limit=limit, page_token=page_token, ascending=ascending, request_options=request_options
+            inbox_id, limit=limit, page_token=page_token, ascending=ascending, request_options=request_options
         )
         return _response.data
 
-    def get(self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None) -> Webhook:
+    def get(
+        self, inbox_id: InboxId, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> Webhook:
         """
         **CLI:**
         ```bash
-        agentmail webhooks get --webhook-id <webhook_id>
+        agentmail inboxes:webhooks get --inbox-id <inbox_id> --webhook-id <webhook_id>
         ```
 
         Parameters
         ----------
+        inbox_id : InboxId
+
         webhook_id : WebhookId
 
         request_options : typing.Optional[RequestOptions]
@@ -105,38 +113,38 @@ class WebhooksClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.webhooks.get(
+        client.inboxes.webhooks.get(
+            inbox_id="inbox_id",
             webhook_id="webhook_id",
         )
         """
-        _response = self._raw_client.get(webhook_id, request_options=request_options)
+        _response = self._raw_client.get(inbox_id, webhook_id, request_options=request_options)
         return _response.data
 
     def create(
         self,
+        inbox_id: InboxId,
         *,
         url: Url,
         event_types: CreateWebhookEventTypes,
-        pod_ids: typing.Optional[PodIds] = OMIT,
-        inbox_ids: typing.Optional[InboxIds] = OMIT,
         client_id: typing.Optional[ClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Webhook:
         """
+        Create a webhook scoped to this inbox.
+
         **CLI:**
         ```bash
-        agentmail webhooks create --url https://example.com/webhook --event-type message.received
+        agentmail inboxes:webhooks create --inbox-id <inbox_id> --url https://example.com/webhook --event-type message.received
         ```
 
         Parameters
         ----------
+        inbox_id : InboxId
+
         url : Url
 
         event_types : CreateWebhookEventTypes
-
-        pod_ids : typing.Optional[PodIds]
-
-        inbox_ids : typing.Optional[InboxIds]
 
         client_id : typing.Optional[ClientId]
 
@@ -154,56 +162,36 @@ class WebhooksClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.webhooks.create(
+        client.inboxes.webhooks.create(
+            inbox_id="inbox_id",
             url="url",
             event_types=["message.received", "message.received"],
         )
         """
         _response = self._raw_client.create(
-            url=url,
-            event_types=event_types,
-            pod_ids=pod_ids,
-            inbox_ids=inbox_ids,
-            client_id=client_id,
-            request_options=request_options,
+            inbox_id, url=url, event_types=event_types, client_id=client_id, request_options=request_options
         )
         return _response.data
 
     def update(
         self,
+        inbox_id: InboxId,
         webhook_id: WebhookId,
         *,
-        add_pod_ids: typing.Optional[PodIds] = OMIT,
-        remove_pod_ids: typing.Optional[PodIds] = OMIT,
-        add_inbox_ids: typing.Optional[InboxIds] = OMIT,
-        remove_inbox_ids: typing.Optional[InboxIds] = OMIT,
         event_types: typing.Optional[UpdateWebhookEventTypes] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Webhook:
         """
-        Update inbox or pod subscriptions, or replace the webhook's `event_types` in full when you pass a
-        non-empty `event_types` array (see request field docs). Inbox and pod changes use add/remove lists.
-
         **CLI:**
         ```bash
-        agentmail webhooks update --webhook-id <webhook_id> --add-inbox-id <inbox_id>
+        agentmail inboxes:webhooks update --inbox-id <inbox_id> --webhook-id <webhook_id> --event-type message.received
         ```
 
         Parameters
         ----------
+        inbox_id : InboxId
+
         webhook_id : WebhookId
-
-        add_pod_ids : typing.Optional[PodIds]
-            Pod IDs to subscribe to the webhook.
-
-        remove_pod_ids : typing.Optional[PodIds]
-            Pod IDs to unsubscribe from the webhook.
-
-        add_inbox_ids : typing.Optional[InboxIds]
-            Inbox IDs to subscribe to the webhook.
-
-        remove_inbox_ids : typing.Optional[InboxIds]
-            Inbox IDs to unsubscribe from the webhook.
 
         event_types : typing.Optional[UpdateWebhookEventTypes]
 
@@ -221,30 +209,29 @@ class WebhooksClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.webhooks.update(
+        client.inboxes.webhooks.update(
+            inbox_id="inbox_id",
             webhook_id="webhook_id",
         )
         """
         _response = self._raw_client.update(
-            webhook_id,
-            add_pod_ids=add_pod_ids,
-            remove_pod_ids=remove_pod_ids,
-            add_inbox_ids=add_inbox_ids,
-            remove_inbox_ids=remove_inbox_ids,
-            event_types=event_types,
-            request_options=request_options,
+            inbox_id, webhook_id, event_types=event_types, request_options=request_options
         )
         return _response.data
 
-    def delete(self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def delete(
+        self, inbox_id: InboxId, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         **CLI:**
         ```bash
-        agentmail webhooks delete --webhook-id <webhook_id>
+        agentmail inboxes:webhooks delete --inbox-id <inbox_id> --webhook-id <webhook_id>
         ```
 
         Parameters
         ----------
+        inbox_id : InboxId
+
         webhook_id : WebhookId
 
         request_options : typing.Optional[RequestOptions]
@@ -261,11 +248,12 @@ class WebhooksClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.webhooks.delete(
+        client.inboxes.webhooks.delete(
+            inbox_id="inbox_id",
             webhook_id="webhook_id",
         )
         """
-        _response = self._raw_client.delete(webhook_id, request_options=request_options)
+        _response = self._raw_client.delete(inbox_id, webhook_id, request_options=request_options)
         return _response.data
 
 
@@ -286,6 +274,7 @@ class AsyncWebhooksClient:
 
     async def list(
         self,
+        inbox_id: InboxId,
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
@@ -295,11 +284,13 @@ class AsyncWebhooksClient:
         """
         **CLI:**
         ```bash
-        agentmail webhooks list
+        agentmail inboxes:webhooks list --inbox-id <inbox_id>
         ```
 
         Parameters
         ----------
+        inbox_id : InboxId
+
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
@@ -325,25 +316,31 @@ class AsyncWebhooksClient:
 
 
         async def main() -> None:
-            await client.webhooks.list()
+            await client.inboxes.webhooks.list(
+                inbox_id="inbox_id",
+            )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.list(
-            limit=limit, page_token=page_token, ascending=ascending, request_options=request_options
+            inbox_id, limit=limit, page_token=page_token, ascending=ascending, request_options=request_options
         )
         return _response.data
 
-    async def get(self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None) -> Webhook:
+    async def get(
+        self, inbox_id: InboxId, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> Webhook:
         """
         **CLI:**
         ```bash
-        agentmail webhooks get --webhook-id <webhook_id>
+        agentmail inboxes:webhooks get --inbox-id <inbox_id> --webhook-id <webhook_id>
         ```
 
         Parameters
         ----------
+        inbox_id : InboxId
+
         webhook_id : WebhookId
 
         request_options : typing.Optional[RequestOptions]
@@ -365,41 +362,41 @@ class AsyncWebhooksClient:
 
 
         async def main() -> None:
-            await client.webhooks.get(
+            await client.inboxes.webhooks.get(
+                inbox_id="inbox_id",
                 webhook_id="webhook_id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(webhook_id, request_options=request_options)
+        _response = await self._raw_client.get(inbox_id, webhook_id, request_options=request_options)
         return _response.data
 
     async def create(
         self,
+        inbox_id: InboxId,
         *,
         url: Url,
         event_types: CreateWebhookEventTypes,
-        pod_ids: typing.Optional[PodIds] = OMIT,
-        inbox_ids: typing.Optional[InboxIds] = OMIT,
         client_id: typing.Optional[ClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Webhook:
         """
+        Create a webhook scoped to this inbox.
+
         **CLI:**
         ```bash
-        agentmail webhooks create --url https://example.com/webhook --event-type message.received
+        agentmail inboxes:webhooks create --inbox-id <inbox_id> --url https://example.com/webhook --event-type message.received
         ```
 
         Parameters
         ----------
+        inbox_id : InboxId
+
         url : Url
 
         event_types : CreateWebhookEventTypes
-
-        pod_ids : typing.Optional[PodIds]
-
-        inbox_ids : typing.Optional[InboxIds]
 
         client_id : typing.Optional[ClientId]
 
@@ -422,7 +419,8 @@ class AsyncWebhooksClient:
 
 
         async def main() -> None:
-            await client.webhooks.create(
+            await client.inboxes.webhooks.create(
+                inbox_id="inbox_id",
                 url="url",
                 event_types=["message.received", "message.received"],
             )
@@ -431,50 +429,29 @@ class AsyncWebhooksClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.create(
-            url=url,
-            event_types=event_types,
-            pod_ids=pod_ids,
-            inbox_ids=inbox_ids,
-            client_id=client_id,
-            request_options=request_options,
+            inbox_id, url=url, event_types=event_types, client_id=client_id, request_options=request_options
         )
         return _response.data
 
     async def update(
         self,
+        inbox_id: InboxId,
         webhook_id: WebhookId,
         *,
-        add_pod_ids: typing.Optional[PodIds] = OMIT,
-        remove_pod_ids: typing.Optional[PodIds] = OMIT,
-        add_inbox_ids: typing.Optional[InboxIds] = OMIT,
-        remove_inbox_ids: typing.Optional[InboxIds] = OMIT,
         event_types: typing.Optional[UpdateWebhookEventTypes] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Webhook:
         """
-        Update inbox or pod subscriptions, or replace the webhook's `event_types` in full when you pass a
-        non-empty `event_types` array (see request field docs). Inbox and pod changes use add/remove lists.
-
         **CLI:**
         ```bash
-        agentmail webhooks update --webhook-id <webhook_id> --add-inbox-id <inbox_id>
+        agentmail inboxes:webhooks update --inbox-id <inbox_id> --webhook-id <webhook_id> --event-type message.received
         ```
 
         Parameters
         ----------
+        inbox_id : InboxId
+
         webhook_id : WebhookId
-
-        add_pod_ids : typing.Optional[PodIds]
-            Pod IDs to subscribe to the webhook.
-
-        remove_pod_ids : typing.Optional[PodIds]
-            Pod IDs to unsubscribe from the webhook.
-
-        add_inbox_ids : typing.Optional[InboxIds]
-            Inbox IDs to subscribe to the webhook.
-
-        remove_inbox_ids : typing.Optional[InboxIds]
-            Inbox IDs to unsubscribe from the webhook.
 
         event_types : typing.Optional[UpdateWebhookEventTypes]
 
@@ -497,7 +474,8 @@ class AsyncWebhooksClient:
 
 
         async def main() -> None:
-            await client.webhooks.update(
+            await client.inboxes.webhooks.update(
+                inbox_id="inbox_id",
                 webhook_id="webhook_id",
             )
 
@@ -505,25 +483,23 @@ class AsyncWebhooksClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.update(
-            webhook_id,
-            add_pod_ids=add_pod_ids,
-            remove_pod_ids=remove_pod_ids,
-            add_inbox_ids=add_inbox_ids,
-            remove_inbox_ids=remove_inbox_ids,
-            event_types=event_types,
-            request_options=request_options,
+            inbox_id, webhook_id, event_types=event_types, request_options=request_options
         )
         return _response.data
 
-    async def delete(self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
+    async def delete(
+        self, inbox_id: InboxId, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         **CLI:**
         ```bash
-        agentmail webhooks delete --webhook-id <webhook_id>
+        agentmail inboxes:webhooks delete --inbox-id <inbox_id> --webhook-id <webhook_id>
         ```
 
         Parameters
         ----------
+        inbox_id : InboxId
+
         webhook_id : WebhookId
 
         request_options : typing.Optional[RequestOptions]
@@ -545,12 +521,13 @@ class AsyncWebhooksClient:
 
 
         async def main() -> None:
-            await client.webhooks.delete(
+            await client.inboxes.webhooks.delete(
+                inbox_id="inbox_id",
                 webhook_id="webhook_id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.delete(webhook_id, request_options=request_options)
+        _response = await self._raw_client.delete(inbox_id, webhook_id, request_options=request_options)
         return _response.data

@@ -25,6 +25,7 @@ if typing.TYPE_CHECKING:
     from .messages.client import AsyncMessagesClient, MessagesClient
     from .metrics.client import AsyncMetricsClient, MetricsClient
     from .threads.client import AsyncThreadsClient, ThreadsClient
+    from .webhooks.client import AsyncWebhooksClient, WebhooksClient
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
@@ -36,6 +37,7 @@ class InboxesClient:
         self._threads: typing.Optional[ThreadsClient] = None
         self._messages: typing.Optional[MessagesClient] = None
         self._drafts: typing.Optional[DraftsClient] = None
+        self._webhooks: typing.Optional[WebhooksClient] = None
         self._lists: typing.Optional[ListsClient] = None
         self._metrics: typing.Optional[MetricsClient] = None
         self._events: typing.Optional[EventsClient] = None
@@ -270,6 +272,14 @@ class InboxesClient:
         return self._drafts
 
     @property
+    def webhooks(self):
+        if self._webhooks is None:
+            from .webhooks.client import WebhooksClient  # noqa: E402
+
+            self._webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
+        return self._webhooks
+
+    @property
     def lists(self):
         if self._lists is None:
             from .lists.client import ListsClient  # noqa: E402
@@ -309,6 +319,7 @@ class AsyncInboxesClient:
         self._threads: typing.Optional[AsyncThreadsClient] = None
         self._messages: typing.Optional[AsyncMessagesClient] = None
         self._drafts: typing.Optional[AsyncDraftsClient] = None
+        self._webhooks: typing.Optional[AsyncWebhooksClient] = None
         self._lists: typing.Optional[AsyncListsClient] = None
         self._metrics: typing.Optional[AsyncMetricsClient] = None
         self._events: typing.Optional[AsyncEventsClient] = None
@@ -581,6 +592,14 @@ class AsyncInboxesClient:
 
             self._drafts = AsyncDraftsClient(client_wrapper=self._client_wrapper)
         return self._drafts
+
+    @property
+    def webhooks(self):
+        if self._webhooks is None:
+            from .webhooks.client import AsyncWebhooksClient  # noqa: E402
+
+            self._webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
+        return self._webhooks
 
     @property
     def lists(self):

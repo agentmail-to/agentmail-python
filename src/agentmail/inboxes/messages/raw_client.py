@@ -5,6 +5,7 @@ from json.decoder import JSONDecodeError
 
 from ...attachments.types.attachment_id import AttachmentId
 from ...attachments.types.attachment_response import AttachmentResponse
+from ...attachments.types.send_attachment import SendAttachment
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.datetime_utils import serialize_datetime
@@ -14,6 +15,18 @@ from ...core.parse_error import ParsingError
 from ...core.request_options import RequestOptions
 from ...core.serialization import convert_and_respect_annotation_metadata
 from ...core.unchecked_base_model import construct_type
+from ...drafts.types.draft import Draft
+from ...drafts.types.draft_bcc import DraftBcc
+from ...drafts.types.draft_cc import DraftCc
+from ...drafts.types.draft_client_id import DraftClientId
+from ...drafts.types.draft_html import DraftHtml
+from ...drafts.types.draft_labels import DraftLabels
+from ...drafts.types.draft_reply_all import DraftReplyAll
+from ...drafts.types.draft_reply_to import DraftReplyTo
+from ...drafts.types.draft_send_at import DraftSendAt
+from ...drafts.types.draft_subject import DraftSubject
+from ...drafts.types.draft_text import DraftText
+from ...drafts.types.draft_to import DraftTo
 from ...errors.not_found_error import NotFoundError
 from ...errors.validation_error import ValidationError as errors_validation_error_ValidationError
 from ...messages.errors.message_rejected_error import MessageRejectedError
@@ -1270,6 +1283,379 @@ class RawMessagesClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def draft_reply(
+        self,
+        inbox_id: InboxId,
+        message_id: MessageId,
+        *,
+        labels: typing.Optional[DraftLabels] = OMIT,
+        reply_to: typing.Optional[DraftReplyTo] = OMIT,
+        to: typing.Optional[DraftTo] = OMIT,
+        cc: typing.Optional[DraftCc] = OMIT,
+        bcc: typing.Optional[DraftBcc] = OMIT,
+        reply_all: typing.Optional[DraftReplyAll] = OMIT,
+        subject: typing.Optional[DraftSubject] = OMIT,
+        text: typing.Optional[DraftText] = OMIT,
+        html: typing.Optional[DraftHtml] = OMIT,
+        attachments: typing.Optional[typing.Sequence[SendAttachment]] = OMIT,
+        send_at: typing.Optional[DraftSendAt] = OMIT,
+        client_id: typing.Optional[DraftClientId] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[Draft]:
+        """
+        Create a draft that replies to a message instead of sending it. The
+        recipients, subject, and threading are derived from the source message.
+        Send it later with `Send Draft`.
+
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages draft-reply --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+        ```
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_id : MessageId
+
+        labels : typing.Optional[DraftLabels]
+
+        reply_to : typing.Optional[DraftReplyTo]
+
+        to : typing.Optional[DraftTo]
+
+        cc : typing.Optional[DraftCc]
+
+        bcc : typing.Optional[DraftBcc]
+
+        reply_all : typing.Optional[DraftReplyAll]
+
+        subject : typing.Optional[DraftSubject]
+
+        text : typing.Optional[DraftText]
+
+        html : typing.Optional[DraftHtml]
+
+        attachments : typing.Optional[typing.Sequence[SendAttachment]]
+            Attachments to include in draft.
+
+        send_at : typing.Optional[DraftSendAt]
+
+        client_id : typing.Optional[DraftClientId]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[Draft]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}/draft-reply",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "labels": labels,
+                "reply_to": reply_to,
+                "to": to,
+                "cc": cc,
+                "bcc": bcc,
+                "reply_all": reply_all,
+                "subject": subject,
+                "text": text,
+                "html": html,
+                "attachments": convert_and_respect_annotation_metadata(
+                    object_=attachments, annotation=typing.Sequence[SendAttachment], direction="write"
+                ),
+                "send_at": send_at,
+                "client_id": client_id,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Draft,
+                    construct_type(
+                        type_=Draft,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def draft_reply_all(
+        self,
+        inbox_id: InboxId,
+        message_id: MessageId,
+        *,
+        labels: typing.Optional[DraftLabels] = OMIT,
+        reply_to: typing.Optional[DraftReplyTo] = OMIT,
+        subject: typing.Optional[DraftSubject] = OMIT,
+        text: typing.Optional[DraftText] = OMIT,
+        html: typing.Optional[DraftHtml] = OMIT,
+        attachments: typing.Optional[typing.Sequence[SendAttachment]] = OMIT,
+        send_at: typing.Optional[DraftSendAt] = OMIT,
+        client_id: typing.Optional[DraftClientId] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[Draft]:
+        """
+        Create a draft that replies to every recipient of a message instead of
+        sending it. Recipients, subject, and threading are derived from the
+        source message. Send it later with `Send Draft`.
+
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages draft-reply-all --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+        ```
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_id : MessageId
+
+        labels : typing.Optional[DraftLabels]
+
+        reply_to : typing.Optional[DraftReplyTo]
+
+        subject : typing.Optional[DraftSubject]
+
+        text : typing.Optional[DraftText]
+
+        html : typing.Optional[DraftHtml]
+
+        attachments : typing.Optional[typing.Sequence[SendAttachment]]
+            Attachments to include in draft.
+
+        send_at : typing.Optional[DraftSendAt]
+
+        client_id : typing.Optional[DraftClientId]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[Draft]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}/draft-reply-all",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "labels": labels,
+                "reply_to": reply_to,
+                "subject": subject,
+                "text": text,
+                "html": html,
+                "attachments": convert_and_respect_annotation_metadata(
+                    object_=attachments, annotation=typing.Sequence[SendAttachment], direction="write"
+                ),
+                "send_at": send_at,
+                "client_id": client_id,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Draft,
+                    construct_type(
+                        type_=Draft,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def draft_forward(
+        self,
+        inbox_id: InboxId,
+        message_id: MessageId,
+        *,
+        labels: typing.Optional[DraftLabels] = OMIT,
+        reply_to: typing.Optional[DraftReplyTo] = OMIT,
+        to: typing.Optional[DraftTo] = OMIT,
+        cc: typing.Optional[DraftCc] = OMIT,
+        bcc: typing.Optional[DraftBcc] = OMIT,
+        subject: typing.Optional[DraftSubject] = OMIT,
+        text: typing.Optional[DraftText] = OMIT,
+        html: typing.Optional[DraftHtml] = OMIT,
+        attachments: typing.Optional[typing.Sequence[SendAttachment]] = OMIT,
+        send_at: typing.Optional[DraftSendAt] = OMIT,
+        client_id: typing.Optional[DraftClientId] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[Draft]:
+        """
+        Create a draft that forwards a message instead of sending it. The subject
+        and threading are derived from the source message, whose body and
+        attachments are merged in at send time. Send it later with `Send Draft`.
+
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages draft-forward --inbox-id <inbox_id> --message-id <message_id> --to recipient@example.com
+        ```
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_id : MessageId
+
+        labels : typing.Optional[DraftLabels]
+
+        reply_to : typing.Optional[DraftReplyTo]
+
+        to : typing.Optional[DraftTo]
+
+        cc : typing.Optional[DraftCc]
+
+        bcc : typing.Optional[DraftBcc]
+
+        subject : typing.Optional[DraftSubject]
+
+        text : typing.Optional[DraftText]
+
+        html : typing.Optional[DraftHtml]
+
+        attachments : typing.Optional[typing.Sequence[SendAttachment]]
+            Attachments to include in draft.
+
+        send_at : typing.Optional[DraftSendAt]
+
+        client_id : typing.Optional[DraftClientId]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[Draft]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}/draft-forward",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "labels": labels,
+                "reply_to": reply_to,
+                "to": to,
+                "cc": cc,
+                "bcc": bcc,
+                "subject": subject,
+                "text": text,
+                "html": html,
+                "attachments": convert_and_respect_annotation_metadata(
+                    object_=attachments, annotation=typing.Sequence[SendAttachment], direction="write"
+                ),
+                "send_at": send_at,
+                "client_id": client_id,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Draft,
+                    construct_type(
+                        type_=Draft,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawMessagesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -2463,6 +2849,379 @@ class AsyncRawMessagesClient:
                 )
             if _response.status_code == 403:
                 raise MessageRejectedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def draft_reply(
+        self,
+        inbox_id: InboxId,
+        message_id: MessageId,
+        *,
+        labels: typing.Optional[DraftLabels] = OMIT,
+        reply_to: typing.Optional[DraftReplyTo] = OMIT,
+        to: typing.Optional[DraftTo] = OMIT,
+        cc: typing.Optional[DraftCc] = OMIT,
+        bcc: typing.Optional[DraftBcc] = OMIT,
+        reply_all: typing.Optional[DraftReplyAll] = OMIT,
+        subject: typing.Optional[DraftSubject] = OMIT,
+        text: typing.Optional[DraftText] = OMIT,
+        html: typing.Optional[DraftHtml] = OMIT,
+        attachments: typing.Optional[typing.Sequence[SendAttachment]] = OMIT,
+        send_at: typing.Optional[DraftSendAt] = OMIT,
+        client_id: typing.Optional[DraftClientId] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[Draft]:
+        """
+        Create a draft that replies to a message instead of sending it. The
+        recipients, subject, and threading are derived from the source message.
+        Send it later with `Send Draft`.
+
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages draft-reply --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+        ```
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_id : MessageId
+
+        labels : typing.Optional[DraftLabels]
+
+        reply_to : typing.Optional[DraftReplyTo]
+
+        to : typing.Optional[DraftTo]
+
+        cc : typing.Optional[DraftCc]
+
+        bcc : typing.Optional[DraftBcc]
+
+        reply_all : typing.Optional[DraftReplyAll]
+
+        subject : typing.Optional[DraftSubject]
+
+        text : typing.Optional[DraftText]
+
+        html : typing.Optional[DraftHtml]
+
+        attachments : typing.Optional[typing.Sequence[SendAttachment]]
+            Attachments to include in draft.
+
+        send_at : typing.Optional[DraftSendAt]
+
+        client_id : typing.Optional[DraftClientId]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[Draft]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}/draft-reply",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "labels": labels,
+                "reply_to": reply_to,
+                "to": to,
+                "cc": cc,
+                "bcc": bcc,
+                "reply_all": reply_all,
+                "subject": subject,
+                "text": text,
+                "html": html,
+                "attachments": convert_and_respect_annotation_metadata(
+                    object_=attachments, annotation=typing.Sequence[SendAttachment], direction="write"
+                ),
+                "send_at": send_at,
+                "client_id": client_id,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Draft,
+                    construct_type(
+                        type_=Draft,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def draft_reply_all(
+        self,
+        inbox_id: InboxId,
+        message_id: MessageId,
+        *,
+        labels: typing.Optional[DraftLabels] = OMIT,
+        reply_to: typing.Optional[DraftReplyTo] = OMIT,
+        subject: typing.Optional[DraftSubject] = OMIT,
+        text: typing.Optional[DraftText] = OMIT,
+        html: typing.Optional[DraftHtml] = OMIT,
+        attachments: typing.Optional[typing.Sequence[SendAttachment]] = OMIT,
+        send_at: typing.Optional[DraftSendAt] = OMIT,
+        client_id: typing.Optional[DraftClientId] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[Draft]:
+        """
+        Create a draft that replies to every recipient of a message instead of
+        sending it. Recipients, subject, and threading are derived from the
+        source message. Send it later with `Send Draft`.
+
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages draft-reply-all --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+        ```
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_id : MessageId
+
+        labels : typing.Optional[DraftLabels]
+
+        reply_to : typing.Optional[DraftReplyTo]
+
+        subject : typing.Optional[DraftSubject]
+
+        text : typing.Optional[DraftText]
+
+        html : typing.Optional[DraftHtml]
+
+        attachments : typing.Optional[typing.Sequence[SendAttachment]]
+            Attachments to include in draft.
+
+        send_at : typing.Optional[DraftSendAt]
+
+        client_id : typing.Optional[DraftClientId]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[Draft]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}/draft-reply-all",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "labels": labels,
+                "reply_to": reply_to,
+                "subject": subject,
+                "text": text,
+                "html": html,
+                "attachments": convert_and_respect_annotation_metadata(
+                    object_=attachments, annotation=typing.Sequence[SendAttachment], direction="write"
+                ),
+                "send_at": send_at,
+                "client_id": client_id,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Draft,
+                    construct_type(
+                        type_=Draft,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def draft_forward(
+        self,
+        inbox_id: InboxId,
+        message_id: MessageId,
+        *,
+        labels: typing.Optional[DraftLabels] = OMIT,
+        reply_to: typing.Optional[DraftReplyTo] = OMIT,
+        to: typing.Optional[DraftTo] = OMIT,
+        cc: typing.Optional[DraftCc] = OMIT,
+        bcc: typing.Optional[DraftBcc] = OMIT,
+        subject: typing.Optional[DraftSubject] = OMIT,
+        text: typing.Optional[DraftText] = OMIT,
+        html: typing.Optional[DraftHtml] = OMIT,
+        attachments: typing.Optional[typing.Sequence[SendAttachment]] = OMIT,
+        send_at: typing.Optional[DraftSendAt] = OMIT,
+        client_id: typing.Optional[DraftClientId] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[Draft]:
+        """
+        Create a draft that forwards a message instead of sending it. The subject
+        and threading are derived from the source message, whose body and
+        attachments are merged in at send time. Send it later with `Send Draft`.
+
+        **CLI:**
+        ```bash
+        agentmail inboxes:messages draft-forward --inbox-id <inbox_id> --message-id <message_id> --to recipient@example.com
+        ```
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_id : MessageId
+
+        labels : typing.Optional[DraftLabels]
+
+        reply_to : typing.Optional[DraftReplyTo]
+
+        to : typing.Optional[DraftTo]
+
+        cc : typing.Optional[DraftCc]
+
+        bcc : typing.Optional[DraftBcc]
+
+        subject : typing.Optional[DraftSubject]
+
+        text : typing.Optional[DraftText]
+
+        html : typing.Optional[DraftHtml]
+
+        attachments : typing.Optional[typing.Sequence[SendAttachment]]
+            Attachments to include in draft.
+
+        send_at : typing.Optional[DraftSendAt]
+
+        client_id : typing.Optional[DraftClientId]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[Draft]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}/draft-forward",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "labels": labels,
+                "reply_to": reply_to,
+                "to": to,
+                "cc": cc,
+                "bcc": bcc,
+                "subject": subject,
+                "text": text,
+                "html": html,
+                "attachments": convert_and_respect_annotation_metadata(
+                    object_=attachments, annotation=typing.Sequence[SendAttachment], direction="write"
+                ),
+                "send_at": send_at,
+                "client_id": client_id,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Draft,
+                    construct_type(
+                        type_=Draft,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,

@@ -6,18 +6,23 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .create_draft_forward_request import CreateDraftForwardRequest
+    from .create_draft_reply_all_request import CreateDraftReplyAllRequest
+    from .create_draft_reply_request import CreateDraftReplyRequest
     from .create_draft_request import CreateDraftRequest
     from .draft import Draft
     from .draft_attachments import DraftAttachments
     from .draft_bcc import DraftBcc
     from .draft_cc import DraftCc
     from .draft_client_id import DraftClientId
+    from .draft_forward_of import DraftForwardOf
     from .draft_html import DraftHtml
     from .draft_id import DraftId
     from .draft_in_reply_to import DraftInReplyTo
     from .draft_item import DraftItem
     from .draft_labels import DraftLabels
     from .draft_preview import DraftPreview
+    from .draft_reply_all import DraftReplyAll
     from .draft_reply_to import DraftReplyTo
     from .draft_send_at import DraftSendAt
     from .draft_send_status import DraftSendStatus
@@ -28,18 +33,23 @@ if typing.TYPE_CHECKING:
     from .list_drafts_response import ListDraftsResponse
     from .update_draft_request import UpdateDraftRequest
 _dynamic_imports: typing.Dict[str, str] = {
+    "CreateDraftForwardRequest": ".create_draft_forward_request",
+    "CreateDraftReplyAllRequest": ".create_draft_reply_all_request",
+    "CreateDraftReplyRequest": ".create_draft_reply_request",
     "CreateDraftRequest": ".create_draft_request",
     "Draft": ".draft",
     "DraftAttachments": ".draft_attachments",
     "DraftBcc": ".draft_bcc",
     "DraftCc": ".draft_cc",
     "DraftClientId": ".draft_client_id",
+    "DraftForwardOf": ".draft_forward_of",
     "DraftHtml": ".draft_html",
     "DraftId": ".draft_id",
     "DraftInReplyTo": ".draft_in_reply_to",
     "DraftItem": ".draft_item",
     "DraftLabels": ".draft_labels",
     "DraftPreview": ".draft_preview",
+    "DraftReplyAll": ".draft_reply_all",
     "DraftReplyTo": ".draft_reply_to",
     "DraftSendAt": ".draft_send_at",
     "DraftSendStatus": ".draft_send_status",
@@ -74,18 +84,23 @@ def __dir__():
 
 
 __all__ = [
+    "CreateDraftForwardRequest",
+    "CreateDraftReplyAllRequest",
+    "CreateDraftReplyRequest",
     "CreateDraftRequest",
     "Draft",
     "DraftAttachments",
     "DraftBcc",
     "DraftCc",
     "DraftClientId",
+    "DraftForwardOf",
     "DraftHtml",
     "DraftId",
     "DraftInReplyTo",
     "DraftItem",
     "DraftLabels",
     "DraftPreview",
+    "DraftReplyAll",
     "DraftReplyTo",
     "DraftSendAt",
     "DraftSendStatus",

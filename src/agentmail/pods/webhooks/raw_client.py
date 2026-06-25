@@ -3,29 +3,29 @@
 import typing
 from json.decoder import JSONDecodeError
 
-from ..core.api_error import ApiError
-from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.http_response import AsyncHttpResponse, HttpResponse
-from ..core.jsonable_encoder import jsonable_encoder
-from ..core.parse_error import ParsingError
-from ..core.request_options import RequestOptions
-from ..core.unchecked_base_model import construct_type
-from ..errors.not_found_error import NotFoundError
-from ..errors.validation_error import ValidationError as errors_validation_error_ValidationError
-from ..events.types.inbox_ids import InboxIds
-from ..events.types.pod_ids import PodIds
-from ..types.ascending import Ascending
-from ..types.error_response import ErrorResponse
-from ..types.limit import Limit
-from ..types.page_token import PageToken
-from ..types.validation_error_response import ValidationErrorResponse
-from .types.client_id import ClientId
-from .types.create_webhook_event_types import CreateWebhookEventTypes
-from .types.list_webhooks_response import ListWebhooksResponse
-from .types.update_webhook_event_types import UpdateWebhookEventTypes
-from .types.url import Url
-from .types.webhook import Webhook
-from .types.webhook_id import WebhookId
+from ...core.api_error import ApiError
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.http_response import AsyncHttpResponse, HttpResponse
+from ...core.jsonable_encoder import jsonable_encoder
+from ...core.parse_error import ParsingError
+from ...core.request_options import RequestOptions
+from ...core.unchecked_base_model import construct_type
+from ...errors.not_found_error import NotFoundError
+from ...errors.validation_error import ValidationError as errors_validation_error_ValidationError
+from ...events.types.inbox_ids import InboxIds
+from ...types.ascending import Ascending
+from ...types.error_response import ErrorResponse
+from ...types.limit import Limit
+from ...types.page_token import PageToken
+from ...types.validation_error_response import ValidationErrorResponse
+from ...webhooks.types.client_id import ClientId
+from ...webhooks.types.create_webhook_event_types import CreateWebhookEventTypes
+from ...webhooks.types.list_webhooks_response import ListWebhooksResponse
+from ...webhooks.types.update_webhook_event_types import UpdateWebhookEventTypes
+from ...webhooks.types.url import Url
+from ...webhooks.types.webhook import Webhook
+from ...webhooks.types.webhook_id import WebhookId
+from ..types.pod_id import PodId
 from pydantic import ValidationError as pydantic_ValidationError
 
 # this is used as the default value for optional parameters
@@ -38,6 +38,7 @@ class RawWebhooksClient:
 
     def list(
         self,
+        pod_id: PodId,
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
@@ -47,11 +48,13 @@ class RawWebhooksClient:
         """
         **CLI:**
         ```bash
-        agentmail webhooks list
+        agentmail pods:webhooks list --pod-id <pod_id>
         ```
 
         Parameters
         ----------
+        pod_id : PodId
+
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
@@ -66,7 +69,7 @@ class RawWebhooksClient:
         HttpResponse[ListWebhooksResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v0/webhooks",
+            f"v0/pods/{jsonable_encoder(pod_id)}/webhooks",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
@@ -96,16 +99,18 @@ class RawWebhooksClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
-        self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None
+        self, pod_id: PodId, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Webhook]:
         """
         **CLI:**
         ```bash
-        agentmail webhooks get --webhook-id <webhook_id>
+        agentmail pods:webhooks get --pod-id <pod_id> --webhook-id <webhook_id>
         ```
 
         Parameters
         ----------
+        pod_id : PodId
+
         webhook_id : WebhookId
 
         request_options : typing.Optional[RequestOptions]
@@ -116,7 +121,7 @@ class RawWebhooksClient:
         HttpResponse[Webhook]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/webhooks/{jsonable_encoder(webhook_id)}",
+            f"v0/pods/{jsonable_encoder(pod_id)}/webhooks/{jsonable_encoder(webhook_id)}",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
@@ -153,27 +158,29 @@ class RawWebhooksClient:
 
     def create(
         self,
+        pod_id: PodId,
         *,
         url: Url,
         event_types: CreateWebhookEventTypes,
-        pod_ids: typing.Optional[PodIds] = OMIT,
         inbox_ids: typing.Optional[InboxIds] = OMIT,
         client_id: typing.Optional[ClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Webhook]:
         """
+        Create a webhook scoped to this pod.
+
         **CLI:**
         ```bash
-        agentmail webhooks create --url https://example.com/webhook --event-type message.received
+        agentmail pods:webhooks create --pod-id <pod_id> --url https://example.com/webhook --event-type message.received
         ```
 
         Parameters
         ----------
+        pod_id : PodId
+
         url : Url
 
         event_types : CreateWebhookEventTypes
-
-        pod_ids : typing.Optional[PodIds]
 
         inbox_ids : typing.Optional[InboxIds]
 
@@ -187,11 +194,10 @@ class RawWebhooksClient:
         HttpResponse[Webhook]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v0/webhooks",
+            f"v0/pods/{jsonable_encoder(pod_id)}/webhooks",
             base_url=self._client_wrapper.get_environment().http,
             method="POST",
             json={
-                "pod_ids": pod_ids,
                 "inbox_ids": inbox_ids,
                 "url": url,
                 "event_types": event_types,
@@ -232,33 +238,25 @@ class RawWebhooksClient:
 
     def update(
         self,
+        pod_id: PodId,
         webhook_id: WebhookId,
         *,
-        add_pod_ids: typing.Optional[PodIds] = OMIT,
-        remove_pod_ids: typing.Optional[PodIds] = OMIT,
         add_inbox_ids: typing.Optional[InboxIds] = OMIT,
         remove_inbox_ids: typing.Optional[InboxIds] = OMIT,
         event_types: typing.Optional[UpdateWebhookEventTypes] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Webhook]:
         """
-        Update inbox or pod subscriptions, or replace the webhook's `event_types` in full when you pass a
-        non-empty `event_types` array (see request field docs). Inbox and pod changes use add/remove lists.
-
         **CLI:**
         ```bash
-        agentmail webhooks update --webhook-id <webhook_id> --add-inbox-id <inbox_id>
+        agentmail pods:webhooks update --pod-id <pod_id> --webhook-id <webhook_id> --add-inbox-id <inbox_id>
         ```
 
         Parameters
         ----------
+        pod_id : PodId
+
         webhook_id : WebhookId
-
-        add_pod_ids : typing.Optional[PodIds]
-            Pod IDs to subscribe to the webhook.
-
-        remove_pod_ids : typing.Optional[PodIds]
-            Pod IDs to unsubscribe from the webhook.
 
         add_inbox_ids : typing.Optional[InboxIds]
             Inbox IDs to subscribe to the webhook.
@@ -276,12 +274,10 @@ class RawWebhooksClient:
         HttpResponse[Webhook]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/webhooks/{jsonable_encoder(webhook_id)}",
+            f"v0/pods/{jsonable_encoder(pod_id)}/webhooks/{jsonable_encoder(webhook_id)}",
             base_url=self._client_wrapper.get_environment().http,
             method="PATCH",
             json={
-                "add_pod_ids": add_pod_ids,
-                "remove_pod_ids": remove_pod_ids,
                 "add_inbox_ids": add_inbox_ids,
                 "remove_inbox_ids": remove_inbox_ids,
                 "event_types": event_types,
@@ -331,16 +327,18 @@ class RawWebhooksClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
-        self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None
+        self, pod_id: PodId, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
         **CLI:**
         ```bash
-        agentmail webhooks delete --webhook-id <webhook_id>
+        agentmail pods:webhooks delete --pod-id <pod_id> --webhook-id <webhook_id>
         ```
 
         Parameters
         ----------
+        pod_id : PodId
+
         webhook_id : WebhookId
 
         request_options : typing.Optional[RequestOptions]
@@ -351,7 +349,7 @@ class RawWebhooksClient:
         HttpResponse[None]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/webhooks/{jsonable_encoder(webhook_id)}",
+            f"v0/pods/{jsonable_encoder(pod_id)}/webhooks/{jsonable_encoder(webhook_id)}",
             base_url=self._client_wrapper.get_environment().http,
             method="DELETE",
             request_options=request_options,
@@ -386,6 +384,7 @@ class AsyncRawWebhooksClient:
 
     async def list(
         self,
+        pod_id: PodId,
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
@@ -395,11 +394,13 @@ class AsyncRawWebhooksClient:
         """
         **CLI:**
         ```bash
-        agentmail webhooks list
+        agentmail pods:webhooks list --pod-id <pod_id>
         ```
 
         Parameters
         ----------
+        pod_id : PodId
+
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
@@ -414,7 +415,7 @@ class AsyncRawWebhooksClient:
         AsyncHttpResponse[ListWebhooksResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v0/webhooks",
+            f"v0/pods/{jsonable_encoder(pod_id)}/webhooks",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
@@ -444,16 +445,18 @@ class AsyncRawWebhooksClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None
+        self, pod_id: PodId, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Webhook]:
         """
         **CLI:**
         ```bash
-        agentmail webhooks get --webhook-id <webhook_id>
+        agentmail pods:webhooks get --pod-id <pod_id> --webhook-id <webhook_id>
         ```
 
         Parameters
         ----------
+        pod_id : PodId
+
         webhook_id : WebhookId
 
         request_options : typing.Optional[RequestOptions]
@@ -464,7 +467,7 @@ class AsyncRawWebhooksClient:
         AsyncHttpResponse[Webhook]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/webhooks/{jsonable_encoder(webhook_id)}",
+            f"v0/pods/{jsonable_encoder(pod_id)}/webhooks/{jsonable_encoder(webhook_id)}",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
@@ -501,27 +504,29 @@ class AsyncRawWebhooksClient:
 
     async def create(
         self,
+        pod_id: PodId,
         *,
         url: Url,
         event_types: CreateWebhookEventTypes,
-        pod_ids: typing.Optional[PodIds] = OMIT,
         inbox_ids: typing.Optional[InboxIds] = OMIT,
         client_id: typing.Optional[ClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Webhook]:
         """
+        Create a webhook scoped to this pod.
+
         **CLI:**
         ```bash
-        agentmail webhooks create --url https://example.com/webhook --event-type message.received
+        agentmail pods:webhooks create --pod-id <pod_id> --url https://example.com/webhook --event-type message.received
         ```
 
         Parameters
         ----------
+        pod_id : PodId
+
         url : Url
 
         event_types : CreateWebhookEventTypes
-
-        pod_ids : typing.Optional[PodIds]
 
         inbox_ids : typing.Optional[InboxIds]
 
@@ -535,11 +540,10 @@ class AsyncRawWebhooksClient:
         AsyncHttpResponse[Webhook]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v0/webhooks",
+            f"v0/pods/{jsonable_encoder(pod_id)}/webhooks",
             base_url=self._client_wrapper.get_environment().http,
             method="POST",
             json={
-                "pod_ids": pod_ids,
                 "inbox_ids": inbox_ids,
                 "url": url,
                 "event_types": event_types,
@@ -580,33 +584,25 @@ class AsyncRawWebhooksClient:
 
     async def update(
         self,
+        pod_id: PodId,
         webhook_id: WebhookId,
         *,
-        add_pod_ids: typing.Optional[PodIds] = OMIT,
-        remove_pod_ids: typing.Optional[PodIds] = OMIT,
         add_inbox_ids: typing.Optional[InboxIds] = OMIT,
         remove_inbox_ids: typing.Optional[InboxIds] = OMIT,
         event_types: typing.Optional[UpdateWebhookEventTypes] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Webhook]:
         """
-        Update inbox or pod subscriptions, or replace the webhook's `event_types` in full when you pass a
-        non-empty `event_types` array (see request field docs). Inbox and pod changes use add/remove lists.
-
         **CLI:**
         ```bash
-        agentmail webhooks update --webhook-id <webhook_id> --add-inbox-id <inbox_id>
+        agentmail pods:webhooks update --pod-id <pod_id> --webhook-id <webhook_id> --add-inbox-id <inbox_id>
         ```
 
         Parameters
         ----------
+        pod_id : PodId
+
         webhook_id : WebhookId
-
-        add_pod_ids : typing.Optional[PodIds]
-            Pod IDs to subscribe to the webhook.
-
-        remove_pod_ids : typing.Optional[PodIds]
-            Pod IDs to unsubscribe from the webhook.
 
         add_inbox_ids : typing.Optional[InboxIds]
             Inbox IDs to subscribe to the webhook.
@@ -624,12 +620,10 @@ class AsyncRawWebhooksClient:
         AsyncHttpResponse[Webhook]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/webhooks/{jsonable_encoder(webhook_id)}",
+            f"v0/pods/{jsonable_encoder(pod_id)}/webhooks/{jsonable_encoder(webhook_id)}",
             base_url=self._client_wrapper.get_environment().http,
             method="PATCH",
             json={
-                "add_pod_ids": add_pod_ids,
-                "remove_pod_ids": remove_pod_ids,
                 "add_inbox_ids": add_inbox_ids,
                 "remove_inbox_ids": remove_inbox_ids,
                 "event_types": event_types,
@@ -679,16 +673,18 @@ class AsyncRawWebhooksClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
-        self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None
+        self, pod_id: PodId, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
         **CLI:**
         ```bash
-        agentmail webhooks delete --webhook-id <webhook_id>
+        agentmail pods:webhooks delete --pod-id <pod_id> --webhook-id <webhook_id>
         ```
 
         Parameters
         ----------
+        pod_id : PodId
+
         webhook_id : WebhookId
 
         request_options : typing.Optional[RequestOptions]
@@ -699,7 +695,7 @@ class AsyncRawWebhooksClient:
         AsyncHttpResponse[None]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/webhooks/{jsonable_encoder(webhook_id)}",
+            f"v0/pods/{jsonable_encoder(pod_id)}/webhooks/{jsonable_encoder(webhook_id)}",
             base_url=self._client_wrapper.get_environment().http,
             method="DELETE",
             request_options=request_options,

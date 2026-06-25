@@ -9,6 +9,7 @@ from ...inboxes.types.inbox_id import InboxId
 from .draft_attachments import DraftAttachments
 from .draft_bcc import DraftBcc
 from .draft_cc import DraftCc
+from .draft_forward_of import DraftForwardOf
 from .draft_id import DraftId
 from .draft_in_reply_to import DraftInReplyTo
 from .draft_labels import DraftLabels
@@ -31,6 +32,7 @@ class DraftItem(UncheckedBaseModel):
     preview: typing.Optional[DraftPreview] = None
     attachments: typing.Optional[DraftAttachments] = None
     in_reply_to: typing.Optional[DraftInReplyTo] = None
+    forward_of: typing.Optional[DraftForwardOf] = None
     send_status: typing.Optional[DraftSendStatus] = None
     send_at: typing.Optional[DraftSendAt] = None
     updated_at: DraftUpdatedAt

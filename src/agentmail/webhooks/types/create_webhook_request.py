@@ -4,26 +4,12 @@ import typing
 
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
-from ...core.unchecked_base_model import UncheckedBaseModel
-from ...events.types.event_types import EventTypes
-from ...events.types.inbox_ids import InboxIds
 from ...events.types.pod_ids import PodIds
-from .client_id import ClientId
-from .url import Url
+from .create_pod_webhook_request import CreatePodWebhookRequest
 
 
-class CreateWebhookRequest(UncheckedBaseModel):
-    url: Url
-    event_types: EventTypes = pydantic.Field()
-    """
-    Full list of event types this webhook should receive. At least one type is required. Send every type you
-    want in this array (not incremental). See [Webhooks overview](https://docs.agentmail.to/webhooks-overview)
-    for spam, blocked, and unauthenticated events and required permissions.
-    """
-
+class CreateWebhookRequest(CreatePodWebhookRequest):
     pod_ids: typing.Optional[PodIds] = None
-    inbox_ids: typing.Optional[InboxIds] = None
-    client_id: typing.Optional[ClientId] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

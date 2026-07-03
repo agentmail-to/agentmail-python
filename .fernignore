@@ -2,3 +2,8 @@
 
 src/agentmail/core/query_encoder.py
 tests/utils/test_query_encoding.py
+
+# Frozen to preserve the Idempotency-Key auto-mint patch (see idempotency.py).
+src/agentmail/core/idempotency.py
+src/agentmail/core/http_client.py
+tests/utils/test_idempotency.py

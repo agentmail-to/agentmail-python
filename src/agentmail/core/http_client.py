@@ -11,6 +11,7 @@ from random import random
 import httpx
 from .file import File, convert_file_dict_to_httpx_tuples
 from .force_multipart import FORCE_MULTIPART
+from .idempotency import maybe_mint_idempotency_key
 from .jsonable_encoder import jsonable_encoder
 from .logging import LogConfig, Logger, create_logger
 from .query_encoder import encode_query
@@ -304,6 +305,20 @@ class HttpClient:
         omit: typing.Optional[typing.Any] = None,
         force_multipart: typing.Optional[bool] = None,
     ) -> httpx.Response:
+        # Auto-mint an Idempotency-Key for send endpoints. This runs ONCE per
+        # logical call (retries == 0, before the retry recursion below) so every
+        # internal retry reuses the same key. The minted key is stored on the
+        # `headers` local, which is re-passed as headers=headers in the recursion.
+        if retries == 0:
+            _minted_headers = maybe_mint_idempotency_key(
+                method=method,
+                path=path,
+                headers=headers,
+                additional_headers=(request_options.get("additional_headers") if request_options is not None else None),
+            )
+            if _minted_headers is not None:
+                headers = _minted_headers
+
         base_url = self.get_base_url(base_url)
         timeout = (
             request_options.get("timeout_in_seconds")
@@ -564,6 +579,20 @@ class AsyncHttpClient:
         omit: typing.Optional[typing.Any] = None,
         force_multipart: typing.Optional[bool] = None,
     ) -> httpx.Response:
+        # Auto-mint an Idempotency-Key for send endpoints. This runs ONCE per
+        # logical call (retries == 0, before the retry recursion below) so every
+        # internal retry reuses the same key. The minted key is stored on the
+        # `headers` local, which is re-passed as headers=headers in the recursion.
+        if retries == 0:
+            _minted_headers = maybe_mint_idempotency_key(
+                method=method,
+                path=path,
+                headers=headers,
+                additional_headers=(request_options.get("additional_headers") if request_options is not None else None),
+            )
+            if _minted_headers is not None:
+                headers = _minted_headers
+
         base_url = self.get_base_url(base_url)
         timeout = (
             request_options.get("timeout_in_seconds")

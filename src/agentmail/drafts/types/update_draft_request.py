@@ -3,11 +3,14 @@
 import typing
 
 import pydantic
+from ...attachments.types.attachment_id import AttachmentId
+from ...attachments.types.send_attachment import SendAttachment
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from .draft_bcc import DraftBcc
 from .draft_cc import DraftCc
 from .draft_html import DraftHtml
+from .draft_labels import DraftLabels
 from .draft_reply_to import DraftReplyTo
 from .draft_send_at import DraftSendAt
 from .draft_subject import DraftSubject
@@ -16,6 +19,13 @@ from .draft_to import DraftTo
 
 
 class UpdateDraftRequest(UncheckedBaseModel):
+    """
+    Edit fields on an existing draft. A draft's kind (plain, reply, or forward)
+    is fixed at creation and cannot be changed here. Omitting a field leaves it
+    unchanged; passing `null` (or `[]` for a recipient field) clears it. Pass
+    `send_at` to schedule or reschedule the draft, or `null` to un-schedule it.
+    """
+
     reply_to: typing.Optional[DraftReplyTo] = None
     to: typing.Optional[DraftTo] = None
     cc: typing.Optional[DraftCc] = None
@@ -23,6 +33,26 @@ class UpdateDraftRequest(UncheckedBaseModel):
     subject: typing.Optional[DraftSubject] = None
     text: typing.Optional[DraftText] = None
     html: typing.Optional[DraftHtml] = None
+    add_attachments: typing.Optional[typing.List[SendAttachment]] = pydantic.Field(default=None)
+    """
+    Attachments to add to the draft.
+    """
+
+    remove_attachments: typing.Optional[typing.List[AttachmentId]] = pydantic.Field(default=None)
+    """
+    IDs of attachments to remove from the draft.
+    """
+
+    add_labels: typing.Optional[DraftLabels] = pydantic.Field(default=None)
+    """
+    Label or labels to add to the draft.
+    """
+
+    remove_labels: typing.Optional[DraftLabels] = pydantic.Field(default=None)
+    """
+    Label or labels to remove from the draft.
+    """
+
     send_at: typing.Optional[DraftSendAt] = None
 
     if IS_PYDANTIC_V2:

@@ -19,16 +19,19 @@ from ...drafts.types.draft import Draft
 from ...drafts.types.draft_bcc import DraftBcc
 from ...drafts.types.draft_cc import DraftCc
 from ...drafts.types.draft_client_id import DraftClientId
+from ...drafts.types.draft_forward_of import DraftForwardOf
 from ...drafts.types.draft_html import DraftHtml
 from ...drafts.types.draft_id import DraftId
 from ...drafts.types.draft_in_reply_to import DraftInReplyTo
 from ...drafts.types.draft_labels import DraftLabels
+from ...drafts.types.draft_reply_all import DraftReplyAll
 from ...drafts.types.draft_reply_to import DraftReplyTo
 from ...drafts.types.draft_send_at import DraftSendAt
 from ...drafts.types.draft_subject import DraftSubject
 from ...drafts.types.draft_text import DraftText
 from ...drafts.types.draft_to import DraftTo
 from ...drafts.types.list_drafts_response import ListDraftsResponse
+from ...errors.conflict_error import ConflictError
 from ...errors.not_found_error import NotFoundError
 from ...errors.validation_error import ValidationError as errors_validation_error_ValidationError
 from ...messages.errors.message_rejected_error import MessageRejectedError
@@ -275,11 +278,19 @@ class RawDraftsClient:
         html: typing.Optional[DraftHtml] = OMIT,
         attachments: typing.Optional[typing.Sequence[SendAttachment]] = OMIT,
         in_reply_to: typing.Optional[DraftInReplyTo] = OMIT,
+        forward_of: typing.Optional[DraftForwardOf] = OMIT,
+        reply_all: typing.Optional[DraftReplyAll] = OMIT,
         send_at: typing.Optional[DraftSendAt] = OMIT,
         client_id: typing.Optional[DraftClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Draft]:
         """
+        Create a draft. Supply `in_reply_to` to create a reply draft (with
+        `reply_all` to address the whole thread), whose recipients, subject, and
+        threading are derived from the referenced message, or `forward_of` to
+        create a forward draft, which derives the subject, threading, and
+        forwarded content from the source but keeps recipients caller-supplied.
+
         **CLI:**
         ```bash
         agentmail inboxes:drafts create --inbox-id <inbox_id> --to recipient@example.com --subject "Draft subject" --text "Draft body"
@@ -310,6 +321,10 @@ class RawDraftsClient:
 
         in_reply_to : typing.Optional[DraftInReplyTo]
 
+        forward_of : typing.Optional[DraftForwardOf]
+
+        reply_all : typing.Optional[DraftReplyAll]
+
         send_at : typing.Optional[DraftSendAt]
 
         client_id : typing.Optional[DraftClientId]
@@ -338,6 +353,8 @@ class RawDraftsClient:
                     object_=attachments, annotation=typing.Sequence[SendAttachment], direction="write"
                 ),
                 "in_reply_to": in_reply_to,
+                "forward_of": forward_of,
+                "reply_all": reply_all,
                 "send_at": send_at,
                 "client_id": client_id,
             },
@@ -354,6 +371,17 @@ class RawDraftsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 404:
                 raise NotFoundError(
                     headers=dict(_response.headers),
@@ -386,10 +414,18 @@ class RawDraftsClient:
         subject: typing.Optional[DraftSubject] = OMIT,
         text: typing.Optional[DraftText] = OMIT,
         html: typing.Optional[DraftHtml] = OMIT,
+        add_attachments: typing.Optional[typing.Sequence[SendAttachment]] = OMIT,
+        remove_attachments: typing.Optional[typing.Sequence[AttachmentId]] = OMIT,
+        add_labels: typing.Optional[DraftLabels] = OMIT,
+        remove_labels: typing.Optional[DraftLabels] = OMIT,
         send_at: typing.Optional[DraftSendAt] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Draft]:
         """
+        Edit fields on an existing draft. Passing `null` clears a field (or `[]`
+        for a recipient field); `send_at: null` un-schedules a scheduled draft.
+        A draft that is already being sent cannot be edited.
+
         **CLI:**
         ```bash
         agentmail inboxes:drafts update --inbox-id <inbox_id> --draft-id <draft_id> --subject "Updated subject"
@@ -415,6 +451,18 @@ class RawDraftsClient:
 
         html : typing.Optional[DraftHtml]
 
+        add_attachments : typing.Optional[typing.Sequence[SendAttachment]]
+            Attachments to add to the draft.
+
+        remove_attachments : typing.Optional[typing.Sequence[AttachmentId]]
+            IDs of attachments to remove from the draft.
+
+        add_labels : typing.Optional[DraftLabels]
+            Label or labels to add to the draft.
+
+        remove_labels : typing.Optional[DraftLabels]
+            Label or labels to remove from the draft.
+
         send_at : typing.Optional[DraftSendAt]
 
         request_options : typing.Optional[RequestOptions]
@@ -436,6 +484,12 @@ class RawDraftsClient:
                 "subject": subject,
                 "text": text,
                 "html": html,
+                "add_attachments": convert_and_respect_annotation_metadata(
+                    object_=add_attachments, annotation=typing.Sequence[SendAttachment], direction="write"
+                ),
+                "remove_attachments": remove_attachments,
+                "add_labels": add_labels,
+                "remove_labels": remove_labels,
                 "send_at": send_at,
             },
             request_options=request_options,
@@ -451,8 +505,30 @@ class RawDraftsClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 404:
                 raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
@@ -529,6 +605,7 @@ class RawDraftsClient:
         *,
         add_labels: typing.Optional[UpdateMessageLabels] = OMIT,
         remove_labels: typing.Optional[UpdateMessageLabels] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SendMessageResponse]:
         """
@@ -549,6 +626,9 @@ class RawDraftsClient:
         remove_labels : typing.Optional[UpdateMessageLabels]
             Label or labels to remove from message.
 
+        idempotency_key : typing.Optional[str]
+            Unique key that makes a send idempotent. A retry carrying the same key returns the original message instead of sending a second email; reusing a key with a different request — different message content, a different sending inbox, or a different send endpoint — returns a 409 conflict. Keys expire 24 hours after the send completes.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -567,6 +647,9 @@ class RawDraftsClient:
                 "remove_labels": convert_and_respect_annotation_metadata(
                     object_=remove_labels, annotation=UpdateMessageLabels, direction="write"
                 ),
+            },
+            headers={
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else None,
             },
             request_options=request_options,
             omit=OMIT,
@@ -599,6 +682,17 @@ class RawDraftsClient:
                         ValidationErrorResponse,
                         construct_type(
                             type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -850,11 +944,19 @@ class AsyncRawDraftsClient:
         html: typing.Optional[DraftHtml] = OMIT,
         attachments: typing.Optional[typing.Sequence[SendAttachment]] = OMIT,
         in_reply_to: typing.Optional[DraftInReplyTo] = OMIT,
+        forward_of: typing.Optional[DraftForwardOf] = OMIT,
+        reply_all: typing.Optional[DraftReplyAll] = OMIT,
         send_at: typing.Optional[DraftSendAt] = OMIT,
         client_id: typing.Optional[DraftClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Draft]:
         """
+        Create a draft. Supply `in_reply_to` to create a reply draft (with
+        `reply_all` to address the whole thread), whose recipients, subject, and
+        threading are derived from the referenced message, or `forward_of` to
+        create a forward draft, which derives the subject, threading, and
+        forwarded content from the source but keeps recipients caller-supplied.
+
         **CLI:**
         ```bash
         agentmail inboxes:drafts create --inbox-id <inbox_id> --to recipient@example.com --subject "Draft subject" --text "Draft body"
@@ -885,6 +987,10 @@ class AsyncRawDraftsClient:
 
         in_reply_to : typing.Optional[DraftInReplyTo]
 
+        forward_of : typing.Optional[DraftForwardOf]
+
+        reply_all : typing.Optional[DraftReplyAll]
+
         send_at : typing.Optional[DraftSendAt]
 
         client_id : typing.Optional[DraftClientId]
@@ -913,6 +1019,8 @@ class AsyncRawDraftsClient:
                     object_=attachments, annotation=typing.Sequence[SendAttachment], direction="write"
                 ),
                 "in_reply_to": in_reply_to,
+                "forward_of": forward_of,
+                "reply_all": reply_all,
                 "send_at": send_at,
                 "client_id": client_id,
             },
@@ -929,6 +1037,17 @@ class AsyncRawDraftsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 404:
                 raise NotFoundError(
                     headers=dict(_response.headers),
@@ -961,10 +1080,18 @@ class AsyncRawDraftsClient:
         subject: typing.Optional[DraftSubject] = OMIT,
         text: typing.Optional[DraftText] = OMIT,
         html: typing.Optional[DraftHtml] = OMIT,
+        add_attachments: typing.Optional[typing.Sequence[SendAttachment]] = OMIT,
+        remove_attachments: typing.Optional[typing.Sequence[AttachmentId]] = OMIT,
+        add_labels: typing.Optional[DraftLabels] = OMIT,
+        remove_labels: typing.Optional[DraftLabels] = OMIT,
         send_at: typing.Optional[DraftSendAt] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Draft]:
         """
+        Edit fields on an existing draft. Passing `null` clears a field (or `[]`
+        for a recipient field); `send_at: null` un-schedules a scheduled draft.
+        A draft that is already being sent cannot be edited.
+
         **CLI:**
         ```bash
         agentmail inboxes:drafts update --inbox-id <inbox_id> --draft-id <draft_id> --subject "Updated subject"
@@ -990,6 +1117,18 @@ class AsyncRawDraftsClient:
 
         html : typing.Optional[DraftHtml]
 
+        add_attachments : typing.Optional[typing.Sequence[SendAttachment]]
+            Attachments to add to the draft.
+
+        remove_attachments : typing.Optional[typing.Sequence[AttachmentId]]
+            IDs of attachments to remove from the draft.
+
+        add_labels : typing.Optional[DraftLabels]
+            Label or labels to add to the draft.
+
+        remove_labels : typing.Optional[DraftLabels]
+            Label or labels to remove from the draft.
+
         send_at : typing.Optional[DraftSendAt]
 
         request_options : typing.Optional[RequestOptions]
@@ -1011,6 +1150,12 @@ class AsyncRawDraftsClient:
                 "subject": subject,
                 "text": text,
                 "html": html,
+                "add_attachments": convert_and_respect_annotation_metadata(
+                    object_=add_attachments, annotation=typing.Sequence[SendAttachment], direction="write"
+                ),
+                "remove_attachments": remove_attachments,
+                "add_labels": add_labels,
+                "remove_labels": remove_labels,
                 "send_at": send_at,
             },
             request_options=request_options,
@@ -1026,8 +1171,30 @@ class AsyncRawDraftsClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 404:
                 raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
@@ -1104,6 +1271,7 @@ class AsyncRawDraftsClient:
         *,
         add_labels: typing.Optional[UpdateMessageLabels] = OMIT,
         remove_labels: typing.Optional[UpdateMessageLabels] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SendMessageResponse]:
         """
@@ -1124,6 +1292,9 @@ class AsyncRawDraftsClient:
         remove_labels : typing.Optional[UpdateMessageLabels]
             Label or labels to remove from message.
 
+        idempotency_key : typing.Optional[str]
+            Unique key that makes a send idempotent. A retry carrying the same key returns the original message instead of sending a second email; reusing a key with a different request — different message content, a different sending inbox, or a different send endpoint — returns a 409 conflict. Keys expire 24 hours after the send completes.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -1142,6 +1313,9 @@ class AsyncRawDraftsClient:
                 "remove_labels": convert_and_respect_annotation_metadata(
                     object_=remove_labels, annotation=UpdateMessageLabels, direction="write"
                 ),
+            },
+            headers={
+                "Idempotency-Key": str(idempotency_key) if idempotency_key is not None else None,
             },
             request_options=request_options,
             omit=OMIT,
@@ -1174,6 +1348,17 @@ class AsyncRawDraftsClient:
                         ValidationErrorResponse,
                         construct_type(
                             type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

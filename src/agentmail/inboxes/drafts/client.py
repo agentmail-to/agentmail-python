@@ -11,10 +11,12 @@ from ...drafts.types.draft import Draft
 from ...drafts.types.draft_bcc import DraftBcc
 from ...drafts.types.draft_cc import DraftCc
 from ...drafts.types.draft_client_id import DraftClientId
+from ...drafts.types.draft_forward_of import DraftForwardOf
 from ...drafts.types.draft_html import DraftHtml
 from ...drafts.types.draft_id import DraftId
 from ...drafts.types.draft_in_reply_to import DraftInReplyTo
 from ...drafts.types.draft_labels import DraftLabels
+from ...drafts.types.draft_reply_all import DraftReplyAll
 from ...drafts.types.draft_reply_to import DraftReplyTo
 from ...drafts.types.draft_send_at import DraftSendAt
 from ...drafts.types.draft_subject import DraftSubject
@@ -211,11 +213,19 @@ class DraftsClient:
         html: typing.Optional[DraftHtml] = OMIT,
         attachments: typing.Optional[typing.Sequence[SendAttachment]] = OMIT,
         in_reply_to: typing.Optional[DraftInReplyTo] = OMIT,
+        forward_of: typing.Optional[DraftForwardOf] = OMIT,
+        reply_all: typing.Optional[DraftReplyAll] = OMIT,
         send_at: typing.Optional[DraftSendAt] = OMIT,
         client_id: typing.Optional[DraftClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Draft:
         """
+        Create a draft. Supply `in_reply_to` to create a reply draft (with
+        `reply_all` to address the whole thread), whose recipients, subject, and
+        threading are derived from the referenced message, or `forward_of` to
+        create a forward draft, which derives the subject, threading, and
+        forwarded content from the source but keeps recipients caller-supplied.
+
         **CLI:**
         ```bash
         agentmail inboxes:drafts create --inbox-id <inbox_id> --to recipient@example.com --subject "Draft subject" --text "Draft body"
@@ -245,6 +255,10 @@ class DraftsClient:
             Attachments to include in draft.
 
         in_reply_to : typing.Optional[DraftInReplyTo]
+
+        forward_of : typing.Optional[DraftForwardOf]
+
+        reply_all : typing.Optional[DraftReplyAll]
 
         send_at : typing.Optional[DraftSendAt]
 
@@ -280,6 +294,8 @@ class DraftsClient:
             html=html,
             attachments=attachments,
             in_reply_to=in_reply_to,
+            forward_of=forward_of,
+            reply_all=reply_all,
             send_at=send_at,
             client_id=client_id,
             request_options=request_options,
@@ -298,10 +314,18 @@ class DraftsClient:
         subject: typing.Optional[DraftSubject] = OMIT,
         text: typing.Optional[DraftText] = OMIT,
         html: typing.Optional[DraftHtml] = OMIT,
+        add_attachments: typing.Optional[typing.Sequence[SendAttachment]] = OMIT,
+        remove_attachments: typing.Optional[typing.Sequence[AttachmentId]] = OMIT,
+        add_labels: typing.Optional[DraftLabels] = OMIT,
+        remove_labels: typing.Optional[DraftLabels] = OMIT,
         send_at: typing.Optional[DraftSendAt] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Draft:
         """
+        Edit fields on an existing draft. Passing `null` clears a field (or `[]`
+        for a recipient field); `send_at: null` un-schedules a scheduled draft.
+        A draft that is already being sent cannot be edited.
+
         **CLI:**
         ```bash
         agentmail inboxes:drafts update --inbox-id <inbox_id> --draft-id <draft_id> --subject "Updated subject"
@@ -326,6 +350,18 @@ class DraftsClient:
         text : typing.Optional[DraftText]
 
         html : typing.Optional[DraftHtml]
+
+        add_attachments : typing.Optional[typing.Sequence[SendAttachment]]
+            Attachments to add to the draft.
+
+        remove_attachments : typing.Optional[typing.Sequence[AttachmentId]]
+            IDs of attachments to remove from the draft.
+
+        add_labels : typing.Optional[DraftLabels]
+            Label or labels to add to the draft.
+
+        remove_labels : typing.Optional[DraftLabels]
+            Label or labels to remove from the draft.
 
         send_at : typing.Optional[DraftSendAt]
 
@@ -358,6 +394,10 @@ class DraftsClient:
             subject=subject,
             text=text,
             html=html,
+            add_attachments=add_attachments,
+            remove_attachments=remove_attachments,
+            add_labels=add_labels,
+            remove_labels=remove_labels,
             send_at=send_at,
             request_options=request_options,
         )
@@ -407,6 +447,7 @@ class DraftsClient:
         *,
         add_labels: typing.Optional[UpdateMessageLabels] = OMIT,
         remove_labels: typing.Optional[UpdateMessageLabels] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
@@ -426,6 +467,9 @@ class DraftsClient:
 
         remove_labels : typing.Optional[UpdateMessageLabels]
             Label or labels to remove from message.
+
+        idempotency_key : typing.Optional[str]
+            Unique key that makes a send idempotent. A retry carrying the same key returns the original message instead of sending a second email; reusing a key with a different request — different message content, a different sending inbox, or a different send endpoint — returns a 409 conflict. Keys expire 24 hours after the send completes.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -447,7 +491,12 @@ class DraftsClient:
         )
         """
         _response = self._raw_client.send(
-            inbox_id, draft_id, add_labels=add_labels, remove_labels=remove_labels, request_options=request_options
+            inbox_id,
+            draft_id,
+            add_labels=add_labels,
+            remove_labels=remove_labels,
+            idempotency_key=idempotency_key,
+            request_options=request_options,
         )
         return _response.data
 
@@ -653,11 +702,19 @@ class AsyncDraftsClient:
         html: typing.Optional[DraftHtml] = OMIT,
         attachments: typing.Optional[typing.Sequence[SendAttachment]] = OMIT,
         in_reply_to: typing.Optional[DraftInReplyTo] = OMIT,
+        forward_of: typing.Optional[DraftForwardOf] = OMIT,
+        reply_all: typing.Optional[DraftReplyAll] = OMIT,
         send_at: typing.Optional[DraftSendAt] = OMIT,
         client_id: typing.Optional[DraftClientId] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Draft:
         """
+        Create a draft. Supply `in_reply_to` to create a reply draft (with
+        `reply_all` to address the whole thread), whose recipients, subject, and
+        threading are derived from the referenced message, or `forward_of` to
+        create a forward draft, which derives the subject, threading, and
+        forwarded content from the source but keeps recipients caller-supplied.
+
         **CLI:**
         ```bash
         agentmail inboxes:drafts create --inbox-id <inbox_id> --to recipient@example.com --subject "Draft subject" --text "Draft body"
@@ -687,6 +744,10 @@ class AsyncDraftsClient:
             Attachments to include in draft.
 
         in_reply_to : typing.Optional[DraftInReplyTo]
+
+        forward_of : typing.Optional[DraftForwardOf]
+
+        reply_all : typing.Optional[DraftReplyAll]
 
         send_at : typing.Optional[DraftSendAt]
 
@@ -730,6 +791,8 @@ class AsyncDraftsClient:
             html=html,
             attachments=attachments,
             in_reply_to=in_reply_to,
+            forward_of=forward_of,
+            reply_all=reply_all,
             send_at=send_at,
             client_id=client_id,
             request_options=request_options,
@@ -748,10 +811,18 @@ class AsyncDraftsClient:
         subject: typing.Optional[DraftSubject] = OMIT,
         text: typing.Optional[DraftText] = OMIT,
         html: typing.Optional[DraftHtml] = OMIT,
+        add_attachments: typing.Optional[typing.Sequence[SendAttachment]] = OMIT,
+        remove_attachments: typing.Optional[typing.Sequence[AttachmentId]] = OMIT,
+        add_labels: typing.Optional[DraftLabels] = OMIT,
+        remove_labels: typing.Optional[DraftLabels] = OMIT,
         send_at: typing.Optional[DraftSendAt] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Draft:
         """
+        Edit fields on an existing draft. Passing `null` clears a field (or `[]`
+        for a recipient field); `send_at: null` un-schedules a scheduled draft.
+        A draft that is already being sent cannot be edited.
+
         **CLI:**
         ```bash
         agentmail inboxes:drafts update --inbox-id <inbox_id> --draft-id <draft_id> --subject "Updated subject"
@@ -776,6 +847,18 @@ class AsyncDraftsClient:
         text : typing.Optional[DraftText]
 
         html : typing.Optional[DraftHtml]
+
+        add_attachments : typing.Optional[typing.Sequence[SendAttachment]]
+            Attachments to add to the draft.
+
+        remove_attachments : typing.Optional[typing.Sequence[AttachmentId]]
+            IDs of attachments to remove from the draft.
+
+        add_labels : typing.Optional[DraftLabels]
+            Label or labels to add to the draft.
+
+        remove_labels : typing.Optional[DraftLabels]
+            Label or labels to remove from the draft.
 
         send_at : typing.Optional[DraftSendAt]
 
@@ -816,6 +899,10 @@ class AsyncDraftsClient:
             subject=subject,
             text=text,
             html=html,
+            add_attachments=add_attachments,
+            remove_attachments=remove_attachments,
+            add_labels=add_labels,
+            remove_labels=remove_labels,
             send_at=send_at,
             request_options=request_options,
         )
@@ -873,6 +960,7 @@ class AsyncDraftsClient:
         *,
         add_labels: typing.Optional[UpdateMessageLabels] = OMIT,
         remove_labels: typing.Optional[UpdateMessageLabels] = OMIT,
+        idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
@@ -892,6 +980,9 @@ class AsyncDraftsClient:
 
         remove_labels : typing.Optional[UpdateMessageLabels]
             Label or labels to remove from message.
+
+        idempotency_key : typing.Optional[str]
+            Unique key that makes a send idempotent. A retry carrying the same key returns the original message instead of sending a second email; reusing a key with a different request — different message content, a different sending inbox, or a different send endpoint — returns a 409 conflict. Keys expire 24 hours after the send completes.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -921,6 +1012,11 @@ class AsyncDraftsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.send(
-            inbox_id, draft_id, add_labels=add_labels, remove_labels=remove_labels, request_options=request_options
+            inbox_id,
+            draft_id,
+            add_labels=add_labels,
+            remove_labels=remove_labels,
+            idempotency_key=idempotency_key,
+            request_options=request_options,
         )
         return _response.data

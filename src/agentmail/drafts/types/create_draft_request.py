@@ -9,9 +9,11 @@ from ...core.unchecked_base_model import UncheckedBaseModel
 from .draft_bcc import DraftBcc
 from .draft_cc import DraftCc
 from .draft_client_id import DraftClientId
+from .draft_forward_of import DraftForwardOf
 from .draft_html import DraftHtml
 from .draft_in_reply_to import DraftInReplyTo
 from .draft_labels import DraftLabels
+from .draft_reply_all import DraftReplyAll
 from .draft_reply_to import DraftReplyTo
 from .draft_send_at import DraftSendAt
 from .draft_subject import DraftSubject
@@ -20,6 +22,22 @@ from .draft_to import DraftTo
 
 
 class CreateDraftRequest(UncheckedBaseModel):
+    """
+    Body for creating a draft. Supports plain, reply, reply-all, and forward
+    drafts:
+
+    - **Plain draft:** supply `to`, `subject`, `text`, etc.
+    - **Reply:** set `in_reply_to` to a message ID. Recipients, subject, and
+      threading are derived from that message. Set `reply_all` to address the
+      whole thread (you then cannot also pass `to`, `cc`, or `bcc`).
+    - **Forward:** set `forward_of` to a message ID. The subject and threading
+      are derived from the source message, whose body and attachments are
+      merged in at send time.
+
+    `in_reply_to` and `forward_of` are mutually exclusive, and reading the
+    referenced message requires `message_read` permission.
+    """
+
     labels: typing.Optional[DraftLabels] = None
     reply_to: typing.Optional[DraftReplyTo] = None
     to: typing.Optional[DraftTo] = None
@@ -34,6 +52,8 @@ class CreateDraftRequest(UncheckedBaseModel):
     """
 
     in_reply_to: typing.Optional[DraftInReplyTo] = None
+    forward_of: typing.Optional[DraftForwardOf] = None
+    reply_all: typing.Optional[DraftReplyAll] = None
     send_at: typing.Optional[DraftSendAt] = None
     client_id: typing.Optional[DraftClientId] = None
 

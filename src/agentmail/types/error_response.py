@@ -5,13 +5,19 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from ..core.unchecked_base_model import UncheckedBaseModel
+from .error_code import ErrorCode
+from .error_docs import ErrorDocs
+from .error_fix import ErrorFix
 from .error_message import ErrorMessage
 from .error_name import ErrorName
 
 
 class ErrorResponse(UncheckedBaseModel):
     name: ErrorName
+    code: typing.Optional[ErrorCode] = None
     message: ErrorMessage
+    fix: typing.Optional[ErrorFix] = None
+    docs: typing.Optional[ErrorDocs] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

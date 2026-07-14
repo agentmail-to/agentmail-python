@@ -7,9 +7,6 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
-        CreateDraftForwardRequest,
-        CreateDraftReplyAllRequest,
-        CreateDraftReplyRequest,
         CreateDraftRequest,
         Draft,
         DraftAttachments,
@@ -35,9 +32,6 @@ if typing.TYPE_CHECKING:
         UpdateDraftRequest,
     )
 _dynamic_imports: typing.Dict[str, str] = {
-    "CreateDraftForwardRequest": ".types",
-    "CreateDraftReplyAllRequest": ".types",
-    "CreateDraftReplyRequest": ".types",
     "CreateDraftRequest": ".types",
     "Draft": ".types",
     "DraftAttachments": ".types",
@@ -86,9 +80,6 @@ def __dir__():
 
 
 __all__ = [
-    "CreateDraftForwardRequest",
-    "CreateDraftReplyAllRequest",
-    "CreateDraftReplyRequest",
     "CreateDraftRequest",
     "Draft",
     "DraftAttachments",

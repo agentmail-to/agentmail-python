@@ -6030,7 +6030,7 @@ client.inboxes.threads.update(
 <dl>
 <dd>
 
-Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+Permanently deletes a thread and all of its messages.
 
 **CLI:**
 ```bash
@@ -6086,14 +6086,6 @@ client.inboxes.threads.delete(
 <dd>
 
 **thread_id:** `ThreadId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**permanent:** `typing.Optional[bool]` — If true, permanently delete the thread instead of moving to trash.
     
 </dd>
 </dl>
@@ -10152,7 +10144,7 @@ client.pods.threads.update(
 <dl>
 <dd>
 
-Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+Permanently deletes a thread and all of its messages.
 
 **CLI:**
 ```bash
@@ -10208,14 +10200,6 @@ client.pods.threads.delete(
 <dd>
 
 **thread_id:** `ThreadId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**permanent:** `typing.Optional[bool]` — If true, permanently delete the thread instead of moving to trash.
     
 </dd>
 </dl>
@@ -11230,7 +11214,7 @@ client.threads.update(
 <dl>
 <dd>
 
-Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+Permanently deletes a thread and all of its messages.
 
 **CLI:**
 ```bash
@@ -11277,14 +11261,6 @@ client.threads.delete(
 <dd>
 
 **thread_id:** `ThreadId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**permanent:** `typing.Optional[bool]` — If true, permanently delete the thread instead of moving to trash.
     
 </dd>
 </dl>

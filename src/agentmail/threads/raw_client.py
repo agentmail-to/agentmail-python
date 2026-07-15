@@ -463,14 +463,10 @@ class RawThreadsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def delete(
-        self,
-        thread_id: ThreadId,
-        *,
-        permanent: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
-        Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+        Permanently deletes a thread and all of its messages.
 
         **CLI:**
         ```bash
@@ -480,9 +476,6 @@ class RawThreadsClient:
         Parameters
         ----------
         thread_id : ThreadId
-
-        permanent : typing.Optional[bool]
-            If true, permanently delete the thread instead of moving to trash.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -495,9 +488,6 @@ class RawThreadsClient:
             f"v0/threads/{jsonable_encoder(thread_id)}",
             base_url=self._client_wrapper.get_environment().http,
             method="DELETE",
-            params={
-                "permanent": permanent,
-            },
             request_options=request_options,
         )
         try:
@@ -947,14 +937,10 @@ class AsyncRawThreadsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def delete(
-        self,
-        thread_id: ThreadId,
-        *,
-        permanent: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
-        Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+        Permanently deletes a thread and all of its messages.
 
         **CLI:**
         ```bash
@@ -964,9 +950,6 @@ class AsyncRawThreadsClient:
         Parameters
         ----------
         thread_id : ThreadId
-
-        permanent : typing.Optional[bool]
-            If true, permanently delete the thread instead of moving to trash.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -979,9 +962,6 @@ class AsyncRawThreadsClient:
             f"v0/threads/{jsonable_encoder(thread_id)}",
             base_url=self._client_wrapper.get_environment().http,
             method="DELETE",
-            params={
-                "permanent": permanent,
-            },
             request_options=request_options,
         )
         try:

@@ -336,15 +336,10 @@ class ThreadsClient:
         return _response.data
 
     def delete(
-        self,
-        inbox_id: InboxId,
-        thread_id: ThreadId,
-        *,
-        permanent: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, inbox_id: InboxId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
-        Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+        Permanently deletes a thread and all of its messages.
 
         **CLI:**
         ```bash
@@ -356,9 +351,6 @@ class ThreadsClient:
         inbox_id : InboxId
 
         thread_id : ThreadId
-
-        permanent : typing.Optional[bool]
-            If true, permanently delete the thread instead of moving to trash.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -379,7 +371,7 @@ class ThreadsClient:
             thread_id="thread_id",
         )
         """
-        _response = self._raw_client.delete(inbox_id, thread_id, permanent=permanent, request_options=request_options)
+        _response = self._raw_client.delete(inbox_id, thread_id, request_options=request_options)
         return _response.data
 
 
@@ -732,15 +724,10 @@ class AsyncThreadsClient:
         return _response.data
 
     async def delete(
-        self,
-        inbox_id: InboxId,
-        thread_id: ThreadId,
-        *,
-        permanent: typing.Optional[bool] = None,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, inbox_id: InboxId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
-        Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+        Permanently deletes a thread and all of its messages.
 
         **CLI:**
         ```bash
@@ -752,9 +739,6 @@ class AsyncThreadsClient:
         inbox_id : InboxId
 
         thread_id : ThreadId
-
-        permanent : typing.Optional[bool]
-            If true, permanently delete the thread instead of moving to trash.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -783,7 +767,5 @@ class AsyncThreadsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.delete(
-            inbox_id, thread_id, permanent=permanent, request_options=request_options
-        )
+        _response = await self._raw_client.delete(inbox_id, thread_id, request_options=request_options)
         return _response.data

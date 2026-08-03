@@ -16,9 +16,12 @@ if typing.TYPE_CHECKING:
         UpdateInboxWebhookRequest,
         UpdatePodWebhookRequest,
         UpdateWebhookEventTypes,
+        UpdateWebhookHeadersRequest,
         UpdateWebhookRequest,
         Url,
         Webhook,
+        WebhookHeaderNamesResponse,
+        WebhookHeaders,
         WebhookId,
     )
     from . import events
@@ -36,9 +39,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateInboxWebhookRequest": ".types",
     "UpdatePodWebhookRequest": ".types",
     "UpdateWebhookEventTypes": ".types",
+    "UpdateWebhookHeadersRequest": ".types",
     "UpdateWebhookRequest": ".types",
     "Url": ".types",
     "Webhook": ".types",
+    "WebhookHeaderNamesResponse": ".types",
+    "WebhookHeaders": ".types",
     "WebhookId": ".types",
     "events": ".events",
 }
@@ -78,9 +84,12 @@ __all__ = [
     "UpdateInboxWebhookRequest",
     "UpdatePodWebhookRequest",
     "UpdateWebhookEventTypes",
+    "UpdateWebhookHeadersRequest",
     "UpdateWebhookRequest",
     "Url",
     "Webhook",
+    "WebhookHeaderNamesResponse",
+    "WebhookHeaders",
     "WebhookId",
     "events",
 ]

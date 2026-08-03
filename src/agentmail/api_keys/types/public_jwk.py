@@ -5,22 +5,21 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
-from .client_id import ClientId
-from .create_webhook_event_types import CreateWebhookEventTypes
-from .url import Url
-from .webhook_headers import WebhookHeaders
+from .public_jwk_coordinate import PublicJwkCoordinate
 
 
-class CreateInboxWebhookRequest(UncheckedBaseModel):
+class PublicJwk(UncheckedBaseModel):
     """
-    Create a webhook scoped to an inbox. The inbox comes from the path, so `inbox_ids` and `pod_ids`
-    are not accepted.
+    A public P-256 JWK. The object accepts exactly `kty`, `crv`, `x`, and `y`.
+    Private key material such as `d`, embedded key IDs, and all other members
+    are rejected. The server also rejects coordinates that are not a point on
+    P-256.
     """
 
-    url: Url
-    event_types: CreateWebhookEventTypes
-    client_id: typing.Optional[ClientId] = None
-    headers: typing.Optional[WebhookHeaders] = None
+    kty: typing.Literal["EC"] = "EC"
+    crv: typing.Literal["P-256"] = "P-256"
+    x: PublicJwkCoordinate
+    y: PublicJwkCoordinate
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

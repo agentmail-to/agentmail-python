@@ -5,22 +5,19 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
-from .client_id import ClientId
-from .create_webhook_event_types import CreateWebhookEventTypes
-from .url import Url
-from .webhook_headers import WebhookHeaders
+from .public_jwk import PublicJwk
 
 
-class CreateInboxWebhookRequest(UncheckedBaseModel):
+class PublicKeyMaterial(UncheckedBaseModel):
     """
-    Create a webhook scoped to an inbox. The inbox comes from the path, so `inbox_ids` and `pod_ids`
-    are not accepted.
+    Registered public key material and its server-computed RFC 7638 thumbprint.
     """
 
-    url: Url
-    event_types: CreateWebhookEventTypes
-    client_id: typing.Optional[ClientId] = None
-    headers: typing.Optional[WebhookHeaders] = None
+    jwk: PublicJwk
+    fingerprint: str = pydantic.Field()
+    """
+    RFC 7638 SHA-256 JWK thumbprint encoded as unpadded base64url.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

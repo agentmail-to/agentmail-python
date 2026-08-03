@@ -14,6 +14,8 @@ from ...webhooks.types.list_webhooks_response import ListWebhooksResponse
 from ...webhooks.types.update_webhook_event_types import UpdateWebhookEventTypes
 from ...webhooks.types.url import Url
 from ...webhooks.types.webhook import Webhook
+from ...webhooks.types.webhook_header_names_response import WebhookHeaderNamesResponse
+from ...webhooks.types.webhook_headers import WebhookHeaders
 from ...webhooks.types.webhook_id import WebhookId
 from ..types.pod_id import PodId
 from .raw_client import AsyncRawWebhooksClient, RawWebhooksClient
@@ -122,6 +124,41 @@ class WebhooksClient:
         _response = self._raw_client.get(pod_id, webhook_id, request_options=request_options)
         return _response.data
 
+    def get_headers(
+        self, pod_id: PodId, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> WebhookHeaderNamesResponse:
+        """
+        List the names of custom HTTP headers included with deliveries to this pod-scoped webhook.
+        Header values are write-only and are never returned.
+
+        Parameters
+        ----------
+        pod_id : PodId
+
+        webhook_id : WebhookId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WebhookHeaderNamesResponse
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.pods.webhooks.get_headers(
+            pod_id="pod_id",
+            webhook_id="webhook_id",
+        )
+        """
+        _response = self._raw_client.get_headers(pod_id, webhook_id, request_options=request_options)
+        return _response.data
+
     def create(
         self,
         pod_id: PodId,
@@ -130,6 +167,7 @@ class WebhooksClient:
         event_types: CreateWebhookEventTypes,
         inbox_ids: typing.Optional[InboxIds] = OMIT,
         client_id: typing.Optional[ClientId] = OMIT,
+        headers: typing.Optional[WebhookHeaders] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Webhook:
         """
@@ -151,6 +189,8 @@ class WebhooksClient:
         inbox_ids : typing.Optional[InboxIds]
 
         client_id : typing.Optional[ClientId]
+
+        headers : typing.Optional[WebhookHeaders]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -178,6 +218,7 @@ class WebhooksClient:
             event_types=event_types,
             inbox_ids=inbox_ids,
             client_id=client_id,
+            headers=headers,
             request_options=request_options,
         )
         return _response.data
@@ -238,6 +279,54 @@ class WebhooksClient:
             remove_inbox_ids=remove_inbox_ids,
             event_types=event_types,
             request_options=request_options,
+        )
+        return _response.data
+
+    def update_headers(
+        self,
+        pod_id: PodId,
+        webhook_id: WebhookId,
+        *,
+        headers: typing.Optional[WebhookHeaders] = OMIT,
+        remove_headers: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Atomically set, replace, or remove custom HTTP headers included with deliveries to this
+        pod-scoped webhook. Header values remain write-only.
+
+        Parameters
+        ----------
+        pod_id : PodId
+
+        webhook_id : WebhookId
+
+        headers : typing.Optional[WebhookHeaders]
+
+        remove_headers : typing.Optional[typing.Sequence[str]]
+            Names of custom delivery headers to remove.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.pods.webhooks.update_headers(
+            pod_id="pod_id",
+            webhook_id="webhook_id",
+        )
+        """
+        _response = self._raw_client.update_headers(
+            pod_id, webhook_id, headers=headers, remove_headers=remove_headers, request_options=request_options
         )
         return _response.data
 
@@ -395,6 +484,49 @@ class AsyncWebhooksClient:
         _response = await self._raw_client.get(pod_id, webhook_id, request_options=request_options)
         return _response.data
 
+    async def get_headers(
+        self, pod_id: PodId, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> WebhookHeaderNamesResponse:
+        """
+        List the names of custom HTTP headers included with deliveries to this pod-scoped webhook.
+        Header values are write-only and are never returned.
+
+        Parameters
+        ----------
+        pod_id : PodId
+
+        webhook_id : WebhookId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        WebhookHeaderNamesResponse
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.pods.webhooks.get_headers(
+                pod_id="pod_id",
+                webhook_id="webhook_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_headers(pod_id, webhook_id, request_options=request_options)
+        return _response.data
+
     async def create(
         self,
         pod_id: PodId,
@@ -403,6 +535,7 @@ class AsyncWebhooksClient:
         event_types: CreateWebhookEventTypes,
         inbox_ids: typing.Optional[InboxIds] = OMIT,
         client_id: typing.Optional[ClientId] = OMIT,
+        headers: typing.Optional[WebhookHeaders] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Webhook:
         """
@@ -424,6 +557,8 @@ class AsyncWebhooksClient:
         inbox_ids : typing.Optional[InboxIds]
 
         client_id : typing.Optional[ClientId]
+
+        headers : typing.Optional[WebhookHeaders]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -459,6 +594,7 @@ class AsyncWebhooksClient:
             event_types=event_types,
             inbox_ids=inbox_ids,
             client_id=client_id,
+            headers=headers,
             request_options=request_options,
         )
         return _response.data
@@ -527,6 +663,62 @@ class AsyncWebhooksClient:
             remove_inbox_ids=remove_inbox_ids,
             event_types=event_types,
             request_options=request_options,
+        )
+        return _response.data
+
+    async def update_headers(
+        self,
+        pod_id: PodId,
+        webhook_id: WebhookId,
+        *,
+        headers: typing.Optional[WebhookHeaders] = OMIT,
+        remove_headers: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
+        """
+        Atomically set, replace, or remove custom HTTP headers included with deliveries to this
+        pod-scoped webhook. Header values remain write-only.
+
+        Parameters
+        ----------
+        pod_id : PodId
+
+        webhook_id : WebhookId
+
+        headers : typing.Optional[WebhookHeaders]
+
+        remove_headers : typing.Optional[typing.Sequence[str]]
+            Names of custom delivery headers to remove.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.pods.webhooks.update_headers(
+                pod_id="pod_id",
+                webhook_id="webhook_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update_headers(
+            pod_id, webhook_id, headers=headers, remove_headers=remove_headers, request_options=request_options
         )
         return _response.data
 

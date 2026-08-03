@@ -25,6 +25,8 @@ from .types.list_webhooks_response import ListWebhooksResponse
 from .types.update_webhook_event_types import UpdateWebhookEventTypes
 from .types.url import Url
 from .types.webhook import Webhook
+from .types.webhook_header_names_response import WebhookHeaderNamesResponse
+from .types.webhook_headers import WebhookHeaders
 from .types.webhook_id import WebhookId
 from pydantic import ValidationError as pydantic_ValidationError
 
@@ -151,6 +153,60 @@ class RawWebhooksClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def get_headers(
+        self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[WebhookHeaderNamesResponse]:
+        """
+        List the names of custom HTTP headers included with deliveries to this webhook. Header values are
+        write-only and are never returned.
+
+        Parameters
+        ----------
+        webhook_id : WebhookId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[WebhookHeaderNamesResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/webhooks/{jsonable_encoder(webhook_id)}/headers",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    WebhookHeaderNamesResponse,
+                    construct_type(
+                        type_=WebhookHeaderNamesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def create(
         self,
         *,
@@ -159,6 +215,7 @@ class RawWebhooksClient:
         pod_ids: typing.Optional[PodIds] = OMIT,
         inbox_ids: typing.Optional[InboxIds] = OMIT,
         client_id: typing.Optional[ClientId] = OMIT,
+        headers: typing.Optional[WebhookHeaders] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Webhook]:
         """
@@ -179,6 +236,8 @@ class RawWebhooksClient:
 
         client_id : typing.Optional[ClientId]
 
+        headers : typing.Optional[WebhookHeaders]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -196,6 +255,7 @@ class RawWebhooksClient:
                 "url": url,
                 "event_types": event_types,
                 "client_id": client_id,
+                "headers": headers,
             },
             request_options=request_options,
             omit=OMIT,
@@ -299,6 +359,79 @@ class RawWebhooksClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def update_headers(
+        self,
+        webhook_id: WebhookId,
+        *,
+        headers: typing.Optional[WebhookHeaders] = OMIT,
+        remove_headers: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[None]:
+        """
+        Atomically set, replace, or remove custom HTTP headers included with deliveries to this webhook.
+        Header values remain write-only.
+
+        Parameters
+        ----------
+        webhook_id : WebhookId
+
+        headers : typing.Optional[WebhookHeaders]
+
+        remove_headers : typing.Optional[typing.Sequence[str]]
+            Names of custom delivery headers to remove.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/webhooks/{jsonable_encoder(webhook_id)}/headers",
+            base_url=self._client_wrapper.get_environment().http,
+            method="PATCH",
+            json={
+                "headers": headers,
+                "remove_headers": remove_headers,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
             if _response.status_code == 404:
                 raise NotFoundError(
                     headers=dict(_response.headers),
@@ -499,6 +632,60 @@ class AsyncRawWebhooksClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    async def get_headers(
+        self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[WebhookHeaderNamesResponse]:
+        """
+        List the names of custom HTTP headers included with deliveries to this webhook. Header values are
+        write-only and are never returned.
+
+        Parameters
+        ----------
+        webhook_id : WebhookId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[WebhookHeaderNamesResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/webhooks/{jsonable_encoder(webhook_id)}/headers",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    WebhookHeaderNamesResponse,
+                    construct_type(
+                        type_=WebhookHeaderNamesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     async def create(
         self,
         *,
@@ -507,6 +694,7 @@ class AsyncRawWebhooksClient:
         pod_ids: typing.Optional[PodIds] = OMIT,
         inbox_ids: typing.Optional[InboxIds] = OMIT,
         client_id: typing.Optional[ClientId] = OMIT,
+        headers: typing.Optional[WebhookHeaders] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Webhook]:
         """
@@ -527,6 +715,8 @@ class AsyncRawWebhooksClient:
 
         client_id : typing.Optional[ClientId]
 
+        headers : typing.Optional[WebhookHeaders]
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -544,6 +734,7 @@ class AsyncRawWebhooksClient:
                 "url": url,
                 "event_types": event_types,
                 "client_id": client_id,
+                "headers": headers,
             },
             request_options=request_options,
             omit=OMIT,
@@ -647,6 +838,79 @@ class AsyncRawWebhooksClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def update_headers(
+        self,
+        webhook_id: WebhookId,
+        *,
+        headers: typing.Optional[WebhookHeaders] = OMIT,
+        remove_headers: typing.Optional[typing.Sequence[str]] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[None]:
+        """
+        Atomically set, replace, or remove custom HTTP headers included with deliveries to this webhook.
+        Header values remain write-only.
+
+        Parameters
+        ----------
+        webhook_id : WebhookId
+
+        headers : typing.Optional[WebhookHeaders]
+
+        remove_headers : typing.Optional[typing.Sequence[str]]
+            Names of custom delivery headers to remove.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/webhooks/{jsonable_encoder(webhook_id)}/headers",
+            base_url=self._client_wrapper.get_environment().http,
+            method="PATCH",
+            json={
+                "headers": headers,
+                "remove_headers": remove_headers,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
             if _response.status_code == 404:
                 raise NotFoundError(
                     headers=dict(_response.headers),

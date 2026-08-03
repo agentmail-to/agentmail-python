@@ -11,20 +11,47 @@ if typing.TYPE_CHECKING:
     from .api_key_permissions import ApiKeyPermissions
     from .create_api_key_request import CreateApiKeyRequest
     from .create_api_key_response import CreateApiKeyResponse
+    from .create_public_key_request import CreatePublicKeyRequest
     from .created_at import CreatedAt
+    from .inbox_public_key_scope import InboxPublicKeyScope
     from .list_api_keys_response import ListApiKeysResponse
+    from .list_public_keys_response import ListPublicKeysResponse
     from .name import Name
+    from .organization_public_key_scope import OrganizationPublicKeyScope
+    from .pod_public_key_scope import PodPublicKeyScope
     from .prefix import Prefix
+    from .public_jwk import PublicJwk
+    from .public_jwk_coordinate import PublicJwkCoordinate
+    from .public_key_credential import PublicKeyCredential
+    from .public_key_material import PublicKeyMaterial
+    from .public_key_scope import PublicKeyScope, PublicKeyScope_Inbox, PublicKeyScope_Organization, PublicKeyScope_Pod
+    from .revoke_all_agent_id_sign_in_keys_response import RevokeAllAgentIdSignInKeysResponse
+    from .update_public_key_name_request import UpdatePublicKeyNameRequest
 _dynamic_imports: typing.Dict[str, str] = {
     "ApiKey": ".api_key",
     "ApiKeyId": ".api_key_id",
     "ApiKeyPermissions": ".api_key_permissions",
     "CreateApiKeyRequest": ".create_api_key_request",
     "CreateApiKeyResponse": ".create_api_key_response",
+    "CreatePublicKeyRequest": ".create_public_key_request",
     "CreatedAt": ".created_at",
+    "InboxPublicKeyScope": ".inbox_public_key_scope",
     "ListApiKeysResponse": ".list_api_keys_response",
+    "ListPublicKeysResponse": ".list_public_keys_response",
     "Name": ".name",
+    "OrganizationPublicKeyScope": ".organization_public_key_scope",
+    "PodPublicKeyScope": ".pod_public_key_scope",
     "Prefix": ".prefix",
+    "PublicJwk": ".public_jwk",
+    "PublicJwkCoordinate": ".public_jwk_coordinate",
+    "PublicKeyCredential": ".public_key_credential",
+    "PublicKeyMaterial": ".public_key_material",
+    "PublicKeyScope": ".public_key_scope",
+    "PublicKeyScope_Inbox": ".public_key_scope",
+    "PublicKeyScope_Organization": ".public_key_scope",
+    "PublicKeyScope_Pod": ".public_key_scope",
+    "RevokeAllAgentIdSignInKeysResponse": ".revoke_all_agent_id_sign_in_keys_response",
+    "UpdatePublicKeyNameRequest": ".update_public_key_name_request",
 }
 
 
@@ -55,8 +82,23 @@ __all__ = [
     "ApiKeyPermissions",
     "CreateApiKeyRequest",
     "CreateApiKeyResponse",
+    "CreatePublicKeyRequest",
     "CreatedAt",
+    "InboxPublicKeyScope",
     "ListApiKeysResponse",
+    "ListPublicKeysResponse",
     "Name",
+    "OrganizationPublicKeyScope",
+    "PodPublicKeyScope",
     "Prefix",
+    "PublicJwk",
+    "PublicJwkCoordinate",
+    "PublicKeyCredential",
+    "PublicKeyMaterial",
+    "PublicKeyScope",
+    "PublicKeyScope_Inbox",
+    "PublicKeyScope_Organization",
+    "PublicKeyScope_Pod",
+    "RevokeAllAgentIdSignInKeysResponse",
+    "UpdatePublicKeyNameRequest",
 ]

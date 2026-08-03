@@ -15,9 +15,12 @@ if typing.TYPE_CHECKING:
     from .update_inbox_webhook_request import UpdateInboxWebhookRequest
     from .update_pod_webhook_request import UpdatePodWebhookRequest
     from .update_webhook_event_types import UpdateWebhookEventTypes
+    from .update_webhook_headers_request import UpdateWebhookHeadersRequest
     from .update_webhook_request import UpdateWebhookRequest
     from .url import Url
     from .webhook import Webhook
+    from .webhook_header_names_response import WebhookHeaderNamesResponse
+    from .webhook_headers import WebhookHeaders
     from .webhook_id import WebhookId
 _dynamic_imports: typing.Dict[str, str] = {
     "ClientId": ".client_id",
@@ -29,9 +32,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UpdateInboxWebhookRequest": ".update_inbox_webhook_request",
     "UpdatePodWebhookRequest": ".update_pod_webhook_request",
     "UpdateWebhookEventTypes": ".update_webhook_event_types",
+    "UpdateWebhookHeadersRequest": ".update_webhook_headers_request",
     "UpdateWebhookRequest": ".update_webhook_request",
     "Url": ".url",
     "Webhook": ".webhook",
+    "WebhookHeaderNamesResponse": ".webhook_header_names_response",
+    "WebhookHeaders": ".webhook_headers",
     "WebhookId": ".webhook_id",
 }
 
@@ -67,8 +73,11 @@ __all__ = [
     "UpdateInboxWebhookRequest",
     "UpdatePodWebhookRequest",
     "UpdateWebhookEventTypes",
+    "UpdateWebhookHeadersRequest",
     "UpdateWebhookRequest",
     "Url",
     "Webhook",
+    "WebhookHeaderNamesResponse",
+    "WebhookHeaders",
     "WebhookId",
 ]

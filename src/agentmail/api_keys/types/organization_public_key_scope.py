@@ -5,22 +5,12 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
-from .client_id import ClientId
-from .create_webhook_event_types import CreateWebhookEventTypes
-from .url import Url
-from .webhook_headers import WebhookHeaders
 
 
-class CreateInboxWebhookRequest(UncheckedBaseModel):
+class OrganizationPublicKeyScope(UncheckedBaseModel):
     """
-    Create a webhook scoped to an inbox. The inbox comes from the path, so `inbox_ids` and `pod_ids`
-    are not accepted.
+    Organization-wide authority.
     """
-
-    url: Url
-    event_types: CreateWebhookEventTypes
-    client_id: typing.Optional[ClientId] = None
-    headers: typing.Optional[WebhookHeaders] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

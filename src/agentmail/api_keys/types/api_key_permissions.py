@@ -32,19 +32,9 @@ class ApiKeyPermissions(UncheckedBaseModel):
     Delete inboxes.
     """
 
-    thread_read: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Read threads.
-    """
-
-    thread_delete: typing.Optional[bool] = pydantic.Field(default=None)
-    """
-    Delete threads.
-    """
-
     message_read: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Read messages.
+    Read messages. Also required to read threads.
     """
 
     message_send: typing.Optional[bool] = pydantic.Field(default=None)
@@ -54,7 +44,12 @@ class ApiKeyPermissions(UncheckedBaseModel):
 
     message_update: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Update message labels.
+    Update message labels. Also required to update threads.
+    """
+
+    message_delete: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Delete messages. Also required to delete threads.
     """
 
     label_spam_read: typing.Optional[bool] = pydantic.Field(default=None)
@@ -65,6 +60,11 @@ class ApiKeyPermissions(UncheckedBaseModel):
     label_blocked_read: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Access messages labeled blocked.
+    """
+
+    label_unauthenticated_read: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Access messages labeled unauthenticated.
     """
 
     label_trash_read: typing.Optional[bool] = pydantic.Field(default=None)
@@ -165,6 +165,11 @@ class ApiKeyPermissions(UncheckedBaseModel):
     api_key_create: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Create API keys.
+    """
+
+    api_key_update: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Update API keys.
     """
 
     api_key_delete: typing.Optional[bool] = pydantic.Field(default=None)

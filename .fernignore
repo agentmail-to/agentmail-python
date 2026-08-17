@@ -2,5 +2,3 @@
 
 src/agentmail/core/query_encoder.py
 tests/utils/test_query_encoding.py
-
-LICENSE

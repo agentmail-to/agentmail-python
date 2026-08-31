@@ -71,7 +71,7 @@ class ThreadsClient:
 
         **CLI:**
         ```bash
-        agentmail pods:threads list --pod-id <pod_id>
+        agentmail pods threads list --pod-id <pod_id>
         ```
 
         Parameters
@@ -205,7 +205,7 @@ class ThreadsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:threads get --pod-id <pod_id> --thread-id <thread_id>
+        agentmail pods threads get --pod-id <pod_id> --thread-id <thread_id>
         ```
 
         Parameters
@@ -247,7 +247,7 @@ class ThreadsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:threads get-attachment --pod-id <pod_id> --thread-id <thread_id> --attachment-id <attachment_id>
+        agentmail pods threads get-attachment --pod-id <pod_id> --thread-id <thread_id> --attachment-id <attachment_id>
         ```
 
         Parameters
@@ -337,7 +337,7 @@ class ThreadsClient:
 
         **CLI:**
         ```bash
-        agentmail pods:threads delete --pod-id <pod_id> --thread-id <thread_id>
+        agentmail pods threads delete --pod-id <pod_id> --thread-id <thread_id>
         ```
 
         Parameters
@@ -411,7 +411,7 @@ class AsyncThreadsClient:
 
         **CLI:**
         ```bash
-        agentmail pods:threads list --pod-id <pod_id>
+        agentmail pods threads list --pod-id <pod_id>
         ```
 
         Parameters
@@ -561,7 +561,7 @@ class AsyncThreadsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:threads get --pod-id <pod_id> --thread-id <thread_id>
+        agentmail pods threads get --pod-id <pod_id> --thread-id <thread_id>
         ```
 
         Parameters
@@ -611,7 +611,7 @@ class AsyncThreadsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:threads get-attachment --pod-id <pod_id> --thread-id <thread_id> --attachment-id <attachment_id>
+        agentmail pods threads get-attachment --pod-id <pod_id> --thread-id <thread_id> --attachment-id <attachment_id>
         ```
 
         Parameters
@@ -719,7 +719,7 @@ class AsyncThreadsClient:
 
         **CLI:**
         ```bash
-        agentmail pods:threads delete --pod-id <pod_id> --thread-id <thread_id>
+        agentmail pods threads delete --pod-id <pod_id> --thread-id <thread_id>
         ```
 
         Parameters

@@ -23,8 +23,12 @@ from ..types.page_token import PageToken
 from ..types.validation_error_response import ValidationErrorResponse
 from .types.api_key_id import ApiKeyId
 from .types.api_key_permissions import ApiKeyPermissions
+from .types.browser_authorization_list_limit import BrowserAuthorizationListLimit
 from .types.create_api_key_response import CreateApiKeyResponse
 from .types.list_api_keys_response import ListApiKeysResponse
+from .types.list_browser_consents_response import ListBrowserConsentsResponse
+from .types.list_browser_credentials_response import ListBrowserCredentialsResponse
+from .types.list_browser_lifecycle_events_response import ListBrowserLifecycleEventsResponse
 from .types.list_public_keys_response import ListPublicKeysResponse
 from .types.name import Name
 from .types.public_jwk import PublicJwk
@@ -568,6 +572,326 @@ class RawApiKeysClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def list_browser_credentials(
+        self,
+        *,
+        limit: typing.Optional[BrowserAuthorizationListLimit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[ListBrowserCredentialsResponse]:
+        """
+        List active browser credentials visible to the caller's scope. Requires `api_key_read`.
+
+        Parameters
+        ----------
+        limit : typing.Optional[BrowserAuthorizationListLimit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ListBrowserCredentialsResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v0/api-keys/browser-credentials",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            params={
+                "limit": limit,
+                "page_token": page_token,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ListBrowserCredentialsResponse,
+                    construct_type(
+                        type_=ListBrowserCredentialsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def list_browser_credential_events(
+        self,
+        *,
+        limit: typing.Optional[BrowserAuthorizationListLimit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[ListBrowserLifecycleEventsResponse]:
+        """
+        List owner-facing browser credential and consent lifecycle events. Requires `api_key_read`.
+
+        Parameters
+        ----------
+        limit : typing.Optional[BrowserAuthorizationListLimit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ListBrowserLifecycleEventsResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v0/api-keys/browser-credentials/events",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            params={
+                "limit": limit,
+                "page_token": page_token,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ListBrowserLifecycleEventsResponse,
+                    construct_type(
+                        type_=ListBrowserLifecycleEventsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def delete_browser_credential(
+        self, credential_id: uuid.UUID, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[None]:
+        """
+        Permanently revoke one active browser credential. Requires `api_key_delete`.
+
+        Parameters
+        ----------
+        credential_id : uuid.UUID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/api-keys/browser-credentials/{jsonable_encoder(credential_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def cancel_browser_enrollment(
+        self, enrollment_id: uuid.UUID, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[None]:
+        """
+        Cancel one pending, unexpired browser enrollment intent. Requires `api_key_delete`.
+
+        Parameters
+        ----------
+        enrollment_id : uuid.UUID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/api-keys/browser-credentials/enrollments/{jsonable_encoder(enrollment_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def list_browser_consents(
+        self,
+        *,
+        inbox_id: str,
+        limit: typing.Optional[BrowserAuthorizationListLimit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[ListBrowserConsentsResponse]:
+        """
+        List remembered AgentID client approvals for one live inbox. Requires `api_key_read`.
+
+        Parameters
+        ----------
+        inbox_id : str
+
+        limit : typing.Optional[BrowserAuthorizationListLimit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ListBrowserConsentsResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v0/api-keys/browser-consents",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            params={
+                "inbox_id": inbox_id,
+                "limit": limit,
+                "page_token": page_token,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ListBrowserConsentsResponse,
+                    construct_type(
+                        type_=ListBrowserConsentsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def delete_browser_consent(
+        self, consent_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[None]:
+        """
+        Revoke one remembered AgentID client approval. Requires `api_key_delete`.
+
+        Parameters
+        ----------
+        consent_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[None]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/api-keys/browser-consents/{jsonable_encoder(consent_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return HttpResponse(response=_response, data=None)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawApiKeysClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -1082,6 +1406,326 @@ class AsyncRawApiKeysClient:
                 )
             if _response.status_code == 409:
                 raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def list_browser_credentials(
+        self,
+        *,
+        limit: typing.Optional[BrowserAuthorizationListLimit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[ListBrowserCredentialsResponse]:
+        """
+        List active browser credentials visible to the caller's scope. Requires `api_key_read`.
+
+        Parameters
+        ----------
+        limit : typing.Optional[BrowserAuthorizationListLimit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ListBrowserCredentialsResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v0/api-keys/browser-credentials",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            params={
+                "limit": limit,
+                "page_token": page_token,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ListBrowserCredentialsResponse,
+                    construct_type(
+                        type_=ListBrowserCredentialsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def list_browser_credential_events(
+        self,
+        *,
+        limit: typing.Optional[BrowserAuthorizationListLimit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[ListBrowserLifecycleEventsResponse]:
+        """
+        List owner-facing browser credential and consent lifecycle events. Requires `api_key_read`.
+
+        Parameters
+        ----------
+        limit : typing.Optional[BrowserAuthorizationListLimit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ListBrowserLifecycleEventsResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v0/api-keys/browser-credentials/events",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            params={
+                "limit": limit,
+                "page_token": page_token,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ListBrowserLifecycleEventsResponse,
+                    construct_type(
+                        type_=ListBrowserLifecycleEventsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def delete_browser_credential(
+        self, credential_id: uuid.UUID, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[None]:
+        """
+        Permanently revoke one active browser credential. Requires `api_key_delete`.
+
+        Parameters
+        ----------
+        credential_id : uuid.UUID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/api-keys/browser-credentials/{jsonable_encoder(credential_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def cancel_browser_enrollment(
+        self, enrollment_id: uuid.UUID, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[None]:
+        """
+        Cancel one pending, unexpired browser enrollment intent. Requires `api_key_delete`.
+
+        Parameters
+        ----------
+        enrollment_id : uuid.UUID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/api-keys/browser-credentials/enrollments/{jsonable_encoder(enrollment_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def list_browser_consents(
+        self,
+        *,
+        inbox_id: str,
+        limit: typing.Optional[BrowserAuthorizationListLimit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[ListBrowserConsentsResponse]:
+        """
+        List remembered AgentID client approvals for one live inbox. Requires `api_key_read`.
+
+        Parameters
+        ----------
+        inbox_id : str
+
+        limit : typing.Optional[BrowserAuthorizationListLimit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ListBrowserConsentsResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v0/api-keys/browser-consents",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            params={
+                "inbox_id": inbox_id,
+                "limit": limit,
+                "page_token": page_token,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ListBrowserConsentsResponse,
+                    construct_type(
+                        type_=ListBrowserConsentsResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def delete_browser_consent(
+        self, consent_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[None]:
+        """
+        Revoke one remembered AgentID client approval. Requires `api_key_delete`.
+
+        Parameters
+        ----------
+        consent_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[None]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/api-keys/browser-consents/{jsonable_encoder(consent_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="DELETE",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                return AsyncHttpResponse(response=_response, data=None)
+            if _response.status_code == 404:
+                raise NotFoundError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,

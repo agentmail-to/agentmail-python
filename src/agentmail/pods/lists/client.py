@@ -45,7 +45,7 @@ class ListsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:lists list --pod-id <pod_id> --direction <direction> --type <type>
+        agentmail pods lists list --pod-id <pod_id> --direction <direction> --type <type>
         ```
 
         Parameters
@@ -97,7 +97,7 @@ class ListsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:lists get --pod-id <pod_id> --direction <direction> --type <type> --entry <entry>
+        agentmail pods lists get --pod-id <pod_id> --direction <direction> --type <type> --entry <entry>
         ```
 
         Parameters
@@ -148,7 +148,7 @@ class ListsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:lists create --pod-id <pod_id> --direction <direction> --type <type> --entry user@example.com
+        agentmail pods lists create --pod-id <pod_id> --direction <direction> --type <type> --entry user@example.com
         ```
 
         Parameters
@@ -203,7 +203,7 @@ class ListsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:lists delete --pod-id <pod_id> --direction <direction> --type <type> --entry <entry>
+        agentmail pods lists delete --pod-id <pod_id> --direction <direction> --type <type> --entry <entry>
         ```
 
         Parameters
@@ -270,7 +270,7 @@ class AsyncListsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:lists list --pod-id <pod_id> --direction <direction> --type <type>
+        agentmail pods lists list --pod-id <pod_id> --direction <direction> --type <type>
         ```
 
         Parameters
@@ -330,7 +330,7 @@ class AsyncListsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:lists get --pod-id <pod_id> --direction <direction> --type <type> --entry <entry>
+        agentmail pods lists get --pod-id <pod_id> --direction <direction> --type <type> --entry <entry>
         ```
 
         Parameters
@@ -389,7 +389,7 @@ class AsyncListsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:lists create --pod-id <pod_id> --direction <direction> --type <type> --entry user@example.com
+        agentmail pods lists create --pod-id <pod_id> --direction <direction> --type <type> --entry user@example.com
         ```
 
         Parameters
@@ -452,7 +452,7 @@ class AsyncListsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:lists delete --pod-id <pod_id> --direction <direction> --type <type> --entry <entry>
+        agentmail pods lists delete --pod-id <pod_id> --direction <direction> --type <type> --entry <entry>
         ```
 
         Parameters

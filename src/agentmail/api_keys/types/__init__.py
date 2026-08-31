@@ -9,12 +9,34 @@ if typing.TYPE_CHECKING:
     from .api_key import ApiKey
     from .api_key_id import ApiKeyId
     from .api_key_permissions import ApiKeyPermissions
+    from .browser_authorization_list_limit import BrowserAuthorizationListLimit
+    from .browser_consent import BrowserConsent
+    from .browser_consent_lifecycle_event import BrowserConsentLifecycleEvent
+    from .browser_consent_lifecycle_event_type import BrowserConsentLifecycleEventType
+    from .browser_credential import BrowserCredential
+    from .browser_credential_creator import BrowserCredentialCreator
+    from .browser_enrollment_accepted import BrowserEnrollmentAccepted
+    from .browser_enrollment_lifecycle_event import BrowserEnrollmentLifecycleEvent
+    from .browser_enrollment_lifecycle_event_type import BrowserEnrollmentLifecycleEventType
+    from .browser_enrollment_transaction_jti import BrowserEnrollmentTransactionJti
+    from .browser_lifecycle_actor import (
+        BrowserLifecycleActor,
+        BrowserLifecycleActor_ApiKey,
+        BrowserLifecycleActor_BrowserCredential,
+    )
+    from .browser_lifecycle_api_key_actor import BrowserLifecycleApiKeyActor
+    from .browser_lifecycle_credential_actor import BrowserLifecycleCredentialActor
+    from .browser_lifecycle_event import BrowserLifecycleEvent
     from .create_api_key_request import CreateApiKeyRequest
     from .create_api_key_response import CreateApiKeyResponse
+    from .create_browser_enrollment_request import CreateBrowserEnrollmentRequest
     from .create_public_key_request import CreatePublicKeyRequest
     from .created_at import CreatedAt
     from .inbox_public_key_scope import InboxPublicKeyScope
     from .list_api_keys_response import ListApiKeysResponse
+    from .list_browser_consents_response import ListBrowserConsentsResponse
+    from .list_browser_credentials_response import ListBrowserCredentialsResponse
+    from .list_browser_lifecycle_events_response import ListBrowserLifecycleEventsResponse
     from .list_public_keys_response import ListPublicKeysResponse
     from .name import Name
     from .organization_public_key_scope import OrganizationPublicKeyScope
@@ -31,12 +53,32 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ApiKey": ".api_key",
     "ApiKeyId": ".api_key_id",
     "ApiKeyPermissions": ".api_key_permissions",
+    "BrowserAuthorizationListLimit": ".browser_authorization_list_limit",
+    "BrowserConsent": ".browser_consent",
+    "BrowserConsentLifecycleEvent": ".browser_consent_lifecycle_event",
+    "BrowserConsentLifecycleEventType": ".browser_consent_lifecycle_event_type",
+    "BrowserCredential": ".browser_credential",
+    "BrowserCredentialCreator": ".browser_credential_creator",
+    "BrowserEnrollmentAccepted": ".browser_enrollment_accepted",
+    "BrowserEnrollmentLifecycleEvent": ".browser_enrollment_lifecycle_event",
+    "BrowserEnrollmentLifecycleEventType": ".browser_enrollment_lifecycle_event_type",
+    "BrowserEnrollmentTransactionJti": ".browser_enrollment_transaction_jti",
+    "BrowserLifecycleActor": ".browser_lifecycle_actor",
+    "BrowserLifecycleActor_ApiKey": ".browser_lifecycle_actor",
+    "BrowserLifecycleActor_BrowserCredential": ".browser_lifecycle_actor",
+    "BrowserLifecycleApiKeyActor": ".browser_lifecycle_api_key_actor",
+    "BrowserLifecycleCredentialActor": ".browser_lifecycle_credential_actor",
+    "BrowserLifecycleEvent": ".browser_lifecycle_event",
     "CreateApiKeyRequest": ".create_api_key_request",
     "CreateApiKeyResponse": ".create_api_key_response",
+    "CreateBrowserEnrollmentRequest": ".create_browser_enrollment_request",
     "CreatePublicKeyRequest": ".create_public_key_request",
     "CreatedAt": ".created_at",
     "InboxPublicKeyScope": ".inbox_public_key_scope",
     "ListApiKeysResponse": ".list_api_keys_response",
+    "ListBrowserConsentsResponse": ".list_browser_consents_response",
+    "ListBrowserCredentialsResponse": ".list_browser_credentials_response",
+    "ListBrowserLifecycleEventsResponse": ".list_browser_lifecycle_events_response",
     "ListPublicKeysResponse": ".list_public_keys_response",
     "Name": ".name",
     "OrganizationPublicKeyScope": ".organization_public_key_scope",
@@ -80,12 +122,32 @@ __all__ = [
     "ApiKey",
     "ApiKeyId",
     "ApiKeyPermissions",
+    "BrowserAuthorizationListLimit",
+    "BrowserConsent",
+    "BrowserConsentLifecycleEvent",
+    "BrowserConsentLifecycleEventType",
+    "BrowserCredential",
+    "BrowserCredentialCreator",
+    "BrowserEnrollmentAccepted",
+    "BrowserEnrollmentLifecycleEvent",
+    "BrowserEnrollmentLifecycleEventType",
+    "BrowserEnrollmentTransactionJti",
+    "BrowserLifecycleActor",
+    "BrowserLifecycleActor_ApiKey",
+    "BrowserLifecycleActor_BrowserCredential",
+    "BrowserLifecycleApiKeyActor",
+    "BrowserLifecycleCredentialActor",
+    "BrowserLifecycleEvent",
     "CreateApiKeyRequest",
     "CreateApiKeyResponse",
+    "CreateBrowserEnrollmentRequest",
     "CreatePublicKeyRequest",
     "CreatedAt",
     "InboxPublicKeyScope",
     "ListApiKeysResponse",
+    "ListBrowserConsentsResponse",
+    "ListBrowserCredentialsResponse",
+    "ListBrowserLifecycleEventsResponse",
     "ListPublicKeysResponse",
     "Name",
     "OrganizationPublicKeyScope",

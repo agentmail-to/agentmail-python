@@ -72,7 +72,7 @@ class RawThreadsClient:
 
         **CLI:**
         ```bash
-        agentmail inboxes:threads list --inbox-id <inbox_id>
+        agentmail inboxes threads list --inbox-id <inbox_id>
         ```
 
         Parameters
@@ -264,7 +264,7 @@ class RawThreadsClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:threads get --inbox-id <inbox_id> --thread-id <thread_id>
+        agentmail inboxes threads get --inbox-id <inbox_id> --thread-id <thread_id>
         ```
 
         Parameters
@@ -327,7 +327,7 @@ class RawThreadsClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:threads get-attachment --inbox-id <inbox_id> --thread-id <thread_id> --attachment-id <attachment_id>
+        agentmail inboxes threads get-attachment --inbox-id <inbox_id> --thread-id <thread_id> --attachment-id <attachment_id>
         ```
 
         Parameters
@@ -483,7 +483,7 @@ class RawThreadsClient:
 
         **CLI:**
         ```bash
-        agentmail inboxes:threads delete --inbox-id <inbox_id> --thread-id <thread_id>
+        agentmail inboxes threads delete --inbox-id <inbox_id> --thread-id <thread_id>
         ```
 
         Parameters
@@ -560,7 +560,7 @@ class AsyncRawThreadsClient:
 
         **CLI:**
         ```bash
-        agentmail inboxes:threads list --inbox-id <inbox_id>
+        agentmail inboxes threads list --inbox-id <inbox_id>
         ```
 
         Parameters
@@ -752,7 +752,7 @@ class AsyncRawThreadsClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:threads get --inbox-id <inbox_id> --thread-id <thread_id>
+        agentmail inboxes threads get --inbox-id <inbox_id> --thread-id <thread_id>
         ```
 
         Parameters
@@ -815,7 +815,7 @@ class AsyncRawThreadsClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:threads get-attachment --inbox-id <inbox_id> --thread-id <thread_id> --attachment-id <attachment_id>
+        agentmail inboxes threads get-attachment --inbox-id <inbox_id> --thread-id <thread_id> --attachment-id <attachment_id>
         ```
 
         Parameters
@@ -971,7 +971,7 @@ class AsyncRawThreadsClient:
 
         **CLI:**
         ```bash
-        agentmail inboxes:threads delete --inbox-id <inbox_id> --thread-id <thread_id>
+        agentmail inboxes threads delete --inbox-id <inbox_id> --thread-id <thread_id>
         ```
 
         Parameters

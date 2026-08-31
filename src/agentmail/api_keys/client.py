@@ -12,8 +12,12 @@ from ..types.page_token import PageToken
 from .raw_client import AsyncRawApiKeysClient, RawApiKeysClient
 from .types.api_key_id import ApiKeyId
 from .types.api_key_permissions import ApiKeyPermissions
+from .types.browser_authorization_list_limit import BrowserAuthorizationListLimit
 from .types.create_api_key_response import CreateApiKeyResponse
 from .types.list_api_keys_response import ListApiKeysResponse
+from .types.list_browser_consents_response import ListBrowserConsentsResponse
+from .types.list_browser_credentials_response import ListBrowserCredentialsResponse
+from .types.list_browser_lifecycle_events_response import ListBrowserLifecycleEventsResponse
 from .types.list_public_keys_response import ListPublicKeysResponse
 from .types.name import Name
 from .types.public_jwk import PublicJwk
@@ -370,6 +374,223 @@ class ApiKeysClient:
         _response = self._raw_client.revoke_all_agent_id_sign_in_keys(
             idempotency_key=idempotency_key, request_options=request_options
         )
+        return _response.data
+
+    def list_browser_credentials(
+        self,
+        *,
+        limit: typing.Optional[BrowserAuthorizationListLimit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ListBrowserCredentialsResponse:
+        """
+        List active browser credentials visible to the caller's scope. Requires `api_key_read`.
+
+        Parameters
+        ----------
+        limit : typing.Optional[BrowserAuthorizationListLimit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListBrowserCredentialsResponse
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.api_keys.list_browser_credentials()
+        """
+        _response = self._raw_client.list_browser_credentials(
+            limit=limit, page_token=page_token, request_options=request_options
+        )
+        return _response.data
+
+    def list_browser_credential_events(
+        self,
+        *,
+        limit: typing.Optional[BrowserAuthorizationListLimit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ListBrowserLifecycleEventsResponse:
+        """
+        List owner-facing browser credential and consent lifecycle events. Requires `api_key_read`.
+
+        Parameters
+        ----------
+        limit : typing.Optional[BrowserAuthorizationListLimit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListBrowserLifecycleEventsResponse
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.api_keys.list_browser_credential_events()
+        """
+        _response = self._raw_client.list_browser_credential_events(
+            limit=limit, page_token=page_token, request_options=request_options
+        )
+        return _response.data
+
+    def delete_browser_credential(
+        self, credential_id: uuid.UUID, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Permanently revoke one active browser credential. Requires `api_key_delete`.
+
+        Parameters
+        ----------
+        credential_id : uuid.UUID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import uuid
+
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.api_keys.delete_browser_credential(
+            credential_id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+        )
+        """
+        _response = self._raw_client.delete_browser_credential(credential_id, request_options=request_options)
+        return _response.data
+
+    def cancel_browser_enrollment(
+        self, enrollment_id: uuid.UUID, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Cancel one pending, unexpired browser enrollment intent. Requires `api_key_delete`.
+
+        Parameters
+        ----------
+        enrollment_id : uuid.UUID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import uuid
+
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.api_keys.cancel_browser_enrollment(
+            enrollment_id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+        )
+        """
+        _response = self._raw_client.cancel_browser_enrollment(enrollment_id, request_options=request_options)
+        return _response.data
+
+    def list_browser_consents(
+        self,
+        *,
+        inbox_id: str,
+        limit: typing.Optional[BrowserAuthorizationListLimit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ListBrowserConsentsResponse:
+        """
+        List remembered AgentID client approvals for one live inbox. Requires `api_key_read`.
+
+        Parameters
+        ----------
+        inbox_id : str
+
+        limit : typing.Optional[BrowserAuthorizationListLimit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListBrowserConsentsResponse
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.api_keys.list_browser_consents(
+            inbox_id="inbox_id",
+        )
+        """
+        _response = self._raw_client.list_browser_consents(
+            inbox_id=inbox_id, limit=limit, page_token=page_token, request_options=request_options
+        )
+        return _response.data
+
+    def delete_browser_consent(
+        self, consent_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Revoke one remembered AgentID client approval. Requires `api_key_delete`.
+
+        Parameters
+        ----------
+        consent_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.api_keys.delete_browser_consent(
+            consent_id="consent_id",
+        )
+        """
+        _response = self._raw_client.delete_browser_consent(consent_id, request_options=request_options)
         return _response.data
 
 
@@ -782,4 +1003,267 @@ class AsyncApiKeysClient:
         _response = await self._raw_client.revoke_all_agent_id_sign_in_keys(
             idempotency_key=idempotency_key, request_options=request_options
         )
+        return _response.data
+
+    async def list_browser_credentials(
+        self,
+        *,
+        limit: typing.Optional[BrowserAuthorizationListLimit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ListBrowserCredentialsResponse:
+        """
+        List active browser credentials visible to the caller's scope. Requires `api_key_read`.
+
+        Parameters
+        ----------
+        limit : typing.Optional[BrowserAuthorizationListLimit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListBrowserCredentialsResponse
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.api_keys.list_browser_credentials()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list_browser_credentials(
+            limit=limit, page_token=page_token, request_options=request_options
+        )
+        return _response.data
+
+    async def list_browser_credential_events(
+        self,
+        *,
+        limit: typing.Optional[BrowserAuthorizationListLimit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ListBrowserLifecycleEventsResponse:
+        """
+        List owner-facing browser credential and consent lifecycle events. Requires `api_key_read`.
+
+        Parameters
+        ----------
+        limit : typing.Optional[BrowserAuthorizationListLimit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListBrowserLifecycleEventsResponse
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.api_keys.list_browser_credential_events()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list_browser_credential_events(
+            limit=limit, page_token=page_token, request_options=request_options
+        )
+        return _response.data
+
+    async def delete_browser_credential(
+        self, credential_id: uuid.UUID, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Permanently revoke one active browser credential. Requires `api_key_delete`.
+
+        Parameters
+        ----------
+        credential_id : uuid.UUID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+        import uuid
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.api_keys.delete_browser_credential(
+                credential_id=uuid.UUID(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete_browser_credential(credential_id, request_options=request_options)
+        return _response.data
+
+    async def cancel_browser_enrollment(
+        self, enrollment_id: uuid.UUID, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Cancel one pending, unexpired browser enrollment intent. Requires `api_key_delete`.
+
+        Parameters
+        ----------
+        enrollment_id : uuid.UUID
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+        import uuid
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.api_keys.cancel_browser_enrollment(
+                enrollment_id=uuid.UUID(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.cancel_browser_enrollment(enrollment_id, request_options=request_options)
+        return _response.data
+
+    async def list_browser_consents(
+        self,
+        *,
+        inbox_id: str,
+        limit: typing.Optional[BrowserAuthorizationListLimit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ListBrowserConsentsResponse:
+        """
+        List remembered AgentID client approvals for one live inbox. Requires `api_key_read`.
+
+        Parameters
+        ----------
+        inbox_id : str
+
+        limit : typing.Optional[BrowserAuthorizationListLimit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ListBrowserConsentsResponse
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.api_keys.list_browser_consents(
+                inbox_id="inbox_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.list_browser_consents(
+            inbox_id=inbox_id, limit=limit, page_token=page_token, request_options=request_options
+        )
+        return _response.data
+
+    async def delete_browser_consent(
+        self, consent_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
+        """
+        Revoke one remembered AgentID client approval. Requires `api_key_delete`.
+
+        Parameters
+        ----------
+        consent_id : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.api_keys.delete_browser_consent(
+                consent_id="consent_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.delete_browser_consent(consent_id, request_options=request_options)
         return _response.data

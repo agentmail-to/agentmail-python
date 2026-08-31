@@ -49,7 +49,7 @@ class DraftsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:drafts list --pod-id <pod_id>
+        agentmail pods drafts list --pod-id <pod_id>
         ```
 
         Parameters
@@ -104,7 +104,7 @@ class DraftsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:drafts get --pod-id <pod_id> --draft-id <draft_id>
+        agentmail pods drafts get --pod-id <pod_id> --draft-id <draft_id>
         ```
 
         Parameters
@@ -146,7 +146,7 @@ class DraftsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:drafts get-attachment --pod-id <pod_id> --draft-id <draft_id> --attachment-id <attachment_id>
+        agentmail pods drafts get-attachment --pod-id <pod_id> --draft-id <draft_id> --attachment-id <attachment_id>
         ```
 
         Parameters
@@ -211,7 +211,7 @@ class AsyncDraftsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:drafts list --pod-id <pod_id>
+        agentmail pods drafts list --pod-id <pod_id>
         ```
 
         Parameters
@@ -274,7 +274,7 @@ class AsyncDraftsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:drafts get --pod-id <pod_id> --draft-id <draft_id>
+        agentmail pods drafts get --pod-id <pod_id> --draft-id <draft_id>
         ```
 
         Parameters
@@ -324,7 +324,7 @@ class AsyncDraftsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:drafts get-attachment --pod-id <pod_id> --draft-id <draft_id> --attachment-id <attachment_id>
+        agentmail pods drafts get-attachment --pod-id <pod_id> --draft-id <draft_id> --attachment-id <attachment_id>
         ```
 
         Parameters

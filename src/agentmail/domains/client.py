@@ -12,8 +12,10 @@ from .types.domain import Domain
 from .types.domain_id import DomainId
 from .types.domain_name import DomainName
 from .types.feedback_enabled import FeedbackEnabled
+from .types.get_setup_link_response import GetSetupLinkResponse
 from .types.list_domains_response import ListDomainsResponse
 from .types.subdomains_enabled import SubdomainsEnabled
+from .types.tracking_enabled import TrackingEnabled
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -149,6 +151,7 @@ class DomainsClient:
         domain: DomainName,
         feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
         subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
+        tracking_enabled: typing.Optional[TrackingEnabled] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Domain:
         """
@@ -164,6 +167,8 @@ class DomainsClient:
         feedback_enabled : typing.Optional[FeedbackEnabled]
 
         subdomains_enabled : typing.Optional[SubdomainsEnabled]
+
+        tracking_enabled : typing.Optional[TrackingEnabled]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -187,6 +192,7 @@ class DomainsClient:
             domain=domain,
             feedback_enabled=feedback_enabled,
             subdomains_enabled=subdomains_enabled,
+            tracking_enabled=tracking_enabled,
             request_options=request_options,
         )
         return _response.data
@@ -197,6 +203,7 @@ class DomainsClient:
         *,
         feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
         subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
+        tracking_enabled: typing.Optional[TrackingEnabled] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Domain:
         """
@@ -212,6 +219,8 @@ class DomainsClient:
         feedback_enabled : typing.Optional[FeedbackEnabled]
 
         subdomains_enabled : typing.Optional[SubdomainsEnabled]
+
+        tracking_enabled : typing.Optional[TrackingEnabled]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -235,6 +244,7 @@ class DomainsClient:
             domain_id,
             feedback_enabled=feedback_enabled,
             subdomains_enabled=subdomains_enabled,
+            tracking_enabled=tracking_enabled,
             request_options=request_options,
         )
         return _response.data
@@ -301,6 +311,37 @@ class DomainsClient:
         )
         """
         _response = self._raw_client.verify(domain_id, request_options=request_options)
+        return _response.data
+
+    def get_setup_link(
+        self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetSetupLinkResponse:
+        """
+        Build a one-click DNS setup link for the domain via the Domain Connect standard. When the domain's DNS provider supports Domain Connect and carries the AgentMail template, the response contains a signed URL: opening it lets the domain owner approve the required DNS records at their provider, which writes them automatically — no copy-paste. When the provider does not support it, `supported` is `false` and the domain's `records` should be added manually instead.
+
+        Parameters
+        ----------
+        domain_id : DomainId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetSetupLinkResponse
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.domains.get_setup_link(
+            domain_id="domain_id",
+        )
+        """
+        _response = self._raw_client.get_setup_link(domain_id, request_options=request_options)
         return _response.data
 
 
@@ -459,6 +500,7 @@ class AsyncDomainsClient:
         domain: DomainName,
         feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
         subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
+        tracking_enabled: typing.Optional[TrackingEnabled] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Domain:
         """
@@ -474,6 +516,8 @@ class AsyncDomainsClient:
         feedback_enabled : typing.Optional[FeedbackEnabled]
 
         subdomains_enabled : typing.Optional[SubdomainsEnabled]
+
+        tracking_enabled : typing.Optional[TrackingEnabled]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -505,6 +549,7 @@ class AsyncDomainsClient:
             domain=domain,
             feedback_enabled=feedback_enabled,
             subdomains_enabled=subdomains_enabled,
+            tracking_enabled=tracking_enabled,
             request_options=request_options,
         )
         return _response.data
@@ -515,6 +560,7 @@ class AsyncDomainsClient:
         *,
         feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
         subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
+        tracking_enabled: typing.Optional[TrackingEnabled] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Domain:
         """
@@ -530,6 +576,8 @@ class AsyncDomainsClient:
         feedback_enabled : typing.Optional[FeedbackEnabled]
 
         subdomains_enabled : typing.Optional[SubdomainsEnabled]
+
+        tracking_enabled : typing.Optional[TrackingEnabled]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -561,6 +609,7 @@ class AsyncDomainsClient:
             domain_id,
             feedback_enabled=feedback_enabled,
             subdomains_enabled=subdomains_enabled,
+            tracking_enabled=tracking_enabled,
             request_options=request_options,
         )
         return _response.data
@@ -643,4 +692,43 @@ class AsyncDomainsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.verify(domain_id, request_options=request_options)
+        return _response.data
+
+    async def get_setup_link(
+        self, domain_id: DomainId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> GetSetupLinkResponse:
+        """
+        Build a one-click DNS setup link for the domain via the Domain Connect standard. When the domain's DNS provider supports Domain Connect and carries the AgentMail template, the response contains a signed URL: opening it lets the domain owner approve the required DNS records at their provider, which writes them automatically — no copy-paste. When the provider does not support it, `supported` is `false` and the domain's `records` should be added manually instead.
+
+        Parameters
+        ----------
+        domain_id : DomainId
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        GetSetupLinkResponse
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.domains.get_setup_link(
+                domain_id="domain_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_setup_link(domain_id, request_options=request_options)
         return _response.data

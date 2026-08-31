@@ -160,7 +160,7 @@ class WebhooksClient:
         """
         **CLI:**
         ```bash
-        agentmail webhooks create --url https://example.com/webhook --event-type message.received
+        agentmail webhooks create --url https://example.com/webhook --event-types message.received
         ```
 
         Parameters
@@ -224,7 +224,7 @@ class WebhooksClient:
 
         **CLI:**
         ```bash
-        agentmail webhooks update --webhook-id <webhook_id> --add-inbox-id <inbox_id>
+        agentmail webhooks update --webhook-id <webhook_id> --add-inbox-ids <inbox_id>
         ```
 
         Parameters
@@ -511,7 +511,7 @@ class AsyncWebhooksClient:
         """
         **CLI:**
         ```bash
-        agentmail webhooks create --url https://example.com/webhook --event-type message.received
+        agentmail webhooks create --url https://example.com/webhook --event-types message.received
         ```
 
         Parameters
@@ -583,7 +583,7 @@ class AsyncWebhooksClient:
 
         **CLI:**
         ```bash
-        agentmail webhooks update --webhook-id <webhook_id> --add-inbox-id <inbox_id>
+        agentmail webhooks update --webhook-id <webhook_id> --add-inbox-ids <inbox_id>
         ```
 
         Parameters

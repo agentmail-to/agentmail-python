@@ -8,12 +8,14 @@ from ...core.unchecked_base_model import UncheckedBaseModel
 from .domain_name import DomainName
 from .feedback_enabled import FeedbackEnabled
 from .subdomains_enabled import SubdomainsEnabled
+from .tracking_enabled import TrackingEnabled
 
 
 class CreateDomainRequest(UncheckedBaseModel):
     domain: DomainName
     feedback_enabled: typing.Optional[FeedbackEnabled] = None
     subdomains_enabled: typing.Optional[SubdomainsEnabled] = None
+    tracking_enabled: typing.Optional[TrackingEnabled] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

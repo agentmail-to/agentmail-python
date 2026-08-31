@@ -13,6 +13,7 @@ from ..events.types.domain_verified_event import DomainVerifiedEvent
 from ..events.types.message_bounced_event import MessageBouncedEvent
 from ..events.types.message_complained_event import MessageComplainedEvent
 from ..events.types.message_delivered_event import MessageDeliveredEvent
+from ..events.types.message_opened_event import MessageOpenedEvent
 from ..events.types.message_received_event import MessageReceivedEvent
 from ..events.types.message_rejected_event import MessageRejectedEvent
 from ..events.types.message_sent_event import MessageSentEvent
@@ -34,6 +35,7 @@ WebsocketsSocketClientResponse = typing.Union[
     MessageBouncedEvent,
     MessageComplainedEvent,
     MessageRejectedEvent,
+    MessageOpenedEvent,
     DomainVerifiedEvent,
     Error,
 ]

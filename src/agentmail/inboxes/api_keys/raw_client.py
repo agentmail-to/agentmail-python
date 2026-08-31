@@ -44,7 +44,7 @@ class RawApiKeysClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:api-keys list --inbox-id <inbox_id>
+        agentmail inboxes api-keys list --inbox-id <inbox_id>
         ```
 
         Parameters
@@ -113,7 +113,7 @@ class RawApiKeysClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:api-keys create --inbox-id <inbox_id> --name "My Key"
+        agentmail inboxes api-keys create --inbox-id <inbox_id> --name "My Key"
         ```
 
         Parameters
@@ -191,7 +191,7 @@ class RawApiKeysClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:api-keys delete --inbox-id <inbox_id> --api-key-id <api_key_id>
+        agentmail inboxes api-keys delete --inbox-id <inbox_id> --api-key-id <api_key_id>
         ```
 
         Parameters
@@ -252,7 +252,7 @@ class AsyncRawApiKeysClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:api-keys list --inbox-id <inbox_id>
+        agentmail inboxes api-keys list --inbox-id <inbox_id>
         ```
 
         Parameters
@@ -321,7 +321,7 @@ class AsyncRawApiKeysClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:api-keys create --inbox-id <inbox_id> --name "My Key"
+        agentmail inboxes api-keys create --inbox-id <inbox_id> --name "My Key"
         ```
 
         Parameters
@@ -399,7 +399,7 @@ class AsyncRawApiKeysClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:api-keys delete --inbox-id <inbox_id> --api-key-id <api_key_id>
+        agentmail inboxes api-keys delete --inbox-id <inbox_id> --api-key-id <api_key_id>
         ```
 
         Parameters

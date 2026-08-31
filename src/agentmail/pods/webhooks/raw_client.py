@@ -50,7 +50,7 @@ class RawWebhooksClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:webhooks list --pod-id <pod_id>
+        agentmail pods webhooks list --pod-id <pod_id>
         ```
 
         Parameters
@@ -106,7 +106,7 @@ class RawWebhooksClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:webhooks get --pod-id <pod_id> --webhook-id <webhook_id>
+        agentmail pods webhooks get --pod-id <pod_id> --webhook-id <webhook_id>
         ```
 
         Parameters
@@ -230,7 +230,7 @@ class RawWebhooksClient:
 
         **CLI:**
         ```bash
-        agentmail pods:webhooks create --pod-id <pod_id> --url https://example.com/webhook --event-type message.received
+        agentmail pods webhooks create --pod-id <pod_id> --url https://example.com/webhook --event-types message.received
         ```
 
         Parameters
@@ -311,7 +311,7 @@ class RawWebhooksClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:webhooks update --pod-id <pod_id> --webhook-id <webhook_id> --add-inbox-id <inbox_id>
+        agentmail pods webhooks update --pod-id <pod_id> --webhook-id <webhook_id> --add-inbox-ids <inbox_id>
         ```
 
         Parameters
@@ -470,7 +470,7 @@ class RawWebhooksClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:webhooks delete --pod-id <pod_id> --webhook-id <webhook_id>
+        agentmail pods webhooks delete --pod-id <pod_id> --webhook-id <webhook_id>
         ```
 
         Parameters
@@ -532,7 +532,7 @@ class AsyncRawWebhooksClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:webhooks list --pod-id <pod_id>
+        agentmail pods webhooks list --pod-id <pod_id>
         ```
 
         Parameters
@@ -588,7 +588,7 @@ class AsyncRawWebhooksClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:webhooks get --pod-id <pod_id> --webhook-id <webhook_id>
+        agentmail pods webhooks get --pod-id <pod_id> --webhook-id <webhook_id>
         ```
 
         Parameters
@@ -712,7 +712,7 @@ class AsyncRawWebhooksClient:
 
         **CLI:**
         ```bash
-        agentmail pods:webhooks create --pod-id <pod_id> --url https://example.com/webhook --event-type message.received
+        agentmail pods webhooks create --pod-id <pod_id> --url https://example.com/webhook --event-types message.received
         ```
 
         Parameters
@@ -793,7 +793,7 @@ class AsyncRawWebhooksClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:webhooks update --pod-id <pod_id> --webhook-id <webhook_id> --add-inbox-id <inbox_id>
+        agentmail pods webhooks update --pod-id <pod_id> --webhook-id <webhook_id> --add-inbox-ids <inbox_id>
         ```
 
         Parameters
@@ -952,7 +952,7 @@ class AsyncRawWebhooksClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:webhooks delete --pod-id <pod_id> --webhook-id <webhook_id>
+        agentmail pods webhooks delete --pod-id <pod_id> --webhook-id <webhook_id>
         ```
 
         Parameters

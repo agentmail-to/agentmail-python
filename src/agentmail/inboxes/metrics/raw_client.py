@@ -51,7 +51,7 @@ class RawMetricsClient:
 
         **CLI:**
         ```bash
-        agentmail inboxes:metrics query --inbox-id <inbox_id>
+        agentmail inboxes metrics query-events --inbox-id <inbox_id>
         ```
 
         Parameters
@@ -235,7 +235,7 @@ class AsyncRawMetricsClient:
 
         **CLI:**
         ```bash
-        agentmail inboxes:metrics query --inbox-id <inbox_id>
+        agentmail inboxes metrics query-events --inbox-id <inbox_id>
         ```
 
         Parameters

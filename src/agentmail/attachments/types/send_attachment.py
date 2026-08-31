@@ -12,18 +12,24 @@ from .attachment_filename import AttachmentFilename
 
 
 class SendAttachment(UncheckedBaseModel):
+    """
+    Provide either `content` or `url` for each attachment.
+    """
+
     filename: typing.Optional[AttachmentFilename] = None
     content_type: typing.Optional[AttachmentContentType] = None
     content_disposition: typing.Optional[AttachmentContentDisposition] = None
     content_id: typing.Optional[AttachmentContentId] = None
     content: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Base64 encoded content of attachment.
+    Base64 encoded content of the attachment. The entire request, including the message body and all attachments, is limited to 6 MB.
     """
 
     url: typing.Optional[str] = pydantic.Field(default=None)
     """
-    URL to the attachment.
+    URL that AgentMail can download without custom authentication headers or cookies.
+    Redirects and pre-signed URLs are supported, and the final response must be a
+    successful 2xx response. Keep URL-backed attachments around 30 MB total per message.
     """
 
     if IS_PYDANTIC_V2:

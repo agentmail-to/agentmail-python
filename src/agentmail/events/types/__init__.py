@@ -17,10 +17,12 @@ if typing.TYPE_CHECKING:
     from .message_bounced_event import MessageBouncedEvent
     from .message_complained_event import MessageComplainedEvent
     from .message_delivered_event import MessageDeliveredEvent
+    from .message_opened_event import MessageOpenedEvent
     from .message_received_event import MessageReceivedEvent
     from .message_received_event_type import MessageReceivedEventType
     from .message_rejected_event import MessageRejectedEvent
     from .message_sent_event import MessageSentEvent
+    from .open import Open
     from .pod_ids import PodIds
     from .recipient import Recipient
     from .reject import Reject
@@ -38,10 +40,12 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MessageBouncedEvent": ".message_bounced_event",
     "MessageComplainedEvent": ".message_complained_event",
     "MessageDeliveredEvent": ".message_delivered_event",
+    "MessageOpenedEvent": ".message_opened_event",
     "MessageReceivedEvent": ".message_received_event",
     "MessageReceivedEventType": ".message_received_event_type",
     "MessageRejectedEvent": ".message_rejected_event",
     "MessageSentEvent": ".message_sent_event",
+    "Open": ".open",
     "PodIds": ".pod_ids",
     "Recipient": ".recipient",
     "Reject": ".reject",
@@ -83,10 +87,12 @@ __all__ = [
     "MessageBouncedEvent",
     "MessageComplainedEvent",
     "MessageDeliveredEvent",
+    "MessageOpenedEvent",
     "MessageReceivedEvent",
     "MessageReceivedEventType",
     "MessageRejectedEvent",
     "MessageSentEvent",
+    "Open",
     "PodIds",
     "Recipient",
     "Reject",

@@ -27,6 +27,7 @@ from ...messages.types.send_message_headers import SendMessageHeaders
 from ...messages.types.send_message_reply_to import SendMessageReplyTo
 from ...messages.types.send_message_response import SendMessageResponse
 from ...messages.types.send_message_to import SendMessageTo
+from ...messages.types.track_opens import TrackOpens
 from ...messages.types.update_message_labels import UpdateMessageLabels
 from ...messages.types.update_message_response import UpdateMessageResponse
 from ...types.after import After
@@ -90,7 +91,7 @@ class MessagesClient:
 
         **CLI:**
         ```bash
-        agentmail inboxes:messages list --inbox-id <inbox_id>
+        agentmail inboxes messages list --inbox-id <inbox_id>
         ```
 
         Parameters
@@ -230,7 +231,7 @@ class MessagesClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:messages get --inbox-id <inbox_id> --message-id <message_id>
+        agentmail inboxes messages get --inbox-id <inbox_id> --message-id <message_id>
         ```
 
         Parameters
@@ -275,7 +276,7 @@ class MessagesClient:
 
         **CLI:**
         ```bash
-        agentmail inboxes:messages batch-get --inbox-id <inbox_id> --message-id <id1> --message-id <id2>
+        agentmail inboxes messages batch-get --inbox-id <inbox_id> --message-ids <id1> --message-ids <id2>
         ```
 
         Parameters
@@ -325,7 +326,7 @@ class MessagesClient:
 
         **CLI:**
         ```bash
-        agentmail inboxes:messages batch-update --inbox-id <inbox_id> --message-id <id1> --message-id <id2> --add-label read --remove-label unread
+        agentmail inboxes messages batch-update --inbox-id <inbox_id> --message-ids <id1> --message-ids <id2> --add-labels read --remove-labels unread
         ```
 
         Parameters
@@ -379,7 +380,7 @@ class MessagesClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:messages get-attachment --inbox-id <inbox_id> --message-id <message_id> --attachment-id <attachment_id>
+        agentmail inboxes messages get-attachment --inbox-id <inbox_id> --message-id <message_id> --attachment-id <attachment_id>
         ```
 
         Parameters
@@ -421,7 +422,7 @@ class MessagesClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:messages get-raw --inbox-id <inbox_id> --message-id <message_id>
+        agentmail inboxes messages get-raw --inbox-id <inbox_id> --message-id <message_id>
         ```
 
         Parameters
@@ -464,7 +465,7 @@ class MessagesClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:messages update --inbox-id <inbox_id> --message-id <message_id> --add-label read --remove-label unread
+        agentmail inboxes messages update --inbox-id <inbox_id> --message-id <message_id> --add-labels read --remove-labels unread
         ```
 
         Parameters
@@ -511,7 +512,7 @@ class MessagesClient:
 
         **CLI:**
         ```bash
-        agentmail inboxes:messages delete --inbox-id <inbox_id> --message-id <message_id>
+        agentmail inboxes messages delete --inbox-id <inbox_id> --message-id <message_id>
         ```
 
         Parameters
@@ -556,13 +557,14 @@ class MessagesClient:
         html: typing.Optional[MessageHtml] = OMIT,
         attachments: typing.Optional[SendMessageAttachments] = OMIT,
         headers: typing.Optional[SendMessageHeaders] = OMIT,
+        track_opens: typing.Optional[TrackOpens] = OMIT,
         idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:messages send --inbox-id <inbox_id> --to recipient@example.com --subject "Hello" --text "Body"
+        agentmail inboxes messages send --inbox-id <inbox_id> --to recipient@example.com --subject "Hello" --text "Body"
         ```
 
         Parameters
@@ -588,6 +590,8 @@ class MessagesClient:
         attachments : typing.Optional[SendMessageAttachments]
 
         headers : typing.Optional[SendMessageHeaders]
+
+        track_opens : typing.Optional[TrackOpens]
 
         idempotency_key : typing.Optional[str]
             Unique key that makes a send idempotent. A retry carrying the same key returns the original message instead of sending a second email; reusing a key with a different request — different message content, a different sending inbox, or a different send endpoint — returns a 409 conflict. Keys expire 24 hours after the send completes.
@@ -622,6 +626,7 @@ class MessagesClient:
             html=html,
             attachments=attachments,
             headers=headers,
+            track_opens=track_opens,
             idempotency_key=idempotency_key,
             request_options=request_options,
         )
@@ -642,13 +647,14 @@ class MessagesClient:
         html: typing.Optional[MessageHtml] = OMIT,
         attachments: typing.Optional[SendMessageAttachments] = OMIT,
         headers: typing.Optional[SendMessageHeaders] = OMIT,
+        track_opens: typing.Optional[TrackOpens] = OMIT,
         idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:messages reply --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+        agentmail inboxes messages reply --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
         ```
 
         Parameters
@@ -676,6 +682,8 @@ class MessagesClient:
         attachments : typing.Optional[SendMessageAttachments]
 
         headers : typing.Optional[SendMessageHeaders]
+
+        track_opens : typing.Optional[TrackOpens]
 
         idempotency_key : typing.Optional[str]
             Unique key that makes a send idempotent. A retry carrying the same key returns the original message instead of sending a second email; reusing a key with a different request — different message content, a different sending inbox, or a different send endpoint — returns a 409 conflict. Keys expire 24 hours after the send completes.
@@ -712,6 +720,7 @@ class MessagesClient:
             html=html,
             attachments=attachments,
             headers=headers,
+            track_opens=track_opens,
             idempotency_key=idempotency_key,
             request_options=request_options,
         )
@@ -728,13 +737,14 @@ class MessagesClient:
         html: typing.Optional[MessageHtml] = OMIT,
         attachments: typing.Optional[SendMessageAttachments] = OMIT,
         headers: typing.Optional[SendMessageHeaders] = OMIT,
+        track_opens: typing.Optional[TrackOpens] = OMIT,
         idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:messages reply-all --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+        agentmail inboxes messages reply-all --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
         ```
 
         Parameters
@@ -754,6 +764,8 @@ class MessagesClient:
         attachments : typing.Optional[SendMessageAttachments]
 
         headers : typing.Optional[SendMessageHeaders]
+
+        track_opens : typing.Optional[TrackOpens]
 
         idempotency_key : typing.Optional[str]
             Unique key that makes a send idempotent. A retry carrying the same key returns the original message instead of sending a second email; reusing a key with a different request — different message content, a different sending inbox, or a different send endpoint — returns a 409 conflict. Keys expire 24 hours after the send completes.
@@ -786,6 +798,7 @@ class MessagesClient:
             html=html,
             attachments=attachments,
             headers=headers,
+            track_opens=track_opens,
             idempotency_key=idempotency_key,
             request_options=request_options,
         )
@@ -806,13 +819,14 @@ class MessagesClient:
         html: typing.Optional[MessageHtml] = OMIT,
         attachments: typing.Optional[SendMessageAttachments] = OMIT,
         headers: typing.Optional[SendMessageHeaders] = OMIT,
+        track_opens: typing.Optional[TrackOpens] = OMIT,
         idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:messages forward --inbox-id <inbox_id> --message-id <message_id> --to recipient@example.com
+        agentmail inboxes messages forward --inbox-id <inbox_id> --message-id <message_id> --to recipient@example.com
         ```
 
         Parameters
@@ -840,6 +854,8 @@ class MessagesClient:
         attachments : typing.Optional[SendMessageAttachments]
 
         headers : typing.Optional[SendMessageHeaders]
+
+        track_opens : typing.Optional[TrackOpens]
 
         idempotency_key : typing.Optional[str]
             Unique key that makes a send idempotent. A retry carrying the same key returns the original message instead of sending a second email; reusing a key with a different request — different message content, a different sending inbox, or a different send endpoint — returns a 409 conflict. Keys expire 24 hours after the send completes.
@@ -876,6 +892,7 @@ class MessagesClient:
             html=html,
             attachments=attachments,
             headers=headers,
+            track_opens=track_opens,
             idempotency_key=idempotency_key,
             request_options=request_options,
         )
@@ -925,7 +942,7 @@ class AsyncMessagesClient:
 
         **CLI:**
         ```bash
-        agentmail inboxes:messages list --inbox-id <inbox_id>
+        agentmail inboxes messages list --inbox-id <inbox_id>
         ```
 
         Parameters
@@ -1081,7 +1098,7 @@ class AsyncMessagesClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:messages get --inbox-id <inbox_id> --message-id <message_id>
+        agentmail inboxes messages get --inbox-id <inbox_id> --message-id <message_id>
         ```
 
         Parameters
@@ -1134,7 +1151,7 @@ class AsyncMessagesClient:
 
         **CLI:**
         ```bash
-        agentmail inboxes:messages batch-get --inbox-id <inbox_id> --message-id <id1> --message-id <id2>
+        agentmail inboxes messages batch-get --inbox-id <inbox_id> --message-ids <id1> --message-ids <id2>
         ```
 
         Parameters
@@ -1192,7 +1209,7 @@ class AsyncMessagesClient:
 
         **CLI:**
         ```bash
-        agentmail inboxes:messages batch-update --inbox-id <inbox_id> --message-id <id1> --message-id <id2> --add-label read --remove-label unread
+        agentmail inboxes messages batch-update --inbox-id <inbox_id> --message-ids <id1> --message-ids <id2> --add-labels read --remove-labels unread
         ```
 
         Parameters
@@ -1254,7 +1271,7 @@ class AsyncMessagesClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:messages get-attachment --inbox-id <inbox_id> --message-id <message_id> --attachment-id <attachment_id>
+        agentmail inboxes messages get-attachment --inbox-id <inbox_id> --message-id <message_id> --attachment-id <attachment_id>
         ```
 
         Parameters
@@ -1304,7 +1321,7 @@ class AsyncMessagesClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:messages get-raw --inbox-id <inbox_id> --message-id <message_id>
+        agentmail inboxes messages get-raw --inbox-id <inbox_id> --message-id <message_id>
         ```
 
         Parameters
@@ -1355,7 +1372,7 @@ class AsyncMessagesClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:messages update --inbox-id <inbox_id> --message-id <message_id> --add-label read --remove-label unread
+        agentmail inboxes messages update --inbox-id <inbox_id> --message-id <message_id> --add-labels read --remove-labels unread
         ```
 
         Parameters
@@ -1410,7 +1427,7 @@ class AsyncMessagesClient:
 
         **CLI:**
         ```bash
-        agentmail inboxes:messages delete --inbox-id <inbox_id> --message-id <message_id>
+        agentmail inboxes messages delete --inbox-id <inbox_id> --message-id <message_id>
         ```
 
         Parameters
@@ -1463,13 +1480,14 @@ class AsyncMessagesClient:
         html: typing.Optional[MessageHtml] = OMIT,
         attachments: typing.Optional[SendMessageAttachments] = OMIT,
         headers: typing.Optional[SendMessageHeaders] = OMIT,
+        track_opens: typing.Optional[TrackOpens] = OMIT,
         idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:messages send --inbox-id <inbox_id> --to recipient@example.com --subject "Hello" --text "Body"
+        agentmail inboxes messages send --inbox-id <inbox_id> --to recipient@example.com --subject "Hello" --text "Body"
         ```
 
         Parameters
@@ -1495,6 +1513,8 @@ class AsyncMessagesClient:
         attachments : typing.Optional[SendMessageAttachments]
 
         headers : typing.Optional[SendMessageHeaders]
+
+        track_opens : typing.Optional[TrackOpens]
 
         idempotency_key : typing.Optional[str]
             Unique key that makes a send idempotent. A retry carrying the same key returns the original message instead of sending a second email; reusing a key with a different request — different message content, a different sending inbox, or a different send endpoint — returns a 409 conflict. Keys expire 24 hours after the send completes.
@@ -1537,6 +1557,7 @@ class AsyncMessagesClient:
             html=html,
             attachments=attachments,
             headers=headers,
+            track_opens=track_opens,
             idempotency_key=idempotency_key,
             request_options=request_options,
         )
@@ -1557,13 +1578,14 @@ class AsyncMessagesClient:
         html: typing.Optional[MessageHtml] = OMIT,
         attachments: typing.Optional[SendMessageAttachments] = OMIT,
         headers: typing.Optional[SendMessageHeaders] = OMIT,
+        track_opens: typing.Optional[TrackOpens] = OMIT,
         idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:messages reply --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+        agentmail inboxes messages reply --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
         ```
 
         Parameters
@@ -1591,6 +1613,8 @@ class AsyncMessagesClient:
         attachments : typing.Optional[SendMessageAttachments]
 
         headers : typing.Optional[SendMessageHeaders]
+
+        track_opens : typing.Optional[TrackOpens]
 
         idempotency_key : typing.Optional[str]
             Unique key that makes a send idempotent. A retry carrying the same key returns the original message instead of sending a second email; reusing a key with a different request — different message content, a different sending inbox, or a different send endpoint — returns a 409 conflict. Keys expire 24 hours after the send completes.
@@ -1635,6 +1659,7 @@ class AsyncMessagesClient:
             html=html,
             attachments=attachments,
             headers=headers,
+            track_opens=track_opens,
             idempotency_key=idempotency_key,
             request_options=request_options,
         )
@@ -1651,13 +1676,14 @@ class AsyncMessagesClient:
         html: typing.Optional[MessageHtml] = OMIT,
         attachments: typing.Optional[SendMessageAttachments] = OMIT,
         headers: typing.Optional[SendMessageHeaders] = OMIT,
+        track_opens: typing.Optional[TrackOpens] = OMIT,
         idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:messages reply-all --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+        agentmail inboxes messages reply-all --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
         ```
 
         Parameters
@@ -1677,6 +1703,8 @@ class AsyncMessagesClient:
         attachments : typing.Optional[SendMessageAttachments]
 
         headers : typing.Optional[SendMessageHeaders]
+
+        track_opens : typing.Optional[TrackOpens]
 
         idempotency_key : typing.Optional[str]
             Unique key that makes a send idempotent. A retry carrying the same key returns the original message instead of sending a second email; reusing a key with a different request — different message content, a different sending inbox, or a different send endpoint — returns a 409 conflict. Keys expire 24 hours after the send completes.
@@ -1717,6 +1745,7 @@ class AsyncMessagesClient:
             html=html,
             attachments=attachments,
             headers=headers,
+            track_opens=track_opens,
             idempotency_key=idempotency_key,
             request_options=request_options,
         )
@@ -1737,13 +1766,14 @@ class AsyncMessagesClient:
         html: typing.Optional[MessageHtml] = OMIT,
         attachments: typing.Optional[SendMessageAttachments] = OMIT,
         headers: typing.Optional[SendMessageHeaders] = OMIT,
+        track_opens: typing.Optional[TrackOpens] = OMIT,
         idempotency_key: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> SendMessageResponse:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:messages forward --inbox-id <inbox_id> --message-id <message_id> --to recipient@example.com
+        agentmail inboxes messages forward --inbox-id <inbox_id> --message-id <message_id> --to recipient@example.com
         ```
 
         Parameters
@@ -1771,6 +1801,8 @@ class AsyncMessagesClient:
         attachments : typing.Optional[SendMessageAttachments]
 
         headers : typing.Optional[SendMessageHeaders]
+
+        track_opens : typing.Optional[TrackOpens]
 
         idempotency_key : typing.Optional[str]
             Unique key that makes a send idempotent. A retry carrying the same key returns the original message instead of sending a second email; reusing a key with a different request — different message content, a different sending inbox, or a different send endpoint — returns a 409 conflict. Keys expire 24 hours after the send completes.
@@ -1815,6 +1847,7 @@ class AsyncMessagesClient:
             html=html,
             attachments=attachments,
             headers=headers,
+            track_opens=track_opens,
             idempotency_key=idempotency_key,
             request_options=request_options,
         )

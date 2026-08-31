@@ -972,7 +972,7 @@ client.webhooks.get_headers(
 
 **CLI:**
 ```bash
-agentmail webhooks create --url https://example.com/webhook --event-type message.received
+agentmail webhooks create --url https://example.com/webhook --event-types message.received
 ```
 </dd>
 </dl>
@@ -1055,7 +1055,7 @@ non-empty `event_types` array (see request field docs). Inbox and pod changes us
 
 **CLI:**
 ```bash
-agentmail webhooks update --webhook-id <webhook_id> --add-inbox-id <inbox_id>
+agentmail webhooks update --webhook-id <webhook_id> --add-inbox-ids <inbox_id>
 ```
 </dd>
 </dl>
@@ -2104,6 +2104,474 @@ client.api_keys.revoke_all_agent_id_sign_in_keys(
 </dl>
 </details>
 
+<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">list_browser_credentials</a>(...) -> ListBrowserCredentialsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List active browser credentials visible to the caller's scope. Requires `api_key_read`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.api_keys.list_browser_credentials()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[BrowserAuthorizationListLimit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">list_browser_credential_events</a>(...) -> ListBrowserLifecycleEventsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List owner-facing browser credential and consent lifecycle events. Requires `api_key_read`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.api_keys.list_browser_credential_events()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[BrowserAuthorizationListLimit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">delete_browser_credential</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Permanently revoke one active browser credential. Requires `api_key_delete`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+import uuid
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.api_keys.delete_browser_credential(
+    credential_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**credential_id:** `uuid.UUID` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">cancel_browser_enrollment</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cancel one pending, unexpired browser enrollment intent. Requires `api_key_delete`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+import uuid
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.api_keys.cancel_browser_enrollment(
+    enrollment_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**enrollment_id:** `uuid.UUID` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">list_browser_consents</a>(...) -> ListBrowserConsentsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List remembered AgentID client approvals for one live inbox. Requires `api_key_read`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.api_keys.list_browser_consents(
+    inbox_id="inbox_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[BrowserAuthorizationListLimit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">delete_browser_consent</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Revoke one remembered AgentID client approval. Requires `api_key_delete`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.api_keys.delete_browser_consent(
+    consent_id="consent_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**consent_id:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Auth
 <details><summary><code>client.auth.<a href="src/agentmail/auth/client.py">me</a>() -> Identity</code></summary>
 <dl>
@@ -2728,6 +3196,79 @@ client.domains.verify(
 </dl>
 </details>
 
+<details><summary><code>client.domains.<a href="src/agentmail/domains/client.py">get_setup_link</a>(...) -> GetSetupLinkResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Build a one-click DNS setup link for the domain via the Domain Connect standard. When the domain's DNS provider supports Domain Connect and carries the AgentMail template, the response contains a signed URL: opening it lets the domain owner approve the required DNS records at their provider, which writes them automatically — no copy-paste. When the provider does not support it, `supported` is `false` and the domain's `records` should be added manually instead.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.domains.get_setup_link(
+    domain_id="domain_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**domain_id:** `DomainId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Drafts
 <details><summary><code>client.drafts.<a href="src/agentmail/drafts/client.py">list</a>(...) -> ListDraftsResponse</code></summary>
 <dl>
@@ -3019,7 +3560,7 @@ client.drafts.get_attachment(
 
 **CLI:**
 ```bash
-agentmail inboxes:api-keys list --inbox-id <inbox_id>
+agentmail inboxes api-keys list --inbox-id <inbox_id>
 ```
 </dd>
 </dl>
@@ -3111,7 +3652,7 @@ client.inboxes.api_keys.list(
 
 **CLI:**
 ```bash
-agentmail inboxes:api-keys create --inbox-id <inbox_id> --name "My Key"
+agentmail inboxes api-keys create --inbox-id <inbox_id> --name "My Key"
 ```
 </dd>
 </dl>
@@ -3195,7 +3736,7 @@ client.inboxes.api_keys.create(
 
 **CLI:**
 ```bash
-agentmail inboxes:api-keys delete --inbox-id <inbox_id> --api-key-id <api_key_id>
+agentmail inboxes api-keys delete --inbox-id <inbox_id> --api-key-id <api_key_id>
 ```
 </dd>
 </dl>
@@ -3266,6 +3807,113 @@ client.inboxes.api_keys.delete(
 </dl>
 </details>
 
+## Inboxes BrowserCredentials
+<details><summary><code>client.inboxes.browser_credentials.<a href="src/agentmail/inboxes/browser_credentials/client.py">create_enrollment</a>(...) -> BrowserEnrollmentAccepted</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Attach a browser enrollment intent to the inbox. Requires
+`api_key_create`. Before submitting `transaction_jti`, independently
+verify that the browser page's final origin is exactly
+`https://auth.agentid.com`.
+
+This endpoint is available to every organization using US production.
+It is not available in EU production.
+
+Select `inbox_id` from trusted AgentMail configuration. An AgentID
+`login_hint` is not authoritative for selecting the inbox; when the
+transaction includes one, it must match the path inbox.
+
+**AgentMail API keys are sent only to `https://api.agentmail.to`; AgentID never requests them.**
+
+A new intent returns `202`; an idempotent retry for the same pending
+transaction, inbox, and bearer key returns `200` with the same receipt.
+An intent lasts at most five minutes. An activated credential lasts at
+most 30 days and cannot outlive its authorizing bearer API key.
+
+Creation is limited to 20 intents per bearer API key per hour, 100 per
+organization per hour, and five live unused intents per bearer API key.
+Browser activation is separately limited to 20 activations per
+authorizing bearer API key per UTC day. Either kind of limit can return
+`429`; honor the `Retry-After` header. Cancelling an enrollment releases
+its live-intent slot but does not reset the daily activation counter.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.browser_credentials.create_enrollment(
+    inbox_id="inbox_id",
+    transaction_jti="blackcurrant..........",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `CreateBrowserEnrollmentRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inboxes Drafts
 <details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">list</a>(...) -> ListDraftsResponse</code></summary>
 <dl>
@@ -3281,7 +3929,7 @@ client.inboxes.api_keys.delete(
 
 **CLI:**
 ```bash
-agentmail inboxes:drafts list --inbox-id <inbox_id>
+agentmail inboxes drafts list --inbox-id <inbox_id>
 ```
 </dd>
 </dl>
@@ -3405,7 +4053,7 @@ client.inboxes.drafts.list(
 
 **CLI:**
 ```bash
-agentmail inboxes:drafts get --inbox-id <inbox_id> --draft-id <draft_id>
+agentmail inboxes drafts get --inbox-id <inbox_id> --draft-id <draft_id>
 ```
 </dd>
 </dl>
@@ -3490,7 +4138,7 @@ client.inboxes.drafts.get(
 
 **CLI:**
 ```bash
-agentmail inboxes:drafts get-attachment --inbox-id <inbox_id> --draft-id <draft_id> --attachment-id <attachment_id>
+agentmail inboxes drafts get-attachment --inbox-id <inbox_id> --draft-id <draft_id> --attachment-id <attachment_id>
 ```
 </dd>
 </dl>
@@ -3590,7 +4238,7 @@ forwarded content from the source but keeps recipients caller-supplied.
 
 **CLI:**
 ```bash
-agentmail inboxes:drafts create --inbox-id <inbox_id> --to recipient@example.com --subject "Draft subject" --text "Draft body"
+agentmail inboxes drafts create --inbox-id <inbox_id> --to recipient@example.com --subject "Draft subject" --text "Draft body"
 ```
 </dd>
 </dl>
@@ -3678,7 +4326,7 @@ A draft that is already being sent cannot be edited.
 
 **CLI:**
 ```bash
-agentmail inboxes:drafts update --inbox-id <inbox_id> --draft-id <draft_id> --subject "Updated subject"
+agentmail inboxes drafts update --inbox-id <inbox_id> --draft-id <draft_id> --subject "Updated subject"
 ```
 </dd>
 </dl>
@@ -3771,7 +4419,7 @@ client.inboxes.drafts.update(
 
 **CLI:**
 ```bash
-agentmail inboxes:drafts delete --inbox-id <inbox_id> --draft-id <draft_id>
+agentmail inboxes drafts delete --inbox-id <inbox_id> --draft-id <draft_id>
 ```
 </dd>
 </dl>
@@ -3856,7 +4504,7 @@ client.inboxes.drafts.delete(
 
 **CLI:**
 ```bash
-agentmail inboxes:drafts send --inbox-id <inbox_id> --draft-id <draft_id>
+agentmail inboxes drafts send --inbox-id <inbox_id> --draft-id <draft_id>
 ```
 </dd>
 </dl>
@@ -3952,7 +4600,7 @@ List label change events for an inbox. Returns events in reverse chronological o
 
 **CLI:**
 ```bash
-agentmail inboxes:events list --inbox-id <inbox_id>
+agentmail inboxes events list --inbox-id <inbox_id>
 ```
 </dd>
 </dl>
@@ -4053,7 +4701,7 @@ client.inboxes.events.list(
 
 **CLI:**
 ```bash
-agentmail inboxes:lists list --inbox-id <inbox_id> --direction <direction> --type <type>
+agentmail inboxes lists list --inbox-id <inbox_id> --direction <direction> --type <type>
 ```
 </dd>
 </dl>
@@ -4163,7 +4811,7 @@ client.inboxes.lists.list(
 
 **CLI:**
 ```bash
-agentmail inboxes:lists get --inbox-id <inbox_id> --direction <direction> --type <type> --entry <entry>
+agentmail inboxes lists get --inbox-id <inbox_id> --direction <direction> --type <type> --entry <entry>
 ```
 </dd>
 </dl>
@@ -4266,7 +4914,7 @@ client.inboxes.lists.get(
 
 **CLI:**
 ```bash
-agentmail inboxes:lists create --inbox-id <inbox_id> --direction <direction> --type <type> --entry user@example.com
+agentmail inboxes lists create --inbox-id <inbox_id> --direction <direction> --type <type> --entry user@example.com
 ```
 </dd>
 </dl>
@@ -4369,7 +5017,7 @@ client.inboxes.lists.create(
 
 **CLI:**
 ```bash
-agentmail inboxes:lists delete --inbox-id <inbox_id> --direction <direction> --type <type> --entry <entry>
+agentmail inboxes lists delete --inbox-id <inbox_id> --direction <direction> --type <type> --entry <entry>
 ```
 </dd>
 </dl>
@@ -4479,7 +5127,7 @@ search across sender, recipients, subject, and message body, use
 
 **CLI:**
 ```bash
-agentmail inboxes:messages list --inbox-id <inbox_id>
+agentmail inboxes messages list --inbox-id <inbox_id>
 ```
 </dd>
 </dl>
@@ -4776,7 +5424,7 @@ client.inboxes.messages.search(
 
 **CLI:**
 ```bash
-agentmail inboxes:messages get --inbox-id <inbox_id> --message-id <message_id>
+agentmail inboxes messages get --inbox-id <inbox_id> --message-id <message_id>
 ```
 </dd>
 </dl>
@@ -4865,7 +5513,7 @@ to detect misses.
 
 **CLI:**
 ```bash
-agentmail inboxes:messages batch-get --inbox-id <inbox_id> --message-id <id1> --message-id <id2>
+agentmail inboxes messages batch-get --inbox-id <inbox_id> --message-ids <id1> --message-ids <id2>
 ```
 </dd>
 </dl>
@@ -4960,7 +5608,7 @@ exclusions.
 
 **CLI:**
 ```bash
-agentmail inboxes:messages batch-update --inbox-id <inbox_id> --message-id <id1> --message-id <id2> --add-label read --remove-label unread
+agentmail inboxes messages batch-update --inbox-id <inbox_id> --message-ids <id1> --message-ids <id2> --add-labels read --remove-labels unread
 ```
 </dd>
 </dl>
@@ -5048,7 +5696,7 @@ client.inboxes.messages.batch_update(
 
 **CLI:**
 ```bash
-agentmail inboxes:messages get-attachment --inbox-id <inbox_id> --message-id <message_id> --attachment-id <attachment_id>
+agentmail inboxes messages get-attachment --inbox-id <inbox_id> --message-id <message_id> --attachment-id <attachment_id>
 ```
 </dd>
 </dl>
@@ -5142,7 +5790,7 @@ client.inboxes.messages.get_attachment(
 
 **CLI:**
 ```bash
-agentmail inboxes:messages get-raw --inbox-id <inbox_id> --message-id <message_id>
+agentmail inboxes messages get-raw --inbox-id <inbox_id> --message-id <message_id>
 ```
 </dd>
 </dl>
@@ -5227,7 +5875,7 @@ client.inboxes.messages.get_raw(
 
 **CLI:**
 ```bash
-agentmail inboxes:messages update --inbox-id <inbox_id> --message-id <message_id> --add-label read --remove-label unread
+agentmail inboxes messages update --inbox-id <inbox_id> --message-id <message_id> --add-labels read --remove-labels unread
 ```
 </dd>
 </dl>
@@ -5322,7 +5970,7 @@ Permanently deletes a message.
 
 **CLI:**
 ```bash
-agentmail inboxes:messages delete --inbox-id <inbox_id> --message-id <message_id>
+agentmail inboxes messages delete --inbox-id <inbox_id> --message-id <message_id>
 ```
 </dd>
 </dl>
@@ -5407,7 +6055,7 @@ client.inboxes.messages.delete(
 
 **CLI:**
 ```bash
-agentmail inboxes:messages send --inbox-id <inbox_id> --to recipient@example.com --subject "Hello" --text "Body"
+agentmail inboxes messages send --inbox-id <inbox_id> --to recipient@example.com --subject "Hello" --text "Body"
 ```
 </dd>
 </dl>
@@ -5491,7 +6139,7 @@ client.inboxes.messages.send(
 
 **CLI:**
 ```bash
-agentmail inboxes:messages reply --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+agentmail inboxes messages reply --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
 ```
 </dd>
 </dl>
@@ -5584,7 +6232,7 @@ client.inboxes.messages.reply(
 
 **CLI:**
 ```bash
-agentmail inboxes:messages reply-all --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+agentmail inboxes messages reply-all --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
 ```
 </dd>
 </dl>
@@ -5677,7 +6325,7 @@ client.inboxes.messages.reply_all(
 
 **CLI:**
 ```bash
-agentmail inboxes:messages forward --inbox-id <inbox_id> --message-id <message_id> --to recipient@example.com
+agentmail inboxes messages forward --inbox-id <inbox_id> --message-id <message_id> --to recipient@example.com
 ```
 </dd>
 </dl>
@@ -5777,7 +6425,7 @@ many seconds.
 
 **CLI:**
 ```bash
-agentmail inboxes:metrics query --inbox-id <inbox_id>
+agentmail inboxes metrics query-events --inbox-id <inbox_id>
 ```
 </dd>
 </dl>
@@ -6034,7 +6682,7 @@ full-text search, use `Search Threads`.
 
 **CLI:**
 ```bash
-agentmail inboxes:threads list --inbox-id <inbox_id>
+agentmail inboxes threads list --inbox-id <inbox_id>
 ```
 </dd>
 </dl>
@@ -6331,7 +6979,7 @@ client.inboxes.threads.search(
 
 **CLI:**
 ```bash
-agentmail inboxes:threads get --inbox-id <inbox_id> --thread-id <thread_id>
+agentmail inboxes threads get --inbox-id <inbox_id> --thread-id <thread_id>
 ```
 </dd>
 </dl>
@@ -6416,7 +7064,7 @@ client.inboxes.threads.get(
 
 **CLI:**
 ```bash
-agentmail inboxes:threads get-attachment --inbox-id <inbox_id> --thread-id <thread_id> --attachment-id <attachment_id>
+agentmail inboxes threads get-attachment --inbox-id <inbox_id> --thread-id <thread_id> --attachment-id <attachment_id>
 ```
 </dd>
 </dl>
@@ -6602,7 +7250,7 @@ Permanently deletes a thread and all of its messages.
 
 **CLI:**
 ```bash
-agentmail inboxes:threads delete --inbox-id <inbox_id> --thread-id <thread_id>
+agentmail inboxes threads delete --inbox-id <inbox_id> --thread-id <thread_id>
 ```
 </dd>
 </dl>
@@ -6688,7 +7336,7 @@ client.inboxes.threads.delete(
 
 **CLI:**
 ```bash
-agentmail inboxes:webhooks list --inbox-id <inbox_id>
+agentmail inboxes webhooks list --inbox-id <inbox_id>
 ```
 </dd>
 </dl>
@@ -6788,7 +7436,7 @@ client.inboxes.webhooks.list(
 
 **CLI:**
 ```bash
-agentmail inboxes:webhooks get --inbox-id <inbox_id> --webhook-id <webhook_id>
+agentmail inboxes webhooks get --inbox-id <inbox_id> --webhook-id <webhook_id>
 ```
 </dd>
 </dl>
@@ -6958,7 +7606,7 @@ Create a webhook scoped to this inbox.
 
 **CLI:**
 ```bash
-agentmail inboxes:webhooks create --inbox-id <inbox_id> --url https://example.com/webhook --event-type message.received
+agentmail inboxes webhooks create --inbox-id <inbox_id> --url https://example.com/webhook --event-types message.received
 ```
 </dd>
 </dl>
@@ -7047,7 +7695,7 @@ client.inboxes.webhooks.create(
 
 **CLI:**
 ```bash
-agentmail inboxes:webhooks update --inbox-id <inbox_id> --webhook-id <webhook_id> --event-type message.received
+agentmail inboxes webhooks update --inbox-id <inbox_id> --webhook-id <webhook_id> --event-types message.received
 ```
 </dd>
 </dl>
@@ -7231,7 +7879,7 @@ client.inboxes.webhooks.update_headers(
 
 **CLI:**
 ```bash
-agentmail inboxes:webhooks delete --inbox-id <inbox_id> --webhook-id <webhook_id>
+agentmail inboxes webhooks delete --inbox-id <inbox_id> --webhook-id <webhook_id>
 ```
 </dd>
 </dl>
@@ -7707,7 +8355,7 @@ that many seconds.
 
 **CLI:**
 ```bash
-agentmail metrics list
+agentmail metrics query-events
 ```
 </dd>
 </dl>
@@ -8006,7 +8654,7 @@ client.organizations.get()
 
 **CLI:**
 ```bash
-agentmail pods:api-keys list --pod-id <pod_id>
+agentmail pods api-keys list --pod-id <pod_id>
 ```
 </dd>
 </dl>
@@ -8098,7 +8746,7 @@ client.pods.api_keys.list(
 
 **CLI:**
 ```bash
-agentmail pods:api-keys create --pod-id <pod_id> --name "My Key"
+agentmail pods api-keys create --pod-id <pod_id> --name "My Key"
 ```
 </dd>
 </dl>
@@ -8182,7 +8830,7 @@ client.pods.api_keys.create(
 
 **CLI:**
 ```bash
-agentmail pods:api-keys delete --pod-id <pod_id> --api-key-id <api_key_id>
+agentmail pods api-keys delete --pod-id <pod_id> --api-key-id <api_key_id>
 ```
 </dd>
 </dl>
@@ -8268,7 +8916,7 @@ client.pods.api_keys.delete(
 
 **CLI:**
 ```bash
-agentmail pods:domains list --pod-id <pod_id>
+agentmail pods domains list --pod-id <pod_id>
 ```
 </dd>
 </dl>
@@ -8368,7 +9016,7 @@ client.pods.domains.list(
 
 **CLI:**
 ```bash
-agentmail pods:domains get --pod-id <pod_id> --domain-id <domain_id>
+agentmail pods domains get --pod-id <pod_id> --domain-id <domain_id>
 ```
 </dd>
 </dl>
@@ -8453,7 +9101,7 @@ client.pods.domains.get(
 
 **CLI:**
 ```bash
-agentmail pods:domains get-zone-file --pod-id <pod_id> --domain-id <domain_id>
+agentmail pods domains get-zone-file --pod-id <pod_id> --domain-id <domain_id>
 ```
 </dd>
 </dl>
@@ -8538,7 +9186,7 @@ client.pods.domains.get_zone_file(
 
 **CLI:**
 ```bash
-agentmail pods:domains create --pod-id <pod_id> --domain example.com
+agentmail pods domains create --pod-id <pod_id> --domain example.com
 ```
 </dd>
 </dl>
@@ -8623,7 +9271,7 @@ client.pods.domains.create(
 
 **CLI:**
 ```bash
-agentmail pods:domains update --pod-id <pod_id> --domain-id <domain_id>
+agentmail pods domains update --pod-id <pod_id> --domain-id <domain_id>
 ```
 </dd>
 </dl>
@@ -8716,7 +9364,7 @@ client.pods.domains.update(
 
 **CLI:**
 ```bash
-agentmail pods:domains delete --pod-id <pod_id> --domain-id <domain_id>
+agentmail pods domains delete --pod-id <pod_id> --domain-id <domain_id>
 ```
 </dd>
 </dl>
@@ -8801,7 +9449,7 @@ client.pods.domains.delete(
 
 **CLI:**
 ```bash
-agentmail pods:domains verify --pod-id <pod_id> --domain-id <domain_id>
+agentmail pods domains verify --pod-id <pod_id> --domain-id <domain_id>
 ```
 </dd>
 </dl>
@@ -8887,7 +9535,7 @@ client.pods.domains.verify(
 
 **CLI:**
 ```bash
-agentmail pods:drafts list --pod-id <pod_id>
+agentmail pods drafts list --pod-id <pod_id>
 ```
 </dd>
 </dl>
@@ -9011,7 +9659,7 @@ client.pods.drafts.list(
 
 **CLI:**
 ```bash
-agentmail pods:drafts get --pod-id <pod_id> --draft-id <draft_id>
+agentmail pods drafts get --pod-id <pod_id> --draft-id <draft_id>
 ```
 </dd>
 </dl>
@@ -9096,7 +9744,7 @@ client.pods.drafts.get(
 
 **CLI:**
 ```bash
-agentmail pods:drafts get-attachment --pod-id <pod_id> --draft-id <draft_id> --attachment-id <attachment_id>
+agentmail pods drafts get-attachment --pod-id <pod_id> --draft-id <draft_id> --attachment-id <attachment_id>
 ```
 </dd>
 </dl>
@@ -9191,7 +9839,7 @@ client.pods.drafts.get_attachment(
 
 **CLI:**
 ```bash
-agentmail pods:inboxes list --pod-id <pod_id>
+agentmail pods inboxes list --pod-id <pod_id>
 ```
 </dd>
 </dl>
@@ -9291,7 +9939,7 @@ client.pods.inboxes.list(
 
 **CLI:**
 ```bash
-agentmail pods:inboxes get --pod-id <pod_id> --inbox-id <inbox_id>
+agentmail pods inboxes get --pod-id <pod_id> --inbox-id <inbox_id>
 ```
 </dd>
 </dl>
@@ -9376,7 +10024,7 @@ client.pods.inboxes.get(
 
 **CLI:**
 ```bash
-agentmail pods:inboxes create --pod-id <pod_id> --username myagent --domain example.com
+agentmail pods inboxes create --pod-id <pod_id> --username myagent --domain example.com
 ```
 </dd>
 </dl>
@@ -9460,7 +10108,7 @@ client.pods.inboxes.create(
 
 **CLI:**
 ```bash
-agentmail pods:inboxes update --pod-id <pod_id> --inbox-id <inbox_id>
+agentmail pods inboxes update --pod-id <pod_id> --inbox-id <inbox_id>
 ```
 </dd>
 </dl>
@@ -9553,7 +10201,7 @@ client.pods.inboxes.update(
 
 **CLI:**
 ```bash
-agentmail pods:inboxes delete --pod-id <pod_id> --inbox-id <inbox_id>
+agentmail pods inboxes delete --pod-id <pod_id> --inbox-id <inbox_id>
 ```
 </dd>
 </dl>
@@ -9639,7 +10287,7 @@ client.pods.inboxes.delete(
 
 **CLI:**
 ```bash
-agentmail pods:lists list --pod-id <pod_id> --direction <direction> --type <type>
+agentmail pods lists list --pod-id <pod_id> --direction <direction> --type <type>
 ```
 </dd>
 </dl>
@@ -9749,7 +10397,7 @@ client.pods.lists.list(
 
 **CLI:**
 ```bash
-agentmail pods:lists get --pod-id <pod_id> --direction <direction> --type <type> --entry <entry>
+agentmail pods lists get --pod-id <pod_id> --direction <direction> --type <type> --entry <entry>
 ```
 </dd>
 </dl>
@@ -9852,7 +10500,7 @@ client.pods.lists.get(
 
 **CLI:**
 ```bash
-agentmail pods:lists create --pod-id <pod_id> --direction <direction> --type <type> --entry user@example.com
+agentmail pods lists create --pod-id <pod_id> --direction <direction> --type <type> --entry user@example.com
 ```
 </dd>
 </dl>
@@ -9955,7 +10603,7 @@ client.pods.lists.create(
 
 **CLI:**
 ```bash
-agentmail pods:lists delete --pod-id <pod_id> --direction <direction> --type <type> --entry <entry>
+agentmail pods lists delete --pod-id <pod_id> --direction <direction> --type <type> --entry <entry>
 ```
 </dd>
 </dl>
@@ -10065,7 +10713,7 @@ many seconds.
 
 **CLI:**
 ```bash
-agentmail pods:metrics query --pod-id <pod_id>
+agentmail pods metrics query-events --pod-id <pod_id>
 ```
 </dd>
 </dl>
@@ -10322,7 +10970,7 @@ full-text search, use `Search Threads`.
 
 **CLI:**
 ```bash
-agentmail pods:threads list --pod-id <pod_id>
+agentmail pods threads list --pod-id <pod_id>
 ```
 </dd>
 </dl>
@@ -10619,7 +11267,7 @@ client.pods.threads.search(
 
 **CLI:**
 ```bash
-agentmail pods:threads get --pod-id <pod_id> --thread-id <thread_id>
+agentmail pods threads get --pod-id <pod_id> --thread-id <thread_id>
 ```
 </dd>
 </dl>
@@ -10704,7 +11352,7 @@ client.pods.threads.get(
 
 **CLI:**
 ```bash
-agentmail pods:threads get-attachment --pod-id <pod_id> --thread-id <thread_id> --attachment-id <attachment_id>
+agentmail pods threads get-attachment --pod-id <pod_id> --thread-id <thread_id> --attachment-id <attachment_id>
 ```
 </dd>
 </dl>
@@ -10890,7 +11538,7 @@ Permanently deletes a thread and all of its messages.
 
 **CLI:**
 ```bash
-agentmail pods:threads delete --pod-id <pod_id> --thread-id <thread_id>
+agentmail pods threads delete --pod-id <pod_id> --thread-id <thread_id>
 ```
 </dd>
 </dl>
@@ -10976,7 +11624,7 @@ client.pods.threads.delete(
 
 **CLI:**
 ```bash
-agentmail pods:webhooks list --pod-id <pod_id>
+agentmail pods webhooks list --pod-id <pod_id>
 ```
 </dd>
 </dl>
@@ -11076,7 +11724,7 @@ client.pods.webhooks.list(
 
 **CLI:**
 ```bash
-agentmail pods:webhooks get --pod-id <pod_id> --webhook-id <webhook_id>
+agentmail pods webhooks get --pod-id <pod_id> --webhook-id <webhook_id>
 ```
 </dd>
 </dl>
@@ -11246,7 +11894,7 @@ Create a webhook scoped to this pod.
 
 **CLI:**
 ```bash
-agentmail pods:webhooks create --pod-id <pod_id> --url https://example.com/webhook --event-type message.received
+agentmail pods webhooks create --pod-id <pod_id> --url https://example.com/webhook --event-types message.received
 ```
 </dd>
 </dl>
@@ -11335,7 +11983,7 @@ client.pods.webhooks.create(
 
 **CLI:**
 ```bash
-agentmail pods:webhooks update --pod-id <pod_id> --webhook-id <webhook_id> --add-inbox-id <inbox_id>
+agentmail pods webhooks update --pod-id <pod_id> --webhook-id <webhook_id> --add-inbox-ids <inbox_id>
 ```
 </dd>
 </dl>
@@ -11519,7 +12167,7 @@ client.pods.webhooks.update_headers(
 
 **CLI:**
 ```bash
-agentmail pods:webhooks delete --pod-id <pod_id> --webhook-id <webhook_id>
+agentmail pods webhooks delete --pod-id <pod_id> --webhook-id <webhook_id>
 ```
 </dd>
 </dl>

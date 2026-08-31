@@ -68,7 +68,7 @@ class DraftsClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:drafts list --inbox-id <inbox_id>
+        agentmail inboxes drafts list --inbox-id <inbox_id>
         ```
 
         Parameters
@@ -123,7 +123,7 @@ class DraftsClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:drafts get --inbox-id <inbox_id> --draft-id <draft_id>
+        agentmail inboxes drafts get --inbox-id <inbox_id> --draft-id <draft_id>
         ```
 
         Parameters
@@ -165,7 +165,7 @@ class DraftsClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:drafts get-attachment --inbox-id <inbox_id> --draft-id <draft_id> --attachment-id <attachment_id>
+        agentmail inboxes drafts get-attachment --inbox-id <inbox_id> --draft-id <draft_id> --attachment-id <attachment_id>
         ```
 
         Parameters
@@ -228,7 +228,7 @@ class DraftsClient:
 
         **CLI:**
         ```bash
-        agentmail inboxes:drafts create --inbox-id <inbox_id> --to recipient@example.com --subject "Draft subject" --text "Draft body"
+        agentmail inboxes drafts create --inbox-id <inbox_id> --to recipient@example.com --subject "Draft subject" --text "Draft body"
         ```
 
         Parameters
@@ -328,7 +328,7 @@ class DraftsClient:
 
         **CLI:**
         ```bash
-        agentmail inboxes:drafts update --inbox-id <inbox_id> --draft-id <draft_id> --subject "Updated subject"
+        agentmail inboxes drafts update --inbox-id <inbox_id> --draft-id <draft_id> --subject "Updated subject"
         ```
 
         Parameters
@@ -409,7 +409,7 @@ class DraftsClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:drafts delete --inbox-id <inbox_id> --draft-id <draft_id>
+        agentmail inboxes drafts delete --inbox-id <inbox_id> --draft-id <draft_id>
         ```
 
         Parameters
@@ -453,7 +453,7 @@ class DraftsClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:drafts send --inbox-id <inbox_id> --draft-id <draft_id>
+        agentmail inboxes drafts send --inbox-id <inbox_id> --draft-id <draft_id>
         ```
 
         Parameters
@@ -531,7 +531,7 @@ class AsyncDraftsClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:drafts list --inbox-id <inbox_id>
+        agentmail inboxes drafts list --inbox-id <inbox_id>
         ```
 
         Parameters
@@ -594,7 +594,7 @@ class AsyncDraftsClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:drafts get --inbox-id <inbox_id> --draft-id <draft_id>
+        agentmail inboxes drafts get --inbox-id <inbox_id> --draft-id <draft_id>
         ```
 
         Parameters
@@ -644,7 +644,7 @@ class AsyncDraftsClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:drafts get-attachment --inbox-id <inbox_id> --draft-id <draft_id> --attachment-id <attachment_id>
+        agentmail inboxes drafts get-attachment --inbox-id <inbox_id> --draft-id <draft_id> --attachment-id <attachment_id>
         ```
 
         Parameters
@@ -717,7 +717,7 @@ class AsyncDraftsClient:
 
         **CLI:**
         ```bash
-        agentmail inboxes:drafts create --inbox-id <inbox_id> --to recipient@example.com --subject "Draft subject" --text "Draft body"
+        agentmail inboxes drafts create --inbox-id <inbox_id> --to recipient@example.com --subject "Draft subject" --text "Draft body"
         ```
 
         Parameters
@@ -825,7 +825,7 @@ class AsyncDraftsClient:
 
         **CLI:**
         ```bash
-        agentmail inboxes:drafts update --inbox-id <inbox_id> --draft-id <draft_id> --subject "Updated subject"
+        agentmail inboxes drafts update --inbox-id <inbox_id> --draft-id <draft_id> --subject "Updated subject"
         ```
 
         Parameters
@@ -914,7 +914,7 @@ class AsyncDraftsClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:drafts delete --inbox-id <inbox_id> --draft-id <draft_id>
+        agentmail inboxes drafts delete --inbox-id <inbox_id> --draft-id <draft_id>
         ```
 
         Parameters
@@ -966,7 +966,7 @@ class AsyncDraftsClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:drafts send --inbox-id <inbox_id> --draft-id <draft_id>
+        agentmail inboxes drafts send --inbox-id <inbox_id> --draft-id <draft_id>
         ```
 
         Parameters

@@ -17,6 +17,7 @@ from ...domains.types.domain_name import DomainName
 from ...domains.types.feedback_enabled import FeedbackEnabled
 from ...domains.types.list_domains_response import ListDomainsResponse
 from ...domains.types.subdomains_enabled import SubdomainsEnabled
+from ...domains.types.tracking_enabled import TrackingEnabled
 from ...errors.not_found_error import NotFoundError
 from ...errors.validation_error import ValidationError as errors_validation_error_ValidationError
 from ...types.ascending import Ascending
@@ -47,7 +48,7 @@ class RawDomainsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains list --pod-id <pod_id>
+        agentmail pods domains list --pod-id <pod_id>
         ```
 
         Parameters
@@ -114,7 +115,7 @@ class RawDomainsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains get --pod-id <pod_id> --domain-id <domain_id>
+        agentmail pods domains get --pod-id <pod_id> --domain-id <domain_id>
         ```
 
         Parameters
@@ -173,7 +174,7 @@ class RawDomainsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains get-zone-file --pod-id <pod_id> --domain-id <domain_id>
+        agentmail pods domains get-zone-file --pod-id <pod_id> --domain-id <domain_id>
         ```
 
         Parameters
@@ -238,12 +239,13 @@ class RawDomainsClient:
         domain: DomainName,
         feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
         subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
+        tracking_enabled: typing.Optional[TrackingEnabled] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Domain]:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains create --pod-id <pod_id> --domain example.com
+        agentmail pods domains create --pod-id <pod_id> --domain example.com
         ```
 
         Parameters
@@ -255,6 +257,8 @@ class RawDomainsClient:
         feedback_enabled : typing.Optional[FeedbackEnabled]
 
         subdomains_enabled : typing.Optional[SubdomainsEnabled]
+
+        tracking_enabled : typing.Optional[TrackingEnabled]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -271,6 +275,7 @@ class RawDomainsClient:
                 "domain": domain,
                 "feedback_enabled": feedback_enabled,
                 "subdomains_enabled": subdomains_enabled,
+                "tracking_enabled": tracking_enabled,
             },
             request_options=request_options,
             omit=OMIT,
@@ -312,12 +317,13 @@ class RawDomainsClient:
         *,
         feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
         subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
+        tracking_enabled: typing.Optional[TrackingEnabled] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Domain]:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains update --pod-id <pod_id> --domain-id <domain_id>
+        agentmail pods domains update --pod-id <pod_id> --domain-id <domain_id>
         ```
 
         Parameters
@@ -329,6 +335,8 @@ class RawDomainsClient:
         feedback_enabled : typing.Optional[FeedbackEnabled]
 
         subdomains_enabled : typing.Optional[SubdomainsEnabled]
+
+        tracking_enabled : typing.Optional[TrackingEnabled]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -344,6 +352,7 @@ class RawDomainsClient:
             json={
                 "feedback_enabled": feedback_enabled,
                 "subdomains_enabled": subdomains_enabled,
+                "tracking_enabled": tracking_enabled,
             },
             request_options=request_options,
             omit=OMIT,
@@ -384,7 +393,7 @@ class RawDomainsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains delete --pod-id <pod_id> --domain-id <domain_id>
+        agentmail pods domains delete --pod-id <pod_id> --domain-id <domain_id>
         ```
 
         Parameters
@@ -435,7 +444,7 @@ class RawDomainsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains verify --pod-id <pod_id> --domain-id <domain_id>
+        agentmail pods domains verify --pod-id <pod_id> --domain-id <domain_id>
         ```
 
         Parameters
@@ -497,7 +506,7 @@ class AsyncRawDomainsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains list --pod-id <pod_id>
+        agentmail pods domains list --pod-id <pod_id>
         ```
 
         Parameters
@@ -564,7 +573,7 @@ class AsyncRawDomainsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains get --pod-id <pod_id> --domain-id <domain_id>
+        agentmail pods domains get --pod-id <pod_id> --domain-id <domain_id>
         ```
 
         Parameters
@@ -623,7 +632,7 @@ class AsyncRawDomainsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains get-zone-file --pod-id <pod_id> --domain-id <domain_id>
+        agentmail pods domains get-zone-file --pod-id <pod_id> --domain-id <domain_id>
         ```
 
         Parameters
@@ -689,12 +698,13 @@ class AsyncRawDomainsClient:
         domain: DomainName,
         feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
         subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
+        tracking_enabled: typing.Optional[TrackingEnabled] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Domain]:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains create --pod-id <pod_id> --domain example.com
+        agentmail pods domains create --pod-id <pod_id> --domain example.com
         ```
 
         Parameters
@@ -706,6 +716,8 @@ class AsyncRawDomainsClient:
         feedback_enabled : typing.Optional[FeedbackEnabled]
 
         subdomains_enabled : typing.Optional[SubdomainsEnabled]
+
+        tracking_enabled : typing.Optional[TrackingEnabled]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -722,6 +734,7 @@ class AsyncRawDomainsClient:
                 "domain": domain,
                 "feedback_enabled": feedback_enabled,
                 "subdomains_enabled": subdomains_enabled,
+                "tracking_enabled": tracking_enabled,
             },
             request_options=request_options,
             omit=OMIT,
@@ -763,12 +776,13 @@ class AsyncRawDomainsClient:
         *,
         feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
         subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
+        tracking_enabled: typing.Optional[TrackingEnabled] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Domain]:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains update --pod-id <pod_id> --domain-id <domain_id>
+        agentmail pods domains update --pod-id <pod_id> --domain-id <domain_id>
         ```
 
         Parameters
@@ -780,6 +794,8 @@ class AsyncRawDomainsClient:
         feedback_enabled : typing.Optional[FeedbackEnabled]
 
         subdomains_enabled : typing.Optional[SubdomainsEnabled]
+
+        tracking_enabled : typing.Optional[TrackingEnabled]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -795,6 +811,7 @@ class AsyncRawDomainsClient:
             json={
                 "feedback_enabled": feedback_enabled,
                 "subdomains_enabled": subdomains_enabled,
+                "tracking_enabled": tracking_enabled,
             },
             request_options=request_options,
             omit=OMIT,
@@ -835,7 +852,7 @@ class AsyncRawDomainsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains delete --pod-id <pod_id> --domain-id <domain_id>
+        agentmail pods domains delete --pod-id <pod_id> --domain-id <domain_id>
         ```
 
         Parameters
@@ -886,7 +903,7 @@ class AsyncRawDomainsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains verify --pod-id <pod_id> --domain-id <domain_id>
+        agentmail pods domains verify --pod-id <pod_id> --domain-id <domain_id>
         ```
 
         Parameters

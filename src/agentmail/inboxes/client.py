@@ -19,6 +19,7 @@ from .types.update_metadata import UpdateMetadata
 
 if typing.TYPE_CHECKING:
     from .api_keys.client import ApiKeysClient, AsyncApiKeysClient
+    from .browser_credentials.client import AsyncBrowserCredentialsClient, BrowserCredentialsClient
     from .drafts.client import AsyncDraftsClient, DraftsClient
     from .events.client import AsyncEventsClient, EventsClient
     from .lists.client import AsyncListsClient, ListsClient
@@ -37,6 +38,7 @@ class InboxesClient:
         self._threads: typing.Optional[ThreadsClient] = None
         self._messages: typing.Optional[MessagesClient] = None
         self._drafts: typing.Optional[DraftsClient] = None
+        self._browser_credentials: typing.Optional[BrowserCredentialsClient] = None
         self._webhooks: typing.Optional[WebhooksClient] = None
         self._lists: typing.Optional[ListsClient] = None
         self._metrics: typing.Optional[MetricsClient] = None
@@ -272,6 +274,14 @@ class InboxesClient:
         return self._drafts
 
     @property
+    def browser_credentials(self):
+        if self._browser_credentials is None:
+            from .browser_credentials.client import BrowserCredentialsClient  # noqa: E402
+
+            self._browser_credentials = BrowserCredentialsClient(client_wrapper=self._client_wrapper)
+        return self._browser_credentials
+
+    @property
     def webhooks(self):
         if self._webhooks is None:
             from .webhooks.client import WebhooksClient  # noqa: E402
@@ -319,6 +329,7 @@ class AsyncInboxesClient:
         self._threads: typing.Optional[AsyncThreadsClient] = None
         self._messages: typing.Optional[AsyncMessagesClient] = None
         self._drafts: typing.Optional[AsyncDraftsClient] = None
+        self._browser_credentials: typing.Optional[AsyncBrowserCredentialsClient] = None
         self._webhooks: typing.Optional[AsyncWebhooksClient] = None
         self._lists: typing.Optional[AsyncListsClient] = None
         self._metrics: typing.Optional[AsyncMetricsClient] = None
@@ -592,6 +603,14 @@ class AsyncInboxesClient:
 
             self._drafts = AsyncDraftsClient(client_wrapper=self._client_wrapper)
         return self._drafts
+
+    @property
+    def browser_credentials(self):
+        if self._browser_credentials is None:
+            from .browser_credentials.client import AsyncBrowserCredentialsClient  # noqa: E402
+
+            self._browser_credentials = AsyncBrowserCredentialsClient(client_wrapper=self._client_wrapper)
+        return self._browser_credentials
 
     @property
     def webhooks(self):

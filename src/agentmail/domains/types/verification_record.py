@@ -35,6 +35,11 @@ class VerificationRecord(UncheckedBaseModel):
     The priority of the MX record.
     """
 
+    reason: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Why the record is INVALID, when known. `duplicate_records` means the expected value is present but extra records coexist at the same name; `value_mismatch` means a record exists but does not match the expected value.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

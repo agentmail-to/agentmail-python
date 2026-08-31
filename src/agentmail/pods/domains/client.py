@@ -10,6 +10,7 @@ from ...domains.types.domain_name import DomainName
 from ...domains.types.feedback_enabled import FeedbackEnabled
 from ...domains.types.list_domains_response import ListDomainsResponse
 from ...domains.types.subdomains_enabled import SubdomainsEnabled
+from ...domains.types.tracking_enabled import TrackingEnabled
 from ...types.ascending import Ascending
 from ...types.limit import Limit
 from ...types.page_token import PageToken
@@ -47,7 +48,7 @@ class DomainsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains list --pod-id <pod_id>
+        agentmail pods domains list --pod-id <pod_id>
         ```
 
         Parameters
@@ -89,7 +90,7 @@ class DomainsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains get --pod-id <pod_id> --domain-id <domain_id>
+        agentmail pods domains get --pod-id <pod_id> --domain-id <domain_id>
         ```
 
         Parameters
@@ -126,7 +127,7 @@ class DomainsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains get-zone-file --pod-id <pod_id> --domain-id <domain_id>
+        agentmail pods domains get-zone-file --pod-id <pod_id> --domain-id <domain_id>
         ```
 
         Parameters
@@ -164,12 +165,13 @@ class DomainsClient:
         domain: DomainName,
         feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
         subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
+        tracking_enabled: typing.Optional[TrackingEnabled] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Domain:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains create --pod-id <pod_id> --domain example.com
+        agentmail pods domains create --pod-id <pod_id> --domain example.com
         ```
 
         Parameters
@@ -181,6 +183,8 @@ class DomainsClient:
         feedback_enabled : typing.Optional[FeedbackEnabled]
 
         subdomains_enabled : typing.Optional[SubdomainsEnabled]
+
+        tracking_enabled : typing.Optional[TrackingEnabled]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -206,6 +210,7 @@ class DomainsClient:
             domain=domain,
             feedback_enabled=feedback_enabled,
             subdomains_enabled=subdomains_enabled,
+            tracking_enabled=tracking_enabled,
             request_options=request_options,
         )
         return _response.data
@@ -217,12 +222,13 @@ class DomainsClient:
         *,
         feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
         subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
+        tracking_enabled: typing.Optional[TrackingEnabled] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Domain:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains update --pod-id <pod_id> --domain-id <domain_id>
+        agentmail pods domains update --pod-id <pod_id> --domain-id <domain_id>
         ```
 
         Parameters
@@ -234,6 +240,8 @@ class DomainsClient:
         feedback_enabled : typing.Optional[FeedbackEnabled]
 
         subdomains_enabled : typing.Optional[SubdomainsEnabled]
+
+        tracking_enabled : typing.Optional[TrackingEnabled]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -259,6 +267,7 @@ class DomainsClient:
             domain_id,
             feedback_enabled=feedback_enabled,
             subdomains_enabled=subdomains_enabled,
+            tracking_enabled=tracking_enabled,
             request_options=request_options,
         )
         return _response.data
@@ -269,7 +278,7 @@ class DomainsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains delete --pod-id <pod_id> --domain-id <domain_id>
+        agentmail pods domains delete --pod-id <pod_id> --domain-id <domain_id>
         ```
 
         Parameters
@@ -306,7 +315,7 @@ class DomainsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains verify --pod-id <pod_id> --domain-id <domain_id>
+        agentmail pods domains verify --pod-id <pod_id> --domain-id <domain_id>
         ```
 
         Parameters
@@ -365,7 +374,7 @@ class AsyncDomainsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains list --pod-id <pod_id>
+        agentmail pods domains list --pod-id <pod_id>
         ```
 
         Parameters
@@ -415,7 +424,7 @@ class AsyncDomainsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains get --pod-id <pod_id> --domain-id <domain_id>
+        agentmail pods domains get --pod-id <pod_id> --domain-id <domain_id>
         ```
 
         Parameters
@@ -460,7 +469,7 @@ class AsyncDomainsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains get-zone-file --pod-id <pod_id> --domain-id <domain_id>
+        agentmail pods domains get-zone-file --pod-id <pod_id> --domain-id <domain_id>
         ```
 
         Parameters
@@ -507,12 +516,13 @@ class AsyncDomainsClient:
         domain: DomainName,
         feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
         subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
+        tracking_enabled: typing.Optional[TrackingEnabled] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Domain:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains create --pod-id <pod_id> --domain example.com
+        agentmail pods domains create --pod-id <pod_id> --domain example.com
         ```
 
         Parameters
@@ -524,6 +534,8 @@ class AsyncDomainsClient:
         feedback_enabled : typing.Optional[FeedbackEnabled]
 
         subdomains_enabled : typing.Optional[SubdomainsEnabled]
+
+        tracking_enabled : typing.Optional[TrackingEnabled]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -557,6 +569,7 @@ class AsyncDomainsClient:
             domain=domain,
             feedback_enabled=feedback_enabled,
             subdomains_enabled=subdomains_enabled,
+            tracking_enabled=tracking_enabled,
             request_options=request_options,
         )
         return _response.data
@@ -568,12 +581,13 @@ class AsyncDomainsClient:
         *,
         feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
         subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
+        tracking_enabled: typing.Optional[TrackingEnabled] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Domain:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains update --pod-id <pod_id> --domain-id <domain_id>
+        agentmail pods domains update --pod-id <pod_id> --domain-id <domain_id>
         ```
 
         Parameters
@@ -585,6 +599,8 @@ class AsyncDomainsClient:
         feedback_enabled : typing.Optional[FeedbackEnabled]
 
         subdomains_enabled : typing.Optional[SubdomainsEnabled]
+
+        tracking_enabled : typing.Optional[TrackingEnabled]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -618,6 +634,7 @@ class AsyncDomainsClient:
             domain_id,
             feedback_enabled=feedback_enabled,
             subdomains_enabled=subdomains_enabled,
+            tracking_enabled=tracking_enabled,
             request_options=request_options,
         )
         return _response.data
@@ -628,7 +645,7 @@ class AsyncDomainsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains delete --pod-id <pod_id> --domain-id <domain_id>
+        agentmail pods domains delete --pod-id <pod_id> --domain-id <domain_id>
         ```
 
         Parameters
@@ -673,7 +690,7 @@ class AsyncDomainsClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:domains verify --pod-id <pod_id> --domain-id <domain_id>
+        agentmail pods domains verify --pod-id <pod_id> --domain-id <domain_id>
         ```
 
         Parameters

@@ -13,11 +13,13 @@ if typing.TYPE_CHECKING:
     from .domain_item import DomainItem
     from .domain_name import DomainName
     from .feedback_enabled import FeedbackEnabled
+    from .get_setup_link_response import GetSetupLinkResponse
     from .list_domains_response import ListDomainsResponse
     from .record_status import RecordStatus
     from .record_type import RecordType
     from .status import Status
     from .subdomains_enabled import SubdomainsEnabled
+    from .tracking_enabled import TrackingEnabled
     from .update_domain_request import UpdateDomainRequest
     from .verification_record import VerificationRecord
     from .verification_status import VerificationStatus
@@ -29,11 +31,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DomainItem": ".domain_item",
     "DomainName": ".domain_name",
     "FeedbackEnabled": ".feedback_enabled",
+    "GetSetupLinkResponse": ".get_setup_link_response",
     "ListDomainsResponse": ".list_domains_response",
     "RecordStatus": ".record_status",
     "RecordType": ".record_type",
     "Status": ".status",
     "SubdomainsEnabled": ".subdomains_enabled",
+    "TrackingEnabled": ".tracking_enabled",
     "UpdateDomainRequest": ".update_domain_request",
     "VerificationRecord": ".verification_record",
     "VerificationStatus": ".verification_status",
@@ -69,11 +73,13 @@ __all__ = [
     "DomainItem",
     "DomainName",
     "FeedbackEnabled",
+    "GetSetupLinkResponse",
     "ListDomainsResponse",
     "RecordStatus",
     "RecordType",
     "Status",
     "SubdomainsEnabled",
+    "TrackingEnabled",
     "UpdateDomainRequest",
     "VerificationRecord",
     "VerificationStatus",

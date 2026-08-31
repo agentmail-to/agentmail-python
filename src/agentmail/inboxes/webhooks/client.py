@@ -50,7 +50,7 @@ class WebhooksClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:webhooks list --inbox-id <inbox_id>
+        agentmail inboxes webhooks list --inbox-id <inbox_id>
         ```
 
         Parameters
@@ -92,7 +92,7 @@ class WebhooksClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:webhooks get --inbox-id <inbox_id> --webhook-id <webhook_id>
+        agentmail inboxes webhooks get --inbox-id <inbox_id> --webhook-id <webhook_id>
         ```
 
         Parameters
@@ -173,7 +173,7 @@ class WebhooksClient:
 
         **CLI:**
         ```bash
-        agentmail inboxes:webhooks create --inbox-id <inbox_id> --url https://example.com/webhook --event-type message.received
+        agentmail inboxes webhooks create --inbox-id <inbox_id> --url https://example.com/webhook --event-types message.received
         ```
 
         Parameters
@@ -229,7 +229,7 @@ class WebhooksClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:webhooks update --inbox-id <inbox_id> --webhook-id <webhook_id> --event-type message.received
+        agentmail inboxes webhooks update --inbox-id <inbox_id> --webhook-id <webhook_id> --event-types message.received
         ```
 
         Parameters
@@ -318,7 +318,7 @@ class WebhooksClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:webhooks delete --inbox-id <inbox_id> --webhook-id <webhook_id>
+        agentmail inboxes webhooks delete --inbox-id <inbox_id> --webhook-id <webhook_id>
         ```
 
         Parameters
@@ -377,7 +377,7 @@ class AsyncWebhooksClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:webhooks list --inbox-id <inbox_id>
+        agentmail inboxes webhooks list --inbox-id <inbox_id>
         ```
 
         Parameters
@@ -427,7 +427,7 @@ class AsyncWebhooksClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:webhooks get --inbox-id <inbox_id> --webhook-id <webhook_id>
+        agentmail inboxes webhooks get --inbox-id <inbox_id> --webhook-id <webhook_id>
         ```
 
         Parameters
@@ -524,7 +524,7 @@ class AsyncWebhooksClient:
 
         **CLI:**
         ```bash
-        agentmail inboxes:webhooks create --inbox-id <inbox_id> --url https://example.com/webhook --event-type message.received
+        agentmail inboxes webhooks create --inbox-id <inbox_id> --url https://example.com/webhook --event-types message.received
         ```
 
         Parameters
@@ -588,7 +588,7 @@ class AsyncWebhooksClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:webhooks update --inbox-id <inbox_id> --webhook-id <webhook_id> --event-type message.received
+        agentmail inboxes webhooks update --inbox-id <inbox_id> --webhook-id <webhook_id> --event-types message.received
         ```
 
         Parameters
@@ -693,7 +693,7 @@ class AsyncWebhooksClient:
         """
         **CLI:**
         ```bash
-        agentmail inboxes:webhooks delete --inbox-id <inbox_id> --webhook-id <webhook_id>
+        agentmail inboxes webhooks delete --inbox-id <inbox_id> --webhook-id <webhook_id>
         ```
 
         Parameters

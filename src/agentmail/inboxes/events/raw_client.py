@@ -38,7 +38,7 @@ class RawEventsClient:
 
         **CLI:**
         ```bash
-        agentmail inboxes:events list --inbox-id <inbox_id>
+        agentmail inboxes events list --inbox-id <inbox_id>
         ```
 
         Parameters
@@ -118,7 +118,7 @@ class AsyncRawEventsClient:
 
         **CLI:**
         ```bash
-        agentmail inboxes:events list --inbox-id <inbox_id>
+        agentmail inboxes events list --inbox-id <inbox_id>
         ```
 
         Parameters

@@ -49,7 +49,7 @@ class RawInboxesClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:inboxes list --pod-id <pod_id>
+        agentmail pods inboxes list --pod-id <pod_id>
         ```
 
         Parameters
@@ -116,7 +116,7 @@ class RawInboxesClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:inboxes get --pod-id <pod_id> --inbox-id <inbox_id>
+        agentmail pods inboxes get --pod-id <pod_id> --inbox-id <inbox_id>
         ```
 
         Parameters
@@ -182,7 +182,7 @@ class RawInboxesClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:inboxes create --pod-id <pod_id> --username myagent --domain example.com
+        agentmail pods inboxes create --pod-id <pod_id> --username myagent --domain example.com
         ```
 
         Parameters
@@ -280,7 +280,7 @@ class RawInboxesClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:inboxes update --pod-id <pod_id> --inbox-id <inbox_id>
+        agentmail pods inboxes update --pod-id <pod_id> --inbox-id <inbox_id>
         ```
 
         Parameters
@@ -355,7 +355,7 @@ class RawInboxesClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:inboxes delete --pod-id <pod_id> --inbox-id <inbox_id>
+        agentmail pods inboxes delete --pod-id <pod_id> --inbox-id <inbox_id>
         ```
 
         Parameters
@@ -417,7 +417,7 @@ class AsyncRawInboxesClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:inboxes list --pod-id <pod_id>
+        agentmail pods inboxes list --pod-id <pod_id>
         ```
 
         Parameters
@@ -484,7 +484,7 @@ class AsyncRawInboxesClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:inboxes get --pod-id <pod_id> --inbox-id <inbox_id>
+        agentmail pods inboxes get --pod-id <pod_id> --inbox-id <inbox_id>
         ```
 
         Parameters
@@ -550,7 +550,7 @@ class AsyncRawInboxesClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:inboxes create --pod-id <pod_id> --username myagent --domain example.com
+        agentmail pods inboxes create --pod-id <pod_id> --username myagent --domain example.com
         ```
 
         Parameters
@@ -648,7 +648,7 @@ class AsyncRawInboxesClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:inboxes update --pod-id <pod_id> --inbox-id <inbox_id>
+        agentmail pods inboxes update --pod-id <pod_id> --inbox-id <inbox_id>
         ```
 
         Parameters
@@ -723,7 +723,7 @@ class AsyncRawInboxesClient:
         """
         **CLI:**
         ```bash
-        agentmail pods:inboxes delete --pod-id <pod_id> --inbox-id <inbox_id>
+        agentmail pods inboxes delete --pod-id <pod_id> --inbox-id <inbox_id>
         ```
 
         Parameters

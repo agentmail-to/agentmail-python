@@ -15,6 +15,7 @@ from .send_message_cc import SendMessageCc
 from .send_message_headers import SendMessageHeaders
 from .send_message_reply_to import SendMessageReplyTo
 from .send_message_to import SendMessageTo
+from .track_opens import TrackOpens
 
 
 class ReplyToMessageRequest(UncheckedBaseModel):
@@ -28,6 +29,7 @@ class ReplyToMessageRequest(UncheckedBaseModel):
     html: typing.Optional[MessageHtml] = None
     attachments: typing.Optional[SendMessageAttachments] = None
     headers: typing.Optional[SendMessageHeaders] = None
+    track_opens: typing.Optional[TrackOpens] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

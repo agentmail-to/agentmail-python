@@ -51,7 +51,7 @@ class MetricsClient:
 
         **CLI:**
         ```bash
-        agentmail metrics list
+        agentmail metrics query-events
         ```
 
         Parameters
@@ -190,7 +190,7 @@ class AsyncMetricsClient:
 
         **CLI:**
         ```bash
-        agentmail metrics list
+        agentmail metrics query-events
         ```
 
         Parameters

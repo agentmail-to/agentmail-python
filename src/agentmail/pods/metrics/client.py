@@ -53,7 +53,7 @@ class MetricsClient:
 
         **CLI:**
         ```bash
-        agentmail pods:metrics query --pod-id <pod_id>
+        agentmail pods metrics query-events --pod-id <pod_id>
         ```
 
         Parameters
@@ -206,7 +206,7 @@ class AsyncMetricsClient:
 
         **CLI:**
         ```bash
-        agentmail pods:metrics query --pod-id <pod_id>
+        agentmail pods metrics query-events --pod-id <pod_id>
         ```
 
         Parameters

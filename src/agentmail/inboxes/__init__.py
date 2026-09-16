@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        AuthorizeInboxRequest,
         ClientId,
         CreateInboxRequest,
         DisplayName,
@@ -16,11 +17,13 @@ if typing.TYPE_CHECKING:
         ListInboxesResponse,
         Metadata,
         MetadataValue,
+        SearchInboxesResponse,
         UpdateInboxRequest,
         UpdateMetadata,
     )
-    from . import api_keys, browser_credentials, drafts, events, lists, messages, metrics, threads, webhooks
+    from . import api_keys, drafts, events, lists, messages, metrics, threads, webhooks
 _dynamic_imports: typing.Dict[str, str] = {
+    "AuthorizeInboxRequest": ".types",
     "ClientId": ".types",
     "CreateInboxRequest": ".types",
     "DisplayName": ".types",
@@ -30,10 +33,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListInboxesResponse": ".types",
     "Metadata": ".types",
     "MetadataValue": ".types",
+    "SearchInboxesResponse": ".types",
     "UpdateInboxRequest": ".types",
     "UpdateMetadata": ".types",
     "api_keys": ".api_keys",
-    "browser_credentials": ".browser_credentials",
     "drafts": ".drafts",
     "events": ".events",
     "lists": ".lists",
@@ -66,6 +69,7 @@ def __dir__():
 
 
 __all__ = [
+    "AuthorizeInboxRequest",
     "ClientId",
     "CreateInboxRequest",
     "DisplayName",
@@ -75,10 +79,10 @@ __all__ = [
     "ListInboxesResponse",
     "Metadata",
     "MetadataValue",
+    "SearchInboxesResponse",
     "UpdateInboxRequest",
     "UpdateMetadata",
     "api_keys",
-    "browser_credentials",
     "drafts",
     "events",
     "lists",

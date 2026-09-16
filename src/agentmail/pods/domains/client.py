@@ -163,6 +163,7 @@ class DomainsClient:
         pod_id: PodId,
         *,
         domain: DomainName,
+        allow_conflicting_provider: typing.Optional[bool] = OMIT,
         feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
         subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
         tracking_enabled: typing.Optional[TrackingEnabled] = OMIT,
@@ -179,6 +180,13 @@ class DomainsClient:
         pod_id : PodId
 
         domain : DomainName
+
+        allow_conflicting_provider : typing.Optional[bool]
+            Allow registration when the domain already has Google Workspace MX records.
+            Defaults to false; registration otherwise returns 422 when a conflicting
+            provider is detected.
+            This flag does not configure DNS or inbound routing. For shared Google
+            Workspace domains, follow the [Google Workspace guide](/google-workspace).
 
         feedback_enabled : typing.Optional[FeedbackEnabled]
 
@@ -208,6 +216,7 @@ class DomainsClient:
         _response = self._raw_client.create(
             pod_id,
             domain=domain,
+            allow_conflicting_provider=allow_conflicting_provider,
             feedback_enabled=feedback_enabled,
             subdomains_enabled=subdomains_enabled,
             tracking_enabled=tracking_enabled,
@@ -514,6 +523,7 @@ class AsyncDomainsClient:
         pod_id: PodId,
         *,
         domain: DomainName,
+        allow_conflicting_provider: typing.Optional[bool] = OMIT,
         feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
         subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
         tracking_enabled: typing.Optional[TrackingEnabled] = OMIT,
@@ -530,6 +540,13 @@ class AsyncDomainsClient:
         pod_id : PodId
 
         domain : DomainName
+
+        allow_conflicting_provider : typing.Optional[bool]
+            Allow registration when the domain already has Google Workspace MX records.
+            Defaults to false; registration otherwise returns 422 when a conflicting
+            provider is detected.
+            This flag does not configure DNS or inbound routing. For shared Google
+            Workspace domains, follow the [Google Workspace guide](/google-workspace).
 
         feedback_enabled : typing.Optional[FeedbackEnabled]
 
@@ -567,6 +584,7 @@ class AsyncDomainsClient:
         _response = await self._raw_client.create(
             pod_id,
             domain=domain,
+            allow_conflicting_provider=allow_conflicting_provider,
             feedback_enabled=feedback_enabled,
             subdomains_enabled=subdomains_enabled,
             tracking_enabled=tracking_enabled,

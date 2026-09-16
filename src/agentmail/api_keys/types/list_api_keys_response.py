@@ -15,7 +15,8 @@ class ListApiKeysResponse(UncheckedBaseModel):
     next_page_token: typing.Optional[PageToken] = None
     api_keys: typing.List[ApiKey] = pydantic.Field()
     """
-    Ordered by `created_at` descending.
+    Every credential family, ordered by `created_at`. `type` restricts
+    to one family.
     """
 
     if IS_PYDANTIC_V2:

@@ -190,7 +190,14 @@ class ThreadsClient:
         )
         return _response.data
 
-    def get(self, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None) -> Thread:
+    def get(
+        self,
+        thread_id: ThreadId,
+        *,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Thread:
         """
         **CLI:**
         ```bash
@@ -200,6 +207,12 @@ class ThreadsClient:
         Parameters
         ----------
         thread_id : ThreadId
+
+        limit : typing.Optional[Limit]
+            Maximum number of messages to return. Cannot exceed 100.
+
+        page_token : typing.Optional[PageToken]
+            Token returned by the previous response for retrieving the next, older page.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -219,7 +232,7 @@ class ThreadsClient:
             thread_id="thread_id",
         )
         """
-        _response = self._raw_client.get(thread_id, request_options=request_options)
+        _response = self._raw_client.get(thread_id, limit=limit, page_token=page_token, request_options=request_options)
         return _response.data
 
     def get_attachment(
@@ -520,7 +533,14 @@ class AsyncThreadsClient:
         )
         return _response.data
 
-    async def get(self, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None) -> Thread:
+    async def get(
+        self,
+        thread_id: ThreadId,
+        *,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Thread:
         """
         **CLI:**
         ```bash
@@ -530,6 +550,12 @@ class AsyncThreadsClient:
         Parameters
         ----------
         thread_id : ThreadId
+
+        limit : typing.Optional[Limit]
+            Maximum number of messages to return. Cannot exceed 100.
+
+        page_token : typing.Optional[PageToken]
+            Token returned by the previous response for retrieving the next, older page.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -557,7 +583,9 @@ class AsyncThreadsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(thread_id, request_options=request_options)
+        _response = await self._raw_client.get(
+            thread_id, limit=limit, page_token=page_token, request_options=request_options
+        )
         return _response.data
 
     async def get_attachment(

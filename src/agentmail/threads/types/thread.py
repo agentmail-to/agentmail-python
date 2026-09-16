@@ -7,6 +7,9 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from ...inboxes.types.inbox_id import InboxId
 from ...messages.types.message import Message
+from ...types.count import Count
+from ...types.limit import Limit
+from ...types.page_token import PageToken
 from .thread_attachments import ThreadAttachments
 from .thread_created_at import ThreadCreatedAt
 from .thread_id import ThreadId
@@ -41,9 +44,24 @@ class Thread(UncheckedBaseModel):
     size: ThreadSize
     updated_at: ThreadUpdatedAt
     created_at: ThreadCreatedAt
+    count: Count = pydantic.Field()
+    """
+    Number of messages in this response page.
+    """
+
+    limit: typing.Optional[Limit] = pydantic.Field(default=None)
+    """
+    Maximum number of messages requested for this page.
+    """
+
+    next_page_token: typing.Optional[PageToken] = pydantic.Field(default=None)
+    """
+    Token for the next, older page of messages. Omitted when this page completes the thread.
+    """
+
     messages: typing.List[Message] = pydantic.Field()
     """
-    Messages in thread. Ordered by `timestamp` ascending.
+    Messages in this page, ordered by `timestamp` ascending. The first page contains the newest messages; follow `next_page_token` to retrieve older pages.
     """
 
     if IS_PYDANTIC_V2:

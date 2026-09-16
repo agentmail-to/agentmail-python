@@ -11,6 +11,7 @@ from .core.logging import LogConfig, Logger
 from .environment import AgentMailEnvironment
 
 if typing.TYPE_CHECKING:
+    from .accounts.client import AccountsClient, AsyncAccountsClient
     from .agent.client import AgentClient, AsyncAgentClient
     from .api_keys.client import ApiKeysClient, AsyncApiKeysClient
     from .auth.client import AsyncAuthClient, AuthClient
@@ -21,6 +22,7 @@ if typing.TYPE_CHECKING:
     from .metrics.client import AsyncMetricsClient, MetricsClient
     from .organizations.client import AsyncOrganizationsClient, OrganizationsClient
     from .pods.client import AsyncPodsClient, PodsClient
+    from .providers.client import AsyncProvidersClient, ProvidersClient
     from .threads.client import AsyncThreadsClient, ThreadsClient
     from .webhooks.client import AsyncWebhooksClient, WebhooksClient
     from .websockets.client import AsyncWebsocketsClient, WebsocketsClient
@@ -95,6 +97,7 @@ class AgentMail:
         self._inboxes: typing.Optional[InboxesClient] = None
         self._pods: typing.Optional[PodsClient] = None
         self._webhooks: typing.Optional[WebhooksClient] = None
+        self._accounts: typing.Optional[AccountsClient] = None
         self._agent: typing.Optional[AgentClient] = None
         self._api_keys: typing.Optional[ApiKeysClient] = None
         self._auth: typing.Optional[AuthClient] = None
@@ -103,6 +106,7 @@ class AgentMail:
         self._lists: typing.Optional[ListsClient] = None
         self._metrics: typing.Optional[MetricsClient] = None
         self._organizations: typing.Optional[OrganizationsClient] = None
+        self._providers: typing.Optional[ProvidersClient] = None
         self._threads: typing.Optional[ThreadsClient] = None
         self._websockets: typing.Optional[WebsocketsClient] = None
 
@@ -129,6 +133,14 @@ class AgentMail:
 
             self._webhooks = WebhooksClient(client_wrapper=self._client_wrapper)
         return self._webhooks
+
+    @property
+    def accounts(self):
+        if self._accounts is None:
+            from .accounts.client import AccountsClient  # noqa: E402
+
+            self._accounts = AccountsClient(client_wrapper=self._client_wrapper)
+        return self._accounts
 
     @property
     def agent(self):
@@ -193,6 +205,14 @@ class AgentMail:
 
             self._organizations = OrganizationsClient(client_wrapper=self._client_wrapper)
         return self._organizations
+
+    @property
+    def providers(self):
+        if self._providers is None:
+            from .providers.client import ProvidersClient  # noqa: E402
+
+            self._providers = ProvidersClient(client_wrapper=self._client_wrapper)
+        return self._providers
 
     @property
     def threads(self):
@@ -280,6 +300,7 @@ class AsyncAgentMail:
         self._inboxes: typing.Optional[AsyncInboxesClient] = None
         self._pods: typing.Optional[AsyncPodsClient] = None
         self._webhooks: typing.Optional[AsyncWebhooksClient] = None
+        self._accounts: typing.Optional[AsyncAccountsClient] = None
         self._agent: typing.Optional[AsyncAgentClient] = None
         self._api_keys: typing.Optional[AsyncApiKeysClient] = None
         self._auth: typing.Optional[AsyncAuthClient] = None
@@ -288,6 +309,7 @@ class AsyncAgentMail:
         self._lists: typing.Optional[AsyncListsClient] = None
         self._metrics: typing.Optional[AsyncMetricsClient] = None
         self._organizations: typing.Optional[AsyncOrganizationsClient] = None
+        self._providers: typing.Optional[AsyncProvidersClient] = None
         self._threads: typing.Optional[AsyncThreadsClient] = None
         self._websockets: typing.Optional[AsyncWebsocketsClient] = None
 
@@ -314,6 +336,14 @@ class AsyncAgentMail:
 
             self._webhooks = AsyncWebhooksClient(client_wrapper=self._client_wrapper)
         return self._webhooks
+
+    @property
+    def accounts(self):
+        if self._accounts is None:
+            from .accounts.client import AsyncAccountsClient  # noqa: E402
+
+            self._accounts = AsyncAccountsClient(client_wrapper=self._client_wrapper)
+        return self._accounts
 
     @property
     def agent(self):
@@ -378,6 +408,14 @@ class AsyncAgentMail:
 
             self._organizations = AsyncOrganizationsClient(client_wrapper=self._client_wrapper)
         return self._organizations
+
+    @property
+    def providers(self):
+        if self._providers is None:
+            from .providers.client import AsyncProvidersClient  # noqa: E402
+
+            self._providers = AsyncProvidersClient(client_wrapper=self._client_wrapper)
+        return self._providers
 
     @property
     def threads(self):

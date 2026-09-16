@@ -13,6 +13,15 @@ from .tracking_enabled import TrackingEnabled
 
 class CreateDomainRequest(UncheckedBaseModel):
     domain: DomainName
+    allow_conflicting_provider: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Allow registration when the domain already has Google Workspace MX records.
+    Defaults to false; registration otherwise returns 422 when a conflicting
+    provider is detected.
+    This flag does not configure DNS or inbound routing. For shared Google
+    Workspace domains, follow the [Google Workspace guide](/google-workspace).
+    """
+
     feedback_enabled: typing.Optional[FeedbackEnabled] = None
     subdomains_enabled: typing.Optional[SubdomainsEnabled] = None
     tracking_enabled: typing.Optional[TrackingEnabled] = None

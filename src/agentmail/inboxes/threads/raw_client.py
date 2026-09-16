@@ -259,7 +259,13 @@ class RawThreadsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     def get(
-        self, inbox_id: InboxId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        inbox_id: InboxId,
+        thread_id: ThreadId,
+        *,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Thread]:
         """
         **CLI:**
@@ -273,6 +279,12 @@ class RawThreadsClient:
 
         thread_id : ThreadId
 
+        limit : typing.Optional[Limit]
+            Maximum number of messages to return. Cannot exceed 100.
+
+        page_token : typing.Optional[PageToken]
+            Token returned by the previous response for retrieving the next, older page.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -284,6 +296,10 @@ class RawThreadsClient:
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads/{jsonable_encoder(thread_id)}",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
+            params={
+                "limit": limit,
+                "page_token": page_token,
+            },
             request_options=request_options,
         )
         try:
@@ -747,7 +763,13 @@ class AsyncRawThreadsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self, inbox_id: InboxId, thread_id: ThreadId, *, request_options: typing.Optional[RequestOptions] = None
+        self,
+        inbox_id: InboxId,
+        thread_id: ThreadId,
+        *,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Thread]:
         """
         **CLI:**
@@ -761,6 +783,12 @@ class AsyncRawThreadsClient:
 
         thread_id : ThreadId
 
+        limit : typing.Optional[Limit]
+            Maximum number of messages to return. Cannot exceed 100.
+
+        page_token : typing.Optional[PageToken]
+            Token returned by the previous response for retrieving the next, older page.
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -772,6 +800,10 @@ class AsyncRawThreadsClient:
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/threads/{jsonable_encoder(thread_id)}",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
+            params={
+                "limit": limit,
+                "page_token": page_token,
+            },
             request_options=request_options,
         )
         try:

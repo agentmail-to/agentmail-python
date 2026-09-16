@@ -2,9 +2,11 @@
 
 import typing
 
+from ...api_keys.types.api_key import ApiKey
 from ...api_keys.types.api_key_id import ApiKeyId
 from ...api_keys.types.api_key_permissions import ApiKeyPermissions
-from ...api_keys.types.create_api_key_response import CreateApiKeyResponse
+from ...api_keys.types.create_api_key_request import CreateApiKeyRequest
+from ...api_keys.types.create_api_key_result import CreateApiKeyResult
 from ...api_keys.types.list_api_keys_response import ListApiKeysResponse
 from ...api_keys.types.name import Name
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
@@ -80,10 +82,9 @@ class ApiKeysClient:
         self,
         inbox_id: InboxId,
         *,
-        name: typing.Optional[Name] = OMIT,
-        permissions: typing.Optional[ApiKeyPermissions] = OMIT,
+        request: CreateApiKeyRequest,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> CreateApiKeyResponse:
+    ) -> CreateApiKeyResult:
         """
         **CLI:**
         ```bash
@@ -94,6 +95,52 @@ class ApiKeysClient:
         ----------
         inbox_id : InboxId
 
+        request : CreateApiKeyRequest
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CreateApiKeyResult
+
+        Examples
+        --------
+        from agentmail import AgentMail
+        from agentmail.api_keys import CreateBearerApiKeyRequest
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.inboxes.api_keys.create(
+            inbox_id="inbox_id",
+            request=CreateBearerApiKeyRequest(),
+        )
+        """
+        _response = self._raw_client.create(inbox_id, request=request, request_options=request_options)
+        return _response.data
+
+    def update(
+        self,
+        inbox_id: InboxId,
+        api_key_id: ApiKeyId,
+        *,
+        name: typing.Optional[Name] = OMIT,
+        permissions: typing.Optional[ApiKeyPermissions] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ApiKey:
+        """
+        **CLI:**
+        ```bash
+        agentmail inboxes api-keys update --inbox-id <inbox_id> --api-key-id <api_key_id> --name "Renamed"
+        ```
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        api_key_id : ApiKeyId
+
         name : typing.Optional[Name]
 
         permissions : typing.Optional[ApiKeyPermissions]
@@ -103,7 +150,7 @@ class ApiKeysClient:
 
         Returns
         -------
-        CreateApiKeyResponse
+        ApiKey
 
         Examples
         --------
@@ -112,12 +159,13 @@ class ApiKeysClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.inboxes.api_keys.create(
+        client.inboxes.api_keys.update(
             inbox_id="inbox_id",
+            api_key_id="api_key_id",
         )
         """
-        _response = self._raw_client.create(
-            inbox_id, name=name, permissions=permissions, request_options=request_options
+        _response = self._raw_client.update(
+            inbox_id, api_key_id, name=name, permissions=permissions, request_options=request_options
         )
         return _response.data
 
@@ -231,10 +279,9 @@ class AsyncApiKeysClient:
         self,
         inbox_id: InboxId,
         *,
-        name: typing.Optional[Name] = OMIT,
-        permissions: typing.Optional[ApiKeyPermissions] = OMIT,
+        request: CreateApiKeyRequest,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> CreateApiKeyResponse:
+    ) -> CreateApiKeyResult:
         """
         **CLI:**
         ```bash
@@ -245,6 +292,60 @@ class AsyncApiKeysClient:
         ----------
         inbox_id : InboxId
 
+        request : CreateApiKeyRequest
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        CreateApiKeyResult
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+        from agentmail.api_keys import CreateBearerApiKeyRequest
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.inboxes.api_keys.create(
+                inbox_id="inbox_id",
+                request=CreateBearerApiKeyRequest(),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create(inbox_id, request=request, request_options=request_options)
+        return _response.data
+
+    async def update(
+        self,
+        inbox_id: InboxId,
+        api_key_id: ApiKeyId,
+        *,
+        name: typing.Optional[Name] = OMIT,
+        permissions: typing.Optional[ApiKeyPermissions] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ApiKey:
+        """
+        **CLI:**
+        ```bash
+        agentmail inboxes api-keys update --inbox-id <inbox_id> --api-key-id <api_key_id> --name "Renamed"
+        ```
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        api_key_id : ApiKeyId
+
         name : typing.Optional[Name]
 
         permissions : typing.Optional[ApiKeyPermissions]
@@ -254,7 +355,7 @@ class AsyncApiKeysClient:
 
         Returns
         -------
-        CreateApiKeyResponse
+        ApiKey
 
         Examples
         --------
@@ -268,15 +369,16 @@ class AsyncApiKeysClient:
 
 
         async def main() -> None:
-            await client.inboxes.api_keys.create(
+            await client.inboxes.api_keys.update(
                 inbox_id="inbox_id",
+                api_key_id="api_key_id",
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create(
-            inbox_id, name=name, permissions=permissions, request_options=request_options
+        _response = await self._raw_client.update(
+            inbox_id, api_key_id, name=name, permissions=permissions, request_options=request_options
         )
         return _response.data
 

@@ -3,9 +3,11 @@
 import typing
 from json.decoder import JSONDecodeError
 
+from ...api_keys.types.api_key import ApiKey
 from ...api_keys.types.api_key_id import ApiKeyId
 from ...api_keys.types.api_key_permissions import ApiKeyPermissions
-from ...api_keys.types.create_api_key_response import CreateApiKeyResponse
+from ...api_keys.types.create_api_key_request import CreateApiKeyRequest
+from ...api_keys.types.create_api_key_result import CreateApiKeyResult
 from ...api_keys.types.list_api_keys_response import ListApiKeysResponse
 from ...api_keys.types.name import Name
 from ...core.api_error import ApiError
@@ -106,10 +108,9 @@ class RawApiKeysClient:
         self,
         inbox_id: InboxId,
         *,
-        name: typing.Optional[Name] = OMIT,
-        permissions: typing.Optional[ApiKeyPermissions] = OMIT,
+        request: CreateApiKeyRequest,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[CreateApiKeyResponse]:
+    ) -> HttpResponse[CreateApiKeyResult]:
         """
         **CLI:**
         ```bash
@@ -120,36 +121,31 @@ class RawApiKeysClient:
         ----------
         inbox_id : InboxId
 
-        name : typing.Optional[Name]
-
-        permissions : typing.Optional[ApiKeyPermissions]
+        request : CreateApiKeyRequest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[CreateApiKeyResponse]
+        HttpResponse[CreateApiKeyResult]
         """
         _response = self._client_wrapper.httpx_client.request(
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/api-keys",
             base_url=self._client_wrapper.get_environment().http,
             method="POST",
-            json={
-                "name": name,
-                "permissions": convert_and_respect_annotation_metadata(
-                    object_=permissions, annotation=ApiKeyPermissions, direction="write"
-                ),
-            },
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=CreateApiKeyRequest, direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    CreateApiKeyResponse,
+                    CreateApiKeyResult,
                     construct_type(
-                        type_=CreateApiKeyResponse,  # type: ignore
+                        type_=CreateApiKeyResult,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -172,6 +168,92 @@ class RawApiKeysClient:
                         ValidationErrorResponse,
                         construct_type(
                             type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def update(
+        self,
+        inbox_id: InboxId,
+        api_key_id: ApiKeyId,
+        *,
+        name: typing.Optional[Name] = OMIT,
+        permissions: typing.Optional[ApiKeyPermissions] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[ApiKey]:
+        """
+        **CLI:**
+        ```bash
+        agentmail inboxes api-keys update --inbox-id <inbox_id> --api-key-id <api_key_id> --name "Renamed"
+        ```
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        api_key_id : ApiKeyId
+
+        name : typing.Optional[Name]
+
+        permissions : typing.Optional[ApiKeyPermissions]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ApiKey]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/api-keys/{jsonable_encoder(api_key_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="PATCH",
+            json={
+                "name": name,
+                "permissions": convert_and_respect_annotation_metadata(
+                    object_=permissions, annotation=ApiKeyPermissions, direction="write"
+                ),
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ApiKey,
+                    construct_type(
+                        type_=ApiKey,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -314,10 +396,9 @@ class AsyncRawApiKeysClient:
         self,
         inbox_id: InboxId,
         *,
-        name: typing.Optional[Name] = OMIT,
-        permissions: typing.Optional[ApiKeyPermissions] = OMIT,
+        request: CreateApiKeyRequest,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[CreateApiKeyResponse]:
+    ) -> AsyncHttpResponse[CreateApiKeyResult]:
         """
         **CLI:**
         ```bash
@@ -328,36 +409,31 @@ class AsyncRawApiKeysClient:
         ----------
         inbox_id : InboxId
 
-        name : typing.Optional[Name]
-
-        permissions : typing.Optional[ApiKeyPermissions]
+        request : CreateApiKeyRequest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[CreateApiKeyResponse]
+        AsyncHttpResponse[CreateApiKeyResult]
         """
         _response = await self._client_wrapper.httpx_client.request(
             f"v0/inboxes/{jsonable_encoder(inbox_id)}/api-keys",
             base_url=self._client_wrapper.get_environment().http,
             method="POST",
-            json={
-                "name": name,
-                "permissions": convert_and_respect_annotation_metadata(
-                    object_=permissions, annotation=ApiKeyPermissions, direction="write"
-                ),
-            },
+            json=convert_and_respect_annotation_metadata(
+                object_=request, annotation=CreateApiKeyRequest, direction="write"
+            ),
             request_options=request_options,
             omit=OMIT,
         )
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    CreateApiKeyResponse,
+                    CreateApiKeyResult,
                     construct_type(
-                        type_=CreateApiKeyResponse,  # type: ignore
+                        type_=CreateApiKeyResult,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -380,6 +456,92 @@ class AsyncRawApiKeysClient:
                         ValidationErrorResponse,
                         construct_type(
                             type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def update(
+        self,
+        inbox_id: InboxId,
+        api_key_id: ApiKeyId,
+        *,
+        name: typing.Optional[Name] = OMIT,
+        permissions: typing.Optional[ApiKeyPermissions] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[ApiKey]:
+        """
+        **CLI:**
+        ```bash
+        agentmail inboxes api-keys update --inbox-id <inbox_id> --api-key-id <api_key_id> --name "Renamed"
+        ```
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        api_key_id : ApiKeyId
+
+        name : typing.Optional[Name]
+
+        permissions : typing.Optional[ApiKeyPermissions]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ApiKey]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/api-keys/{jsonable_encoder(api_key_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="PATCH",
+            json={
+                "name": name,
+                "permissions": convert_and_respect_annotation_metadata(
+                    object_=permissions, annotation=ApiKeyPermissions, direction="write"
+                ),
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ApiKey,
+                    construct_type(
+                        type_=ApiKey,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

@@ -10,6 +10,7 @@ from ...inboxes.types.inbox import Inbox
 from ...inboxes.types.inbox_id import InboxId
 from ...inboxes.types.list_inboxes_response import ListInboxesResponse
 from ...inboxes.types.metadata import Metadata
+from ...inboxes.types.search_inboxes_response import SearchInboxesResponse
 from ...inboxes.types.update_metadata import UpdateMetadata
 from ...types.ascending import Ascending
 from ...types.limit import Limit
@@ -81,6 +82,58 @@ class InboxesClient:
         """
         _response = self._raw_client.list(
             pod_id, limit=limit, page_token=page_token, ascending=ascending, request_options=request_options
+        )
+        return _response.data
+
+    def search(
+        self,
+        pod_id: PodId,
+        *,
+        q: str,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SearchInboxesResponse:
+        """
+        Searches inboxes in the pod by address or display name, ranked by
+        relevance. Each word in the query matches the start of a word in the
+        address or display name, so `sup` matches `support@example.com` but
+        `port` does not. An exact address match always ranks first. `limit`
+        cannot exceed 100. A page can be empty and still carry a
+        `next_page_token`; keep paging until the token is absent.
+
+        Parameters
+        ----------
+        pod_id : PodId
+
+        q : str
+            Address or display name to search for. Matches word prefixes. Must be 2 to 256 characters.
+
+        limit : typing.Optional[Limit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SearchInboxesResponse
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.pods.inboxes.search(
+            pod_id="pod_id",
+            q="q",
+        )
+        """
+        _response = self._raw_client.search(
+            pod_id, q=q, limit=limit, page_token=page_token, request_options=request_options
         )
         return _response.data
 
@@ -347,6 +400,66 @@ class AsyncInboxesClient:
         """
         _response = await self._raw_client.list(
             pod_id, limit=limit, page_token=page_token, ascending=ascending, request_options=request_options
+        )
+        return _response.data
+
+    async def search(
+        self,
+        pod_id: PodId,
+        *,
+        q: str,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SearchInboxesResponse:
+        """
+        Searches inboxes in the pod by address or display name, ranked by
+        relevance. Each word in the query matches the start of a word in the
+        address or display name, so `sup` matches `support@example.com` but
+        `port` does not. An exact address match always ranks first. `limit`
+        cannot exceed 100. A page can be empty and still carry a
+        `next_page_token`; keep paging until the token is absent.
+
+        Parameters
+        ----------
+        pod_id : PodId
+
+        q : str
+            Address or display name to search for. Matches word prefixes. Must be 2 to 256 characters.
+
+        limit : typing.Optional[Limit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SearchInboxesResponse
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.pods.inboxes.search(
+                pod_id="pod_id",
+                q="q",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.search(
+            pod_id, q=q, limit=limit, page_token=page_token, request_options=request_options
         )
         return _response.data
 

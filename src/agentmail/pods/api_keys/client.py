@@ -2,8 +2,10 @@
 
 import typing
 
+from ...api_keys.types.api_key import ApiKey
 from ...api_keys.types.api_key_id import ApiKeyId
 from ...api_keys.types.api_key_permissions import ApiKeyPermissions
+from ...api_keys.types.create_api_key_request import CreateApiKeyRequest
 from ...api_keys.types.create_api_key_response import CreateApiKeyResponse
 from ...api_keys.types.list_api_keys_response import ListApiKeysResponse
 from ...api_keys.types.name import Name
@@ -77,12 +79,7 @@ class ApiKeysClient:
         return _response.data
 
     def create(
-        self,
-        pod_id: PodId,
-        *,
-        name: typing.Optional[Name] = OMIT,
-        permissions: typing.Optional[ApiKeyPermissions] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, pod_id: PodId, *, request: CreateApiKeyRequest, request_options: typing.Optional[RequestOptions] = None
     ) -> CreateApiKeyResponse:
         """
         **CLI:**
@@ -94,9 +91,7 @@ class ApiKeysClient:
         ----------
         pod_id : PodId
 
-        name : typing.Optional[Name]
-
-        permissions : typing.Optional[ApiKeyPermissions]
+        request : CreateApiKeyRequest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -108,15 +103,66 @@ class ApiKeysClient:
         Examples
         --------
         from agentmail import AgentMail
+        from agentmail.api_keys import CreateBearerApiKeyRequest
 
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
         client.pods.api_keys.create(
             pod_id="pod_id",
+            request=CreateBearerApiKeyRequest(),
         )
         """
-        _response = self._raw_client.create(pod_id, name=name, permissions=permissions, request_options=request_options)
+        _response = self._raw_client.create(pod_id, request=request, request_options=request_options)
+        return _response.data
+
+    def update(
+        self,
+        pod_id: PodId,
+        api_key_id: ApiKeyId,
+        *,
+        name: typing.Optional[Name] = OMIT,
+        permissions: typing.Optional[ApiKeyPermissions] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ApiKey:
+        """
+        **CLI:**
+        ```bash
+        agentmail pods api-keys update --pod-id <pod_id> --api-key-id <api_key_id> --name "Renamed"
+        ```
+
+        Parameters
+        ----------
+        pod_id : PodId
+
+        api_key_id : ApiKeyId
+
+        name : typing.Optional[Name]
+
+        permissions : typing.Optional[ApiKeyPermissions]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ApiKey
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.pods.api_keys.update(
+            pod_id="pod_id",
+            api_key_id="api_key_id",
+        )
+        """
+        _response = self._raw_client.update(
+            pod_id, api_key_id, name=name, permissions=permissions, request_options=request_options
+        )
         return _response.data
 
     def delete(
@@ -226,12 +272,7 @@ class AsyncApiKeysClient:
         return _response.data
 
     async def create(
-        self,
-        pod_id: PodId,
-        *,
-        name: typing.Optional[Name] = OMIT,
-        permissions: typing.Optional[ApiKeyPermissions] = OMIT,
-        request_options: typing.Optional[RequestOptions] = None,
+        self, pod_id: PodId, *, request: CreateApiKeyRequest, request_options: typing.Optional[RequestOptions] = None
     ) -> CreateApiKeyResponse:
         """
         **CLI:**
@@ -243,9 +284,7 @@ class AsyncApiKeysClient:
         ----------
         pod_id : PodId
 
-        name : typing.Optional[Name]
-
-        permissions : typing.Optional[ApiKeyPermissions]
+        request : CreateApiKeyRequest
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -259,6 +298,7 @@ class AsyncApiKeysClient:
         import asyncio
 
         from agentmail import AsyncAgentMail
+        from agentmail.api_keys import CreateBearerApiKeyRequest
 
         client = AsyncAgentMail(
             api_key="YOUR_API_KEY",
@@ -268,13 +308,69 @@ class AsyncApiKeysClient:
         async def main() -> None:
             await client.pods.api_keys.create(
                 pod_id="pod_id",
+                request=CreateBearerApiKeyRequest(),
             )
 
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.create(
-            pod_id, name=name, permissions=permissions, request_options=request_options
+        _response = await self._raw_client.create(pod_id, request=request, request_options=request_options)
+        return _response.data
+
+    async def update(
+        self,
+        pod_id: PodId,
+        api_key_id: ApiKeyId,
+        *,
+        name: typing.Optional[Name] = OMIT,
+        permissions: typing.Optional[ApiKeyPermissions] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ApiKey:
+        """
+        **CLI:**
+        ```bash
+        agentmail pods api-keys update --pod-id <pod_id> --api-key-id <api_key_id> --name "Renamed"
+        ```
+
+        Parameters
+        ----------
+        pod_id : PodId
+
+        api_key_id : ApiKeyId
+
+        name : typing.Optional[Name]
+
+        permissions : typing.Optional[ApiKeyPermissions]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ApiKey
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.pods.api_keys.update(
+                pod_id="pod_id",
+                api_key_id="api_key_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update(
+            pod_id, api_key_id, name=name, permissions=permissions, request_options=request_options
         )
         return _response.data
 

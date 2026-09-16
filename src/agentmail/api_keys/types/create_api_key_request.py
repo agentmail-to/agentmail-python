@@ -2,22 +2,7 @@
 
 import typing
 
-import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2
-from ...core.unchecked_base_model import UncheckedBaseModel
-from .api_key_permissions import ApiKeyPermissions
-from .name import Name
+from .create_bearer_api_key_request import CreateBearerApiKeyRequest
+from .create_public_key_request import CreatePublicKeyRequest
 
-
-class CreateApiKeyRequest(UncheckedBaseModel):
-    name: typing.Optional[Name] = None
-    permissions: typing.Optional[ApiKeyPermissions] = None
-
-    if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
-    else:
-
-        class Config:
-            frozen = True
-            smart_union = True
-            extra = pydantic.Extra.allow
+CreateApiKeyRequest = typing.Union[CreateBearerApiKeyRequest, CreatePublicKeyRequest]

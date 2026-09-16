@@ -6,6 +6,7 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
+    from .authorize_inbox_request import AuthorizeInboxRequest
     from .client_id import ClientId
     from .create_inbox_request import CreateInboxRequest
     from .display_name import DisplayName
@@ -15,9 +16,11 @@ if typing.TYPE_CHECKING:
     from .list_inboxes_response import ListInboxesResponse
     from .metadata import Metadata
     from .metadata_value import MetadataValue
+    from .search_inboxes_response import SearchInboxesResponse
     from .update_inbox_request import UpdateInboxRequest
     from .update_metadata import UpdateMetadata
 _dynamic_imports: typing.Dict[str, str] = {
+    "AuthorizeInboxRequest": ".authorize_inbox_request",
     "ClientId": ".client_id",
     "CreateInboxRequest": ".create_inbox_request",
     "DisplayName": ".display_name",
@@ -27,6 +30,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListInboxesResponse": ".list_inboxes_response",
     "Metadata": ".metadata",
     "MetadataValue": ".metadata_value",
+    "SearchInboxesResponse": ".search_inboxes_response",
     "UpdateInboxRequest": ".update_inbox_request",
     "UpdateMetadata": ".update_metadata",
 }
@@ -54,6 +58,7 @@ def __dir__():
 
 
 __all__ = [
+    "AuthorizeInboxRequest",
     "ClientId",
     "CreateInboxRequest",
     "DisplayName",
@@ -63,6 +68,7 @@ __all__ = [
     "ListInboxesResponse",
     "Metadata",
     "MetadataValue",
+    "SearchInboxesResponse",
     "UpdateInboxRequest",
     "UpdateMetadata",
 ]

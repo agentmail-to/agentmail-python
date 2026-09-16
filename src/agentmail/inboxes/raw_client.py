@@ -3,6 +3,9 @@
 import typing
 from json.decoder import JSONDecodeError
 
+from ..api_keys.types.accept_disclosure import AcceptDisclosure
+from ..api_keys.types.auth_token import AuthToken
+from ..api_keys.types.public_key_credential import PublicKeyCredential
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
@@ -24,6 +27,7 @@ from .types.display_name import DisplayName
 from .types.inbox import Inbox
 from .types.inbox_id import InboxId
 from .types.list_inboxes_response import ListInboxesResponse
+from .types.search_inboxes_response import SearchInboxesResponse
 from .types.update_metadata import UpdateMetadata
 from pydantic import ValidationError as pydantic_ValidationError
 
@@ -85,6 +89,79 @@ class RawInboxesClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def search(
+        self,
+        *,
+        q: str,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[SearchInboxesResponse]:
+        """
+        Searches inboxes in the organization by address or display name, ranked
+        by relevance. Each word in the query matches the start of a word in the
+        address or display name, so `sup` matches `support@example.com` but
+        `port` does not. An exact address match always ranks first. `limit`
+        cannot exceed 100. A page can be empty and still carry a
+        `next_page_token`; keep paging until the token is absent.
+
+        Parameters
+        ----------
+        q : str
+            Address or display name to search for. Matches word prefixes. Must be 2 to 256 characters.
+
+        limit : typing.Optional[Limit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[SearchInboxesResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v0/inboxes/search",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            params={
+                "q": q,
+                "limit": limit,
+                "page_token": page_token,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    SearchInboxesResponse,
+                    construct_type(
+                        type_=SearchInboxesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -360,6 +437,86 @@ class RawInboxesClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def authorize(
+        self,
+        inbox_id: InboxId,
+        *,
+        auth_token: AuthToken,
+        accept_disclosure: typing.Optional[AcceptDisclosure] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[PublicKeyCredential]:
+        """
+        Authorizes the AgentID sign-in a client is already waiting in, for the
+        inbox in the path, and returns the pending public key it will activate. A
+        repeat for the same token, inbox, and bearer returns the same key.
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        auth_token : AuthToken
+
+        accept_disclosure : typing.Optional[AcceptDisclosure]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[PublicKeyCredential]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/authorize",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "auth_token": auth_token,
+                "accept_disclosure": accept_disclosure,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    PublicKeyCredential,
+                    construct_type(
+                        type_=PublicKeyCredential,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawInboxesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -415,6 +572,79 @@ class AsyncRawInboxesClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def search(
+        self,
+        *,
+        q: str,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[SearchInboxesResponse]:
+        """
+        Searches inboxes in the organization by address or display name, ranked
+        by relevance. Each word in the query matches the start of a word in the
+        address or display name, so `sup` matches `support@example.com` but
+        `port` does not. An exact address match always ranks first. `limit`
+        cannot exceed 100. A page can be empty and still carry a
+        `next_page_token`; keep paging until the token is absent.
+
+        Parameters
+        ----------
+        q : str
+            Address or display name to search for. Matches word prefixes. Must be 2 to 256 characters.
+
+        limit : typing.Optional[Limit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[SearchInboxesResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v0/inboxes/search",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            params={
+                "q": q,
+                "limit": limit,
+                "page_token": page_token,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    SearchInboxesResponse,
+                    construct_type(
+                        type_=SearchInboxesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -672,6 +902,86 @@ class AsyncRawInboxesClient:
         try:
             if 200 <= _response.status_code < 300:
                 return AsyncHttpResponse(response=_response, data=None)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def authorize(
+        self,
+        inbox_id: InboxId,
+        *,
+        auth_token: AuthToken,
+        accept_disclosure: typing.Optional[AcceptDisclosure] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[PublicKeyCredential]:
+        """
+        Authorizes the AgentID sign-in a client is already waiting in, for the
+        inbox in the path, and returns the pending public key it will activate. A
+        repeat for the same token, inbox, and bearer returns the same key.
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        auth_token : AuthToken
+
+        accept_disclosure : typing.Optional[AcceptDisclosure]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[PublicKeyCredential]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/authorize",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "auth_token": auth_token,
+                "accept_disclosure": accept_disclosure,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    PublicKeyCredential,
+                    construct_type(
+                        type_=PublicKeyCredential,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 404:
                 raise NotFoundError(
                     headers=dict(_response.headers),

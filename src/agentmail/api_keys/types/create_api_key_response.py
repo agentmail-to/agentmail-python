@@ -8,7 +8,9 @@ from ...core.unchecked_base_model import UncheckedBaseModel
 from .api_key_id import ApiKeyId
 from .api_key_permissions import ApiKeyPermissions
 from .created_at import CreatedAt
+from .inbox_scope_id import InboxScopeId
 from .name import Name
+from .pod_scope_id import PodScopeId
 from .prefix import Prefix
 
 
@@ -21,16 +23,8 @@ class CreateApiKeyResponse(UncheckedBaseModel):
 
     prefix: Prefix
     name: Name
-    pod_id: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Pod ID the api key is scoped to.
-    """
-
-    inbox_id: typing.Optional[str] = pydantic.Field(default=None)
-    """
-    Inbox ID the api key is scoped to.
-    """
-
+    pod_id: typing.Optional[PodScopeId] = None
+    inbox_id: typing.Optional[InboxScopeId] = None
     permissions: typing.Optional[ApiKeyPermissions] = None
     created_at: CreatedAt
 

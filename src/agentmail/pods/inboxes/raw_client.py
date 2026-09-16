@@ -20,6 +20,7 @@ from ...inboxes.types.inbox import Inbox
 from ...inboxes.types.inbox_id import InboxId
 from ...inboxes.types.list_inboxes_response import ListInboxesResponse
 from ...inboxes.types.metadata import Metadata
+from ...inboxes.types.search_inboxes_response import SearchInboxesResponse
 from ...inboxes.types.update_metadata import UpdateMetadata
 from ...types.ascending import Ascending
 from ...types.error_response import ErrorResponse
@@ -90,6 +91,93 @@ class RawInboxesClient:
                     ),
                 )
                 return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def search(
+        self,
+        pod_id: PodId,
+        *,
+        q: str,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[SearchInboxesResponse]:
+        """
+        Searches inboxes in the pod by address or display name, ranked by
+        relevance. Each word in the query matches the start of a word in the
+        address or display name, so `sup` matches `support@example.com` but
+        `port` does not. An exact address match always ranks first. `limit`
+        cannot exceed 100. A page can be empty and still carry a
+        `next_page_token`; keep paging until the token is absent.
+
+        Parameters
+        ----------
+        pod_id : PodId
+
+        q : str
+            Address or display name to search for. Matches word prefixes. Must be 2 to 256 characters.
+
+        limit : typing.Optional[Limit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[SearchInboxesResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/pods/{jsonable_encoder(pod_id)}/inboxes/search",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            params={
+                "q": q,
+                "limit": limit,
+                "page_token": page_token,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    SearchInboxesResponse,
+                    construct_type(
+                        type_=SearchInboxesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 404:
                 raise NotFoundError(
                     headers=dict(_response.headers),
@@ -458,6 +546,93 @@ class AsyncRawInboxesClient:
                     ),
                 )
                 return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def search(
+        self,
+        pod_id: PodId,
+        *,
+        q: str,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[SearchInboxesResponse]:
+        """
+        Searches inboxes in the pod by address or display name, ranked by
+        relevance. Each word in the query matches the start of a word in the
+        address or display name, so `sup` matches `support@example.com` but
+        `port` does not. An exact address match always ranks first. `limit`
+        cannot exceed 100. A page can be empty and still carry a
+        `next_page_token`; keep paging until the token is absent.
+
+        Parameters
+        ----------
+        pod_id : PodId
+
+        q : str
+            Address or display name to search for. Matches word prefixes. Must be 2 to 256 characters.
+
+        limit : typing.Optional[Limit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[SearchInboxesResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/pods/{jsonable_encoder(pod_id)}/inboxes/search",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            params={
+                "q": q,
+                "limit": limit,
+                "page_token": page_token,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    SearchInboxesResponse,
+                    construct_type(
+                        type_=SearchInboxesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             if _response.status_code == 404:
                 raise NotFoundError(
                     headers=dict(_response.headers),

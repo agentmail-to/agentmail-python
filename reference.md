@@ -90,6 +90,100 @@ client.inboxes.list()
 </dl>
 </details>
 
+<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">search</a>(...) -> SearchInboxesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Searches inboxes in the organization by address or display name, ranked
+by relevance. Each word in the query matches the start of a word in the
+address or display name, so `sup` matches `support@example.com` but
+`port` does not. An exact address match always ranks first. `limit`
+cannot exceed 100. A page can be empty and still carry a
+`next_page_token`; keep paging until the token is absent.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.search(
+    q="q",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**q:** `str` — Address or display name to search for. Matches word prefixes. Must be 2 to 256 characters.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[Limit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">get</a>(...) -> Inbox</code></summary>
 <dl>
 <dd>
@@ -381,6 +475,90 @@ client.inboxes.delete(
 <dd>
 
 **inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">authorize</a>(...) -> PublicKeyCredential</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Authorizes the AgentID sign-in a client is already waiting in, for the
+inbox in the path, and returns the pending public key it will activate. A
+repeat for the same token, inbox, and bearer returns the same key.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.authorize(
+    inbox_id="inbox_id",
+    auth_token="blackcurrant..........",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AuthorizeInboxRequest` 
     
 </dd>
 </dl>
@@ -1283,6 +1461,154 @@ client.webhooks.delete(
 </dl>
 </details>
 
+## Accounts
+<details><summary><code>client.accounts.<a href="src/agentmail/accounts/client.py">list</a>(...) -> ListAccountsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists accounts across all providers.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.accounts.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[Limit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ascending:** `typing.Optional[Ascending]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.accounts.<a href="src/agentmail/accounts/client.py">get</a>(...) -> Account</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+import uuid
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.accounts.get(
+    account_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**account_id:** `AccountId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Agent
 <details><summary><code>client.agent.<a href="src/agentmail/agent/client.py">sign_up</a>(...) -> AgentSignupResponse</code></summary>
 <dl>
@@ -1464,6 +1790,10 @@ client.agent.verify(
 <dl>
 <dd>
 
+Lists every credential, newest first. Filter one family with `type`.
+Page to token exhaustion: a page can be empty and still carry a
+`next_page_token`.
+
 **CLI:**
 ```bash
 agentmail api-keys list
@@ -1506,6 +1836,14 @@ client.api_keys.list()
 <dl>
 <dd>
 
+**type:** `typing.Optional[ApiKeyType]` — Restrict the list to one credential family. Omit for every family.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **limit:** `typing.Optional[Limit]` 
     
 </dd>
@@ -1542,7 +1880,7 @@ client.api_keys.list()
 </dl>
 </details>
 
-<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">create</a>(...) -> CreateApiKeyResponse</code></summary>
+<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">get</a>(...) -> ApiKey</code></summary>
 <dl>
 <dd>
 
@@ -1554,10 +1892,8 @@ client.api_keys.list()
 <dl>
 <dd>
 
-**CLI:**
-```bash
-agentmail api-keys create --name "My Key"
-```
+Returns one credential of any family. Public keys also resolve by
+`client_id`. Poll a sign-in key until `status` is `active`.
 </dd>
 </dl>
 </dd>
@@ -1580,7 +1916,89 @@ client = AgentMail(
     environment=AgentMailEnvironment.PROD,
 )
 
-client.api_keys.create()
+client.api_keys.get(
+    api_key_id="api_key_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**api_key_id:** `ApiKeyId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">create</a>(...) -> CreateApiKeyResult</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a bearer key, or registers a public key when the body carries
+`public_key`. The route selects the scope. Bearer secrets are returned once.
+
+**CLI:**
+```bash
+agentmail api-keys create --name "My Key"
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+from agentmail.api_keys import CreateBearerApiKeyRequest
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.api_keys.create(
+    request=CreateBearerApiKeyRequest(),
+)
 
 ```
 </dd>
@@ -1616,6 +2034,89 @@ client.api_keys.create()
 </dl>
 </details>
 
+<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">update</a>(...) -> ApiKey</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Renames a credential or changes its permissions. Public keys also resolve
+by `client_id`; a sign-in key accepts only `provider_connect` and
+`provider_share_owner`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.api_keys.update(
+    api_key_id="api_key_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**api_key_id:** `ApiKeyId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `UpdateApiKeyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
@@ -1627,6 +2128,9 @@ client.api_keys.create()
 
 <dl>
 <dd>
+
+Deletes one credential of any family. A pending sign-in key is
+cancelled; an active one is revoked. Public keys also resolve by `client_id`.
 
 **CLI:**
 ```bash
@@ -1673,886 +2177,6 @@ client.api_keys.delete(
 <dd>
 
 **api_key_id:** `ApiKeyId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">list_public_keys</a>(...) -> ListPublicKeysResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List only public-key credentials visible to the bearer caller's scope.
-Bearer credentials are never returned, even though both credential types
-share storage and pagination indexes. Requires `api_key_read`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-from agentmail.environment import AgentMailEnvironment
-
-client = AgentMail(
-    api_key="<token>",
-    environment=AgentMailEnvironment.PROD,
-)
-
-client.api_keys.list_public_keys()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**limit:** `typing.Optional[Limit]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page_token:** `typing.Optional[PageToken]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**ascending:** `typing.Optional[Ascending]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">create_public_key</a>(...) -> PublicKeyCredential</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Register a public P-256 JWK using an existing AgentMail bearer API key
-with `api_key_create`. Re-registering the same JWK creates a new
-credential ID; it does not replace or recover an earlier credential.
-The private key must never be sent to AgentMail.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-from agentmail.environment import AgentMailEnvironment
-from agentmail.api_keys import PublicJwk
-
-client = AgentMail(
-    api_key="<token>",
-    environment=AgentMailEnvironment.PROD,
-)
-
-client.api_keys.create_public_key(
-    public_key=PublicJwk(
-        kty="EC",
-        crv="P-256",
-        x="blackcurrant...............................",
-        y="blackcurrant...............................",
-    ),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `CreatePublicKeyRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">update_public_key_name</a>(...) -> PublicKeyCredential</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Rename the credential. All security-relevant fields are immutable.
-Requires `api_key_update`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-from agentmail.environment import AgentMailEnvironment
-import uuid
-
-client = AgentMail(
-    api_key="<token>",
-    environment=AgentMailEnvironment.PROD,
-)
-
-client.api_keys.update_public_key_name(
-    api_key_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    name="x",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**api_key_id:** `uuid.UUID` — Public-key credential ID returned by registration.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `UpdatePublicKeyNameRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">revoke_public_key</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Permanently revoke one public-key credential. This hard-deletes the
-credential; repeating the request returns not found. Requires
-`api_key_delete`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-from agentmail.environment import AgentMailEnvironment
-import uuid
-
-client = AgentMail(
-    api_key="<token>",
-    environment=AgentMailEnvironment.PROD,
-)
-
-client.api_keys.revoke_public_key(
-    api_key_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**api_key_id:** `uuid.UUID` — Public-key credential ID returned by registration.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">revoke_all_agent_id_sign_in_keys</a>(...) -> RevokeAllAgentIdSignInKeysResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Invalidate every current public-key credential in the caller's
-organization by advancing its AgentID key generation. The caller must be
-organization-scoped and either have `api_key_delete` or, for a verified
-self-serve agent organization, use an unrestricted unmanaged bearer
-credential. No request body is accepted.
-
-`Idempotency-Key` is required and must be a UUID. Reusing the same UUID
-returns the original permanent receipt without advancing the generation
-again. A new UUID performs a new generation advance.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-from agentmail.environment import AgentMailEnvironment
-
-client = AgentMail(
-    api_key="<token>",
-    environment=AgentMailEnvironment.PROD,
-)
-
-client.api_keys.revoke_all_agent_id_sign_in_keys(
-    idempotency_key="Idempotency-Key",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**idempotency_key:** `str` — Required UUID identifying this revoke-all operation permanently.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">list_browser_credentials</a>(...) -> ListBrowserCredentialsResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List active browser credentials visible to the caller's scope. Requires `api_key_read`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-from agentmail.environment import AgentMailEnvironment
-
-client = AgentMail(
-    api_key="<token>",
-    environment=AgentMailEnvironment.PROD,
-)
-
-client.api_keys.list_browser_credentials()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**limit:** `typing.Optional[BrowserAuthorizationListLimit]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page_token:** `typing.Optional[PageToken]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">list_browser_credential_events</a>(...) -> ListBrowserLifecycleEventsResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List owner-facing browser credential and consent lifecycle events. Requires `api_key_read`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-from agentmail.environment import AgentMailEnvironment
-
-client = AgentMail(
-    api_key="<token>",
-    environment=AgentMailEnvironment.PROD,
-)
-
-client.api_keys.list_browser_credential_events()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**limit:** `typing.Optional[BrowserAuthorizationListLimit]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page_token:** `typing.Optional[PageToken]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">delete_browser_credential</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Permanently revoke one active browser credential. Requires `api_key_delete`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-from agentmail.environment import AgentMailEnvironment
-import uuid
-
-client = AgentMail(
-    api_key="<token>",
-    environment=AgentMailEnvironment.PROD,
-)
-
-client.api_keys.delete_browser_credential(
-    credential_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**credential_id:** `uuid.UUID` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">cancel_browser_enrollment</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Cancel one pending, unexpired browser enrollment intent. Requires `api_key_delete`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-from agentmail.environment import AgentMailEnvironment
-import uuid
-
-client = AgentMail(
-    api_key="<token>",
-    environment=AgentMailEnvironment.PROD,
-)
-
-client.api_keys.cancel_browser_enrollment(
-    enrollment_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**enrollment_id:** `uuid.UUID` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">list_browser_consents</a>(...) -> ListBrowserConsentsResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List remembered AgentID client approvals for one live inbox. Requires `api_key_read`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-from agentmail.environment import AgentMailEnvironment
-
-client = AgentMail(
-    api_key="<token>",
-    environment=AgentMailEnvironment.PROD,
-)
-
-client.api_keys.list_browser_consents(
-    inbox_id="inbox_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**inbox_id:** `str` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**limit:** `typing.Optional[BrowserAuthorizationListLimit]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page_token:** `typing.Optional[PageToken]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.api_keys.<a href="src/agentmail/api_keys/client.py">delete_browser_consent</a>(...)</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Revoke one remembered AgentID client approval. Requires `api_key_delete`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-from agentmail.environment import AgentMailEnvironment
-
-client = AgentMail(
-    api_key="<token>",
-    environment=AgentMailEnvironment.PROD,
-)
-
-client.api_keys.delete_browser_consent(
-    consent_id="consent_id",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**consent_id:** `str` 
     
 </dd>
 </dl>
@@ -3638,7 +3262,7 @@ client.inboxes.api_keys.list(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.api_keys.<a href="src/agentmail/inboxes/api_keys/client.py">create</a>(...) -> CreateApiKeyResponse</code></summary>
+<details><summary><code>client.inboxes.api_keys.<a href="src/agentmail/inboxes/api_keys/client.py">create</a>(...) -> CreateApiKeyResult</code></summary>
 <dl>
 <dd>
 
@@ -3670,6 +3294,7 @@ agentmail inboxes api-keys create --inbox-id <inbox_id> --name "My Key"
 ```python
 from agentmail import AgentMail
 from agentmail.environment import AgentMailEnvironment
+from agentmail.api_keys import CreateBearerApiKeyRequest
 
 client = AgentMail(
     api_key="<token>",
@@ -3678,6 +3303,7 @@ client = AgentMail(
 
 client.inboxes.api_keys.create(
     inbox_id="inbox_id",
+    request=CreateBearerApiKeyRequest(),
 )
 
 ```
@@ -3703,6 +3329,99 @@ client.inboxes.api_keys.create(
 <dd>
 
 **request:** `CreateApiKeyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.api_keys.<a href="src/agentmail/inboxes/api_keys/client.py">update</a>(...) -> ApiKey</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes api-keys update --inbox-id <inbox_id> --api-key-id <api_key_id> --name "Renamed"
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.api_keys.update(
+    inbox_id="inbox_id",
+    api_key_id="api_key_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**api_key_id:** `ApiKeyId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `UpdateApiKeyRequest` 
     
 </dd>
 </dl>
@@ -3788,113 +3507,6 @@ client.inboxes.api_keys.delete(
 <dd>
 
 **api_key_id:** `ApiKeyId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Inboxes BrowserCredentials
-<details><summary><code>client.inboxes.browser_credentials.<a href="src/agentmail/inboxes/browser_credentials/client.py">create_enrollment</a>(...) -> BrowserEnrollmentAccepted</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Attach a browser enrollment intent to the inbox. Requires
-`api_key_create`. Before submitting `transaction_jti`, independently
-verify that the browser page's final origin is exactly
-`https://auth.agentid.com`.
-
-This endpoint is available to every organization using US production.
-It is not available in EU production.
-
-Select `inbox_id` from trusted AgentMail configuration. An AgentID
-`login_hint` is not authoritative for selecting the inbox; when the
-transaction includes one, it must match the path inbox.
-
-**AgentMail API keys are sent only to `https://api.agentmail.to`; AgentID never requests them.**
-
-A new intent returns `202`; an idempotent retry for the same pending
-transaction, inbox, and bearer key returns `200` with the same receipt.
-An intent lasts at most five minutes. An activated credential lasts at
-most 30 days and cannot outlive its authorizing bearer API key.
-
-Creation is limited to 20 intents per bearer API key per hour, 100 per
-organization per hour, and five live unused intents per bearer API key.
-Browser activation is separately limited to 20 activations per
-authorizing bearer API key per UTC day. Either kind of limit can return
-`429`; honor the `Retry-After` header. Cancelling an enrollment releases
-its live-intent slot but does not reset the daily activation counter.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-from agentmail.environment import AgentMailEnvironment
-
-client = AgentMail(
-    api_key="<token>",
-    environment=AgentMailEnvironment.PROD,
-)
-
-client.inboxes.browser_credentials.create_enrollment(
-    inbox_id="inbox_id",
-    transaction_jti="blackcurrant..........",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**inbox_id:** `InboxId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `CreateBrowserEnrollmentRequest` 
     
 </dd>
 </dl>
@@ -7038,6 +6650,22 @@ client.inboxes.threads.get(
 <dl>
 <dd>
 
+**limit:** `typing.Optional[Limit]` — Maximum number of messages to return. Cannot exceed 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` — Token returned by the previous response for retrieving the next, older page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -8764,6 +8392,7 @@ agentmail pods api-keys create --pod-id <pod_id> --name "My Key"
 ```python
 from agentmail import AgentMail
 from agentmail.environment import AgentMailEnvironment
+from agentmail.api_keys import CreateBearerApiKeyRequest
 
 client = AgentMail(
     api_key="<token>",
@@ -8772,6 +8401,7 @@ client = AgentMail(
 
 client.pods.api_keys.create(
     pod_id="pod_id",
+    request=CreateBearerApiKeyRequest(),
 )
 
 ```
@@ -8797,6 +8427,99 @@ client.pods.api_keys.create(
 <dd>
 
 **request:** `CreateApiKeyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.api_keys.<a href="src/agentmail/pods/api_keys/client.py">update</a>(...) -> ApiKey</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods api-keys update --pod-id <pod_id> --api-key-id <api_key_id> --name "Renamed"
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.pods.api_keys.update(
+    pod_id="pod_id",
+    api_key_id="api_key_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**api_key_id:** `ApiKeyId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `UpdateApiKeyRequest` 
     
 </dd>
 </dl>
@@ -9906,6 +9629,109 @@ client.pods.inboxes.list(
 <dd>
 
 **ascending:** `typing.Optional[Ascending]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.inboxes.<a href="src/agentmail/pods/inboxes/client.py">search</a>(...) -> SearchInboxesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Searches inboxes in the pod by address or display name, ranked by
+relevance. Each word in the query matches the start of a word in the
+address or display name, so `sup` matches `support@example.com` but
+`port` does not. An exact address match always ranks first. `limit`
+cannot exceed 100. A page can be empty and still carry a
+`next_page_token`; keep paging until the token is absent.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.pods.inboxes.search(
+    pod_id="pod_id",
+    q="q",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**q:** `str` — Address or display name to search for. Matches word prefixes. Must be 2 to 256 characters.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[Limit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` 
     
 </dd>
 </dl>
@@ -11326,6 +11152,22 @@ client.pods.threads.get(
 <dl>
 <dd>
 
+**limit:** `typing.Optional[Limit]` — Maximum number of messages to return. Cannot exceed 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` — Token returned by the previous response for retrieving the next, older page.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -12238,6 +12080,402 @@ client.pods.webhooks.delete(
 </dl>
 </details>
 
+## Providers
+<details><summary><code>client.providers.<a href="src/agentmail/providers/client.py">list</a>(...) -> ListProvidersResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists providers, most popular first.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.providers.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[Limit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.providers.<a href="src/agentmail/providers/client.py">search</a>(...) -> SearchProvidersResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Searches providers by name prefix.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.providers.search(
+    q="q",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**q:** `str` — Name prefix to search for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[Limit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.providers.<a href="src/agentmail/providers/client.py">get</a>(...) -> Provider</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+import uuid
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.providers.get(
+    provider_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**provider_id:** `ProviderId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.providers.<a href="src/agentmail/providers/client.py">list_accounts</a>(...) -> ListProviderAccountsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists accounts at one provider, most recent sign-in first.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+import uuid
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.providers.list_accounts(
+    provider_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**provider_id:** `ProviderId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[Limit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.providers.<a href="src/agentmail/providers/client.py">connect</a>(...) -> ConnectAccepted</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Starts signing an inbox in to a provider. Returns a single-use `magic_url`,
+valid for five minutes, to open in the client that will hold the sign-in;
+the client enrolls as the inbox and continues to the provider. Poll
+[Get API Key](/api-reference/api-keys/get) with `api_key_id` for `status`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+import uuid
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.providers.connect(
+    provider_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**provider_id:** `ProviderId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `typing.Optional[ConnectProviderBody]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Threads
 <details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">list</a>(...) -> ListThreadsResponse</code></summary>
 <dl>
@@ -12581,6 +12819,22 @@ client.threads.get(
 <dd>
 
 **thread_id:** `ThreadId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[Limit]` — Maximum number of messages to return. Cannot exceed 100.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` — Token returned by the previous response for retrieving the next, older page.
     
 </dd>
 </dl>

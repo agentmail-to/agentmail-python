@@ -4,6 +4,9 @@ from __future__ import annotations
 
 import typing
 
+from ..api_keys.types.accept_disclosure import AcceptDisclosure
+from ..api_keys.types.auth_token import AuthToken
+from ..api_keys.types.public_key_credential import PublicKeyCredential
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.ascending import Ascending
@@ -15,11 +18,11 @@ from .types.display_name import DisplayName
 from .types.inbox import Inbox
 from .types.inbox_id import InboxId
 from .types.list_inboxes_response import ListInboxesResponse
+from .types.search_inboxes_response import SearchInboxesResponse
 from .types.update_metadata import UpdateMetadata
 
 if typing.TYPE_CHECKING:
     from .api_keys.client import ApiKeysClient, AsyncApiKeysClient
-    from .browser_credentials.client import AsyncBrowserCredentialsClient, BrowserCredentialsClient
     from .drafts.client import AsyncDraftsClient, DraftsClient
     from .events.client import AsyncEventsClient, EventsClient
     from .lists.client import AsyncListsClient, ListsClient
@@ -38,7 +41,6 @@ class InboxesClient:
         self._threads: typing.Optional[ThreadsClient] = None
         self._messages: typing.Optional[MessagesClient] = None
         self._drafts: typing.Optional[DraftsClient] = None
-        self._browser_credentials: typing.Optional[BrowserCredentialsClient] = None
         self._webhooks: typing.Optional[WebhooksClient] = None
         self._lists: typing.Optional[ListsClient] = None
         self._metrics: typing.Optional[MetricsClient] = None
@@ -97,6 +99,52 @@ class InboxesClient:
         _response = self._raw_client.list(
             limit=limit, page_token=page_token, ascending=ascending, request_options=request_options
         )
+        return _response.data
+
+    def search(
+        self,
+        *,
+        q: str,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SearchInboxesResponse:
+        """
+        Searches inboxes in the organization by address or display name, ranked
+        by relevance. Each word in the query matches the start of a word in the
+        address or display name, so `sup` matches `support@example.com` but
+        `port` does not. An exact address match always ranks first. `limit`
+        cannot exceed 100. A page can be empty and still carry a
+        `next_page_token`; keep paging until the token is absent.
+
+        Parameters
+        ----------
+        q : str
+            Address or display name to search for. Matches word prefixes. Must be 2 to 256 characters.
+
+        limit : typing.Optional[Limit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SearchInboxesResponse
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.inboxes.search(
+            q="q",
+        )
+        """
+        _response = self._raw_client.search(q=q, limit=limit, page_token=page_token, request_options=request_options)
         return _response.data
 
     def get(self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None) -> Inbox:
@@ -249,6 +297,51 @@ class InboxesClient:
         _response = self._raw_client.delete(inbox_id, request_options=request_options)
         return _response.data
 
+    def authorize(
+        self,
+        inbox_id: InboxId,
+        *,
+        auth_token: AuthToken,
+        accept_disclosure: typing.Optional[AcceptDisclosure] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PublicKeyCredential:
+        """
+        Authorizes the AgentID sign-in a client is already waiting in, for the
+        inbox in the path, and returns the pending public key it will activate. A
+        repeat for the same token, inbox, and bearer returns the same key.
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        auth_token : AuthToken
+
+        accept_disclosure : typing.Optional[AcceptDisclosure]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PublicKeyCredential
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.inboxes.authorize(
+            inbox_id="inbox_id",
+            auth_token="blackcurrant..........",
+        )
+        """
+        _response = self._raw_client.authorize(
+            inbox_id, auth_token=auth_token, accept_disclosure=accept_disclosure, request_options=request_options
+        )
+        return _response.data
+
     @property
     def threads(self):
         if self._threads is None:
@@ -272,14 +365,6 @@ class InboxesClient:
 
             self._drafts = DraftsClient(client_wrapper=self._client_wrapper)
         return self._drafts
-
-    @property
-    def browser_credentials(self):
-        if self._browser_credentials is None:
-            from .browser_credentials.client import BrowserCredentialsClient  # noqa: E402
-
-            self._browser_credentials = BrowserCredentialsClient(client_wrapper=self._client_wrapper)
-        return self._browser_credentials
 
     @property
     def webhooks(self):
@@ -329,7 +414,6 @@ class AsyncInboxesClient:
         self._threads: typing.Optional[AsyncThreadsClient] = None
         self._messages: typing.Optional[AsyncMessagesClient] = None
         self._drafts: typing.Optional[AsyncDraftsClient] = None
-        self._browser_credentials: typing.Optional[AsyncBrowserCredentialsClient] = None
         self._webhooks: typing.Optional[AsyncWebhooksClient] = None
         self._lists: typing.Optional[AsyncListsClient] = None
         self._metrics: typing.Optional[AsyncMetricsClient] = None
@@ -395,6 +479,62 @@ class AsyncInboxesClient:
         """
         _response = await self._raw_client.list(
             limit=limit, page_token=page_token, ascending=ascending, request_options=request_options
+        )
+        return _response.data
+
+    async def search(
+        self,
+        *,
+        q: str,
+        limit: typing.Optional[Limit] = None,
+        page_token: typing.Optional[PageToken] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SearchInboxesResponse:
+        """
+        Searches inboxes in the organization by address or display name, ranked
+        by relevance. Each word in the query matches the start of a word in the
+        address or display name, so `sup` matches `support@example.com` but
+        `port` does not. An exact address match always ranks first. `limit`
+        cannot exceed 100. A page can be empty and still carry a
+        `next_page_token`; keep paging until the token is absent.
+
+        Parameters
+        ----------
+        q : str
+            Address or display name to search for. Matches word prefixes. Must be 2 to 256 characters.
+
+        limit : typing.Optional[Limit]
+
+        page_token : typing.Optional[PageToken]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SearchInboxesResponse
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.inboxes.search(
+                q="q",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.search(
+            q=q, limit=limit, page_token=page_token, request_options=request_options
         )
         return _response.data
 
@@ -580,6 +720,59 @@ class AsyncInboxesClient:
         _response = await self._raw_client.delete(inbox_id, request_options=request_options)
         return _response.data
 
+    async def authorize(
+        self,
+        inbox_id: InboxId,
+        *,
+        auth_token: AuthToken,
+        accept_disclosure: typing.Optional[AcceptDisclosure] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PublicKeyCredential:
+        """
+        Authorizes the AgentID sign-in a client is already waiting in, for the
+        inbox in the path, and returns the pending public key it will activate. A
+        repeat for the same token, inbox, and bearer returns the same key.
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        auth_token : AuthToken
+
+        accept_disclosure : typing.Optional[AcceptDisclosure]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PublicKeyCredential
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.inboxes.authorize(
+                inbox_id="inbox_id",
+                auth_token="blackcurrant..........",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.authorize(
+            inbox_id, auth_token=auth_token, accept_disclosure=accept_disclosure, request_options=request_options
+        )
+        return _response.data
+
     @property
     def threads(self):
         if self._threads is None:
@@ -603,14 +796,6 @@ class AsyncInboxesClient:
 
             self._drafts = AsyncDraftsClient(client_wrapper=self._client_wrapper)
         return self._drafts
-
-    @property
-    def browser_credentials(self):
-        if self._browser_credentials is None:
-            from .browser_credentials.client import AsyncBrowserCredentialsClient  # noqa: E402
-
-            self._browser_credentials = AsyncBrowserCredentialsClient(client_wrapper=self._client_wrapper)
-        return self._browser_credentials
 
     @property
     def webhooks(self):

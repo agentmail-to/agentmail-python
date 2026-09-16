@@ -220,6 +220,7 @@ class RawDomainsClient:
         self,
         *,
         domain: DomainName,
+        allow_conflicting_provider: typing.Optional[bool] = OMIT,
         feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
         subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
         tracking_enabled: typing.Optional[TrackingEnabled] = OMIT,
@@ -234,6 +235,13 @@ class RawDomainsClient:
         Parameters
         ----------
         domain : DomainName
+
+        allow_conflicting_provider : typing.Optional[bool]
+            Allow registration when the domain already has Google Workspace MX records.
+            Defaults to false; registration otherwise returns 422 when a conflicting
+            provider is detected.
+            This flag does not configure DNS or inbound routing. For shared Google
+            Workspace domains, follow the [Google Workspace guide](/google-workspace).
 
         feedback_enabled : typing.Optional[FeedbackEnabled]
 
@@ -254,6 +262,7 @@ class RawDomainsClient:
             method="POST",
             json={
                 "domain": domain,
+                "allow_conflicting_provider": allow_conflicting_provider,
                 "feedback_enabled": feedback_enabled,
                 "subdomains_enabled": subdomains_enabled,
                 "tracking_enabled": tracking_enabled,
@@ -278,6 +287,17 @@ class RawDomainsClient:
                         ValidationErrorResponse,
                         construct_type(
                             type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -748,6 +768,7 @@ class AsyncRawDomainsClient:
         self,
         *,
         domain: DomainName,
+        allow_conflicting_provider: typing.Optional[bool] = OMIT,
         feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
         subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
         tracking_enabled: typing.Optional[TrackingEnabled] = OMIT,
@@ -762,6 +783,13 @@ class AsyncRawDomainsClient:
         Parameters
         ----------
         domain : DomainName
+
+        allow_conflicting_provider : typing.Optional[bool]
+            Allow registration when the domain already has Google Workspace MX records.
+            Defaults to false; registration otherwise returns 422 when a conflicting
+            provider is detected.
+            This flag does not configure DNS or inbound routing. For shared Google
+            Workspace domains, follow the [Google Workspace guide](/google-workspace).
 
         feedback_enabled : typing.Optional[FeedbackEnabled]
 
@@ -782,6 +810,7 @@ class AsyncRawDomainsClient:
             method="POST",
             json={
                 "domain": domain,
+                "allow_conflicting_provider": allow_conflicting_provider,
                 "feedback_enabled": feedback_enabled,
                 "subdomains_enabled": subdomains_enabled,
                 "tracking_enabled": tracking_enabled,
@@ -806,6 +835,17 @@ class AsyncRawDomainsClient:
                         ValidationErrorResponse,
                         construct_type(
                             type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 422:
+                raise UnprocessableError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

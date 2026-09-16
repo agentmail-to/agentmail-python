@@ -177,6 +177,18 @@ class ApiKeyPermissions(UncheckedBaseModel):
     Delete API keys.
     """
 
+    provider_connect: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Sign in to providers as an inbox: connect a provider, authorize an inbox, and mint the
+    sign-in keys. Omitted on a new bearer key means false, whatever else the key holds.
+    """
+
+    provider_share_owner: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Share the organization owner's name and email with providers at sign-in. One permission
+    for both values.
+    """
+
     pod_read: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Read pods.

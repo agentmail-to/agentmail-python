@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .authorize_inbox_request import AuthorizeInboxRequest
+    from .authorize_inbox_response import AuthorizeInboxResponse
     from .client_id import ClientId
     from .create_inbox_request import CreateInboxRequest
     from .display_name import DisplayName
@@ -21,6 +22,7 @@ if typing.TYPE_CHECKING:
     from .update_metadata import UpdateMetadata
 _dynamic_imports: typing.Dict[str, str] = {
     "AuthorizeInboxRequest": ".authorize_inbox_request",
+    "AuthorizeInboxResponse": ".authorize_inbox_response",
     "ClientId": ".client_id",
     "CreateInboxRequest": ".create_inbox_request",
     "DisplayName": ".display_name",
@@ -59,6 +61,7 @@ def __dir__():
 
 __all__ = [
     "AuthorizeInboxRequest",
+    "AuthorizeInboxResponse",
     "ClientId",
     "CreateInboxRequest",
     "DisplayName",

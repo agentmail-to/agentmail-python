@@ -6,13 +6,13 @@ import typing
 
 from ..api_keys.types.accept_disclosure import AcceptDisclosure
 from ..api_keys.types.auth_token import AuthToken
-from ..api_keys.types.public_key_credential import PublicKeyCredential
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.ascending import Ascending
 from ..types.limit import Limit
 from ..types.page_token import PageToken
 from .raw_client import AsyncRawInboxesClient, RawInboxesClient
+from .types.authorize_inbox_response import AuthorizeInboxResponse
 from .types.create_inbox_request import CreateInboxRequest
 from .types.display_name import DisplayName
 from .types.inbox import Inbox
@@ -304,11 +304,12 @@ class InboxesClient:
         auth_token: AuthToken,
         accept_disclosure: typing.Optional[AcceptDisclosure] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> PublicKeyCredential:
+    ) -> AuthorizeInboxResponse:
         """
         Authorizes the AgentID sign-in a client is already waiting in, for the
-        inbox in the path, and returns the pending public key it will activate. A
-        repeat for the same token, inbox, and bearer returns the same key.
+        inbox in the path, and returns the ID of the pending public key it will
+        activate. Read the key with Get API Key. A repeat for the same token,
+        inbox, and bearer returns the same key ID.
 
         Parameters
         ----------
@@ -323,7 +324,7 @@ class InboxesClient:
 
         Returns
         -------
-        PublicKeyCredential
+        AuthorizeInboxResponse
 
         Examples
         --------
@@ -727,11 +728,12 @@ class AsyncInboxesClient:
         auth_token: AuthToken,
         accept_disclosure: typing.Optional[AcceptDisclosure] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> PublicKeyCredential:
+    ) -> AuthorizeInboxResponse:
         """
         Authorizes the AgentID sign-in a client is already waiting in, for the
-        inbox in the path, and returns the pending public key it will activate. A
-        repeat for the same token, inbox, and bearer returns the same key.
+        inbox in the path, and returns the ID of the pending public key it will
+        activate. Read the key with Get API Key. A repeat for the same token,
+        inbox, and bearer returns the same key ID.
 
         Parameters
         ----------
@@ -746,7 +748,7 @@ class AsyncInboxesClient:
 
         Returns
         -------
-        PublicKeyCredential
+        AuthorizeInboxResponse
 
         Examples
         --------

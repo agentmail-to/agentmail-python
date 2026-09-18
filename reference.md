@@ -494,7 +494,7 @@ client.inboxes.delete(
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">authorize</a>(...) -> PublicKeyCredential</code></summary>
+<details><summary><code>client.inboxes.<a href="src/agentmail/inboxes/client.py">authorize</a>(...) -> AuthorizeInboxResponse</code></summary>
 <dl>
 <dd>
 
@@ -507,8 +507,9 @@ client.inboxes.delete(
 <dd>
 
 Authorizes the AgentID sign-in a client is already waiting in, for the
-inbox in the path, and returns the pending public key it will activate. A
-repeat for the same token, inbox, and bearer returns the same key.
+inbox in the path, and returns the ID of the pending public key it will
+activate. Read the key with Get API Key. A repeat for the same token,
+inbox, and bearer returns the same key ID.
 </dd>
 </dl>
 </dd>

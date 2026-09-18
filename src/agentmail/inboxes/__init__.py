@@ -8,6 +8,7 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import (
         AuthorizeInboxRequest,
+        AuthorizeInboxResponse,
         ClientId,
         CreateInboxRequest,
         DisplayName,
@@ -24,6 +25,7 @@ if typing.TYPE_CHECKING:
     from . import api_keys, drafts, events, lists, messages, metrics, threads, webhooks
 _dynamic_imports: typing.Dict[str, str] = {
     "AuthorizeInboxRequest": ".types",
+    "AuthorizeInboxResponse": ".types",
     "ClientId": ".types",
     "CreateInboxRequest": ".types",
     "DisplayName": ".types",
@@ -70,6 +72,7 @@ def __dir__():
 
 __all__ = [
     "AuthorizeInboxRequest",
+    "AuthorizeInboxResponse",
     "ClientId",
     "CreateInboxRequest",
     "DisplayName",

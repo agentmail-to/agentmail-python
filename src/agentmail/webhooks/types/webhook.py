@@ -20,6 +20,19 @@ class Webhook(UncheckedBaseModel):
     event_types: typing.Optional[EventTypes] = None
     pod_ids: typing.Optional[PodIds] = None
     inbox_ids: typing.Optional[InboxIds] = None
+    pod_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    ID of the pod the webhook belongs to: the pod it was created in, or the pod of the inbox it
+    belongs to. Absent for an organization webhook and on some inbox webhooks. This is not the
+    list of pods it receives events for; see `pod_ids`.
+    """
+
+    inbox_id: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    ID of the inbox the webhook belongs to, if it was created for an inbox. This is not the list
+    of inboxes it receives events for; see `inbox_ids`.
+    """
+
     secret: str = pydantic.Field()
     """
     Secret for webhook signature verification.

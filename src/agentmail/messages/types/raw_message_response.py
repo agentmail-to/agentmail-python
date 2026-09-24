@@ -12,7 +12,7 @@ from .message_size import MessageSize
 
 class RawMessageResponse(UncheckedBaseModel):
     """
-    S3 presigned URL to download the raw .eml file.
+    CloudFront signed URL to download the raw .eml file.
     """
 
     message_id: MessageId = pydantic.Field()
@@ -27,7 +27,7 @@ class RawMessageResponse(UncheckedBaseModel):
 
     download_url: str = pydantic.Field()
     """
-    S3 presigned URL to download the raw message. Expires at expires_at.
+    CloudFront signed URL to download the raw message. Expires at expires_at.
     """
 
     expires_at: dt.datetime = pydantic.Field()

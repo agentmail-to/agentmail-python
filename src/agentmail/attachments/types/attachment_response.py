@@ -23,12 +23,17 @@ class AttachmentResponse(UncheckedBaseModel):
     content_id: typing.Optional[AttachmentContentId] = None
     download_url: str = pydantic.Field()
     """
-    URL to download the attachment.
+    Signed HTTPS CDN URL to download the attachment bytes. Retrieve a fresh URL when needed rather than storing it permanently.
+    """
+
+    text_url: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Signed HTTPS CDN URL to download extracted plain text, when available. Omitted when no extracted text is available. Expires at the same time as download_url.
     """
 
     expires_at: dt.datetime = pydantic.Field()
     """
-    Time at which the download URL expires.
+    Time at which download_url and text_url (when present) expire. Retrieve the attachment again to obtain fresh URLs.
     """
 
     if IS_PYDANTIC_V2:

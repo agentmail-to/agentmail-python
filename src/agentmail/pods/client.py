@@ -17,6 +17,7 @@ from .types.pod import Pod
 from .types.pod_id import PodId
 
 if typing.TYPE_CHECKING:
+    from .accounts.client import AccountsClient, AsyncAccountsClient
     from .api_keys.client import ApiKeysClient, AsyncApiKeysClient
     from .domains.client import AsyncDomainsClient, DomainsClient
     from .drafts.client import AsyncDraftsClient, DraftsClient
@@ -41,6 +42,7 @@ class PodsClient:
         self._lists: typing.Optional[ListsClient] = None
         self._metrics: typing.Optional[MetricsClient] = None
         self._api_keys: typing.Optional[ApiKeysClient] = None
+        self._accounts: typing.Optional[AccountsClient] = None
 
     @property
     def with_raw_response(self) -> RawPodsClient:
@@ -262,6 +264,14 @@ class PodsClient:
             self._api_keys = ApiKeysClient(client_wrapper=self._client_wrapper)
         return self._api_keys
 
+    @property
+    def accounts(self):
+        if self._accounts is None:
+            from .accounts.client import AccountsClient  # noqa: E402
+
+            self._accounts = AccountsClient(client_wrapper=self._client_wrapper)
+        return self._accounts
+
 
 class AsyncPodsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -275,6 +285,7 @@ class AsyncPodsClient:
         self._lists: typing.Optional[AsyncListsClient] = None
         self._metrics: typing.Optional[AsyncMetricsClient] = None
         self._api_keys: typing.Optional[AsyncApiKeysClient] = None
+        self._accounts: typing.Optional[AsyncAccountsClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawPodsClient:
@@ -527,3 +538,11 @@ class AsyncPodsClient:
 
             self._api_keys = AsyncApiKeysClient(client_wrapper=self._client_wrapper)
         return self._api_keys
+
+    @property
+    def accounts(self):
+        if self._accounts is None:
+            from .accounts.client import AsyncAccountsClient  # noqa: E402
+
+            self._accounts = AsyncAccountsClient(client_wrapper=self._client_wrapper)
+        return self._accounts

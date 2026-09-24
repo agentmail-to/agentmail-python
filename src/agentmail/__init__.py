@@ -50,7 +50,15 @@ if typing.TYPE_CHECKING:
         webhooks,
         websockets,
     )
-    from .accounts import Account, AccountId, ListAccountsResponse, ProviderId
+    from .accounts import (
+        Account,
+        AccountId,
+        AccountStatus,
+        ListAccountsResponse,
+        ProviderId,
+        UpdateAccountRequest,
+        UpdateAccountStatus,
+    )
     from .agent import AgentSignupRequest, AgentSignupResponse, AgentVerifyRequest, AgentVerifyResponse
     from .api_keys import (
         AcceptDisclosure,
@@ -286,6 +294,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AcceptDisclosure": ".api_keys",
     "Account": ".accounts",
     "AccountId": ".accounts",
+    "AccountStatus": ".accounts",
     "Addresses": ".messages",
     "After": ".types",
     "AgentMail": ".client",
@@ -515,6 +524,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "TrackOpens": ".messages",
     "TrackingEnabled": ".domains",
     "UnprocessableError": ".errors",
+    "UpdateAccountRequest": ".accounts",
+    "UpdateAccountStatus": ".accounts",
     "UpdateApiKeyRequest": ".api_keys",
     "UpdateDomainRequest": ".domains",
     "UpdateDraftRequest": ".drafts",
@@ -580,6 +591,7 @@ __all__ = [
     "AcceptDisclosure",
     "Account",
     "AccountId",
+    "AccountStatus",
     "Addresses",
     "After",
     "AgentMail",
@@ -809,6 +821,8 @@ __all__ = [
     "TrackOpens",
     "TrackingEnabled",
     "UnprocessableError",
+    "UpdateAccountRequest",
+    "UpdateAccountStatus",
     "UpdateApiKeyRequest",
     "UpdateDomainRequest",
     "UpdateDraftRequest",

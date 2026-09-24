@@ -10,6 +10,7 @@ from ...inboxes.types.inbox_id import InboxId
 from ...pods.types.pod_id import PodId
 from ...types.organization_id import OrganizationId
 from .account_id import AccountId
+from .account_status import AccountStatus
 from .provider_id import ProviderId
 
 
@@ -41,6 +42,16 @@ class Account(UncheckedBaseModel):
     sign_in_count: int = pydantic.Field()
     """
     Number of sign-ins at provider.
+    """
+
+    status: typing.Optional[AccountStatus] = pydantic.Field(default=None)
+    """
+    Present only while the account is disabled. Absent means the inbox may sign in.
+    """
+
+    disabled_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Time at which the account was disabled. Present only while `status` is `disabled`.
     """
 
     if IS_PYDANTIC_V2:

@@ -8,13 +8,19 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .account import Account
     from .account_id import AccountId
+    from .account_status import AccountStatus
     from .list_accounts_response import ListAccountsResponse
     from .provider_id import ProviderId
+    from .update_account_request import UpdateAccountRequest
+    from .update_account_status import UpdateAccountStatus
 _dynamic_imports: typing.Dict[str, str] = {
     "Account": ".account",
     "AccountId": ".account_id",
+    "AccountStatus": ".account_status",
     "ListAccountsResponse": ".list_accounts_response",
     "ProviderId": ".provider_id",
+    "UpdateAccountRequest": ".update_account_request",
+    "UpdateAccountStatus": ".update_account_status",
 }
 
 
@@ -39,4 +45,12 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["Account", "AccountId", "ListAccountsResponse", "ProviderId"]
+__all__ = [
+    "Account",
+    "AccountId",
+    "AccountStatus",
+    "ListAccountsResponse",
+    "ProviderId",
+    "UpdateAccountRequest",
+    "UpdateAccountStatus",
+]

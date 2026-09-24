@@ -11,6 +11,10 @@ from .raw_client import AsyncRawAccountsClient, RawAccountsClient
 from .types.account import Account
 from .types.account_id import AccountId
 from .types.list_accounts_response import ListAccountsResponse
+from .types.update_account_status import UpdateAccountStatus
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class AccountsClient:
@@ -37,7 +41,9 @@ class AccountsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListAccountsResponse:
         """
-        Lists accounts across all providers.
+        Lists accounts across all providers, scoped to the API key: an
+        organization key sees every account, a pod key its pod's, an inbox key
+        its inbox's. Requires `inbox_read`.
 
         Parameters
         ----------
@@ -70,6 +76,9 @@ class AccountsClient:
 
     def get(self, account_id: AccountId, *, request_options: typing.Optional[RequestOptions] = None) -> Account:
         """
+        Returns one account by ID. An account outside the key's scope is a 404.
+        Requires `inbox_read`.
+
         Parameters
         ----------
         account_id : AccountId
@@ -99,6 +108,63 @@ class AccountsClient:
         _response = self._raw_client.get(account_id, request_options=request_options)
         return _response.data
 
+    def update(
+        self,
+        account_id: AccountId,
+        *,
+        status: typing.Optional[UpdateAccountStatus] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Account:
+        """
+        Updates one account. Set `status` to `disabled` to stop the inbox from
+        signing in at the provider again, or to `enabled` to re-enable it.
+        Idempotent: disabling an already disabled account keeps its original
+        `disabled_at`, and enabling an enabled account is a no-op.
+
+        Find the `account_id` with List Accounts. An account exists only after an
+        inbox's first sign-in at a provider, so it cannot be disabled in advance.
+        A disable applies to that inbox at that provider whichever sign-in key is
+        used: the provider's next authorization ends in `access_denied`, and a code
+        issued earlier is refused with `invalid_grant`. Access tokens already
+        issued stay valid until they expire, and the provider's own session is
+        unaffected.
+
+        Requires `account_update`, which sign-in keys (`type: public_key`) cannot
+        hold, so call this with a bearer API key. An account outside the key's
+        scope is a 404. A 409 means the account changed during the write; read it
+        again and retry.
+
+        Parameters
+        ----------
+        account_id : AccountId
+
+        status : typing.Optional[UpdateAccountStatus]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Account
+
+        Examples
+        --------
+        import uuid
+
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.accounts.update(
+            account_id=uuid.UUID(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+        )
+        """
+        _response = self._raw_client.update(account_id, status=status, request_options=request_options)
+        return _response.data
+
 
 class AsyncAccountsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -124,7 +190,9 @@ class AsyncAccountsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListAccountsResponse:
         """
-        Lists accounts across all providers.
+        Lists accounts across all providers, scoped to the API key: an
+        organization key sees every account, a pod key its pod's, an inbox key
+        its inbox's. Requires `inbox_read`.
 
         Parameters
         ----------
@@ -165,6 +233,9 @@ class AsyncAccountsClient:
 
     async def get(self, account_id: AccountId, *, request_options: typing.Optional[RequestOptions] = None) -> Account:
         """
+        Returns one account by ID. An account outside the key's scope is a 404.
+        Requires `inbox_read`.
+
         Parameters
         ----------
         account_id : AccountId
@@ -199,4 +270,68 @@ class AsyncAccountsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get(account_id, request_options=request_options)
+        return _response.data
+
+    async def update(
+        self,
+        account_id: AccountId,
+        *,
+        status: typing.Optional[UpdateAccountStatus] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> Account:
+        """
+        Updates one account. Set `status` to `disabled` to stop the inbox from
+        signing in at the provider again, or to `enabled` to re-enable it.
+        Idempotent: disabling an already disabled account keeps its original
+        `disabled_at`, and enabling an enabled account is a no-op.
+
+        Find the `account_id` with List Accounts. An account exists only after an
+        inbox's first sign-in at a provider, so it cannot be disabled in advance.
+        A disable applies to that inbox at that provider whichever sign-in key is
+        used: the provider's next authorization ends in `access_denied`, and a code
+        issued earlier is refused with `invalid_grant`. Access tokens already
+        issued stay valid until they expire, and the provider's own session is
+        unaffected.
+
+        Requires `account_update`, which sign-in keys (`type: public_key`) cannot
+        hold, so call this with a bearer API key. An account outside the key's
+        scope is a 404. A 409 means the account changed during the write; read it
+        again and retry.
+
+        Parameters
+        ----------
+        account_id : AccountId
+
+        status : typing.Optional[UpdateAccountStatus]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Account
+
+        Examples
+        --------
+        import asyncio
+        import uuid
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.accounts.update(
+                account_id=uuid.UUID(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update(account_id, status=status, request_options=request_options)
         return _response.data

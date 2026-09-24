@@ -10,6 +10,7 @@ from ..core.jsonable_encoder import jsonable_encoder
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
+from ..errors.conflict_error import ConflictError
 from ..errors.not_found_error import NotFoundError
 from ..errors.validation_error import ValidationError as errors_validation_error_ValidationError
 from ..types.ascending import Ascending
@@ -20,7 +21,11 @@ from ..types.validation_error_response import ValidationErrorResponse
 from .types.account import Account
 from .types.account_id import AccountId
 from .types.list_accounts_response import ListAccountsResponse
+from .types.update_account_status import UpdateAccountStatus
 from pydantic import ValidationError as pydantic_ValidationError
+
+# this is used as the default value for optional parameters
+OMIT = typing.cast(typing.Any, ...)
 
 
 class RawAccountsClient:
@@ -36,7 +41,9 @@ class RawAccountsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListAccountsResponse]:
         """
-        Lists accounts across all providers.
+        Lists accounts across all providers, scoped to the API key: an
+        organization key sees every account, a pod key its pod's, an inbox key
+        its inbox's. Requires `inbox_read`.
 
         Parameters
         ----------
@@ -98,6 +105,9 @@ class RawAccountsClient:
         self, account_id: AccountId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[Account]:
         """
+        Returns one account by ID. An account outside the key's scope is a 404.
+        Requires `inbox_read`.
+
         Parameters
         ----------
         account_id : AccountId
@@ -145,6 +155,107 @@ class RawAccountsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def update(
+        self,
+        account_id: AccountId,
+        *,
+        status: typing.Optional[UpdateAccountStatus] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[Account]:
+        """
+        Updates one account. Set `status` to `disabled` to stop the inbox from
+        signing in at the provider again, or to `enabled` to re-enable it.
+        Idempotent: disabling an already disabled account keeps its original
+        `disabled_at`, and enabling an enabled account is a no-op.
+
+        Find the `account_id` with List Accounts. An account exists only after an
+        inbox's first sign-in at a provider, so it cannot be disabled in advance.
+        A disable applies to that inbox at that provider whichever sign-in key is
+        used: the provider's next authorization ends in `access_denied`, and a code
+        issued earlier is refused with `invalid_grant`. Access tokens already
+        issued stay valid until they expire, and the provider's own session is
+        unaffected.
+
+        Requires `account_update`, which sign-in keys (`type: public_key`) cannot
+        hold, so call this with a bearer API key. An account outside the key's
+        scope is a 404. A 409 means the account changed during the write; read it
+        again and retry.
+
+        Parameters
+        ----------
+        account_id : AccountId
+
+        status : typing.Optional[UpdateAccountStatus]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[Account]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/accounts/{jsonable_encoder(account_id)}/update",
+            base_url=self._client_wrapper.get_environment().http,
+            method="PATCH",
+            json={
+                "status": status,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Account,
+                    construct_type(
+                        type_=Account,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawAccountsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -159,7 +270,9 @@ class AsyncRawAccountsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListAccountsResponse]:
         """
-        Lists accounts across all providers.
+        Lists accounts across all providers, scoped to the API key: an
+        organization key sees every account, a pod key its pod's, an inbox key
+        its inbox's. Requires `inbox_read`.
 
         Parameters
         ----------
@@ -221,6 +334,9 @@ class AsyncRawAccountsClient:
         self, account_id: AccountId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[Account]:
         """
+        Returns one account by ID. An account outside the key's scope is a 404.
+        Requires `inbox_read`.
+
         Parameters
         ----------
         account_id : AccountId
@@ -250,6 +366,107 @@ class AsyncRawAccountsClient:
                 return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 404:
                 raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def update(
+        self,
+        account_id: AccountId,
+        *,
+        status: typing.Optional[UpdateAccountStatus] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[Account]:
+        """
+        Updates one account. Set `status` to `disabled` to stop the inbox from
+        signing in at the provider again, or to `enabled` to re-enable it.
+        Idempotent: disabling an already disabled account keeps its original
+        `disabled_at`, and enabling an enabled account is a no-op.
+
+        Find the `account_id` with List Accounts. An account exists only after an
+        inbox's first sign-in at a provider, so it cannot be disabled in advance.
+        A disable applies to that inbox at that provider whichever sign-in key is
+        used: the provider's next authorization ends in `access_denied`, and a code
+        issued earlier is refused with `invalid_grant`. Access tokens already
+        issued stay valid until they expire, and the provider's own session is
+        unaffected.
+
+        Requires `account_update`, which sign-in keys (`type: public_key`) cannot
+        hold, so call this with a bearer API key. An account outside the key's
+        scope is a 404. A 409 means the account changed during the write; read it
+        again and retry.
+
+        Parameters
+        ----------
+        account_id : AccountId
+
+        status : typing.Optional[UpdateAccountStatus]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[Account]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/accounts/{jsonable_encoder(account_id)}/update",
+            base_url=self._client_wrapper.get_environment().http,
+            method="PATCH",
+            json={
+                "status": status,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Account,
+                    construct_type(
+                        type_=Account,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,

@@ -321,7 +321,9 @@ class RawWebhooksClient:
         webhook_id : WebhookId
 
         add_inbox_ids : typing.Optional[InboxIds]
-            Inbox IDs to subscribe to the webhook.
+            Inbox IDs to subscribe to the webhook. This only adds to what the webhook receives: on a webhook
+            that covers its whole pod, it changes nothing. To receive only specific inboxes, create a webhook
+            with `inbox_ids` instead.
 
         remove_inbox_ids : typing.Optional[InboxIds]
             Inbox IDs to unsubscribe from the webhook.
@@ -803,7 +805,9 @@ class AsyncRawWebhooksClient:
         webhook_id : WebhookId
 
         add_inbox_ids : typing.Optional[InboxIds]
-            Inbox IDs to subscribe to the webhook.
+            Inbox IDs to subscribe to the webhook. This only adds to what the webhook receives: on a webhook
+            that covers its whole pod, it changes nothing. To receive only specific inboxes, create a webhook
+            with `inbox_ids` instead.
 
         remove_inbox_ids : typing.Optional[InboxIds]
             Inbox IDs to unsubscribe from the webhook.

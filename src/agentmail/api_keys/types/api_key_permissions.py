@@ -189,6 +189,12 @@ class ApiKeyPermissions(UncheckedBaseModel):
     for both values.
     """
 
+    account_update: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Update accounts: disable or re-enable an inbox's sign-in at a provider. Reading accounts
+    needs only `inbox_read`.
+    """
+
     pod_read: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Read pods.

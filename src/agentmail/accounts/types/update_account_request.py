@@ -4,16 +4,18 @@ import typing
 
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
-from ...events.types.pod_ids import PodIds
-from .create_pod_webhook_request import CreatePodWebhookRequest
+from ...core.unchecked_base_model import UncheckedBaseModel
+from .update_account_status import UpdateAccountStatus
 
 
-class CreateWebhookRequest(CreatePodWebhookRequest):
-    pod_ids: typing.Optional[PodIds] = pydantic.Field(default=None)
+class UpdateAccountRequest(UncheckedBaseModel):
     """
-    Pods for which to send events. Maximum 10 per webhook. The webhook receives an event that matches
-    any listed pod or inbox, so a listed pod already covers every inbox in it.
+    Fields to change on the account. Fields you omit are left unchanged and
+    unknown fields are rejected. Expects at least one field; today that is
+    `status`.
     """
+
+    status: typing.Optional[UpdateAccountStatus] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

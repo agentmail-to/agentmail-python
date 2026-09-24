@@ -231,6 +231,8 @@ class RawWebhooksClient:
         event_types : CreateWebhookEventTypes
 
         pod_ids : typing.Optional[PodIds]
+            Pods for which to send events. Maximum 10 per webhook. The webhook receives an event that matches
+            any listed pod or inbox, so a listed pod already covers every inbox in it.
 
         inbox_ids : typing.Optional[InboxIds]
 
@@ -321,7 +323,9 @@ class RawWebhooksClient:
             Pod IDs to unsubscribe from the webhook.
 
         add_inbox_ids : typing.Optional[InboxIds]
-            Inbox IDs to subscribe to the webhook.
+            Inbox IDs to subscribe to the webhook. This only adds to what the webhook receives: on a webhook
+            that covers its whole pod, it changes nothing. To receive only specific inboxes, create a webhook
+            with `inbox_ids` instead.
 
         remove_inbox_ids : typing.Optional[InboxIds]
             Inbox IDs to unsubscribe from the webhook.
@@ -710,6 +714,8 @@ class AsyncRawWebhooksClient:
         event_types : CreateWebhookEventTypes
 
         pod_ids : typing.Optional[PodIds]
+            Pods for which to send events. Maximum 10 per webhook. The webhook receives an event that matches
+            any listed pod or inbox, so a listed pod already covers every inbox in it.
 
         inbox_ids : typing.Optional[InboxIds]
 
@@ -800,7 +806,9 @@ class AsyncRawWebhooksClient:
             Pod IDs to unsubscribe from the webhook.
 
         add_inbox_ids : typing.Optional[InboxIds]
-            Inbox IDs to subscribe to the webhook.
+            Inbox IDs to subscribe to the webhook. This only adds to what the webhook receives: on a webhook
+            that covers its whole pod, it changes nothing. To receive only specific inboxes, create a webhook
+            with `inbox_ids` instead.
 
         remove_inbox_ids : typing.Optional[InboxIds]
             Inbox IDs to unsubscribe from the webhook.

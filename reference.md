@@ -6572,6 +6572,149 @@ client.inboxes.metrics.query_usage(
 </dl>
 </details>
 
+<details><summary><code>client.inboxes.metrics.<a href="src/agentmail/inboxes/metrics/client.py">query_rates</a>(...) -> QueryRatesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Rolling bounce and complaint rates for the inbox. At each `period`
+grid point, the bounced (or complained) messages over the preceding
+`window` divided by the messages sent over the same window, with the
+send count alongside. Account moderation evaluates the organization-wide
+rate, so use the organization endpoint to see the number it acts on;
+the inbox view shows which inboxes contribute. Defaults to the rolling
+24-hour rate sampled hourly over the last day; `start` must be within
+the last 90 days, `window` must be a whole multiple of `period`, and
+the range plus window divided by `period` must not exceed 1000
+buckets.
+
+**CLI:**
+```bash
+agentmail inboxes metrics query-rates --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.metrics.query_rates(
+    inbox_id="inbox_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rate_types:** `typing.Optional[RateTypes]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start:** `typing.Optional[Start]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end:** `typing.Optional[End]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**period:** `typing.Optional[RatePeriod]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**window:** `typing.Optional[Window]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[MetricLimit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**descending:** `typing.Optional[Descending]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inboxes Threads
 <details><summary><code>client.inboxes.threads.<a href="src/agentmail/inboxes/threads/client.py">list</a>(...) -> ListThreadsResponse</code></summary>
 <dl>
@@ -8461,6 +8604,140 @@ client.metrics.query_usage()
 <dd>
 
 **period:** `typing.Optional[Period]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[MetricLimit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**descending:** `typing.Optional[Descending]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.metrics.<a href="src/agentmail/metrics/client.py">query_rates</a>(...) -> QueryRatesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Rolling bounce and complaint rates for the organization. At each
+`period` grid point, the bounced (or complained) messages over the
+preceding `window` divided by the messages sent over the same window,
+with the send count alongside so you can see the volume behind
+it. This is the number AgentMail's account moderation acts on: a
+warning at a 5% bounce rate and suspension at 10%, evaluated over a
+rolling 24 hours once at least 1,000 messages were sent in that
+window. Defaults to the rolling 24-hour rate sampled hourly over the
+last day; `start` must be within the last 90 days, `window` must be a
+whole multiple of `period`, and the range plus window divided by
+`period` must not exceed 1000 buckets.
+
+**CLI:**
+```bash
+agentmail metrics query-rates
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.metrics.query_rates()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**rate_types:** `typing.Optional[RateTypes]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start:** `typing.Optional[Start]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end:** `typing.Optional[End]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**period:** `typing.Optional[RatePeriod]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**window:** `typing.Optional[Window]` 
     
 </dd>
 </dl>
@@ -11221,6 +11498,149 @@ client.pods.metrics.query_usage(
 <dd>
 
 **period:** `typing.Optional[Period]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[MetricLimit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**descending:** `typing.Optional[Descending]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.metrics.<a href="src/agentmail/pods/metrics/client.py">query_rates</a>(...) -> QueryRatesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Rolling bounce and complaint rates for the pod. At each `period` grid
+point, the bounced (or complained) messages over the preceding
+`window` divided by the messages sent over the same window, with the
+send count alongside. Account moderation evaluates the organization-wide
+rate, so use the organization endpoint to see the number it acts on;
+the pod view shows which pods contribute. Defaults to the rolling
+24-hour rate sampled hourly over the last day; `start` must be within
+the last 90 days, `window` must be a whole multiple of `period`, and
+the range plus window divided by `period` must not exceed 1000
+buckets.
+
+**CLI:**
+```bash
+agentmail pods metrics query-rates --pod-id <pod_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.pods.metrics.query_rates(
+    pod_id="pod_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**rate_types:** `typing.Optional[RateTypes]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start:** `typing.Optional[Start]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end:** `typing.Optional[End]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**period:** `typing.Optional[RatePeriod]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**window:** `typing.Optional[Window]` 
     
 </dd>
 </dl>

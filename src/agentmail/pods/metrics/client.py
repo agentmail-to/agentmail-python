@@ -10,9 +10,13 @@ from ...metrics.types.metric_event_types import MetricEventTypes
 from ...metrics.types.metric_limit import MetricLimit
 from ...metrics.types.period import Period
 from ...metrics.types.query_metrics_response import QueryMetricsResponse
+from ...metrics.types.query_rates_response import QueryRatesResponse
 from ...metrics.types.query_usage_response import QueryUsageResponse
+from ...metrics.types.rate_period import RatePeriod
+from ...metrics.types.rate_types import RateTypes
 from ...metrics.types.start import Start
 from ...metrics.types.usage_types import UsageTypes
+from ...metrics.types.window import Window
 from ..types.pod_id import PodId
 from .raw_client import AsyncRawMetricsClient, RawMetricsClient
 
@@ -163,6 +167,85 @@ class MetricsClient:
             start=start,
             end=end,
             period=period,
+            limit=limit,
+            descending=descending,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def query_rates(
+        self,
+        pod_id: PodId,
+        *,
+        rate_types: typing.Optional[RateTypes] = None,
+        start: typing.Optional[Start] = None,
+        end: typing.Optional[End] = None,
+        period: typing.Optional[RatePeriod] = None,
+        window: typing.Optional[Window] = None,
+        limit: typing.Optional[MetricLimit] = None,
+        descending: typing.Optional[Descending] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> QueryRatesResponse:
+        """
+        Rolling bounce and complaint rates for the pod. At each `period` grid
+        point, the bounced (or complained) messages over the preceding
+        `window` divided by the messages sent over the same window, with the
+        send count alongside. Account moderation evaluates the organization-wide
+        rate, so use the organization endpoint to see the number it acts on;
+        the pod view shows which pods contribute. Defaults to the rolling
+        24-hour rate sampled hourly over the last day; `start` must be within
+        the last 90 days, `window` must be a whole multiple of `period`, and
+        the range plus window divided by `period` must not exceed 1000
+        buckets.
+
+        **CLI:**
+        ```bash
+        agentmail pods metrics query-rates --pod-id <pod_id>
+        ```
+
+        Parameters
+        ----------
+        pod_id : PodId
+
+        rate_types : typing.Optional[RateTypes]
+
+        start : typing.Optional[Start]
+
+        end : typing.Optional[End]
+
+        period : typing.Optional[RatePeriod]
+
+        window : typing.Optional[Window]
+
+        limit : typing.Optional[MetricLimit]
+
+        descending : typing.Optional[Descending]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        QueryRatesResponse
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.pods.metrics.query_rates(
+            pod_id="pod_id",
+        )
+        """
+        _response = self._raw_client.query_rates(
+            pod_id,
+            rate_types=rate_types,
+            start=start,
+            end=end,
+            period=period,
+            window=window,
             limit=limit,
             descending=descending,
             request_options=request_options,
@@ -332,6 +415,93 @@ class AsyncMetricsClient:
             start=start,
             end=end,
             period=period,
+            limit=limit,
+            descending=descending,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def query_rates(
+        self,
+        pod_id: PodId,
+        *,
+        rate_types: typing.Optional[RateTypes] = None,
+        start: typing.Optional[Start] = None,
+        end: typing.Optional[End] = None,
+        period: typing.Optional[RatePeriod] = None,
+        window: typing.Optional[Window] = None,
+        limit: typing.Optional[MetricLimit] = None,
+        descending: typing.Optional[Descending] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> QueryRatesResponse:
+        """
+        Rolling bounce and complaint rates for the pod. At each `period` grid
+        point, the bounced (or complained) messages over the preceding
+        `window` divided by the messages sent over the same window, with the
+        send count alongside. Account moderation evaluates the organization-wide
+        rate, so use the organization endpoint to see the number it acts on;
+        the pod view shows which pods contribute. Defaults to the rolling
+        24-hour rate sampled hourly over the last day; `start` must be within
+        the last 90 days, `window` must be a whole multiple of `period`, and
+        the range plus window divided by `period` must not exceed 1000
+        buckets.
+
+        **CLI:**
+        ```bash
+        agentmail pods metrics query-rates --pod-id <pod_id>
+        ```
+
+        Parameters
+        ----------
+        pod_id : PodId
+
+        rate_types : typing.Optional[RateTypes]
+
+        start : typing.Optional[Start]
+
+        end : typing.Optional[End]
+
+        period : typing.Optional[RatePeriod]
+
+        window : typing.Optional[Window]
+
+        limit : typing.Optional[MetricLimit]
+
+        descending : typing.Optional[Descending]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        QueryRatesResponse
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.pods.metrics.query_rates(
+                pod_id="pod_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.query_rates(
+            pod_id,
+            rate_types=rate_types,
+            start=start,
+            end=end,
+            period=period,
+            window=window,
             limit=limit,
             descending=descending,
             request_options=request_options,

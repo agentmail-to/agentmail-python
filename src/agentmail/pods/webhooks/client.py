@@ -231,6 +231,7 @@ class WebhooksClient:
         add_inbox_ids: typing.Optional[InboxIds] = OMIT,
         remove_inbox_ids: typing.Optional[InboxIds] = OMIT,
         event_types: typing.Optional[UpdateWebhookEventTypes] = OMIT,
+        enabled: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Webhook:
         """
@@ -254,6 +255,13 @@ class WebhooksClient:
             Inbox IDs to unsubscribe from the webhook.
 
         event_types : typing.Optional[UpdateWebhookEventTypes]
+
+        enabled : typing.Optional[bool]
+            Set to true to re-enable a webhook that was disabled after repeated failed deliveries, or false
+            to disable it. Events that occurred while the webhook was disabled are not redelivered.
+            Re-enabling a webhook subscribed to `message.received.spam`, `message.received.blocked`, or
+            `message.received.unauthenticated` (or to every event type, with no filter) requires the
+            matching label permissions on the API key.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -280,6 +288,7 @@ class WebhooksClient:
             add_inbox_ids=add_inbox_ids,
             remove_inbox_ids=remove_inbox_ids,
             event_types=event_types,
+            enabled=enabled,
             request_options=request_options,
         )
         return _response.data
@@ -609,6 +618,7 @@ class AsyncWebhooksClient:
         add_inbox_ids: typing.Optional[InboxIds] = OMIT,
         remove_inbox_ids: typing.Optional[InboxIds] = OMIT,
         event_types: typing.Optional[UpdateWebhookEventTypes] = OMIT,
+        enabled: typing.Optional[bool] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Webhook:
         """
@@ -632,6 +642,13 @@ class AsyncWebhooksClient:
             Inbox IDs to unsubscribe from the webhook.
 
         event_types : typing.Optional[UpdateWebhookEventTypes]
+
+        enabled : typing.Optional[bool]
+            Set to true to re-enable a webhook that was disabled after repeated failed deliveries, or false
+            to disable it. Events that occurred while the webhook was disabled are not redelivered.
+            Re-enabling a webhook subscribed to `message.received.spam`, `message.received.blocked`, or
+            `message.received.unauthenticated` (or to every event type, with no filter) requires the
+            matching label permissions on the API key.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -666,6 +683,7 @@ class AsyncWebhooksClient:
             add_inbox_ids=add_inbox_ids,
             remove_inbox_ids=remove_inbox_ids,
             event_types=event_types,
+            enabled=enabled,
             request_options=request_options,
         )
         return _response.data

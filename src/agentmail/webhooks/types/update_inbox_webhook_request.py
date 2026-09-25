@@ -10,10 +10,19 @@ from .update_webhook_event_types import UpdateWebhookEventTypes
 
 class UpdateInboxWebhookRequest(UncheckedBaseModel):
     """
-    Update an inbox-scoped webhook. It is fixed to its inbox, so only `event_types` can change.
+    Update an inbox-scoped webhook. It is fixed to its inbox, so only `event_types` and `enabled` can
+    change.
     """
 
     event_types: typing.Optional[UpdateWebhookEventTypes] = None
+    enabled: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Set to true to re-enable a webhook that was disabled after repeated failed deliveries, or false
+    to disable it. Events that occurred while the webhook was disabled are not redelivered.
+    Re-enabling a webhook subscribed to `message.received.spam`, `message.received.blocked`, or
+    `message.received.unauthenticated` (or to every event type, with no filter) requires the
+    matching label permissions on the API key.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

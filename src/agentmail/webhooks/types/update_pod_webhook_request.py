@@ -10,8 +10,8 @@ from .update_inbox_webhook_request import UpdateInboxWebhookRequest
 
 class UpdatePodWebhookRequest(UpdateInboxWebhookRequest):
     """
-    Update a pod-scoped webhook. You can adjust which inboxes within the pod it listens to and replace
-    its `event_types`, but not the pod scope itself.
+    Update a pod-scoped webhook. You can adjust which inboxes within the pod it listens to, replace
+    its `event_types`, and set `enabled`, but not change the pod scope itself.
     """
 
     add_inbox_ids: typing.Optional[InboxIds] = pydantic.Field(default=None)

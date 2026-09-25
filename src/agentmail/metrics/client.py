@@ -11,9 +11,13 @@ from .types.metric_event_types import MetricEventTypes
 from .types.metric_limit import MetricLimit
 from .types.period import Period
 from .types.query_metrics_response import QueryMetricsResponse
+from .types.query_rates_response import QueryRatesResponse
 from .types.query_usage_response import QueryUsageResponse
+from .types.rate_period import RatePeriod
+from .types.rate_types import RateTypes
 from .types.start import Start
 from .types.usage_types import UsageTypes
+from .types.window import Window
 
 
 class MetricsClient:
@@ -148,6 +152,80 @@ class MetricsClient:
             start=start,
             end=end,
             period=period,
+            limit=limit,
+            descending=descending,
+            request_options=request_options,
+        )
+        return _response.data
+
+    def query_rates(
+        self,
+        *,
+        rate_types: typing.Optional[RateTypes] = None,
+        start: typing.Optional[Start] = None,
+        end: typing.Optional[End] = None,
+        period: typing.Optional[RatePeriod] = None,
+        window: typing.Optional[Window] = None,
+        limit: typing.Optional[MetricLimit] = None,
+        descending: typing.Optional[Descending] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> QueryRatesResponse:
+        """
+        Rolling bounce and complaint rates for the organization. At each
+        `period` grid point, the bounced (or complained) messages over the
+        preceding `window` divided by the messages sent over the same window,
+        with the send count alongside so you can see the volume behind
+        it. This is the number AgentMail's account moderation acts on: a
+        warning at a 5% bounce rate and suspension at 10%, evaluated over a
+        rolling 24 hours once at least 1,000 messages were sent in that
+        window. Defaults to the rolling 24-hour rate sampled hourly over the
+        last day; `start` must be within the last 90 days, `window` must be a
+        whole multiple of `period`, and the range plus window divided by
+        `period` must not exceed 1000 buckets.
+
+        **CLI:**
+        ```bash
+        agentmail metrics query-rates
+        ```
+
+        Parameters
+        ----------
+        rate_types : typing.Optional[RateTypes]
+
+        start : typing.Optional[Start]
+
+        end : typing.Optional[End]
+
+        period : typing.Optional[RatePeriod]
+
+        window : typing.Optional[Window]
+
+        limit : typing.Optional[MetricLimit]
+
+        descending : typing.Optional[Descending]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        QueryRatesResponse
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.metrics.query_rates()
+        """
+        _response = self._raw_client.query_rates(
+            rate_types=rate_types,
+            start=start,
+            end=end,
+            period=period,
+            window=window,
             limit=limit,
             descending=descending,
             request_options=request_options,
@@ -303,6 +381,88 @@ class AsyncMetricsClient:
             start=start,
             end=end,
             period=period,
+            limit=limit,
+            descending=descending,
+            request_options=request_options,
+        )
+        return _response.data
+
+    async def query_rates(
+        self,
+        *,
+        rate_types: typing.Optional[RateTypes] = None,
+        start: typing.Optional[Start] = None,
+        end: typing.Optional[End] = None,
+        period: typing.Optional[RatePeriod] = None,
+        window: typing.Optional[Window] = None,
+        limit: typing.Optional[MetricLimit] = None,
+        descending: typing.Optional[Descending] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> QueryRatesResponse:
+        """
+        Rolling bounce and complaint rates for the organization. At each
+        `period` grid point, the bounced (or complained) messages over the
+        preceding `window` divided by the messages sent over the same window,
+        with the send count alongside so you can see the volume behind
+        it. This is the number AgentMail's account moderation acts on: a
+        warning at a 5% bounce rate and suspension at 10%, evaluated over a
+        rolling 24 hours once at least 1,000 messages were sent in that
+        window. Defaults to the rolling 24-hour rate sampled hourly over the
+        last day; `start` must be within the last 90 days, `window` must be a
+        whole multiple of `period`, and the range plus window divided by
+        `period` must not exceed 1000 buckets.
+
+        **CLI:**
+        ```bash
+        agentmail metrics query-rates
+        ```
+
+        Parameters
+        ----------
+        rate_types : typing.Optional[RateTypes]
+
+        start : typing.Optional[Start]
+
+        end : typing.Optional[End]
+
+        period : typing.Optional[RatePeriod]
+
+        window : typing.Optional[Window]
+
+        limit : typing.Optional[MetricLimit]
+
+        descending : typing.Optional[Descending]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        QueryRatesResponse
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.metrics.query_rates()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.query_rates(
+            rate_types=rate_types,
+            start=start,
+            end=end,
+            period=period,
+            window=window,
             limit=limit,
             descending=descending,
             request_options=request_options,

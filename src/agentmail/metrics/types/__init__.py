@@ -14,11 +14,17 @@ if typing.TYPE_CHECKING:
     from .metric_limit import MetricLimit
     from .period import Period
     from .query_metrics_response import QueryMetricsResponse
+    from .query_rates_response import QueryRatesResponse
     from .query_usage_response import QueryUsageResponse
+    from .rate_period import RatePeriod
+    from .rate_point import RatePoint
+    from .rate_type import RateType
+    from .rate_types import RateTypes
     from .start import Start
     from .usage_point import UsagePoint
     from .usage_type import UsageType
     from .usage_types import UsageTypes
+    from .window import Window
 _dynamic_imports: typing.Dict[str, str] = {
     "Descending": ".descending",
     "End": ".end",
@@ -28,11 +34,17 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MetricLimit": ".metric_limit",
     "Period": ".period",
     "QueryMetricsResponse": ".query_metrics_response",
+    "QueryRatesResponse": ".query_rates_response",
     "QueryUsageResponse": ".query_usage_response",
+    "RatePeriod": ".rate_period",
+    "RatePoint": ".rate_point",
+    "RateType": ".rate_type",
+    "RateTypes": ".rate_types",
     "Start": ".start",
     "UsagePoint": ".usage_point",
     "UsageType": ".usage_type",
     "UsageTypes": ".usage_types",
+    "Window": ".window",
 }
 
 
@@ -66,9 +78,15 @@ __all__ = [
     "MetricLimit",
     "Period",
     "QueryMetricsResponse",
+    "QueryRatesResponse",
     "QueryUsageResponse",
+    "RatePeriod",
+    "RatePoint",
+    "RateType",
+    "RateTypes",
     "Start",
     "UsagePoint",
     "UsageType",
     "UsageTypes",
+    "Window",
 ]

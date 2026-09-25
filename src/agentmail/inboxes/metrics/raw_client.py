@@ -18,9 +18,13 @@ from ...metrics.types.metric_event_types import MetricEventTypes
 from ...metrics.types.metric_limit import MetricLimit
 from ...metrics.types.period import Period
 from ...metrics.types.query_metrics_response import QueryMetricsResponse
+from ...metrics.types.query_rates_response import QueryRatesResponse
 from ...metrics.types.query_usage_response import QueryUsageResponse
+from ...metrics.types.rate_period import RatePeriod
+from ...metrics.types.rate_types import RateTypes
 from ...metrics.types.start import Start
 from ...metrics.types.usage_types import UsageTypes
+from ...metrics.types.window import Window
 from ...types.validation_error_response import ValidationErrorResponse
 from ..types.inbox_id import InboxId
 from pydantic import ValidationError as pydantic_ValidationError
@@ -209,6 +213,106 @@ class RawMetricsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def query_rates(
+        self,
+        inbox_id: InboxId,
+        *,
+        rate_types: typing.Optional[RateTypes] = None,
+        start: typing.Optional[Start] = None,
+        end: typing.Optional[End] = None,
+        period: typing.Optional[RatePeriod] = None,
+        window: typing.Optional[Window] = None,
+        limit: typing.Optional[MetricLimit] = None,
+        descending: typing.Optional[Descending] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[QueryRatesResponse]:
+        """
+        Rolling bounce and complaint rates for the inbox. At each `period`
+        grid point, the bounced (or complained) messages over the preceding
+        `window` divided by the messages sent over the same window, with the
+        send count alongside. Account moderation evaluates the organization-wide
+        rate, so use the organization endpoint to see the number it acts on;
+        the inbox view shows which inboxes contribute. Defaults to the rolling
+        24-hour rate sampled hourly over the last day; `start` must be within
+        the last 90 days, `window` must be a whole multiple of `period`, and
+        the range plus window divided by `period` must not exceed 1000
+        buckets.
+
+        **CLI:**
+        ```bash
+        agentmail inboxes metrics query-rates --inbox-id <inbox_id>
+        ```
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        rate_types : typing.Optional[RateTypes]
+
+        start : typing.Optional[Start]
+
+        end : typing.Optional[End]
+
+        period : typing.Optional[RatePeriod]
+
+        window : typing.Optional[Window]
+
+        limit : typing.Optional[MetricLimit]
+
+        descending : typing.Optional[Descending]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[QueryRatesResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/metrics/rates",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            params={
+                "rate_types": rate_types,
+                "start": serialize_datetime(start) if start is not None else None,
+                "end": serialize_datetime(end) if end is not None else None,
+                "period": period,
+                "window": window,
+                "limit": limit,
+                "descending": descending,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    QueryRatesResponse,
+                    construct_type(
+                        type_=QueryRatesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawMetricsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -369,6 +473,106 @@ class AsyncRawMetricsClient:
                     QueryUsageResponse,
                     construct_type(
                         type_=QueryUsageResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def query_rates(
+        self,
+        inbox_id: InboxId,
+        *,
+        rate_types: typing.Optional[RateTypes] = None,
+        start: typing.Optional[Start] = None,
+        end: typing.Optional[End] = None,
+        period: typing.Optional[RatePeriod] = None,
+        window: typing.Optional[Window] = None,
+        limit: typing.Optional[MetricLimit] = None,
+        descending: typing.Optional[Descending] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[QueryRatesResponse]:
+        """
+        Rolling bounce and complaint rates for the inbox. At each `period`
+        grid point, the bounced (or complained) messages over the preceding
+        `window` divided by the messages sent over the same window, with the
+        send count alongside. Account moderation evaluates the organization-wide
+        rate, so use the organization endpoint to see the number it acts on;
+        the inbox view shows which inboxes contribute. Defaults to the rolling
+        24-hour rate sampled hourly over the last day; `start` must be within
+        the last 90 days, `window` must be a whole multiple of `period`, and
+        the range plus window divided by `period` must not exceed 1000
+        buckets.
+
+        **CLI:**
+        ```bash
+        agentmail inboxes metrics query-rates --inbox-id <inbox_id>
+        ```
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        rate_types : typing.Optional[RateTypes]
+
+        start : typing.Optional[Start]
+
+        end : typing.Optional[End]
+
+        period : typing.Optional[RatePeriod]
+
+        window : typing.Optional[Window]
+
+        limit : typing.Optional[MetricLimit]
+
+        descending : typing.Optional[Descending]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[QueryRatesResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/metrics/rates",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            params={
+                "rate_types": rate_types,
+                "start": serialize_datetime(start) if start is not None else None,
+                "end": serialize_datetime(end) if end is not None else None,
+                "period": period,
+                "window": window,
+                "limit": limit,
+                "descending": descending,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    QueryRatesResponse,
+                    construct_type(
+                        type_=QueryRatesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

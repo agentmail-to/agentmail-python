@@ -18,9 +18,13 @@ from .types.metric_event_types import MetricEventTypes
 from .types.metric_limit import MetricLimit
 from .types.period import Period
 from .types.query_metrics_response import QueryMetricsResponse
+from .types.query_rates_response import QueryRatesResponse
 from .types.query_usage_response import QueryUsageResponse
+from .types.rate_period import RatePeriod
+from .types.rate_types import RateTypes
 from .types.start import Start
 from .types.usage_types import UsageTypes
+from .types.window import Window
 from pydantic import ValidationError as pydantic_ValidationError
 
 
@@ -199,6 +203,104 @@ class RawMetricsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def query_rates(
+        self,
+        *,
+        rate_types: typing.Optional[RateTypes] = None,
+        start: typing.Optional[Start] = None,
+        end: typing.Optional[End] = None,
+        period: typing.Optional[RatePeriod] = None,
+        window: typing.Optional[Window] = None,
+        limit: typing.Optional[MetricLimit] = None,
+        descending: typing.Optional[Descending] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[QueryRatesResponse]:
+        """
+        Rolling bounce and complaint rates for the organization. At each
+        `period` grid point, the bounced (or complained) messages over the
+        preceding `window` divided by the messages sent over the same window,
+        with the send count alongside so you can see the volume behind
+        it. This is the number AgentMail's account moderation acts on: a
+        warning at a 5% bounce rate and suspension at 10%, evaluated over a
+        rolling 24 hours once at least 1,000 messages were sent in that
+        window. Defaults to the rolling 24-hour rate sampled hourly over the
+        last day; `start` must be within the last 90 days, `window` must be a
+        whole multiple of `period`, and the range plus window divided by
+        `period` must not exceed 1000 buckets.
+
+        **CLI:**
+        ```bash
+        agentmail metrics query-rates
+        ```
+
+        Parameters
+        ----------
+        rate_types : typing.Optional[RateTypes]
+
+        start : typing.Optional[Start]
+
+        end : typing.Optional[End]
+
+        period : typing.Optional[RatePeriod]
+
+        window : typing.Optional[Window]
+
+        limit : typing.Optional[MetricLimit]
+
+        descending : typing.Optional[Descending]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[QueryRatesResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v0/metrics/rates",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            params={
+                "rate_types": rate_types,
+                "start": serialize_datetime(start) if start is not None else None,
+                "end": serialize_datetime(end) if end is not None else None,
+                "period": period,
+                "window": window,
+                "limit": limit,
+                "descending": descending,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    QueryRatesResponse,
+                    construct_type(
+                        type_=QueryRatesResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
 
 class AsyncRawMetricsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -351,6 +453,104 @@ class AsyncRawMetricsClient:
                     QueryUsageResponse,
                     construct_type(
                         type_=QueryUsageResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def query_rates(
+        self,
+        *,
+        rate_types: typing.Optional[RateTypes] = None,
+        start: typing.Optional[Start] = None,
+        end: typing.Optional[End] = None,
+        period: typing.Optional[RatePeriod] = None,
+        window: typing.Optional[Window] = None,
+        limit: typing.Optional[MetricLimit] = None,
+        descending: typing.Optional[Descending] = None,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[QueryRatesResponse]:
+        """
+        Rolling bounce and complaint rates for the organization. At each
+        `period` grid point, the bounced (or complained) messages over the
+        preceding `window` divided by the messages sent over the same window,
+        with the send count alongside so you can see the volume behind
+        it. This is the number AgentMail's account moderation acts on: a
+        warning at a 5% bounce rate and suspension at 10%, evaluated over a
+        rolling 24 hours once at least 1,000 messages were sent in that
+        window. Defaults to the rolling 24-hour rate sampled hourly over the
+        last day; `start` must be within the last 90 days, `window` must be a
+        whole multiple of `period`, and the range plus window divided by
+        `period` must not exceed 1000 buckets.
+
+        **CLI:**
+        ```bash
+        agentmail metrics query-rates
+        ```
+
+        Parameters
+        ----------
+        rate_types : typing.Optional[RateTypes]
+
+        start : typing.Optional[Start]
+
+        end : typing.Optional[End]
+
+        period : typing.Optional[RatePeriod]
+
+        window : typing.Optional[Window]
+
+        limit : typing.Optional[MetricLimit]
+
+        descending : typing.Optional[Descending]
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[QueryRatesResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v0/metrics/rates",
+            base_url=self._client_wrapper.get_environment().http,
+            method="GET",
+            params={
+                "rate_types": rate_types,
+                "start": serialize_datetime(start) if start is not None else None,
+                "end": serialize_datetime(end) if end is not None else None,
+                "period": period,
+                "window": window,
+                "limit": limit,
+                "descending": descending,
+            },
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    QueryRatesResponse,
+                    construct_type(
+                        type_=QueryRatesResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

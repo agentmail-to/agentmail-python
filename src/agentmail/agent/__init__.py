@@ -6,8 +6,17 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import AgentSignupRequest, AgentSignupResponse, AgentVerifyRequest, AgentVerifyResponse
+    from .types import (
+        AgentAttachHumanRequest,
+        AgentAttachHumanResponse,
+        AgentSignupRequest,
+        AgentSignupResponse,
+        AgentVerifyRequest,
+        AgentVerifyResponse,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
+    "AgentAttachHumanRequest": ".types",
+    "AgentAttachHumanResponse": ".types",
     "AgentSignupRequest": ".types",
     "AgentSignupResponse": ".types",
     "AgentVerifyRequest": ".types",
@@ -36,4 +45,11 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AgentSignupRequest", "AgentSignupResponse", "AgentVerifyRequest", "AgentVerifyResponse"]
+__all__ = [
+    "AgentAttachHumanRequest",
+    "AgentAttachHumanResponse",
+    "AgentSignupRequest",
+    "AgentSignupResponse",
+    "AgentVerifyRequest",
+    "AgentVerifyResponse",
+]

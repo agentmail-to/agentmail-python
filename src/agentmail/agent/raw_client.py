@@ -9,8 +9,11 @@ from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.unchecked_base_model import construct_type
+from ..errors.conflict_error import ConflictError
 from ..errors.validation_error import ValidationError as errors_validation_error_ValidationError
+from ..types.error_response import ErrorResponse
 from ..types.validation_error_response import ValidationErrorResponse
+from .types.agent_attach_human_response import AgentAttachHumanResponse
 from .types.agent_signup_response import AgentSignupResponse
 from .types.agent_verify_response import AgentVerifyResponse
 from pydantic import ValidationError as pydantic_ValidationError
@@ -26,8 +29,8 @@ class RawAgentClient:
     def sign_up(
         self,
         *,
-        human_email: str,
         username: str,
+        human_email: typing.Optional[str] = OMIT,
         source: typing.Optional[str] = OMIT,
         referrer: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -36,6 +39,8 @@ class RawAgentClient:
         Create a new agent organization with an inbox and API key. This endpoint is for signing up for the first time. If you've already signed up, you're all set — just use your existing API key.
 
         A 6-digit OTP is sent to the human's email for verification.
+
+        `human_email` is optional. Without it, the inbox can receive email but cannot send to anyone until a human is attached with the attach human endpoint. There is also no way to recover the API key, so store it durably. Calling sign-up again without `human_email` creates a new organization, which needs a different `username`: the original username stays with the lost organization's inbox.
 
         This endpoint is idempotent. Calling it again with the same `human_email` will rotate the API key and resend the OTP if expired.
 
@@ -48,11 +53,12 @@ class RawAgentClient:
 
         Parameters
         ----------
-        human_email : str
-            Email address of the human who owns the agent. A 6-digit OTP will be sent to this address.
-
         username : str
             Username for the auto-created inbox (e.g. "my-agent" creates my-agent@agentmail.to).
+
+        human_email : typing.Optional[str]
+            Email address of the human who owns the agent. A 6-digit OTP will be sent to this address.
+            Omit it to get a receive-only inbox: it can receive email but cannot send until a human is attached with the attach human endpoint.
 
         source : typing.Optional[str]
             The SDK, framework, or platform issuing this sign-up (e.g. `agentmail-python`, `agentmail-cli`, `agentmail-mcp`).
@@ -114,6 +120,88 @@ class RawAgentClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def attach_human(
+        self, *, human_email: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[AgentAttachHumanResponse]:
+        """
+        Attach a human to an unverified agent organization. A 6-digit OTP is sent to the human's email, which you then submit to the verify endpoint.
+
+        Use it after signing up without a `human_email`. Once the human is attached, the organization can send email to that human only, and verification lifts the remaining restrictions. For up to 5 minutes after attaching, sends to the human can still be rejected with a `429` daily send limit error while the API key's cached limits catch up. Wait and retry.
+
+        Calling it again with the same `human_email` does not rotate the API key. It resends the OTP if it was never delivered, or issues a new one if it expired. While the current OTP is still valid, calling it again keeps that OTP and its attempt count. If all 10 attempts are used up, wait until the OTP expires, 24 hours after it was issued, then call it again for a new one.
+
+        Calling it with a different `human_email` replaces the attached human and sends the new human an OTP. An organization can replace its human at most 2 times.
+
+        Only available until the organization is verified.
+
+        **CLI:**
+        ```bash
+        agentmail agent attach-human --human-email user@example.com
+        ```
+
+        Parameters
+        ----------
+        human_email : str
+            Email address of the human who owns the agent. A 6-digit OTP will be sent to this address.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[AgentAttachHumanResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "v0/agent/human",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "human_email": human_email,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    AgentAttachHumanResponse,
+                    construct_type(
+                        type_=AgentAttachHumanResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def verify(
         self, *, otp_code: str, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[AgentVerifyResponse]:
@@ -122,7 +210,7 @@ class RawAgentClient:
 
         On success, the organization is upgraded from `agent_unverified` to `agent_verified`, the send allowlist is removed, and free plan entitlements are applied.
 
-        The OTP expires after 24 hours and allows a maximum of 10 attempts. If you run into any difficulties receiving the OTP code, you can also create an account on [console.agentmail.to](https://console.agentmail.to) using the human email address you provided to verify your account.
+        The OTP expires after 24 hours and allows a maximum of 10 attempts. If the OTP expired, call the attach human endpoint with the same `human_email` to get a new one without rotating the API key. Once all 10 attempts are used, even the correct OTP is rejected, and attach human keeps returning the same OTP until it expires, so wait for it to expire before asking for a new one. An organization that signed up without a `human_email` has no OTP until a human is attached. If you run into any difficulties receiving the OTP code, you can also create an account on [console.agentmail.to](https://console.agentmail.to) using the human email address you provided to verify your account.
 
         **CLI:**
         ```bash
@@ -178,8 +266,8 @@ class AsyncRawAgentClient:
     async def sign_up(
         self,
         *,
-        human_email: str,
         username: str,
+        human_email: typing.Optional[str] = OMIT,
         source: typing.Optional[str] = OMIT,
         referrer: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -188,6 +276,8 @@ class AsyncRawAgentClient:
         Create a new agent organization with an inbox and API key. This endpoint is for signing up for the first time. If you've already signed up, you're all set — just use your existing API key.
 
         A 6-digit OTP is sent to the human's email for verification.
+
+        `human_email` is optional. Without it, the inbox can receive email but cannot send to anyone until a human is attached with the attach human endpoint. There is also no way to recover the API key, so store it durably. Calling sign-up again without `human_email` creates a new organization, which needs a different `username`: the original username stays with the lost organization's inbox.
 
         This endpoint is idempotent. Calling it again with the same `human_email` will rotate the API key and resend the OTP if expired.
 
@@ -200,11 +290,12 @@ class AsyncRawAgentClient:
 
         Parameters
         ----------
-        human_email : str
-            Email address of the human who owns the agent. A 6-digit OTP will be sent to this address.
-
         username : str
             Username for the auto-created inbox (e.g. "my-agent" creates my-agent@agentmail.to).
+
+        human_email : typing.Optional[str]
+            Email address of the human who owns the agent. A 6-digit OTP will be sent to this address.
+            Omit it to get a receive-only inbox: it can receive email but cannot send until a human is attached with the attach human endpoint.
 
         source : typing.Optional[str]
             The SDK, framework, or platform issuing this sign-up (e.g. `agentmail-python`, `agentmail-cli`, `agentmail-mcp`).
@@ -266,6 +357,88 @@ class AsyncRawAgentClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    async def attach_human(
+        self, *, human_email: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[AgentAttachHumanResponse]:
+        """
+        Attach a human to an unverified agent organization. A 6-digit OTP is sent to the human's email, which you then submit to the verify endpoint.
+
+        Use it after signing up without a `human_email`. Once the human is attached, the organization can send email to that human only, and verification lifts the remaining restrictions. For up to 5 minutes after attaching, sends to the human can still be rejected with a `429` daily send limit error while the API key's cached limits catch up. Wait and retry.
+
+        Calling it again with the same `human_email` does not rotate the API key. It resends the OTP if it was never delivered, or issues a new one if it expired. While the current OTP is still valid, calling it again keeps that OTP and its attempt count. If all 10 attempts are used up, wait until the OTP expires, 24 hours after it was issued, then call it again for a new one.
+
+        Calling it with a different `human_email` replaces the attached human and sends the new human an OTP. An organization can replace its human at most 2 times.
+
+        Only available until the organization is verified.
+
+        **CLI:**
+        ```bash
+        agentmail agent attach-human --human-email user@example.com
+        ```
+
+        Parameters
+        ----------
+        human_email : str
+            Email address of the human who owns the agent. A 6-digit OTP will be sent to this address.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[AgentAttachHumanResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "v0/agent/human",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "human_email": human_email,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    AgentAttachHumanResponse,
+                    construct_type(
+                        type_=AgentAttachHumanResponse,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     async def verify(
         self, *, otp_code: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[AgentVerifyResponse]:
@@ -274,7 +447,7 @@ class AsyncRawAgentClient:
 
         On success, the organization is upgraded from `agent_unverified` to `agent_verified`, the send allowlist is removed, and free plan entitlements are applied.
 
-        The OTP expires after 24 hours and allows a maximum of 10 attempts. If you run into any difficulties receiving the OTP code, you can also create an account on [console.agentmail.to](https://console.agentmail.to) using the human email address you provided to verify your account.
+        The OTP expires after 24 hours and allows a maximum of 10 attempts. If the OTP expired, call the attach human endpoint with the same `human_email` to get a new one without rotating the API key. Once all 10 attempts are used, even the correct OTP is rejected, and attach human keeps returning the same OTP until it expires, so wait for it to expire before asking for a new one. An organization that signed up without a `human_email` has no OTP until a human is attached. If you run into any difficulties receiving the OTP code, you can also create an account on [console.agentmail.to](https://console.agentmail.to) using the human email address you provided to verify your account.
 
         **CLI:**
         ```bash

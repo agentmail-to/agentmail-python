@@ -12,9 +12,10 @@ class AgentSignupRequest(UncheckedBaseModel):
     Request body to sign up an agent.
     """
 
-    human_email: str = pydantic.Field()
+    human_email: typing.Optional[str] = pydantic.Field(default=None)
     """
     Email address of the human who owns the agent. A 6-digit OTP will be sent to this address.
+    Omit it to get a receive-only inbox: it can receive email but cannot send until a human is attached with the attach human endpoint.
     """
 
     username: str = pydantic.Field()

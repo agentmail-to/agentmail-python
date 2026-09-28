@@ -1742,6 +1742,8 @@ Create a new agent organization with an inbox and API key. This endpoint is for 
 
 A 6-digit OTP is sent to the human's email for verification.
 
+`human_email` is optional. Without it, the inbox can receive email but cannot send to anyone until a human is attached with the attach human endpoint. There is also no way to recover the API key, so store it durably. Calling sign-up again without `human_email` creates a new organization, which needs a different `username`: the original username stays with the lost organization's inbox.
+
 This endpoint is idempotent. Calling it again with the same `human_email` will rotate the API key and resend the OTP if expired.
 
 The returned API key has limited permissions until the organization is verified via the verify endpoint.
@@ -1773,7 +1775,6 @@ client = AgentMail(
 )
 
 client.agent.sign_up(
-    human_email="human_email",
     username="username",
 )
 
@@ -1811,6 +1812,92 @@ client.agent.sign_up(
 </dl>
 </details>
 
+<details><summary><code>client.agent.<a href="src/agentmail/agent/client.py">attach_human</a>(...) -> AgentAttachHumanResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Attach a human to an unverified agent organization. A 6-digit OTP is sent to the human's email, which you then submit to the verify endpoint.
+
+Use it after signing up without a `human_email`. Once the human is attached, the organization can send email to that human only, and verification lifts the remaining restrictions. For up to 5 minutes after attaching, sends to the human can still be rejected with a `429` daily send limit error while the API key's cached limits catch up. Wait and retry.
+
+Calling it again with the same `human_email` does not rotate the API key. It resends the OTP if it was never delivered, or issues a new one if it expired. While the current OTP is still valid, calling it again keeps that OTP and its attempt count. If all 10 attempts are used up, wait until the OTP expires, 24 hours after it was issued, then call it again for a new one.
+
+Calling it with a different `human_email` replaces the attached human and sends the new human an OTP. An organization can replace its human at most 2 times.
+
+Only available until the organization is verified.
+
+**CLI:**
+```bash
+agentmail agent attach-human --human-email user@example.com
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.agent.attach_human(
+    human_email="human_email",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AgentAttachHumanRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.agent.<a href="src/agentmail/agent/client.py">verify</a>(...) -> AgentVerifyResponse</code></summary>
 <dl>
 <dd>
@@ -1827,7 +1914,7 @@ Verify an agent organization using the 6-digit OTP sent to the human's email dur
 
 On success, the organization is upgraded from `agent_unverified` to `agent_verified`, the send allowlist is removed, and free plan entitlements are applied.
 
-The OTP expires after 24 hours and allows a maximum of 10 attempts. If you run into any difficulties receiving the OTP code, you can also create an account on [console.agentmail.to](https://console.agentmail.to) using the human email address you provided to verify your account.
+The OTP expires after 24 hours and allows a maximum of 10 attempts. If the OTP expired, call the attach human endpoint with the same `human_email` to get a new one without rotating the API key. Once all 10 attempts are used, even the correct OTP is rejected, and attach human keeps returning the same OTP until it expires, so wait for it to expire before asking for a new one. An organization that signed up without a `human_email` has no OTP until a human is attached. If you run into any difficulties receiving the OTP code, you can also create an account on [console.agentmail.to](https://console.agentmail.to) using the human email address you provided to verify your account.
 
 **CLI:**
 ```bash

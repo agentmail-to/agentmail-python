@@ -59,7 +59,14 @@ if typing.TYPE_CHECKING:
         UpdateAccountRequest,
         UpdateAccountStatus,
     )
-    from .agent import AgentSignupRequest, AgentSignupResponse, AgentVerifyRequest, AgentVerifyResponse
+    from .agent import (
+        AgentAttachHumanRequest,
+        AgentAttachHumanResponse,
+        AgentSignupRequest,
+        AgentSignupResponse,
+        AgentVerifyRequest,
+        AgentVerifyResponse,
+    )
     from .api_keys import (
         AcceptDisclosure,
         ApiKey,
@@ -303,6 +310,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AccountStatus": ".accounts",
     "Addresses": ".messages",
     "After": ".types",
+    "AgentAttachHumanRequest": ".agent",
+    "AgentAttachHumanResponse": ".agent",
     "AgentMail": ".client",
     "AgentMailEnvironment": ".environment",
     "AgentSignupRequest": ".agent",
@@ -606,6 +615,8 @@ __all__ = [
     "AccountStatus",
     "Addresses",
     "After",
+    "AgentAttachHumanRequest",
+    "AgentAttachHumanResponse",
     "AgentMail",
     "AgentMailEnvironment",
     "AgentSignupRequest",

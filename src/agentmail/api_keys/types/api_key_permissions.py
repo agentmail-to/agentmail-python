@@ -205,6 +205,11 @@ class ApiKeyPermissions(UncheckedBaseModel):
     Create pods.
     """
 
+    pod_update: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Update pods.
+    """
+
     pod_delete: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Delete pods.

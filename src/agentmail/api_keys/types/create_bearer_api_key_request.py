@@ -5,9 +5,20 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from .api_key_mutable_fields import ApiKeyMutableFields
+from .expires_at import ExpiresAt
 
 
 class CreateBearerApiKeyRequest(ApiKeyMutableFields):
+    """
+    `expires_at` must be in the future and is immutable once the key exists.
+    Omitted, the new key inherits the authenticating key's expiry, and never
+    expires only when that key never does. A key cannot create one that
+    outlives it: an `expires_at` later than the authenticating key's own
+    returns `403`.
+    """
+
+    expires_at: typing.Optional[ExpiresAt] = None
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

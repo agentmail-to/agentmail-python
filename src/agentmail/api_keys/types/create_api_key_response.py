@@ -8,6 +8,7 @@ from ...core.unchecked_base_model import UncheckedBaseModel
 from .api_key_id import ApiKeyId
 from .api_key_permissions import ApiKeyPermissions
 from .created_at import CreatedAt
+from .expires_at import ExpiresAt
 from .inbox_scope_id import InboxScopeId
 from .name import Name
 from .pod_scope_id import PodScopeId
@@ -27,6 +28,7 @@ class CreateApiKeyResponse(UncheckedBaseModel):
     inbox_id: typing.Optional[InboxScopeId] = None
     permissions: typing.Optional[ApiKeyPermissions] = None
     created_at: CreatedAt
+    expires_at: typing.Optional[ExpiresAt] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

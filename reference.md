@@ -2251,8 +2251,8 @@ client.api_keys.create(
 <dd>
 
 Renames a credential or changes its permissions. Public keys also resolve
-by `client_id`; a sign-in key accepts only `provider_connect` and
-`provider_share_owner`.
+by `client_id`; a sign-in key accepts only `app_connect` and
+`app_share_owner`.
 </dd>
 </dl>
 </dd>

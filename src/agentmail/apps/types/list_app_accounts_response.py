@@ -3,19 +3,21 @@
 import typing
 
 import pydantic
+from ...accounts.types.account import Account
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from ...types.count import Count
 from ...types.limit import Limit
 from ...types.page_token import PageToken
-from .provider import Provider
+from .app import App
 
 
-class ListProvidersResponse(UncheckedBaseModel):
+class ListAppAccountsResponse(UncheckedBaseModel):
+    app: typing.Optional[App] = None
     count: Count
     limit: Limit
     next_page_token: typing.Optional[PageToken] = None
-    providers: typing.List[Provider]
+    accounts: typing.List[Account]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

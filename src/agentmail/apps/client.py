@@ -2,35 +2,35 @@
 
 import typing
 
-from ..accounts.types.provider_id import ProviderId
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from ..types.limit import Limit
 from ..types.page_token import PageToken
-from .raw_client import AsyncRawProvidersClient, RawProvidersClient
+from .raw_client import AsyncRawAppsClient, RawAppsClient
+from .types.app import App
+from .types.app_id import AppId
 from .types.connect_accepted import ConnectAccepted
-from .types.connect_provider_body import ConnectProviderBody
-from .types.list_provider_accounts_response import ListProviderAccountsResponse
-from .types.list_providers_response import ListProvidersResponse
-from .types.provider import Provider
-from .types.search_providers_response import SearchProvidersResponse
+from .types.connect_app_body import ConnectAppBody
+from .types.list_app_accounts_response import ListAppAccountsResponse
+from .types.list_apps_response import ListAppsResponse
+from .types.search_apps_response import SearchAppsResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
 
-class ProvidersClient:
+class AppsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
-        self._raw_client = RawProvidersClient(client_wrapper=client_wrapper)
+        self._raw_client = RawAppsClient(client_wrapper=client_wrapper)
 
     @property
-    def with_raw_response(self) -> RawProvidersClient:
+    def with_raw_response(self) -> RawAppsClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        RawProvidersClient
+        RawAppsClient
         """
         return self._raw_client
 
@@ -40,9 +40,9 @@ class ProvidersClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListProvidersResponse:
+    ) -> ListAppsResponse:
         """
-        Lists providers, most popular first.
+        Lists apps, most popular first.
 
         Parameters
         ----------
@@ -55,7 +55,7 @@ class ProvidersClient:
 
         Returns
         -------
-        ListProvidersResponse
+        ListAppsResponse
 
         Examples
         --------
@@ -64,16 +64,16 @@ class ProvidersClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.providers.list()
+        client.apps.list()
         """
         _response = self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
         return _response.data
 
     def search(
         self, *, q: str, limit: typing.Optional[Limit] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> SearchProvidersResponse:
+    ) -> SearchAppsResponse:
         """
-        Searches providers by name prefix.
+        Searches apps by name prefix.
 
         Parameters
         ----------
@@ -87,7 +87,7 @@ class ProvidersClient:
 
         Returns
         -------
-        SearchProvidersResponse
+        SearchAppsResponse
 
         Examples
         --------
@@ -96,25 +96,30 @@ class ProvidersClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.providers.search(
+        client.apps.search(
             q="q",
         )
         """
         _response = self._raw_client.search(q=q, limit=limit, request_options=request_options)
         return _response.data
 
-    def get(self, provider_id: ProviderId, *, request_options: typing.Optional[RequestOptions] = None) -> Provider:
+    def get(self, app_id: AppId, *, request_options: typing.Optional[RequestOptions] = None) -> App:
         """
+        Gets one app by ID. An app in the catalog returns its full entry.
+        A registered app that the catalog does not list returns its ID and
+        name only, without `updated_at`, so anyone holding its ID can still look
+        it up. List Apps and Search Apps show catalog entries only.
+
         Parameters
         ----------
-        provider_id : ProviderId
+        app_id : AppId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Provider
+        App
 
         Examples
         --------
@@ -125,29 +130,29 @@ class ProvidersClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.providers.get(
-            provider_id=uuid.UUID(
+        client.apps.get(
+            app_id=uuid.UUID(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
         )
         """
-        _response = self._raw_client.get(provider_id, request_options=request_options)
+        _response = self._raw_client.get(app_id, request_options=request_options)
         return _response.data
 
     def list_accounts(
         self,
-        provider_id: ProviderId,
+        app_id: AppId,
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListProviderAccountsResponse:
+    ) -> ListAppAccountsResponse:
         """
-        Lists accounts at one provider, most recent sign-in first.
+        Lists accounts at one app, most recent sign-in first.
 
         Parameters
         ----------
-        provider_id : ProviderId
+        app_id : AppId
 
         limit : typing.Optional[Limit]
 
@@ -158,7 +163,7 @@ class ProvidersClient:
 
         Returns
         -------
-        ListProviderAccountsResponse
+        ListAppAccountsResponse
 
         Examples
         --------
@@ -169,35 +174,37 @@ class ProvidersClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.providers.list_accounts(
-            provider_id=uuid.UUID(
+        client.apps.list_accounts(
+            app_id=uuid.UUID(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
         )
         """
         _response = self._raw_client.list_accounts(
-            provider_id, limit=limit, page_token=page_token, request_options=request_options
+            app_id, limit=limit, page_token=page_token, request_options=request_options
         )
         return _response.data
 
     def connect(
         self,
-        provider_id: ProviderId,
+        app_id: AppId,
         *,
-        request: typing.Optional[ConnectProviderBody] = None,
+        request: typing.Optional[ConnectAppBody] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ConnectAccepted:
         """
-        Starts signing an inbox in to a provider. Returns a single-use `magic_url`,
+        Starts signing an inbox in to an app. Returns a single-use `magic_url`,
         valid for five minutes, to open in the client that will hold the sign-in;
-        the client enrolls as the inbox and continues to the provider. Poll
-        [Get API Key](/api-reference/api-keys/get) with `api_key_id` for `status`.
+        the client enrolls as the inbox and continues to the app.
+        A `404` names the missing resource: `App` or `Inbox`.
+        A `403` `AppSignupLimitError` means the app accepts no more sign-ups from
+        your organization; sign in with an inbox that already has an account there.
 
         Parameters
         ----------
-        provider_id : ProviderId
+        app_id : AppId
 
-        request : typing.Optional[ConnectProviderBody]
+        request : typing.Optional[ConnectAppBody]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -215,28 +222,28 @@ class ProvidersClient:
         client = AgentMail(
             api_key="YOUR_API_KEY",
         )
-        client.providers.connect(
-            provider_id=uuid.UUID(
+        client.apps.connect(
+            app_id=uuid.UUID(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
         )
         """
-        _response = self._raw_client.connect(provider_id, request=request, request_options=request_options)
+        _response = self._raw_client.connect(app_id, request=request, request_options=request_options)
         return _response.data
 
 
-class AsyncProvidersClient:
+class AsyncAppsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
-        self._raw_client = AsyncRawProvidersClient(client_wrapper=client_wrapper)
+        self._raw_client = AsyncRawAppsClient(client_wrapper=client_wrapper)
 
     @property
-    def with_raw_response(self) -> AsyncRawProvidersClient:
+    def with_raw_response(self) -> AsyncRawAppsClient:
         """
         Retrieves a raw implementation of this client that returns raw responses.
 
         Returns
         -------
-        AsyncRawProvidersClient
+        AsyncRawAppsClient
         """
         return self._raw_client
 
@@ -246,9 +253,9 @@ class AsyncProvidersClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListProvidersResponse:
+    ) -> ListAppsResponse:
         """
-        Lists providers, most popular first.
+        Lists apps, most popular first.
 
         Parameters
         ----------
@@ -261,7 +268,7 @@ class AsyncProvidersClient:
 
         Returns
         -------
-        ListProvidersResponse
+        ListAppsResponse
 
         Examples
         --------
@@ -275,7 +282,7 @@ class AsyncProvidersClient:
 
 
         async def main() -> None:
-            await client.providers.list()
+            await client.apps.list()
 
 
         asyncio.run(main())
@@ -285,9 +292,9 @@ class AsyncProvidersClient:
 
     async def search(
         self, *, q: str, limit: typing.Optional[Limit] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> SearchProvidersResponse:
+    ) -> SearchAppsResponse:
         """
-        Searches providers by name prefix.
+        Searches apps by name prefix.
 
         Parameters
         ----------
@@ -301,7 +308,7 @@ class AsyncProvidersClient:
 
         Returns
         -------
-        SearchProvidersResponse
+        SearchAppsResponse
 
         Examples
         --------
@@ -315,7 +322,7 @@ class AsyncProvidersClient:
 
 
         async def main() -> None:
-            await client.providers.search(
+            await client.apps.search(
                 q="q",
             )
 
@@ -325,20 +332,23 @@ class AsyncProvidersClient:
         _response = await self._raw_client.search(q=q, limit=limit, request_options=request_options)
         return _response.data
 
-    async def get(
-        self, provider_id: ProviderId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> Provider:
+    async def get(self, app_id: AppId, *, request_options: typing.Optional[RequestOptions] = None) -> App:
         """
+        Gets one app by ID. An app in the catalog returns its full entry.
+        A registered app that the catalog does not list returns its ID and
+        name only, without `updated_at`, so anyone holding its ID can still look
+        it up. List Apps and Search Apps show catalog entries only.
+
         Parameters
         ----------
-        provider_id : ProviderId
+        app_id : AppId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        Provider
+        App
 
         Examples
         --------
@@ -353,8 +363,8 @@ class AsyncProvidersClient:
 
 
         async def main() -> None:
-            await client.providers.get(
-                provider_id=uuid.UUID(
+            await client.apps.get(
+                app_id=uuid.UUID(
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
             )
@@ -362,23 +372,23 @@ class AsyncProvidersClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.get(provider_id, request_options=request_options)
+        _response = await self._raw_client.get(app_id, request_options=request_options)
         return _response.data
 
     async def list_accounts(
         self,
-        provider_id: ProviderId,
+        app_id: AppId,
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> ListProviderAccountsResponse:
+    ) -> ListAppAccountsResponse:
         """
-        Lists accounts at one provider, most recent sign-in first.
+        Lists accounts at one app, most recent sign-in first.
 
         Parameters
         ----------
-        provider_id : ProviderId
+        app_id : AppId
 
         limit : typing.Optional[Limit]
 
@@ -389,7 +399,7 @@ class AsyncProvidersClient:
 
         Returns
         -------
-        ListProviderAccountsResponse
+        ListAppAccountsResponse
 
         Examples
         --------
@@ -404,8 +414,8 @@ class AsyncProvidersClient:
 
 
         async def main() -> None:
-            await client.providers.list_accounts(
-                provider_id=uuid.UUID(
+            await client.apps.list_accounts(
+                app_id=uuid.UUID(
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
             )
@@ -414,28 +424,30 @@ class AsyncProvidersClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.list_accounts(
-            provider_id, limit=limit, page_token=page_token, request_options=request_options
+            app_id, limit=limit, page_token=page_token, request_options=request_options
         )
         return _response.data
 
     async def connect(
         self,
-        provider_id: ProviderId,
+        app_id: AppId,
         *,
-        request: typing.Optional[ConnectProviderBody] = None,
+        request: typing.Optional[ConnectAppBody] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ConnectAccepted:
         """
-        Starts signing an inbox in to a provider. Returns a single-use `magic_url`,
+        Starts signing an inbox in to an app. Returns a single-use `magic_url`,
         valid for five minutes, to open in the client that will hold the sign-in;
-        the client enrolls as the inbox and continues to the provider. Poll
-        [Get API Key](/api-reference/api-keys/get) with `api_key_id` for `status`.
+        the client enrolls as the inbox and continues to the app.
+        A `404` names the missing resource: `App` or `Inbox`.
+        A `403` `AppSignupLimitError` means the app accepts no more sign-ups from
+        your organization; sign in with an inbox that already has an account there.
 
         Parameters
         ----------
-        provider_id : ProviderId
+        app_id : AppId
 
-        request : typing.Optional[ConnectProviderBody]
+        request : typing.Optional[ConnectAppBody]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -457,8 +469,8 @@ class AsyncProvidersClient:
 
 
         async def main() -> None:
-            await client.providers.connect(
-                provider_id=uuid.UUID(
+            await client.apps.connect(
+                app_id=uuid.UUID(
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
             )
@@ -466,5 +478,5 @@ class AsyncProvidersClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.connect(provider_id, request=request, request_options=request_options)
+        _response = await self._raw_client.connect(app_id, request=request, request_options=request_options)
         return _response.data

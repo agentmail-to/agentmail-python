@@ -41,7 +41,7 @@ class RawAccountsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListAccountsResponse]:
         """
-        Lists accounts across all providers, scoped to the API key: an
+        Lists accounts across all apps, scoped to the API key: an
         organization key sees every account, a pod key its pod's, an inbox key
         its inbox's. Requires `inbox_read`.
 
@@ -164,16 +164,16 @@ class RawAccountsClient:
     ) -> HttpResponse[Account]:
         """
         Updates one account. Set `status` to `disabled` to stop the inbox from
-        signing in at the provider again, or to `enabled` to re-enable it.
+        signing in at the app again, or to `enabled` to re-enable it.
         Idempotent: disabling an already disabled account keeps its original
         `disabled_at`, and enabling an enabled account is a no-op.
 
         Find the `account_id` with List Accounts. An account exists only after an
-        inbox's first sign-in at a provider, so it cannot be disabled in advance.
-        A disable applies to that inbox at that provider whichever sign-in key is
-        used: the provider's next authorization ends in `access_denied`, and a code
+        inbox's first sign-in at an app, so it cannot be disabled in advance.
+        A disable applies to that inbox at that app whichever sign-in key is
+        used: the app's next authorization ends in `access_denied`, and a code
         issued earlier is refused with `invalid_grant`. Access tokens already
-        issued stay valid until they expire, and the provider's own session is
+        issued stay valid until they expire, and the app's own session is
         unaffected.
 
         Requires `account_update`, which sign-in keys (`type: public_key`) cannot
@@ -270,7 +270,7 @@ class AsyncRawAccountsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListAccountsResponse]:
         """
-        Lists accounts across all providers, scoped to the API key: an
+        Lists accounts across all apps, scoped to the API key: an
         organization key sees every account, a pod key its pod's, an inbox key
         its inbox's. Requires `inbox_read`.
 
@@ -393,16 +393,16 @@ class AsyncRawAccountsClient:
     ) -> AsyncHttpResponse[Account]:
         """
         Updates one account. Set `status` to `disabled` to stop the inbox from
-        signing in at the provider again, or to `enabled` to re-enable it.
+        signing in at the app again, or to `enabled` to re-enable it.
         Idempotent: disabling an already disabled account keeps its original
         `disabled_at`, and enabling an enabled account is a no-op.
 
         Find the `account_id` with List Accounts. An account exists only after an
-        inbox's first sign-in at a provider, so it cannot be disabled in advance.
-        A disable applies to that inbox at that provider whichever sign-in key is
-        used: the provider's next authorization ends in `access_denied`, and a code
+        inbox's first sign-in at an app, so it cannot be disabled in advance.
+        A disable applies to that inbox at that app whichever sign-in key is
+        used: the app's next authorization ends in `access_denied`, and a code
         issued earlier is refused with `invalid_grant`. Access tokens already
-        issued stay valid until they expire, and the provider's own session is
+        issued stay valid until they expire, and the app's own session is
         unaffected.
 
         Requires `account_update`, which sign-in keys (`type: public_key`) cannot

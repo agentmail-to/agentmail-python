@@ -37,6 +37,11 @@ class ApiKeyPermissions(UncheckedBaseModel):
     Read messages. Also required to read threads.
     """
 
+    message_reply: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Reply and reply-all when the request is signed with a registered public key. Bearer keys reply with `message_send`.
+    """
+
     message_send: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Send messages.

@@ -6,26 +6,8 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .types import (
-        ConnectAccepted,
-        ConnectInboxId,
-        ConnectProviderBody,
-        ListProviderAccountsResponse,
-        ListProvidersResponse,
-        MagicUrl,
-        Provider,
-        SearchProvidersResponse,
-    )
-_dynamic_imports: typing.Dict[str, str] = {
-    "ConnectAccepted": ".types",
-    "ConnectInboxId": ".types",
-    "ConnectProviderBody": ".types",
-    "ListProviderAccountsResponse": ".types",
-    "ListProvidersResponse": ".types",
-    "MagicUrl": ".types",
-    "Provider": ".types",
-    "SearchProvidersResponse": ".types",
-}
+    from .app_signup_limit_error import AppSignupLimitError
+_dynamic_imports: typing.Dict[str, str] = {"AppSignupLimitError": ".app_signup_limit_error"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -49,13 +31,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = [
-    "ConnectAccepted",
-    "ConnectInboxId",
-    "ConnectProviderBody",
-    "ListProviderAccountsResponse",
-    "ListProvidersResponse",
-    "MagicUrl",
-    "Provider",
-    "SearchProvidersResponse",
-]
+__all__ = ["AppSignupLimitError"]

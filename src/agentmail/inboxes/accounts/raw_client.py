@@ -38,7 +38,7 @@ class RawAccountsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListAccountsResponse]:
         """
-        Lists accounts held by the inbox, across all providers. Requires `inbox_read`.
+        Lists accounts held by the inbox, across all apps. Requires `inbox_read`.
 
         Parameters
         ----------
@@ -169,7 +169,7 @@ class AsyncRawAccountsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListAccountsResponse]:
         """
-        Lists accounts held by the inbox, across all providers. Requires `inbox_read`.
+        Lists accounts held by the inbox, across all apps. Requires `inbox_read`.
 
         Parameters
         ----------

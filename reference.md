@@ -509,7 +509,8 @@ client.inboxes.delete(
 Authorizes the AgentID sign-in a client is already waiting in, for the
 inbox in the path, and returns the ID of the pending public key it will
 activate. Read the key with Get API Key. A repeat for the same token,
-inbox, and bearer returns the same key ID.
+inbox, and bearer returns the same key ID. A `403` `AppSignupLimitError`
+means the app accepts no more sign-ups from your organization.
 </dd>
 </dl>
 </dd>
@@ -1475,7 +1476,7 @@ client.webhooks.delete(
 <dl>
 <dd>
 
-Lists accounts across all providers, scoped to the API key: an
+Lists accounts across all apps, scoped to the API key: an
 organization key sees every account, a pod key its pod's, an inbox key
 its inbox's. Requires `inbox_read`.
 </dd>
@@ -1640,16 +1641,16 @@ client.accounts.get(
 <dd>
 
 Updates one account. Set `status` to `disabled` to stop the inbox from
-signing in at the provider again, or to `enabled` to re-enable it.
+signing in at the app again, or to `enabled` to re-enable it.
 Idempotent: disabling an already disabled account keeps its original
 `disabled_at`, and enabling an enabled account is a no-op.
 
 Find the `account_id` with List Accounts. An account exists only after an
-inbox's first sign-in at a provider, so it cannot be disabled in advance.
-A disable applies to that inbox at that provider whichever sign-in key is
-used: the provider's next authorization ends in `access_denied`, and a code
+inbox's first sign-in at an app, so it cannot be disabled in advance.
+A disable applies to that inbox at that app whichever sign-in key is
+used: the app's next authorization ends in `access_denied`, and a code
 issued earlier is refused with `invalid_grant`. Access tokens already
-issued stay valid until they expire, and the provider's own session is
+issued stay valid until they expire, and the app's own session is
 unaffected.
 
 Requires `account_update`, which sign-in keys (`type: public_key`) cannot
@@ -2380,6 +2381,421 @@ client.api_keys.delete(
 <dd>
 
 **api_key_id:** `ApiKeyId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Apps
+<details><summary><code>client.apps.<a href="src/agentmail/apps/client.py">list</a>(...) -> ListAppsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists apps, most popular first.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.apps.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[Limit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.apps.<a href="src/agentmail/apps/client.py">search</a>(...) -> SearchAppsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Searches apps by name prefix.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.apps.search(
+    q="q",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**q:** `str` — Name prefix to search for.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[Limit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.apps.<a href="src/agentmail/apps/client.py">get</a>(...) -> App</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets one app by ID. An app in the catalog returns its full entry.
+A registered app that the catalog does not list returns its ID and
+name only, without `updated_at`, so anyone holding its ID can still look
+it up. List Apps and Search Apps show catalog entries only.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+import uuid
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.apps.get(
+    app_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**app_id:** `AppId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.apps.<a href="src/agentmail/apps/client.py">list_accounts</a>(...) -> ListAppAccountsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists accounts at one app, most recent sign-in first.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+import uuid
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.apps.list_accounts(
+    app_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**app_id:** `AppId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[Limit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.apps.<a href="src/agentmail/apps/client.py">connect</a>(...) -> ConnectAccepted</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Starts signing an inbox in to an app. Returns a single-use `magic_url`,
+valid for five minutes, to open in the client that will hold the sign-in;
+the client enrolls as the inbox and continues to the app.
+A `404` names the missing resource: `App` or `Inbox`.
+A `403` `AppSignupLimitError` means the app accepts no more sign-ups from
+your organization; sign in with an inbox that already has an account there.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+import uuid
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.apps.connect(
+    app_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**app_id:** `AppId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `typing.Optional[ConnectAppBody]` 
     
 </dd>
 </dl>
@@ -3385,7 +3801,7 @@ client.drafts.get_attachment(
 <dl>
 <dd>
 
-Lists accounts held by the inbox, across all providers. Requires `inbox_read`.
+Lists accounts held by the inbox, across all apps. Requires `inbox_read`.
 </dd>
 </dl>
 </dd>
@@ -8942,7 +9358,7 @@ client.organizations.get()
 <dl>
 <dd>
 
-Lists accounts held by inboxes in the pod, across all providers. Requires `inbox_read`.
+Lists accounts held by inboxes in the pod, across all apps. Requires `inbox_read`.
 </dd>
 </dl>
 </dd>
@@ -13048,402 +13464,6 @@ client.pods.webhooks.delete(
 <dd>
 
 **webhook_id:** `WebhookId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Providers
-<details><summary><code>client.providers.<a href="src/agentmail/providers/client.py">list</a>(...) -> ListProvidersResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Lists providers, most popular first.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-from agentmail.environment import AgentMailEnvironment
-
-client = AgentMail(
-    api_key="<token>",
-    environment=AgentMailEnvironment.PROD,
-)
-
-client.providers.list()
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**limit:** `typing.Optional[Limit]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page_token:** `typing.Optional[PageToken]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.providers.<a href="src/agentmail/providers/client.py">search</a>(...) -> SearchProvidersResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Searches providers by name prefix.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-from agentmail.environment import AgentMailEnvironment
-
-client = AgentMail(
-    api_key="<token>",
-    environment=AgentMailEnvironment.PROD,
-)
-
-client.providers.search(
-    q="q",
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**q:** `str` — Name prefix to search for.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**limit:** `typing.Optional[Limit]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.providers.<a href="src/agentmail/providers/client.py">get</a>(...) -> Provider</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-from agentmail.environment import AgentMailEnvironment
-import uuid
-
-client = AgentMail(
-    api_key="<token>",
-    environment=AgentMailEnvironment.PROD,
-)
-
-client.providers.get(
-    provider_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**provider_id:** `ProviderId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.providers.<a href="src/agentmail/providers/client.py">list_accounts</a>(...) -> ListProviderAccountsResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Lists accounts at one provider, most recent sign-in first.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-from agentmail.environment import AgentMailEnvironment
-import uuid
-
-client = AgentMail(
-    api_key="<token>",
-    environment=AgentMailEnvironment.PROD,
-)
-
-client.providers.list_accounts(
-    provider_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**provider_id:** `ProviderId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**limit:** `typing.Optional[Limit]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**page_token:** `typing.Optional[PageToken]` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.providers.<a href="src/agentmail/providers/client.py">connect</a>(...) -> ConnectAccepted</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Starts signing an inbox in to a provider. Returns a single-use `magic_url`,
-valid for five minutes, to open in the client that will hold the sign-in;
-the client enrolls as the inbox and continues to the provider. Poll
-[Get API Key](/api-reference/api-keys/get) with `api_key_id` for `status`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```python
-from agentmail import AgentMail
-from agentmail.environment import AgentMailEnvironment
-import uuid
-
-client = AgentMail(
-    api_key="<token>",
-    environment=AgentMailEnvironment.PROD,
-)
-
-client.providers.connect(
-    provider_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-)
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**provider_id:** `ProviderId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `typing.Optional[ConnectProviderBody]` 
     
 </dd>
 </dl>

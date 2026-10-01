@@ -2,4 +2,4 @@
 
 import uuid
 
-ProviderId = uuid.UUID
+AppId = uuid.UUID

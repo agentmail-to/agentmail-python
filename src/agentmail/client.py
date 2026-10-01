@@ -14,6 +14,7 @@ if typing.TYPE_CHECKING:
     from .accounts.client import AccountsClient, AsyncAccountsClient
     from .agent.client import AgentClient, AsyncAgentClient
     from .api_keys.client import ApiKeysClient, AsyncApiKeysClient
+    from .apps.client import AppsClient, AsyncAppsClient
     from .auth.client import AsyncAuthClient, AuthClient
     from .domains.client import AsyncDomainsClient, DomainsClient
     from .drafts.client import AsyncDraftsClient, DraftsClient
@@ -22,7 +23,6 @@ if typing.TYPE_CHECKING:
     from .metrics.client import AsyncMetricsClient, MetricsClient
     from .organizations.client import AsyncOrganizationsClient, OrganizationsClient
     from .pods.client import AsyncPodsClient, PodsClient
-    from .providers.client import AsyncProvidersClient, ProvidersClient
     from .threads.client import AsyncThreadsClient, ThreadsClient
     from .webhooks.client import AsyncWebhooksClient, WebhooksClient
     from .websockets.client import AsyncWebsocketsClient, WebsocketsClient
@@ -100,13 +100,13 @@ class AgentMail:
         self._accounts: typing.Optional[AccountsClient] = None
         self._agent: typing.Optional[AgentClient] = None
         self._api_keys: typing.Optional[ApiKeysClient] = None
+        self._apps: typing.Optional[AppsClient] = None
         self._auth: typing.Optional[AuthClient] = None
         self._domains: typing.Optional[DomainsClient] = None
         self._drafts: typing.Optional[DraftsClient] = None
         self._lists: typing.Optional[ListsClient] = None
         self._metrics: typing.Optional[MetricsClient] = None
         self._organizations: typing.Optional[OrganizationsClient] = None
-        self._providers: typing.Optional[ProvidersClient] = None
         self._threads: typing.Optional[ThreadsClient] = None
         self._websockets: typing.Optional[WebsocketsClient] = None
 
@@ -159,6 +159,14 @@ class AgentMail:
         return self._api_keys
 
     @property
+    def apps(self):
+        if self._apps is None:
+            from .apps.client import AppsClient  # noqa: E402
+
+            self._apps = AppsClient(client_wrapper=self._client_wrapper)
+        return self._apps
+
+    @property
     def auth(self):
         if self._auth is None:
             from .auth.client import AuthClient  # noqa: E402
@@ -205,14 +213,6 @@ class AgentMail:
 
             self._organizations = OrganizationsClient(client_wrapper=self._client_wrapper)
         return self._organizations
-
-    @property
-    def providers(self):
-        if self._providers is None:
-            from .providers.client import ProvidersClient  # noqa: E402
-
-            self._providers = ProvidersClient(client_wrapper=self._client_wrapper)
-        return self._providers
 
     @property
     def threads(self):
@@ -303,13 +303,13 @@ class AsyncAgentMail:
         self._accounts: typing.Optional[AsyncAccountsClient] = None
         self._agent: typing.Optional[AsyncAgentClient] = None
         self._api_keys: typing.Optional[AsyncApiKeysClient] = None
+        self._apps: typing.Optional[AsyncAppsClient] = None
         self._auth: typing.Optional[AsyncAuthClient] = None
         self._domains: typing.Optional[AsyncDomainsClient] = None
         self._drafts: typing.Optional[AsyncDraftsClient] = None
         self._lists: typing.Optional[AsyncListsClient] = None
         self._metrics: typing.Optional[AsyncMetricsClient] = None
         self._organizations: typing.Optional[AsyncOrganizationsClient] = None
-        self._providers: typing.Optional[AsyncProvidersClient] = None
         self._threads: typing.Optional[AsyncThreadsClient] = None
         self._websockets: typing.Optional[AsyncWebsocketsClient] = None
 
@@ -362,6 +362,14 @@ class AsyncAgentMail:
         return self._api_keys
 
     @property
+    def apps(self):
+        if self._apps is None:
+            from .apps.client import AsyncAppsClient  # noqa: E402
+
+            self._apps = AsyncAppsClient(client_wrapper=self._client_wrapper)
+        return self._apps
+
+    @property
     def auth(self):
         if self._auth is None:
             from .auth.client import AsyncAuthClient  # noqa: E402
@@ -408,14 +416,6 @@ class AsyncAgentMail:
 
             self._organizations = AsyncOrganizationsClient(client_wrapper=self._client_wrapper)
         return self._organizations
-
-    @property
-    def providers(self):
-        if self._providers is None:
-            from .providers.client import AsyncProvidersClient  # noqa: E402
-
-            self._providers = AsyncProvidersClient(client_wrapper=self._client_wrapper)
-        return self._providers
 
     @property
     def threads(self):

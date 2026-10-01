@@ -6,23 +6,29 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .connect_accepted import ConnectAccepted
-    from .connect_inbox_id import ConnectInboxId
-    from .connect_provider_body import ConnectProviderBody
-    from .list_provider_accounts_response import ListProviderAccountsResponse
-    from .list_providers_response import ListProvidersResponse
-    from .magic_url import MagicUrl
-    from .provider import Provider
-    from .search_providers_response import SearchProvidersResponse
+    from .types import (
+        App,
+        AppId,
+        ConnectAccepted,
+        ConnectAppBody,
+        ConnectInboxId,
+        ListAppAccountsResponse,
+        ListAppsResponse,
+        MagicUrl,
+        SearchAppsResponse,
+    )
+    from .errors import AppSignupLimitError
 _dynamic_imports: typing.Dict[str, str] = {
-    "ConnectAccepted": ".connect_accepted",
-    "ConnectInboxId": ".connect_inbox_id",
-    "ConnectProviderBody": ".connect_provider_body",
-    "ListProviderAccountsResponse": ".list_provider_accounts_response",
-    "ListProvidersResponse": ".list_providers_response",
-    "MagicUrl": ".magic_url",
-    "Provider": ".provider",
-    "SearchProvidersResponse": ".search_providers_response",
+    "App": ".types",
+    "AppId": ".types",
+    "AppSignupLimitError": ".errors",
+    "ConnectAccepted": ".types",
+    "ConnectAppBody": ".types",
+    "ConnectInboxId": ".types",
+    "ListAppAccountsResponse": ".types",
+    "ListAppsResponse": ".types",
+    "MagicUrl": ".types",
+    "SearchAppsResponse": ".types",
 }
 
 
@@ -48,12 +54,14 @@ def __dir__():
 
 
 __all__ = [
+    "App",
+    "AppId",
+    "AppSignupLimitError",
     "ConnectAccepted",
+    "ConnectAppBody",
     "ConnectInboxId",
-    "ConnectProviderBody",
-    "ListProviderAccountsResponse",
-    "ListProvidersResponse",
+    "ListAppAccountsResponse",
+    "ListAppsResponse",
     "MagicUrl",
-    "Provider",
-    "SearchProvidersResponse",
+    "SearchAppsResponse",
 ]

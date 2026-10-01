@@ -5,6 +5,7 @@ from json.decoder import JSONDecodeError
 
 from ..api_keys.types.accept_disclosure import AcceptDisclosure
 from ..api_keys.types.auth_token import AuthToken
+from ..apps.errors.app_signup_limit_error import AppSignupLimitError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
@@ -449,7 +450,8 @@ class RawInboxesClient:
         Authorizes the AgentID sign-in a client is already waiting in, for the
         inbox in the path, and returns the ID of the pending public key it will
         activate. Read the key with Get API Key. A repeat for the same token,
-        inbox, and bearer returns the same key ID.
+        inbox, and bearer returns the same key ID. A `403` `AppSignupLimitError`
+        means the app accepts no more sign-ups from your organization.
 
         Parameters
         ----------
@@ -500,6 +502,17 @@ class RawInboxesClient:
                 )
             if _response.status_code == 404:
                 raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise AppSignupLimitError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
@@ -935,7 +948,8 @@ class AsyncRawInboxesClient:
         Authorizes the AgentID sign-in a client is already waiting in, for the
         inbox in the path, and returns the ID of the pending public key it will
         activate. Read the key with Get API Key. A repeat for the same token,
-        inbox, and bearer returns the same key ID.
+        inbox, and bearer returns the same key ID. A `403` `AppSignupLimitError`
+        means the app accepts no more sign-ups from your organization.
 
         Parameters
         ----------
@@ -986,6 +1000,17 @@ class AsyncRawInboxesClient:
                 )
             if _response.status_code == 404:
                 raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise AppSignupLimitError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,

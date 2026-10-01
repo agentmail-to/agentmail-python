@@ -3,7 +3,6 @@
 import typing
 from json.decoder import JSONDecodeError
 
-from ..accounts.types.provider_id import ProviderId
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.http_response import AsyncHttpResponse, HttpResponse
@@ -18,19 +17,21 @@ from ..types.error_response import ErrorResponse
 from ..types.limit import Limit
 from ..types.page_token import PageToken
 from ..types.validation_error_response import ValidationErrorResponse
+from .errors.app_signup_limit_error import AppSignupLimitError
+from .types.app import App
+from .types.app_id import AppId
 from .types.connect_accepted import ConnectAccepted
-from .types.connect_provider_body import ConnectProviderBody
-from .types.list_provider_accounts_response import ListProviderAccountsResponse
-from .types.list_providers_response import ListProvidersResponse
-from .types.provider import Provider
-from .types.search_providers_response import SearchProvidersResponse
+from .types.connect_app_body import ConnectAppBody
+from .types.list_app_accounts_response import ListAppAccountsResponse
+from .types.list_apps_response import ListAppsResponse
+from .types.search_apps_response import SearchAppsResponse
 from pydantic import ValidationError as pydantic_ValidationError
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
 
 
-class RawProvidersClient:
+class RawAppsClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
@@ -40,9 +41,9 @@ class RawProvidersClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[ListProvidersResponse]:
+    ) -> HttpResponse[ListAppsResponse]:
         """
-        Lists providers, most popular first.
+        Lists apps, most popular first.
 
         Parameters
         ----------
@@ -55,10 +56,10 @@ class RawProvidersClient:
 
         Returns
         -------
-        HttpResponse[ListProvidersResponse]
+        HttpResponse[ListAppsResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v0/providers",
+            "v0/apps",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
@@ -70,9 +71,9 @@ class RawProvidersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ListProvidersResponse,
+                    ListAppsResponse,
                     construct_type(
-                        type_=ListProvidersResponse,  # type: ignore
+                        type_=ListAppsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -99,9 +100,9 @@ class RawProvidersClient:
 
     def search(
         self, *, q: str, limit: typing.Optional[Limit] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[SearchProvidersResponse]:
+    ) -> HttpResponse[SearchAppsResponse]:
         """
-        Searches providers by name prefix.
+        Searches apps by name prefix.
 
         Parameters
         ----------
@@ -115,10 +116,10 @@ class RawProvidersClient:
 
         Returns
         -------
-        HttpResponse[SearchProvidersResponse]
+        HttpResponse[SearchAppsResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            "v0/providers/search",
+            "v0/apps/search",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
@@ -130,9 +131,9 @@ class RawProvidersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    SearchProvidersResponse,
+                    SearchAppsResponse,
                     construct_type(
-                        type_=SearchProvidersResponse,  # type: ignore
+                        type_=SearchAppsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -157,23 +158,26 @@ class RawProvidersClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get(
-        self, provider_id: ProviderId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[Provider]:
+    def get(self, app_id: AppId, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[App]:
         """
+        Gets one app by ID. An app in the catalog returns its full entry.
+        A registered app that the catalog does not list returns its ID and
+        name only, without `updated_at`, so anyone holding its ID can still look
+        it up. List Apps and Search Apps show catalog entries only.
+
         Parameters
         ----------
-        provider_id : ProviderId
+        app_id : AppId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        HttpResponse[Provider]
+        HttpResponse[App]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/providers/{jsonable_encoder(provider_id)}",
+            f"v0/apps/{jsonable_encoder(app_id)}",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
@@ -181,9 +185,9 @@ class RawProvidersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    Provider,
+                    App,
                     construct_type(
-                        type_=Provider,  # type: ignore
+                        type_=App,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -210,18 +214,18 @@ class RawProvidersClient:
 
     def list_accounts(
         self,
-        provider_id: ProviderId,
+        app_id: AppId,
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> HttpResponse[ListProviderAccountsResponse]:
+    ) -> HttpResponse[ListAppAccountsResponse]:
         """
-        Lists accounts at one provider, most recent sign-in first.
+        Lists accounts at one app, most recent sign-in first.
 
         Parameters
         ----------
-        provider_id : ProviderId
+        app_id : AppId
 
         limit : typing.Optional[Limit]
 
@@ -232,10 +236,10 @@ class RawProvidersClient:
 
         Returns
         -------
-        HttpResponse[ListProviderAccountsResponse]
+        HttpResponse[ListAppAccountsResponse]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/providers/{jsonable_encoder(provider_id)}/accounts",
+            f"v0/apps/{jsonable_encoder(app_id)}/accounts",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
@@ -247,9 +251,9 @@ class RawProvidersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ListProviderAccountsResponse,
+                    ListAppAccountsResponse,
                     construct_type(
-                        type_=ListProviderAccountsResponse,  # type: ignore
+                        type_=ListAppAccountsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -276,22 +280,24 @@ class RawProvidersClient:
 
     def connect(
         self,
-        provider_id: ProviderId,
+        app_id: AppId,
         *,
-        request: typing.Optional[ConnectProviderBody] = None,
+        request: typing.Optional[ConnectAppBody] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ConnectAccepted]:
         """
-        Starts signing an inbox in to a provider. Returns a single-use `magic_url`,
+        Starts signing an inbox in to an app. Returns a single-use `magic_url`,
         valid for five minutes, to open in the client that will hold the sign-in;
-        the client enrolls as the inbox and continues to the provider. Poll
-        [Get API Key](/api-reference/api-keys/get) with `api_key_id` for `status`.
+        the client enrolls as the inbox and continues to the app.
+        A `404` names the missing resource: `App` or `Inbox`.
+        A `403` `AppSignupLimitError` means the app accepts no more sign-ups from
+        your organization; sign in with an inbox that already has an account there.
 
         Parameters
         ----------
-        provider_id : ProviderId
+        app_id : AppId
 
-        request : typing.Optional[ConnectProviderBody]
+        request : typing.Optional[ConnectAppBody]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -301,12 +307,10 @@ class RawProvidersClient:
         HttpResponse[ConnectAccepted]
         """
         _response = self._client_wrapper.httpx_client.request(
-            f"v0/providers/{jsonable_encoder(provider_id)}/connect",
+            f"v0/apps/{jsonable_encoder(app_id)}/connect",
             base_url=self._client_wrapper.get_environment().http,
             method="POST",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=ConnectProviderBody, direction="write"
-            ),
+            json=convert_and_respect_annotation_metadata(object_=request, annotation=ConnectAppBody, direction="write"),
             request_options=request_options,
             omit=OMIT,
         )
@@ -342,6 +346,17 @@ class RawProvidersClient:
                         ),
                     ),
                 )
+            if _response.status_code == 403:
+                raise AppSignupLimitError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
@@ -352,7 +367,7 @@ class RawProvidersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
 
-class AsyncRawProvidersClient:
+class AsyncRawAppsClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
@@ -362,9 +377,9 @@ class AsyncRawProvidersClient:
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[ListProvidersResponse]:
+    ) -> AsyncHttpResponse[ListAppsResponse]:
         """
-        Lists providers, most popular first.
+        Lists apps, most popular first.
 
         Parameters
         ----------
@@ -377,10 +392,10 @@ class AsyncRawProvidersClient:
 
         Returns
         -------
-        AsyncHttpResponse[ListProvidersResponse]
+        AsyncHttpResponse[ListAppsResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v0/providers",
+            "v0/apps",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
@@ -392,9 +407,9 @@ class AsyncRawProvidersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ListProvidersResponse,
+                    ListAppsResponse,
                     construct_type(
-                        type_=ListProvidersResponse,  # type: ignore
+                        type_=ListAppsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -421,9 +436,9 @@ class AsyncRawProvidersClient:
 
     async def search(
         self, *, q: str, limit: typing.Optional[Limit] = None, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[SearchProvidersResponse]:
+    ) -> AsyncHttpResponse[SearchAppsResponse]:
         """
-        Searches providers by name prefix.
+        Searches apps by name prefix.
 
         Parameters
         ----------
@@ -437,10 +452,10 @@ class AsyncRawProvidersClient:
 
         Returns
         -------
-        AsyncHttpResponse[SearchProvidersResponse]
+        AsyncHttpResponse[SearchAppsResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "v0/providers/search",
+            "v0/apps/search",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
@@ -452,9 +467,9 @@ class AsyncRawProvidersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    SearchProvidersResponse,
+                    SearchAppsResponse,
                     construct_type(
-                        type_=SearchProvidersResponse,  # type: ignore
+                        type_=SearchAppsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -480,22 +495,27 @@ class AsyncRawProvidersClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self, provider_id: ProviderId, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[Provider]:
+        self, app_id: AppId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[App]:
         """
+        Gets one app by ID. An app in the catalog returns its full entry.
+        A registered app that the catalog does not list returns its ID and
+        name only, without `updated_at`, so anyone holding its ID can still look
+        it up. List Apps and Search Apps show catalog entries only.
+
         Parameters
         ----------
-        provider_id : ProviderId
+        app_id : AppId
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
         Returns
         -------
-        AsyncHttpResponse[Provider]
+        AsyncHttpResponse[App]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/providers/{jsonable_encoder(provider_id)}",
+            f"v0/apps/{jsonable_encoder(app_id)}",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             request_options=request_options,
@@ -503,9 +523,9 @@ class AsyncRawProvidersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    Provider,
+                    App,
                     construct_type(
-                        type_=Provider,  # type: ignore
+                        type_=App,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -532,18 +552,18 @@ class AsyncRawProvidersClient:
 
     async def list_accounts(
         self,
-        provider_id: ProviderId,
+        app_id: AppId,
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
         request_options: typing.Optional[RequestOptions] = None,
-    ) -> AsyncHttpResponse[ListProviderAccountsResponse]:
+    ) -> AsyncHttpResponse[ListAppAccountsResponse]:
         """
-        Lists accounts at one provider, most recent sign-in first.
+        Lists accounts at one app, most recent sign-in first.
 
         Parameters
         ----------
-        provider_id : ProviderId
+        app_id : AppId
 
         limit : typing.Optional[Limit]
 
@@ -554,10 +574,10 @@ class AsyncRawProvidersClient:
 
         Returns
         -------
-        AsyncHttpResponse[ListProviderAccountsResponse]
+        AsyncHttpResponse[ListAppAccountsResponse]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/providers/{jsonable_encoder(provider_id)}/accounts",
+            f"v0/apps/{jsonable_encoder(app_id)}/accounts",
             base_url=self._client_wrapper.get_environment().http,
             method="GET",
             params={
@@ -569,9 +589,9 @@ class AsyncRawProvidersClient:
         try:
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    ListProviderAccountsResponse,
+                    ListAppAccountsResponse,
                     construct_type(
-                        type_=ListProviderAccountsResponse,  # type: ignore
+                        type_=ListAppAccountsResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -598,22 +618,24 @@ class AsyncRawProvidersClient:
 
     async def connect(
         self,
-        provider_id: ProviderId,
+        app_id: AppId,
         *,
-        request: typing.Optional[ConnectProviderBody] = None,
+        request: typing.Optional[ConnectAppBody] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ConnectAccepted]:
         """
-        Starts signing an inbox in to a provider. Returns a single-use `magic_url`,
+        Starts signing an inbox in to an app. Returns a single-use `magic_url`,
         valid for five minutes, to open in the client that will hold the sign-in;
-        the client enrolls as the inbox and continues to the provider. Poll
-        [Get API Key](/api-reference/api-keys/get) with `api_key_id` for `status`.
+        the client enrolls as the inbox and continues to the app.
+        A `404` names the missing resource: `App` or `Inbox`.
+        A `403` `AppSignupLimitError` means the app accepts no more sign-ups from
+        your organization; sign in with an inbox that already has an account there.
 
         Parameters
         ----------
-        provider_id : ProviderId
+        app_id : AppId
 
-        request : typing.Optional[ConnectProviderBody]
+        request : typing.Optional[ConnectAppBody]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -623,12 +645,10 @@ class AsyncRawProvidersClient:
         AsyncHttpResponse[ConnectAccepted]
         """
         _response = await self._client_wrapper.httpx_client.request(
-            f"v0/providers/{jsonable_encoder(provider_id)}/connect",
+            f"v0/apps/{jsonable_encoder(app_id)}/connect",
             base_url=self._client_wrapper.get_environment().http,
             method="POST",
-            json=convert_and_respect_annotation_metadata(
-                object_=request, annotation=ConnectProviderBody, direction="write"
-            ),
+            json=convert_and_respect_annotation_metadata(object_=request, annotation=ConnectAppBody, direction="write"),
             request_options=request_options,
             omit=OMIT,
         )
@@ -655,6 +675,17 @@ class AsyncRawProvidersClient:
                 )
             if _response.status_code == 404:
                 raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 403:
+                raise AppSignupLimitError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,

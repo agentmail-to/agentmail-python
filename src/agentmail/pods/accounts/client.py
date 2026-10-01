@@ -39,7 +39,7 @@ class AccountsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListAccountsResponse:
         """
-        Lists accounts held by inboxes in the pod, across all providers. Requires `inbox_read`.
+        Lists accounts held by inboxes in the pod, across all apps. Requires `inbox_read`.
 
         Parameters
         ----------
@@ -139,7 +139,7 @@ class AsyncAccountsClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListAccountsResponse:
         """
-        Lists accounts held by inboxes in the pod, across all providers. Requires `inbox_read`.
+        Lists accounts held by inboxes in the pod, across all apps. Requires `inbox_read`.
 
         Parameters
         ----------

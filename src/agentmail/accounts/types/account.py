@@ -4,6 +4,7 @@ import datetime as dt
 import typing
 
 import pydantic
+from ...apps.types.app_id import AppId
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from ...inboxes.types.inbox_id import InboxId
@@ -11,19 +12,18 @@ from ...pods.types.pod_id import PodId
 from ...types.organization_id import OrganizationId
 from .account_id import AccountId
 from .account_status import AccountStatus
-from .provider_id import ProviderId
 
 
 class Account(UncheckedBaseModel):
     """
-    One inbox signed in at one provider.
+    One inbox signed in at one app.
     """
 
     account_id: AccountId
-    provider_id: ProviderId
-    provider_name: typing.Optional[str] = pydantic.Field(default=None)
+    app_id: AppId
+    app_name: typing.Optional[str] = pydantic.Field(default=None)
     """
-    Display name of provider.
+    Display name of app.
     """
 
     inbox_id: InboxId
@@ -31,17 +31,17 @@ class Account(UncheckedBaseModel):
     organization_id: OrganizationId
     first_signed_in_at: dt.datetime = pydantic.Field()
     """
-    Time of first sign-in at provider.
+    Time of first sign-in at app.
     """
 
     last_signed_in_at: dt.datetime = pydantic.Field()
     """
-    Time of most recent sign-in at provider.
+    Time of most recent sign-in at app.
     """
 
     sign_in_count: int = pydantic.Field()
     """
-    Number of sign-ins at provider.
+    Number of sign-ins at app.
     """
 
     status: typing.Optional[AccountStatus] = pydantic.Field(default=None)

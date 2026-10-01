@@ -7,13 +7,13 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from ...types.count import Count
 from ...types.limit import Limit
-from .provider import Provider
+from .app import App
 
 
-class SearchProvidersResponse(UncheckedBaseModel):
+class SearchAppsResponse(UncheckedBaseModel):
     count: Count
     limit: Limit
-    providers: typing.List[Provider]
+    apps: typing.List[App]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

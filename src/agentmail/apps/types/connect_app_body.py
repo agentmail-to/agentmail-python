@@ -9,7 +9,7 @@ from ...core.unchecked_base_model import UncheckedBaseModel
 from .connect_inbox_id import ConnectInboxId
 
 
-class ConnectProviderBody(UncheckedBaseModel):
+class ConnectAppBody(UncheckedBaseModel):
     inbox_id: typing.Optional[ConnectInboxId] = None
     accept_disclosure: typing.Optional[AcceptDisclosure] = None
 

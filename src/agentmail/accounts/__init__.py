@@ -11,7 +11,6 @@ if typing.TYPE_CHECKING:
         AccountId,
         AccountStatus,
         ListAccountsResponse,
-        ProviderId,
         UpdateAccountRequest,
         UpdateAccountStatus,
     )
@@ -20,7 +19,6 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AccountId": ".types",
     "AccountStatus": ".types",
     "ListAccountsResponse": ".types",
-    "ProviderId": ".types",
     "UpdateAccountRequest": ".types",
     "UpdateAccountStatus": ".types",
 }
@@ -52,7 +50,6 @@ __all__ = [
     "AccountId",
     "AccountStatus",
     "ListAccountsResponse",
-    "ProviderId",
     "UpdateAccountRequest",
     "UpdateAccountStatus",
 ]

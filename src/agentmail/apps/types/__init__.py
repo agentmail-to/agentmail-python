@@ -6,19 +6,25 @@ import typing
 from importlib import import_module
 
 if typing.TYPE_CHECKING:
-    from .account import Account
-    from .account_id import AccountId
-    from .account_status import AccountStatus
-    from .list_accounts_response import ListAccountsResponse
-    from .update_account_request import UpdateAccountRequest
-    from .update_account_status import UpdateAccountStatus
+    from .app import App
+    from .app_id import AppId
+    from .connect_accepted import ConnectAccepted
+    from .connect_app_body import ConnectAppBody
+    from .connect_inbox_id import ConnectInboxId
+    from .list_app_accounts_response import ListAppAccountsResponse
+    from .list_apps_response import ListAppsResponse
+    from .magic_url import MagicUrl
+    from .search_apps_response import SearchAppsResponse
 _dynamic_imports: typing.Dict[str, str] = {
-    "Account": ".account",
-    "AccountId": ".account_id",
-    "AccountStatus": ".account_status",
-    "ListAccountsResponse": ".list_accounts_response",
-    "UpdateAccountRequest": ".update_account_request",
-    "UpdateAccountStatus": ".update_account_status",
+    "App": ".app",
+    "AppId": ".app_id",
+    "ConnectAccepted": ".connect_accepted",
+    "ConnectAppBody": ".connect_app_body",
+    "ConnectInboxId": ".connect_inbox_id",
+    "ListAppAccountsResponse": ".list_app_accounts_response",
+    "ListAppsResponse": ".list_apps_response",
+    "MagicUrl": ".magic_url",
+    "SearchAppsResponse": ".search_apps_response",
 }
 
 
@@ -44,10 +50,13 @@ def __dir__():
 
 
 __all__ = [
-    "Account",
-    "AccountId",
-    "AccountStatus",
-    "ListAccountsResponse",
-    "UpdateAccountRequest",
-    "UpdateAccountStatus",
+    "App",
+    "AppId",
+    "ConnectAccepted",
+    "ConnectAppBody",
+    "ConnectInboxId",
+    "ListAppAccountsResponse",
+    "ListAppsResponse",
+    "MagicUrl",
+    "SearchAppsResponse",
 ]

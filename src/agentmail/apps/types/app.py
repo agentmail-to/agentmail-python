@@ -4,21 +4,21 @@ import datetime as dt
 import typing
 
 import pydantic
-from ...accounts.types.provider_id import ProviderId
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
+from .app_id import AppId
 
 
-class Provider(UncheckedBaseModel):
+class App(UncheckedBaseModel):
     """
-    A provider an inbox can sign in to.
+    An app an inbox can sign in to.
     """
 
-    provider_id: ProviderId
+    app_id: AppId
     name: typing.Optional[str] = None
     updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """
-    Time at which provider was last updated.
+    Time at which app was last updated.
     """
 
     description: typing.Optional[str] = None
@@ -27,7 +27,7 @@ class Provider(UncheckedBaseModel):
     privacy_url: typing.Optional[str] = None
     owner_signup_limit: typing.Optional[int] = pydantic.Field(default=None)
     """
-    Maximum number of accounts your organization may sign up at this provider. Omitted when the provider sets no limit. 0 means the provider has paused new sign-ups; existing accounts keep signing in.
+    Maximum number of accounts your organization may sign up at this app. Omitted when the app sets no limit. 0 means the app has paused new sign-ups; existing accounts keep signing in.
     """
 
     if IS_PYDANTIC_V2:

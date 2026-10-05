@@ -350,6 +350,9 @@ client.inboxes.create()
 ```bash
 agentmail inboxes update --inbox-id <inbox_id> --display-name "Updated Name"
 ```
+
+To pause an inbox, set `status` to `paused`; set it back to `active` to
+resume. See [Pausing an inbox](/inboxes#pausing-an-inbox).
 </dd>
 </dl>
 </dd>
@@ -398,7 +401,7 @@ client.inboxes.update(
 <dl>
 <dd>
 
-**request:** `UpdateInboxRequest` — Expects an object; provide at least one of `display_name` or `metadata`.
+**request:** `UpdateInboxRequest` — Expects an object; provide at least one of `display_name`, `status`, or `metadata`.
     
 </dd>
 </dl>
@@ -2461,6 +2464,14 @@ client.apps.list()
 <dd>
 
 **page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**category:** `typing.Optional[AppCategory]` — Only apps in this category. A filtered page can hold fewer than `limit` apps while more remain, so page until `next_page_token` is absent. A `page_token` works only with the `category` it was returned for.
     
 </dd>
 </dl>

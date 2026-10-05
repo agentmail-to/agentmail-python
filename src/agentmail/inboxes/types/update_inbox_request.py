@@ -6,19 +6,27 @@ import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from .display_name import DisplayName
+from .inbox_status import InboxStatus
 from .update_metadata import UpdateMetadata
 
 
 class UpdateInboxRequest(UncheckedBaseModel):
     display_name: typing.Optional[DisplayName] = None
+    status: typing.Optional[InboxStatus] = pydantic.Field(default=None)
+    """
+    `paused` stops the inbox sending and receiving mail; `active` resumes
+    it. Mail that arrived while the inbox was paused is not delivered on
+    resume.
+    """
+
     metadata: typing.Optional[UpdateMetadata] = pydantic.Field(default=None)
     """
     Metadata to merge into the inbox's existing metadata. Keys you include
     are added or overwritten; keys you omit are left unchanged. To remove a
     single key, send it with a null value. To clear all metadata, send
     `metadata` as null. Sending an empty object is rejected; use null to
-    clear. Each update must include at least one of `display_name` or
-    `metadata`.
+    clear. Each update must include at least one of `display_name`,
+    `status`, or `metadata`.
     """
 
     if IS_PYDANTIC_V2:

@@ -100,6 +100,7 @@ if typing.TYPE_CHECKING:
     )
     from .apps import (
         App,
+        AppCategory,
         AppId,
         AppSignupLimitError,
         ConnectAccepted,
@@ -326,6 +327,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ApiKeyPermissions": ".api_keys",
     "ApiKeyType": ".api_keys",
     "App": ".apps",
+    "AppCategory": ".apps",
     "AppId": ".apps",
     "AppSignupLimitError": ".apps",
     "Ascending": ".types",
@@ -632,6 +634,7 @@ __all__ = [
     "ApiKeyPermissions",
     "ApiKeyType",
     "App",
+    "AppCategory",
     "AppId",
     "AppSignupLimitError",
     "Ascending",

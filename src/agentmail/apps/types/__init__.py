@@ -7,6 +7,7 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .app import App
+    from .app_category import AppCategory
     from .app_id import AppId
     from .connect_accepted import ConnectAccepted
     from .connect_app_body import ConnectAppBody
@@ -17,6 +18,7 @@ if typing.TYPE_CHECKING:
     from .search_apps_response import SearchAppsResponse
 _dynamic_imports: typing.Dict[str, str] = {
     "App": ".app",
+    "AppCategory": ".app_category",
     "AppId": ".app_id",
     "ConnectAccepted": ".connect_accepted",
     "ConnectAppBody": ".connect_app_body",
@@ -51,6 +53,7 @@ def __dir__():
 
 __all__ = [
     "App",
+    "AppCategory",
     "AppId",
     "ConnectAccepted",
     "ConnectAppBody",

@@ -11,6 +11,7 @@ from .client_id import ClientId
 from .display_name import DisplayName
 from .email import Email
 from .inbox_id import InboxId
+from .inbox_status import InboxStatus
 from .metadata import Metadata
 
 
@@ -20,6 +21,13 @@ class Inbox(UncheckedBaseModel):
     email: Email
     display_name: typing.Optional[DisplayName] = None
     client_id: typing.Optional[ClientId] = None
+    status: typing.Optional[InboxStatus] = pydantic.Field(default=None)
+    """
+    `paused` when the inbox is paused. Omitted when the inbox is active.
+    Treat any value other than `paused` as an inbox that sends and
+    receives normally.
+    """
+
     metadata: typing.Optional[Metadata] = pydantic.Field(default=None)
     """
     Custom metadata attached to the inbox.

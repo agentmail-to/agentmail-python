@@ -8,6 +8,7 @@ from ..types.limit import Limit
 from ..types.page_token import PageToken
 from .raw_client import AsyncRawAppsClient, RawAppsClient
 from .types.app import App
+from .types.app_category import AppCategory
 from .types.app_id import AppId
 from .types.connect_accepted import ConnectAccepted
 from .types.connect_app_body import ConnectAppBody
@@ -39,6 +40,7 @@ class AppsClient:
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
+        category: typing.Optional[AppCategory] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListAppsResponse:
         """
@@ -49,6 +51,9 @@ class AppsClient:
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
+
+        category : typing.Optional[AppCategory]
+            Only apps in this category. A filtered page can hold fewer than `limit` apps while more remain, so page until `next_page_token` is absent. A `page_token` works only with the `category` it was returned for.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -66,7 +71,9 @@ class AppsClient:
         )
         client.apps.list()
         """
-        _response = self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
+        _response = self._raw_client.list(
+            limit=limit, page_token=page_token, category=category, request_options=request_options
+        )
         return _response.data
 
     def search(
@@ -252,6 +259,7 @@ class AsyncAppsClient:
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
+        category: typing.Optional[AppCategory] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> ListAppsResponse:
         """
@@ -262,6 +270,9 @@ class AsyncAppsClient:
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
+
+        category : typing.Optional[AppCategory]
+            Only apps in this category. A filtered page can hold fewer than `limit` apps while more remain, so page until `next_page_token` is absent. A `page_token` works only with the `category` it was returned for.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -287,7 +298,9 @@ class AsyncAppsClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.list(limit=limit, page_token=page_token, request_options=request_options)
+        _response = await self._raw_client.list(
+            limit=limit, page_token=page_token, category=category, request_options=request_options
+        )
         return _response.data
 
     async def search(

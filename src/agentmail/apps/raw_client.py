@@ -19,6 +19,7 @@ from ..types.page_token import PageToken
 from ..types.validation_error_response import ValidationErrorResponse
 from .errors.app_signup_limit_error import AppSignupLimitError
 from .types.app import App
+from .types.app_category import AppCategory
 from .types.app_id import AppId
 from .types.connect_accepted import ConnectAccepted
 from .types.connect_app_body import ConnectAppBody
@@ -40,6 +41,7 @@ class RawAppsClient:
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
+        category: typing.Optional[AppCategory] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[ListAppsResponse]:
         """
@@ -50,6 +52,9 @@ class RawAppsClient:
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
+
+        category : typing.Optional[AppCategory]
+            Only apps in this category. A filtered page can hold fewer than `limit` apps while more remain, so page until `next_page_token` is absent. A `page_token` works only with the `category` it was returned for.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -65,6 +70,7 @@ class RawAppsClient:
             params={
                 "limit": limit,
                 "page_token": page_token,
+                "category": category,
             },
             request_options=request_options,
         )
@@ -376,6 +382,7 @@ class AsyncRawAppsClient:
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
+        category: typing.Optional[AppCategory] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[ListAppsResponse]:
         """
@@ -386,6 +393,9 @@ class AsyncRawAppsClient:
         limit : typing.Optional[Limit]
 
         page_token : typing.Optional[PageToken]
+
+        category : typing.Optional[AppCategory]
+            Only apps in this category. A filtered page can hold fewer than `limit` apps while more remain, so page until `next_page_token` is absent. A `page_token` works only with the `category` it was returned for.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -401,6 +411,7 @@ class AsyncRawAppsClient:
             params={
                 "limit": limit,
                 "page_token": page_token,
+                "category": category,
             },
             request_options=request_options,
         )

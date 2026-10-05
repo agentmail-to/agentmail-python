@@ -6,6 +6,7 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
+from .app_category import AppCategory
 from .app_id import AppId
 
 
@@ -25,6 +26,11 @@ class App(UncheckedBaseModel):
     logo_url: typing.Optional[str] = None
     terms_url: typing.Optional[str] = None
     privacy_url: typing.Optional[str] = None
+    categories: typing.Optional[typing.List[AppCategory]] = pydantic.Field(default=None)
+    """
+    Kinds of app, up to 3. Omitted when the app sets none.
+    """
+
     owner_signup_limit: typing.Optional[int] = pydantic.Field(default=None)
     """
     Maximum number of accounts your organization may sign up at this app. Omitted when the app sets no limit. 0 means the app has paused new sign-ups; existing accounts keep signing in.

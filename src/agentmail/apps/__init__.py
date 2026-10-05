@@ -8,6 +8,7 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import (
         App,
+        AppCategory,
         AppId,
         ConnectAccepted,
         ConnectAppBody,
@@ -20,6 +21,7 @@ if typing.TYPE_CHECKING:
     from .errors import AppSignupLimitError
 _dynamic_imports: typing.Dict[str, str] = {
     "App": ".types",
+    "AppCategory": ".types",
     "AppId": ".types",
     "AppSignupLimitError": ".errors",
     "ConnectAccepted": ".types",
@@ -55,6 +57,7 @@ def __dir__():
 
 __all__ = [
     "App",
+    "AppCategory",
     "AppId",
     "AppSignupLimitError",
     "ConnectAccepted",

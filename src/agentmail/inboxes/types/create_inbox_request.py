@@ -7,6 +7,7 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from .client_id import ClientId
 from .display_name import DisplayName
+from .inbox_status import InboxStatus
 from .metadata import Metadata
 
 
@@ -25,6 +26,11 @@ class CreateInboxRequest(UncheckedBaseModel):
 
     display_name: typing.Optional[DisplayName] = None
     client_id: typing.Optional[ClientId] = None
+    status: typing.Optional[InboxStatus] = pydantic.Field(default=None)
+    """
+    Set `paused` to create the inbox paused.
+    """
+
     metadata: typing.Optional[Metadata] = pydantic.Field(default=None)
     """
     Custom metadata to attach to the inbox.

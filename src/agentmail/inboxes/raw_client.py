@@ -14,6 +14,7 @@ from ..core.parse_error import ParsingError
 from ..core.request_options import RequestOptions
 from ..core.serialization import convert_and_respect_annotation_metadata
 from ..core.unchecked_base_model import construct_type
+from ..errors.conflict_error import ConflictError
 from ..errors.not_found_error import NotFoundError
 from ..errors.unprocessable_error import UnprocessableError
 from ..errors.validation_error import ValidationError as errors_validation_error_ValidationError
@@ -27,6 +28,7 @@ from .types.create_inbox_request import CreateInboxRequest
 from .types.display_name import DisplayName
 from .types.inbox import Inbox
 from .types.inbox_id import InboxId
+from .types.inbox_status import InboxStatus
 from .types.list_inboxes_response import ListInboxesResponse
 from .types.search_inboxes_response import SearchInboxesResponse
 from .types.update_metadata import UpdateMetadata
@@ -305,6 +307,7 @@ class RawInboxesClient:
         inbox_id: InboxId,
         *,
         display_name: typing.Optional[DisplayName] = OMIT,
+        status: typing.Optional[InboxStatus] = OMIT,
         metadata: typing.Optional[UpdateMetadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[Inbox]:
@@ -314,19 +317,27 @@ class RawInboxesClient:
         agentmail inboxes update --inbox-id <inbox_id> --display-name "Updated Name"
         ```
 
+        To pause an inbox, set `status` to `paused`; set it back to `active` to
+        resume. See [Pausing an inbox](/inboxes#pausing-an-inbox).
+
         Parameters
         ----------
         inbox_id : InboxId
 
         display_name : typing.Optional[DisplayName]
 
+        status : typing.Optional[InboxStatus]
+            `paused` stops the inbox sending and receiving mail; `active` resumes
+            it. Mail that arrived while the inbox was paused is not delivered on
+            resume.
+
         metadata : typing.Optional[UpdateMetadata]
             Metadata to merge into the inbox's existing metadata. Keys you include
             are added or overwritten; keys you omit are left unchanged. To remove a
             single key, send it with a null value. To clear all metadata, send
             `metadata` as null. Sending an empty object is rejected; use null to
-            clear. Each update must include at least one of `display_name` or
-            `metadata`.
+            clear. Each update must include at least one of `display_name`,
+            `status`, or `metadata`.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -341,6 +352,7 @@ class RawInboxesClient:
             method="PATCH",
             json={
                 "display_name": display_name,
+                "status": status,
                 "metadata": convert_and_respect_annotation_metadata(
                     object_=metadata, annotation=typing.Optional[UpdateMetadata], direction="write"
                 ),
@@ -376,6 +388,17 @@ class RawInboxesClient:
                         ValidationErrorResponse,
                         construct_type(
                             type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -803,6 +826,7 @@ class AsyncRawInboxesClient:
         inbox_id: InboxId,
         *,
         display_name: typing.Optional[DisplayName] = OMIT,
+        status: typing.Optional[InboxStatus] = OMIT,
         metadata: typing.Optional[UpdateMetadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[Inbox]:
@@ -812,19 +836,27 @@ class AsyncRawInboxesClient:
         agentmail inboxes update --inbox-id <inbox_id> --display-name "Updated Name"
         ```
 
+        To pause an inbox, set `status` to `paused`; set it back to `active` to
+        resume. See [Pausing an inbox](/inboxes#pausing-an-inbox).
+
         Parameters
         ----------
         inbox_id : InboxId
 
         display_name : typing.Optional[DisplayName]
 
+        status : typing.Optional[InboxStatus]
+            `paused` stops the inbox sending and receiving mail; `active` resumes
+            it. Mail that arrived while the inbox was paused is not delivered on
+            resume.
+
         metadata : typing.Optional[UpdateMetadata]
             Metadata to merge into the inbox's existing metadata. Keys you include
             are added or overwritten; keys you omit are left unchanged. To remove a
             single key, send it with a null value. To clear all metadata, send
             `metadata` as null. Sending an empty object is rejected; use null to
-            clear. Each update must include at least one of `display_name` or
-            `metadata`.
+            clear. Each update must include at least one of `display_name`,
+            `status`, or `metadata`.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -839,6 +871,7 @@ class AsyncRawInboxesClient:
             method="PATCH",
             json={
                 "display_name": display_name,
+                "status": status,
                 "metadata": convert_and_respect_annotation_metadata(
                     object_=metadata, annotation=typing.Optional[UpdateMetadata], direction="write"
                 ),
@@ -874,6 +907,17 @@ class AsyncRawInboxesClient:
                         ValidationErrorResponse,
                         construct_type(
                             type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

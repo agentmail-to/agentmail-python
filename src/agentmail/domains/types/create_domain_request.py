@@ -7,6 +7,7 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from .domain_name import DomainName
 from .feedback_enabled import FeedbackEnabled
+from .inbound_enabled import InboundEnabled
 from .subdomains_enabled import SubdomainsEnabled
 from .tracking_enabled import TrackingEnabled
 
@@ -20,9 +21,11 @@ class CreateDomainRequest(UncheckedBaseModel):
     provider is detected.
     This flag does not configure DNS or inbound routing. For shared Google
     Workspace domains, follow the [Google Workspace guide](/google-workspace).
+    Only checked when `inbound_enabled` is true; a send-only domain skips the check.
     """
 
     feedback_enabled: typing.Optional[FeedbackEnabled] = None
+    inbound_enabled: typing.Optional[InboundEnabled] = None
     subdomains_enabled: typing.Optional[SubdomainsEnabled] = None
     tracking_enabled: typing.Optional[TrackingEnabled] = None
 

@@ -11,6 +11,7 @@ from .client_id import ClientId
 from .domain_id import DomainId
 from .domain_name import DomainName
 from .feedback_enabled import FeedbackEnabled
+from .inbound_enabled import InboundEnabled
 from .status import Status
 from .subdomains_enabled import SubdomainsEnabled
 from .tracking_enabled import TrackingEnabled
@@ -28,12 +29,18 @@ class Domain(UncheckedBaseModel):
     """
 
     feedback_enabled: FeedbackEnabled
+    inbound_enabled: typing.Optional[InboundEnabled] = pydantic.Field(default=None)
+    """
+    Absent on domains created before this field existed; those receive email.
+    """
+
     subdomains_enabled: SubdomainsEnabled
     tracking_enabled: TrackingEnabled
     records: typing.List[VerificationRecord] = pydantic.Field()
     """
-    A list of DNS records required to verify the domain. Includes a
-    wildcard MX record (`*.<domain>`) when `subdomains_enabled` is true.
+    A list of DNS records required to verify the domain. Includes the apex
+    MX record unless `inbound_enabled` is false, and a wildcard MX record
+    (`*.<domain>`) when `subdomains_enabled` is true.
     """
 
     client_id: typing.Optional[ClientId] = None

@@ -14,6 +14,7 @@ if typing.TYPE_CHECKING:
     from .domain_name import DomainName
     from .feedback_enabled import FeedbackEnabled
     from .get_setup_link_response import GetSetupLinkResponse
+    from .inbound_enabled import InboundEnabled
     from .list_domains_response import ListDomainsResponse
     from .record_status import RecordStatus
     from .record_type import RecordType
@@ -32,6 +33,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "DomainName": ".domain_name",
     "FeedbackEnabled": ".feedback_enabled",
     "GetSetupLinkResponse": ".get_setup_link_response",
+    "InboundEnabled": ".inbound_enabled",
     "ListDomainsResponse": ".list_domains_response",
     "RecordStatus": ".record_status",
     "RecordType": ".record_type",
@@ -74,6 +76,7 @@ __all__ = [
     "DomainName",
     "FeedbackEnabled",
     "GetSetupLinkResponse",
+    "InboundEnabled",
     "ListDomainsResponse",
     "RecordStatus",
     "RecordType",

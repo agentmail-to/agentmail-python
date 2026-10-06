@@ -6,20 +6,23 @@ import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from .feedback_enabled import FeedbackEnabled
+from .inbound_enabled import InboundEnabled
 from .subdomains_enabled import SubdomainsEnabled
 from .tracking_enabled import TrackingEnabled
 
 
 class UpdateDomainRequest(UncheckedBaseModel):
     """
-    Provide at least one of `feedback_enabled`, `subdomains_enabled`, or
-    `tracking_enabled`. Omitted
-    fields are left unchanged; an empty body is rejected. Enabling
+    Provide at least one of `feedback_enabled`, `inbound_enabled`,
+    `subdomains_enabled`, or `tracking_enabled`. Omitted fields are left
+    unchanged; an empty body is rejected. Enabling `inbound_enabled` or
     `subdomains_enabled` on a verified domain returns it to `PENDING` until the
-    newly-required wildcard MX record (`*.<domain>`) is published and verified.
+    newly required MX record (the apex MX, or the wildcard `*.<domain>`) is
+    published and verified.
     """
 
     feedback_enabled: typing.Optional[FeedbackEnabled] = None
+    inbound_enabled: typing.Optional[InboundEnabled] = None
     subdomains_enabled: typing.Optional[SubdomainsEnabled] = None
     tracking_enabled: typing.Optional[TrackingEnabled] = None
 

@@ -25,6 +25,7 @@ from .types.domain_id import DomainId
 from .types.domain_name import DomainName
 from .types.feedback_enabled import FeedbackEnabled
 from .types.get_setup_link_response import GetSetupLinkResponse
+from .types.inbound_enabled import InboundEnabled
 from .types.list_domains_response import ListDomainsResponse
 from .types.subdomains_enabled import SubdomainsEnabled
 from .types.tracking_enabled import TrackingEnabled
@@ -222,6 +223,7 @@ class RawDomainsClient:
         domain: DomainName,
         allow_conflicting_provider: typing.Optional[bool] = OMIT,
         feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
+        inbound_enabled: typing.Optional[InboundEnabled] = OMIT,
         subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
         tracking_enabled: typing.Optional[TrackingEnabled] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -242,8 +244,11 @@ class RawDomainsClient:
             provider is detected.
             This flag does not configure DNS or inbound routing. For shared Google
             Workspace domains, follow the [Google Workspace guide](/google-workspace).
+            Only checked when `inbound_enabled` is true; a send-only domain skips the check.
 
         feedback_enabled : typing.Optional[FeedbackEnabled]
+
+        inbound_enabled : typing.Optional[InboundEnabled]
 
         subdomains_enabled : typing.Optional[SubdomainsEnabled]
 
@@ -264,6 +269,7 @@ class RawDomainsClient:
                 "domain": domain,
                 "allow_conflicting_provider": allow_conflicting_provider,
                 "feedback_enabled": feedback_enabled,
+                "inbound_enabled": inbound_enabled,
                 "subdomains_enabled": subdomains_enabled,
                 "tracking_enabled": tracking_enabled,
             },
@@ -316,6 +322,7 @@ class RawDomainsClient:
         domain_id: DomainId,
         *,
         feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
+        inbound_enabled: typing.Optional[InboundEnabled] = OMIT,
         subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
         tracking_enabled: typing.Optional[TrackingEnabled] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -331,6 +338,8 @@ class RawDomainsClient:
         domain_id : DomainId
 
         feedback_enabled : typing.Optional[FeedbackEnabled]
+
+        inbound_enabled : typing.Optional[InboundEnabled]
 
         subdomains_enabled : typing.Optional[SubdomainsEnabled]
 
@@ -349,6 +358,7 @@ class RawDomainsClient:
             method="PATCH",
             json={
                 "feedback_enabled": feedback_enabled,
+                "inbound_enabled": inbound_enabled,
                 "subdomains_enabled": subdomains_enabled,
                 "tracking_enabled": tracking_enabled,
             },
@@ -770,6 +780,7 @@ class AsyncRawDomainsClient:
         domain: DomainName,
         allow_conflicting_provider: typing.Optional[bool] = OMIT,
         feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
+        inbound_enabled: typing.Optional[InboundEnabled] = OMIT,
         subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
         tracking_enabled: typing.Optional[TrackingEnabled] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -790,8 +801,11 @@ class AsyncRawDomainsClient:
             provider is detected.
             This flag does not configure DNS or inbound routing. For shared Google
             Workspace domains, follow the [Google Workspace guide](/google-workspace).
+            Only checked when `inbound_enabled` is true; a send-only domain skips the check.
 
         feedback_enabled : typing.Optional[FeedbackEnabled]
+
+        inbound_enabled : typing.Optional[InboundEnabled]
 
         subdomains_enabled : typing.Optional[SubdomainsEnabled]
 
@@ -812,6 +826,7 @@ class AsyncRawDomainsClient:
                 "domain": domain,
                 "allow_conflicting_provider": allow_conflicting_provider,
                 "feedback_enabled": feedback_enabled,
+                "inbound_enabled": inbound_enabled,
                 "subdomains_enabled": subdomains_enabled,
                 "tracking_enabled": tracking_enabled,
             },
@@ -864,6 +879,7 @@ class AsyncRawDomainsClient:
         domain_id: DomainId,
         *,
         feedback_enabled: typing.Optional[FeedbackEnabled] = OMIT,
+        inbound_enabled: typing.Optional[InboundEnabled] = OMIT,
         subdomains_enabled: typing.Optional[SubdomainsEnabled] = OMIT,
         tracking_enabled: typing.Optional[TrackingEnabled] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -879,6 +895,8 @@ class AsyncRawDomainsClient:
         domain_id : DomainId
 
         feedback_enabled : typing.Optional[FeedbackEnabled]
+
+        inbound_enabled : typing.Optional[InboundEnabled]
 
         subdomains_enabled : typing.Optional[SubdomainsEnabled]
 
@@ -897,6 +915,7 @@ class AsyncRawDomainsClient:
             method="PATCH",
             json={
                 "feedback_enabled": feedback_enabled,
+                "inbound_enabled": inbound_enabled,
                 "subdomains_enabled": subdomains_enabled,
                 "tracking_enabled": tracking_enabled,
             },

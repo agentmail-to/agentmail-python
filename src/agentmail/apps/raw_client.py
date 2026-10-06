@@ -20,7 +20,6 @@ from ..types.validation_error_response import ValidationErrorResponse
 from .errors.app_signup_limit_error import AppSignupLimitError
 from .types.app import App
 from .types.app_category import AppCategory
-from .types.app_id import AppId
 from .types.connect_accepted import ConnectAccepted
 from .types.connect_app_body import ConnectAppBody
 from .types.list_app_accounts_response import ListAppAccountsResponse
@@ -164,16 +163,18 @@ class RawAppsClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
-    def get(self, app_id: AppId, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[App]:
+    def get(self, app_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[App]:
         """
-        Gets one app by ID. An app in the catalog returns its full entry.
+        Gets one app by ID or slug. A catalog app returns its full entry.
         A registered app that the catalog does not list returns its ID and
         name only, without `updated_at`, so anyone holding its ID can still look
-        it up. List Apps and Search Apps show catalog entries only.
+        it up; a slug finds catalog apps only. List Apps and Search Apps show
+        catalog entries only.
 
         Parameters
         ----------
-        app_id : AppId
+        app_id : str
+            ID of app, or the `slug` of an app in the catalog. A slug ignores case, spaces and punctuation.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -220,7 +221,7 @@ class RawAppsClient:
 
     def list_accounts(
         self,
-        app_id: AppId,
+        app_id: str,
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
@@ -231,7 +232,8 @@ class RawAppsClient:
 
         Parameters
         ----------
-        app_id : AppId
+        app_id : str
+            ID of app, or the `slug` of an app in the catalog. A slug ignores case, spaces and punctuation.
 
         limit : typing.Optional[Limit]
 
@@ -286,7 +288,7 @@ class RawAppsClient:
 
     def connect(
         self,
-        app_id: AppId,
+        app_id: str,
         *,
         request: typing.Optional[ConnectAppBody] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -295,13 +297,16 @@ class RawAppsClient:
         Starts signing an inbox in to an app. Returns a single-use `magic_url`,
         valid for five minutes, to open in the client that will hold the sign-in;
         the client enrolls as the inbox and continues to the app.
+        An app in the catalog can be named by its `slug`, as in
+        `POST /v0/apps/firecrawl/connect`.
         A `404` names the missing resource: `App` or `Inbox`.
         A `403` `AppSignupLimitError` means the app accepts no more sign-ups from
         your organization; sign in with an inbox that already has an account there.
 
         Parameters
         ----------
-        app_id : AppId
+        app_id : str
+            ID of app, or the `slug` of an app in the catalog. A slug ignores case, spaces and punctuation.
 
         request : typing.Optional[ConnectAppBody]
 
@@ -506,17 +511,19 @@ class AsyncRawAppsClient:
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
     async def get(
-        self, app_id: AppId, *, request_options: typing.Optional[RequestOptions] = None
+        self, app_id: str, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[App]:
         """
-        Gets one app by ID. An app in the catalog returns its full entry.
+        Gets one app by ID or slug. A catalog app returns its full entry.
         A registered app that the catalog does not list returns its ID and
         name only, without `updated_at`, so anyone holding its ID can still look
-        it up. List Apps and Search Apps show catalog entries only.
+        it up; a slug finds catalog apps only. List Apps and Search Apps show
+        catalog entries only.
 
         Parameters
         ----------
-        app_id : AppId
+        app_id : str
+            ID of app, or the `slug` of an app in the catalog. A slug ignores case, spaces and punctuation.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -563,7 +570,7 @@ class AsyncRawAppsClient:
 
     async def list_accounts(
         self,
-        app_id: AppId,
+        app_id: str,
         *,
         limit: typing.Optional[Limit] = None,
         page_token: typing.Optional[PageToken] = None,
@@ -574,7 +581,8 @@ class AsyncRawAppsClient:
 
         Parameters
         ----------
-        app_id : AppId
+        app_id : str
+            ID of app, or the `slug` of an app in the catalog. A slug ignores case, spaces and punctuation.
 
         limit : typing.Optional[Limit]
 
@@ -629,7 +637,7 @@ class AsyncRawAppsClient:
 
     async def connect(
         self,
-        app_id: AppId,
+        app_id: str,
         *,
         request: typing.Optional[ConnectAppBody] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -638,13 +646,16 @@ class AsyncRawAppsClient:
         Starts signing an inbox in to an app. Returns a single-use `magic_url`,
         valid for five minutes, to open in the client that will hold the sign-in;
         the client enrolls as the inbox and continues to the app.
+        An app in the catalog can be named by its `slug`, as in
+        `POST /v0/apps/firecrawl/connect`.
         A `404` names the missing resource: `App` or `Inbox`.
         A `403` `AppSignupLimitError` means the app accepts no more sign-ups from
         your organization; sign in with an inbox that already has an account there.
 
         Parameters
         ----------
-        app_id : AppId
+        app_id : str
+            ID of app, or the `slug` of an app in the catalog. A slug ignores case, spaces and punctuation.
 
         request : typing.Optional[ConnectAppBody]
 

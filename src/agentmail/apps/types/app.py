@@ -16,6 +16,11 @@ class App(UncheckedBaseModel):
     """
 
     app_id: AppId
+    slug: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Short name accepted in place of `app_id` by Get App, List App Accounts and Connect App. Set by AgentMail on apps in the catalog; renaming the app does not change it. Store `app_id`, the app's permanent ID.
+    """
+
     name: typing.Optional[str] = None
     updated_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
     """

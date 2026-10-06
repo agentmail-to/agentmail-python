@@ -1746,7 +1746,7 @@ Create a new agent organization with an inbox and API key. This endpoint is for 
 
 A 6-digit OTP is sent to the human's email for verification.
 
-`human_email` is optional. Without it, the inbox can receive email but cannot send to anyone until a human is attached with the attach human endpoint. There is also no way to recover the API key, so store it durably. Calling sign-up again without `human_email` creates a new organization, which needs a different `username`: the original username stays with the lost organization's inbox.
+`human_email` is optional. Without it, the inbox can receive email but cannot send to anyone until a human is attached with the attach human endpoint or, for a US-region inbox, claims it in the AgentMail Console with the API key (see [How do I claim my agent's inbox?](https://docs.agentmail.to/knowledge-base/claiming-agent-inbox)). There is also no way to recover the API key, so store it durably. Calling sign-up again without `human_email` creates a new organization, which needs a different `username`: the original username stays with the lost organization's inbox.
 
 This endpoint is idempotent. Calling it again with the same `human_email` will rotate the API key and resend the OTP if expired.
 
@@ -2584,10 +2584,11 @@ client.apps.search(
 <dl>
 <dd>
 
-Gets one app by ID. An app in the catalog returns its full entry.
+Gets one app by ID or slug. A catalog app returns its full entry.
 A registered app that the catalog does not list returns its ID and
 name only, without `updated_at`, so anyone holding its ID can still look
-it up. List Apps and Search Apps show catalog entries only.
+it up; a slug finds catalog apps only. List Apps and Search Apps show
+catalog entries only.
 </dd>
 </dl>
 </dd>
@@ -2604,7 +2605,6 @@ it up. List Apps and Search Apps show catalog entries only.
 ```python
 from agentmail import AgentMail
 from agentmail.environment import AgentMailEnvironment
-import uuid
 
 client = AgentMail(
     api_key="<token>",
@@ -2612,7 +2612,7 @@ client = AgentMail(
 )
 
 client.apps.get(
-    app_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    app_id="app_id",
 )
 
 ```
@@ -2629,7 +2629,7 @@ client.apps.get(
 <dl>
 <dd>
 
-**app_id:** `AppId` 
+**app_id:** `str` — ID of app, or the `slug` of an app in the catalog. A slug ignores case, spaces and punctuation.
     
 </dd>
 </dl>
@@ -2678,7 +2678,6 @@ Lists accounts at one app, most recent sign-in first.
 ```python
 from agentmail import AgentMail
 from agentmail.environment import AgentMailEnvironment
-import uuid
 
 client = AgentMail(
     api_key="<token>",
@@ -2686,7 +2685,7 @@ client = AgentMail(
 )
 
 client.apps.list_accounts(
-    app_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    app_id="app_id",
 )
 
 ```
@@ -2703,7 +2702,7 @@ client.apps.list_accounts(
 <dl>
 <dd>
 
-**app_id:** `AppId` 
+**app_id:** `str` — ID of app, or the `slug` of an app in the catalog. A slug ignores case, spaces and punctuation.
     
 </dd>
 </dl>
@@ -2754,6 +2753,8 @@ client.apps.list_accounts(
 Starts signing an inbox in to an app. Returns a single-use `magic_url`,
 valid for five minutes, to open in the client that will hold the sign-in;
 the client enrolls as the inbox and continues to the app.
+An app in the catalog can be named by its `slug`, as in
+`POST /v0/apps/firecrawl/connect`.
 A `404` names the missing resource: `App` or `Inbox`.
 A `403` `AppSignupLimitError` means the app accepts no more sign-ups from
 your organization; sign in with an inbox that already has an account there.
@@ -2773,7 +2774,6 @@ your organization; sign in with an inbox that already has an account there.
 ```python
 from agentmail import AgentMail
 from agentmail.environment import AgentMailEnvironment
-import uuid
 
 client = AgentMail(
     api_key="<token>",
@@ -2781,7 +2781,7 @@ client = AgentMail(
 )
 
 client.apps.connect(
-    app_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    app_id="app_id",
 )
 
 ```
@@ -2798,7 +2798,7 @@ client.apps.connect(
 <dl>
 <dd>
 
-**app_id:** `AppId` 
+**app_id:** `str` — ID of app, or the `slug` of an app in the catalog. A slug ignores case, spaces and punctuation.
     
 </dd>
 </dl>

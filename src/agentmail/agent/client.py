@@ -42,7 +42,7 @@ class AgentClient:
 
         A 6-digit OTP is sent to the human's email for verification.
 
-        `human_email` is optional. Without it, the inbox can receive email but cannot send to anyone until a human is attached with the attach human endpoint. There is also no way to recover the API key, so store it durably. Calling sign-up again without `human_email` creates a new organization, which needs a different `username`: the original username stays with the lost organization's inbox.
+        `human_email` is optional. Without it, the inbox can receive email but cannot send to anyone until a human is attached with the attach human endpoint or, for a US-region inbox, claims it in the AgentMail Console with the API key (see [How do I claim my agent's inbox?](https://docs.agentmail.to/knowledge-base/claiming-agent-inbox)). There is also no way to recover the API key, so store it durably. Calling sign-up again without `human_email` creates a new organization, which needs a different `username`: the original username stays with the lost organization's inbox.
 
         This endpoint is idempotent. Calling it again with the same `human_email` will rotate the API key and resend the OTP if expired.
 
@@ -213,7 +213,7 @@ class AsyncAgentClient:
 
         A 6-digit OTP is sent to the human's email for verification.
 
-        `human_email` is optional. Without it, the inbox can receive email but cannot send to anyone until a human is attached with the attach human endpoint. There is also no way to recover the API key, so store it durably. Calling sign-up again without `human_email` creates a new organization, which needs a different `username`: the original username stays with the lost organization's inbox.
+        `human_email` is optional. Without it, the inbox can receive email but cannot send to anyone until a human is attached with the attach human endpoint or, for a US-region inbox, claims it in the AgentMail Console with the API key (see [How do I claim my agent's inbox?](https://docs.agentmail.to/knowledge-base/claiming-agent-inbox)). There is also no way to recover the API key, so store it durably. Calling sign-up again without `human_email` creates a new organization, which needs a different `username`: the original username stays with the lost organization's inbox.
 
         This endpoint is idempotent. Calling it again with the same `human_email` will rotate the API key and resend the OTP if expired.
 

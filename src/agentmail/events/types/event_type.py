@@ -15,6 +15,12 @@ EventType = typing.Union[
         "message.rejected",
         "message.opened",
         "domain.verified",
+        "calendar.event.created",
+        "calendar.event.updated",
+        "calendar.event.deleted",
+        "calendar.event.responded",
+        "calendar.event.starting",
+        "calendar.event.ending",
     ],
     typing.Any,
 ]

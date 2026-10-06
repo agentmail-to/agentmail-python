@@ -25,6 +25,7 @@ from .types.update_metadata import UpdateMetadata
 if typing.TYPE_CHECKING:
     from .accounts.client import AccountsClient, AsyncAccountsClient
     from .api_keys.client import ApiKeysClient, AsyncApiKeysClient
+    from .calendar.client import AsyncCalendarClient, CalendarClient
     from .drafts.client import AsyncDraftsClient, DraftsClient
     from .events.client import AsyncEventsClient, EventsClient
     from .lists.client import AsyncListsClient, ListsClient
@@ -49,6 +50,7 @@ class InboxesClient:
         self._events: typing.Optional[EventsClient] = None
         self._api_keys: typing.Optional[ApiKeysClient] = None
         self._accounts: typing.Optional[AccountsClient] = None
+        self._calendar: typing.Optional[CalendarClient] = None
 
     @property
     def with_raw_response(self) -> RawInboxesClient:
@@ -428,6 +430,14 @@ class InboxesClient:
             self._accounts = AccountsClient(client_wrapper=self._client_wrapper)
         return self._accounts
 
+    @property
+    def calendar(self):
+        if self._calendar is None:
+            from .calendar.client import CalendarClient  # noqa: E402
+
+            self._calendar = CalendarClient(client_wrapper=self._client_wrapper)
+        return self._calendar
+
 
 class AsyncInboxesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -442,6 +452,7 @@ class AsyncInboxesClient:
         self._events: typing.Optional[AsyncEventsClient] = None
         self._api_keys: typing.Optional[AsyncApiKeysClient] = None
         self._accounts: typing.Optional[AsyncAccountsClient] = None
+        self._calendar: typing.Optional[AsyncCalendarClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawInboxesClient:
@@ -878,3 +889,11 @@ class AsyncInboxesClient:
 
             self._accounts = AsyncAccountsClient(client_wrapper=self._client_wrapper)
         return self._accounts
+
+    @property
+    def calendar(self):
+        if self._calendar is None:
+            from .calendar.client import AsyncCalendarClient  # noqa: E402
+
+            self._calendar = AsyncCalendarClient(client_wrapper=self._client_wrapper)
+        return self._calendar

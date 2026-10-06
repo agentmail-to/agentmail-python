@@ -7,6 +7,13 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .bounce import Bounce
+    from .calendar_event_created_event import CalendarEventCreatedEvent
+    from .calendar_event_deleted_event import CalendarEventDeletedEvent
+    from .calendar_event_ending_event import CalendarEventEndingEvent
+    from .calendar_event_previous import CalendarEventPrevious
+    from .calendar_event_responded_event import CalendarEventRespondedEvent
+    from .calendar_event_starting_event import CalendarEventStartingEvent
+    from .calendar_event_updated_event import CalendarEventUpdatedEvent
     from .complaint import Complaint
     from .delivery import Delivery
     from .domain_verified_event import DomainVerifiedEvent
@@ -30,6 +37,13 @@ if typing.TYPE_CHECKING:
     from .timestamp import Timestamp
 _dynamic_imports: typing.Dict[str, str] = {
     "Bounce": ".bounce",
+    "CalendarEventCreatedEvent": ".calendar_event_created_event",
+    "CalendarEventDeletedEvent": ".calendar_event_deleted_event",
+    "CalendarEventEndingEvent": ".calendar_event_ending_event",
+    "CalendarEventPrevious": ".calendar_event_previous",
+    "CalendarEventRespondedEvent": ".calendar_event_responded_event",
+    "CalendarEventStartingEvent": ".calendar_event_starting_event",
+    "CalendarEventUpdatedEvent": ".calendar_event_updated_event",
     "Complaint": ".complaint",
     "Delivery": ".delivery",
     "DomainVerifiedEvent": ".domain_verified_event",
@@ -77,6 +91,13 @@ def __dir__():
 
 __all__ = [
     "Bounce",
+    "CalendarEventCreatedEvent",
+    "CalendarEventDeletedEvent",
+    "CalendarEventEndingEvent",
+    "CalendarEventPrevious",
+    "CalendarEventRespondedEvent",
+    "CalendarEventStartingEvent",
+    "CalendarEventUpdatedEvent",
     "Complaint",
     "Delivery",
     "DomainVerifiedEvent",

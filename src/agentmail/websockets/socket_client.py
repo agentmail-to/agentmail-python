@@ -9,6 +9,12 @@ import websockets
 import websockets.sync.connection as websockets_sync_connection
 from ..core.events import EventEmitterMixin, EventType
 from ..core.unchecked_base_model import construct_type
+from ..events.types.calendar_event_created_event import CalendarEventCreatedEvent
+from ..events.types.calendar_event_deleted_event import CalendarEventDeletedEvent
+from ..events.types.calendar_event_ending_event import CalendarEventEndingEvent
+from ..events.types.calendar_event_responded_event import CalendarEventRespondedEvent
+from ..events.types.calendar_event_starting_event import CalendarEventStartingEvent
+from ..events.types.calendar_event_updated_event import CalendarEventUpdatedEvent
 from ..events.types.domain_verified_event import DomainVerifiedEvent
 from ..events.types.message_bounced_event import MessageBouncedEvent
 from ..events.types.message_complained_event import MessageComplainedEvent
@@ -37,6 +43,12 @@ WebsocketsSocketClientResponse = typing.Union[
     MessageRejectedEvent,
     MessageOpenedEvent,
     DomainVerifiedEvent,
+    CalendarEventCreatedEvent,
+    CalendarEventUpdatedEvent,
+    CalendarEventDeletedEvent,
+    CalendarEventRespondedEvent,
+    CalendarEventStartingEvent,
+    CalendarEventEndingEvent,
     Error,
 ]
 

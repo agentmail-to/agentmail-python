@@ -220,6 +220,36 @@ class ApiKeyPermissions(UncheckedBaseModel):
     Delete pods.
     """
 
+    calendar_read: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Read inbox calendar settings.
+    """
+
+    calendar_update: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Update inbox calendar settings.
+    """
+
+    calendar_event_read: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Read calendar events, and receive `calendar.event.*` webhook and WebSocket events.
+    """
+
+    calendar_event_create: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Create calendar events.
+    """
+
+    calendar_event_update: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Update calendar events and respond to invitations.
+    """
+
+    calendar_event_delete: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Delete calendar events.
+    """
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:

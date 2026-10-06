@@ -8,6 +8,13 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import (
         Bounce,
+        CalendarEventCreatedEvent,
+        CalendarEventDeletedEvent,
+        CalendarEventEndingEvent,
+        CalendarEventPrevious,
+        CalendarEventRespondedEvent,
+        CalendarEventStartingEvent,
+        CalendarEventUpdatedEvent,
         Complaint,
         Delivery,
         DomainVerifiedEvent,
@@ -32,6 +39,13 @@ if typing.TYPE_CHECKING:
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "Bounce": ".types",
+    "CalendarEventCreatedEvent": ".types",
+    "CalendarEventDeletedEvent": ".types",
+    "CalendarEventEndingEvent": ".types",
+    "CalendarEventPrevious": ".types",
+    "CalendarEventRespondedEvent": ".types",
+    "CalendarEventStartingEvent": ".types",
+    "CalendarEventUpdatedEvent": ".types",
     "Complaint": ".types",
     "Delivery": ".types",
     "DomainVerifiedEvent": ".types",
@@ -79,6 +93,13 @@ def __dir__():
 
 __all__ = [
     "Bounce",
+    "CalendarEventCreatedEvent",
+    "CalendarEventDeletedEvent",
+    "CalendarEventEndingEvent",
+    "CalendarEventPrevious",
+    "CalendarEventRespondedEvent",
+    "CalendarEventStartingEvent",
+    "CalendarEventUpdatedEvent",
     "Complaint",
     "Delivery",
     "DomainVerifiedEvent",

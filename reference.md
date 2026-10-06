@@ -4338,6 +4338,1310 @@ client.inboxes.api_keys.delete(
 </dl>
 </details>
 
+## Inboxes Calendar
+<details><summary><code>client.inboxes.calendar.<a href="src/agentmail/inboxes/calendar/client.py">get</a>(...) -> Calendar</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets the inbox's calendar. Every inbox has one calendar, so this works before any event is
+created. Its `etag` (also the `ETag` response header) is the value to send in `If-Match` to
+make an update conditional.
+
+Requires the `calendar_read` permission. Calendar is in private beta: organizations without
+access receive a `403`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.calendar.get(
+    inbox_id="scheduler@agentmail.to",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**consistency:** `typing.Optional[CalendarConsistency]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.calendar.<a href="src/agentmail/inboxes/calendar/client.py">update</a>(...) -> Calendar</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the calendar's default time zone. Existing events keep their own `timezone`; only
+events created later without a `timezone` use the new default.
+
+Requires the `calendar_update` permission. To make the update conditional, send the
+calendar's current `etag` in `If-Match`: a stale value returns `412`. Without `If-Match` the
+update applies to the calendar as it is.
+
+Calendar is in private beta: organizations without access receive a `403`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.calendar.update(
+    inbox_id="scheduler@agentmail.to",
+    if_match="\"rv-0\"",
+    timezone="America/New_York",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**timezone:** `IanaTimezone` — New default time zone for events created without a `timezone`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**if_match:** `typing.Optional[str]` — The calendar's current `etag`, for example `"rv-0"`. Optional; makes the update conditional; `*` matches any current version.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.calendar.<a href="src/agentmail/inboxes/calendar/client.py">list_events</a>(...) -> ListCalendarEventsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists the events stored on the calendar: one item per one-off or recurring event, plus one
+item for each edited date of a recurring event (as that dated event, with
+`is_exception: true`). Ordered by most recently updated, and cancelled events are included.
+Use it to sync or manage what you created. To see what is on the calendar in a time window,
+use Get Agenda.
+
+The list is always read in the region that serves the request, so it can trail a change made
+moments earlier by a few seconds. Requires the `calendar_event_read` permission.
+
+Calendar is in private beta: organizations without access receive a `403`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.calendar.list_events(
+    inbox_id="scheduler@agentmail.to",
+    limit=50,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[CalendarLimit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.calendar.<a href="src/agentmail/inboxes/calendar/client.py">get_agenda</a>(...) -> ListCalendarEventsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists every date on the calendar in a time window, ordered by start time: one-off events,
+and recurring events expanded into their individual dates, with cancelled dates left out.
+Use it to answer "what is on the calendar".
+
+The window defaults to now through 90 days from now and can be at most 366 days. Items omit
+`description`, `metadata` and `attendees`; get an event by ID for the full object. Dates of
+recurring events appear only up to about 90 days from now; use List Event Instances for a
+recurring event's later dates. While a recurring event's dates are being regenerated after a
+schedule change, which takes a few seconds, the agenda can briefly leave out some of them;
+dates that have already started or ended stay as they ran.
+
+The agenda is read in the region that serves the request, so it can trail a change made
+moments earlier by a few seconds. Pass `consistency=primary` to read your own change right
+away. Requires the `calendar_event_read` permission.
+
+Calendar is in private beta: organizations without access receive a `403`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+import datetime
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.calendar.get_agenda(
+    inbox_id="scheduler@agentmail.to",
+    after=datetime.datetime.fromisoformat("2026-10-07T00:00:00+00:00"),
+    before=datetime.datetime.fromisoformat("2026-10-16T00:00:00+00:00"),
+    limit=3,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**consistency:** `typing.Optional[CalendarConsistency]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**after:** `typing.Optional[WindowAfter]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**before:** `typing.Optional[WindowBefore]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_overlapping:** `typing.Optional[IncludeOverlapping]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[CalendarLimit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.calendar.<a href="src/agentmail/inboxes/calendar/client.py">create_event</a>(...) -> CalendarEventMutationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a one-off or recurring event on the inbox's calendar. Times are wall-clock values in
+`timezone` (the calendar's default time zone if omitted); the response also gives each
+boundary as a UTC instant in `start_at` and `end_at`.
+
+`calendar.event.created` is sent once the event is stored, then `calendar.event.starting`
+and `calendar.event.ending` as each date begins and ends. With `send_invites: true` the
+inbox also emails an invitation to every attendee.
+
+Pass `client_id` to make retries safe: repeating the request with the same `client_id` and
+body returns the original event with status `200` instead of `201`, for as long as the event
+exists.
+
+With `send_invites: true`, each attendee counts as one send against the organization, pod
+and inbox send limits, charged before the event is stored. An over-limit request returns
+`429` `rate_limit_exceeded` and creates nothing. A replay of an earlier create is not
+charged again.
+
+The event's `etag` is the value to send in `If-Match` to make a later update or delete
+conditional. Requires the `calendar_event_create` permission.
+
+Calendar is in private beta: organizations without access receive a `403`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+from agentmail.calendar import Attendee
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.calendar.create_event(
+    inbox_id="scheduler@agentmail.to",
+    client_id="intro-acme-2026-10-15",
+    title="Intro call with Acme",
+    description="Walk Jane through the onboarding plan.",
+    location="https://meet.example.com/acme-intro",
+    metadata={"crm_deal_id": "D-1042"},
+    start="2026-10-15T14:00:00",
+    end="2026-10-15T14:30:00",
+    timezone="America/New_York",
+    attendees=[
+        Attendee(
+            email="jane@acme.com",
+            name="Jane Doe",
+        )
+    ],
+    send_invites=True,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `CreateCalendarEventRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.calendar.<a href="src/agentmail/inboxes/calendar/client.py">get_event</a>(...) -> CalendarEvent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets an event by its UUID, or one date of a recurring event by its dated ID
+(`<uuid>_<slot>`). A dated ID returns the date as it currently stands, including any edit
+to it, with `kind: instance`.
+
+The response's `etag` (also the `ETag` header) is the value to send in `If-Match` to make an
+update, delete or response to this event or date conditional. Treat it as opaque.
+
+Reads can trail a change made moments earlier by a few seconds; pass `consistency=primary`
+to read the latest state of an event or a date. A date that has already started or ended
+reads back as it ran, even if a later change to the series no longer produces it. Requires
+the `calendar_event_read` permission.
+
+Calendar is in private beta: organizations without access receive a `403`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.calendar.get_event(
+    inbox_id="scheduler@agentmail.to",
+    event_id="3f8a2c1e-6b4d-4e9f-a7c2-5d1b8e0f9a36",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**event_id:** `CalendarEventId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**consistency:** `typing.Optional[CalendarConsistency]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.calendar.<a href="src/agentmail/inboxes/calendar/client.py">update_event</a>(...) -> CalendarEventMutationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates an event. Send only the fields to change. To make the update conditional, send the
+event's current `etag` in `If-Match`: a stale value returns `412`. Without `If-Match` the
+update applies to the event as it is; a change that lands while it runs returns `409`
+`race_condition`, so retry. Send `If-Match` when replacing `attendees`, so you don't
+overwrite a response that arrived in the meantime.
+
+- **One-off or series UUID:** changes the event itself. For a series, the change applies to
+  every date that has not been edited individually.
+- **Dated ID (`<uuid>_<slot>`):** changes one date (`mode=single`, the default) or that date
+  and every later date (`mode=future`). `all_day`, `timezone` and `recurrence` cannot be sent
+  for a dated ID.
+
+Once a date has started, its start can no longer change (409 `event_already_started`), but
+its end and status can; for a one-off or series UUID, send the unchanged `start` with the new
+`end`. Once it has ended, only `title`, `description`, `location`,
+`metadata` and `attendees` can change. During the few seconds a date is starting, schedule
+changes return 409 `event_starting`; retry shortly.
+
+Sends `calendar.event.updated`. With `send_invites: true` the organizer inbox also emails the
+updated invitation to every attendee. Requires the `calendar_event_update` permission.
+
+Emailing attendees counts one send per attendee against the organization, pod and inbox
+send limits, charged before the change is saved; an over-limit request returns `429`
+`rate_limit_exceeded` and changes nothing.
+
+Calendar is in private beta: organizations without access receive a `403`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.calendar.update_event(
+    inbox_id="scheduler@agentmail.to",
+    event_id="3f8a2c1e-6b4d-4e9f-a7c2-5d1b8e0f9a36",
+    if_match="\"rv-0\"",
+    start="2026-10-15T15:00:00",
+    end="2026-10-15T15:30:00",
+    send_invites=True,
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**event_id:** `CalendarEventId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mode:** `typing.Optional[InstanceMutationMode]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**if_match:** `typing.Optional[str]` — The event's or date's current `etag`, from the latest read or write response. Optional; makes the update conditional; `*` matches any current version.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**title:** `typing.Optional[str]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `typing.Optional[str]` — Set to `null` to clear.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**location:** `typing.Optional[str]` — Set to `null` to clear.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**metadata:** `typing.Optional[typing.Any]` — Replaces the metadata (any JSON value, usually an object). Set to `null` to clear.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `typing.Optional[CalendarEventStatus]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**all_day:** `typing.Optional[bool]` — Changing `all_day` requires `start`, `end` and `timezone` in the same request. Not accepted for dated event IDs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**start:** `typing.Optional[WallTime]` — New start. For a one-off or series UUID, send it together with `end`. Not accepted with `mode=future`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**end:** `typing.Optional[WallTime]` — New end. For a one-off or series UUID, send it together with `start`. A dated ID accepts `end` alone.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**timezone:** `typing.Optional[IanaTimezone]` — New time zone. Not accepted for dated event IDs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**duration_mode:** `typing.Optional[DurationMode]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**recurrence:** `typing.Optional[RecurrenceInput]` 
+
+Replaces the recurrence. Set to `null` to turn a series into a one-off event (only when no
+date of it has been edited). Not accepted for dated event IDs.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**attendees:** `typing.Optional[typing.List[Attendee]]` — Replaces the attendee list.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**send_invites:** `typing.Optional[bool]` 
+
+When `true`, emails the updated invitation to every attendee. Only the organizer (an `api`
+event) can send. Defaults to `false`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.calendar.<a href="src/agentmail/inboxes/calendar/client.py">delete_event</a>(...) -> DeleteCalendarEventResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes an event, or cancels dates of a recurring event.
+
+- **One-off or series UUID:** deletes the event and every date of it. The event disappears
+  from reads immediately and is removed in the background; the response is `202` with a
+  `deletion_id`. A retry returns the same `deletion_id` while removal runs (send the same
+  `Idempotency-Key`, or none and the same `send_invites`); once it has finished, the event
+  no longer exists and a retry returns `404`. No `calendar.event.starting` or
+  `calendar.event.ending` webhook is sent for the event after the delete is accepted.
+- **Dated ID (`<uuid>_<slot>`):** cancels that date (`mode=single`, the default) or that date
+  and every later date (`mode=future`). Returns `202` with the cancelled date. A `mode=future`
+  delete from the first date deletes the whole series and returns a `deletion_id` instead.
+  A date that is already running still gets its `calendar.event.ending`.
+
+Deleting a one-off or series event sends `calendar.event.deleted`. Cancelling dates sends
+`calendar.event.updated` with the cancelled date. With `send_invites=true` the organizer
+inbox also emails a cancellation to every attendee. Requires the `calendar_event_delete`
+permission. To make the delete conditional, send the current `etag` in `If-Match`.
+
+Emailing cancellations counts one send per attendee against the organization, pod and inbox
+send limits, charged before the delete; an over-limit request returns `429`
+`rate_limit_exceeded` and deletes nothing.
+
+Calendar is in private beta: organizations without access receive a `403`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.calendar.delete_event(
+    inbox_id="scheduler@agentmail.to",
+    event_id="3f8a2c1e-6b4d-4e9f-a7c2-5d1b8e0f9a36",
+    send_invites=True,
+    if_match="\"rv-1\"",
+    idempotency_key="delete-intro-acme",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**event_id:** `CalendarEventId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**mode:** `typing.Optional[InstanceMutationMode]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**send_invites:** `typing.Optional[bool]` — When `true`, emails a cancellation (iCalendar `CANCEL`) to every attendee. Only the organizer can send. Defaults to `false`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**if_match:** `typing.Optional[str]` — The event's or date's current `etag`. Optional; makes the delete conditional; `*` matches any current version.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**idempotency_key:** `typing.Optional[str]` 
+
+1 to 128 visible ASCII characters. Optional. Retrying a delete with the same key
+returns the original result; without a key, retries of the same delete share one
+derived from the event and `send_invites`, so a keyless retry that changes
+`send_invites` is a different delete and returns `404` while removal runs. Keys are
+unique across your organization: reusing one to delete a different event returns
+`409` `idempotency_conflict`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.calendar.<a href="src/agentmail/inboxes/calendar/client.py">list_event_instances</a>(...) -> ListCalendarEventsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists the dates of one recurring event in a time window, in start order, with each date's
+edits applied. Dates are computed from the rule, so this works for any window up to 366
+days, including dates far in the future. Cancelled dates are left out.
+
+The window defaults to now through 90 days from now. Items omit `description`, `metadata`
+and `attendees`; get a date by its ID for the full object. Like other reads, the list can
+trail a change made moments earlier by a few seconds; pass `consistency=primary` to read
+your own change right away. Requires the `calendar_event_read` permission.
+
+Calendar is in private beta: organizations without access receive a `403`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+import datetime
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.calendar.list_event_instances(
+    inbox_id="scheduler@agentmail.to",
+    event_id="7c4e9b2a-1f3d-4a8e-b6c5-2e9d0f1a8b47",
+    after=datetime.datetime.fromisoformat("2026-10-05T00:00:00+00:00"),
+    before=datetime.datetime.fromisoformat("2026-10-10T00:00:00+00:00"),
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**event_id:** `str` — UUID of the recurring event.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**consistency:** `typing.Optional[CalendarConsistency]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**after:** `typing.Optional[WindowAfter]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**before:** `typing.Optional[WindowBefore]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**include_overlapping:** `typing.Optional[IncludeOverlapping]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[CalendarLimit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.calendar.<a href="src/agentmail/inboxes/calendar/client.py">respond_to_event</a>(...) -> CalendarEventMutationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Accepts, declines or tentatively accepts an invitation the inbox received by email. Pass the
+event's UUID to respond for every date, or a dated ID to respond for one date only.
+
+Only works on `email` events where the inbox is an attendee; anything else returns 409
+`calendar_response_invalid`. Updates the inbox's attendee entry and sends
+`calendar.event.responded`. With `send_reply` (default `true`) the inbox emails the response
+to the organizer.
+
+Requires the `calendar_event_update` permission. To make the response conditional, send the
+current `etag` in `If-Match`.
+
+A reply email counts as one send against the organization, pod and inbox send limits,
+charged before the response is saved; an over-limit request returns `429`
+`rate_limit_exceeded` and changes nothing.
+
+Calendar is in private beta: organizations without access receive a `403`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.calendar.respond_to_event(
+    inbox_id="scheduler@agentmail.to",
+    event_id="a1d5c7e9-2b4f-4c6a-9e8d-3f7b1c5a9d20",
+    if_match="\"rv-0\"",
+    status="accepted",
+    comment="See you there.",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**event_id:** `CalendarEventId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `RespondStatus` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**if_match:** `typing.Optional[str]` — The event's or date's current `etag`. Optional; makes the response conditional; `*` matches any current version.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**comment:** `typing.Optional[str]` 
+
+Comment to include with the response. At most 4,096 UTF-8 bytes, with no control characters
+other than tab, line feed and carriage return; a longer comment returns `400`. It is stored
+as the inbox's attendee `comment`.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**send_reply:** `typing.Optional[bool]` — When `true` (default), emails the response (iCalendar `REPLY`) to the organizer.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inboxes Drafts
 <details><summary><code>client.inboxes.drafts.<a href="src/agentmail/inboxes/drafts/client.py">list</a>(...) -> ListDraftsResponse</code></summary>
 <dl>

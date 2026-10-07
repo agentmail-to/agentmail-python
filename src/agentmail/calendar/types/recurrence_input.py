@@ -19,7 +19,8 @@ class RecurrenceInput(UncheckedBaseModel):
     """
     RFC 5545 RRULE body, with or without the `RRULE:` prefix, for example
     `FREQ=WEEKLY;BYDAY=MO,WE,FR` or `FREQ=MONTHLY;BYDAY=-1FR;COUNT=12`. Supported parts: `FREQ`,
-    `INTERVAL` (1 to 366), `COUNT` (1 to 10,000), `UNTIL` (`YYYYMMDD` or `YYYYMMDDTHHMMSSZ`),
+    `INTERVAL` (1 to 366), `COUNT` (1 to 10,000), `UNTIL` (`YYYYMMDD` for all-day events,
+    `YYYYMMDDTHHMMSSZ` for timed events),
     `WKST`, `BYMONTH`, `BYWEEKNO`, `BYYEARDAY`, `BYMONTHDAY`, `BYDAY`, `BYHOUR`, `BYMINUTE`,
     `BYSECOND` and `BYSETPOS`. `COUNT` and `UNTIL` are mutually exclusive. The rule is stored in
     a normalized form, so a response can differ textually from what you sent. At most 512

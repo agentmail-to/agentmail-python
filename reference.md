@@ -4355,8 +4355,9 @@ Gets the inbox's calendar. Every inbox has one calendar, so this works before an
 created. Its `etag` (also the `ETag` response header) is the value to send in `If-Match` to
 make an update conditional.
 
-Requires the `calendar_read` permission. Calendar is in private beta: organizations without
-access receive a `403`.
+Requires the `calendar_read` permission. Calendar is in private beta in US production
+(`api.agentmail.to`) and is unavailable in EU production (`api.agentmail.eu`).
+Organizations without access receive a `403`.
 </dd>
 </dl>
 </dd>
@@ -4444,7 +4445,8 @@ Requires the `calendar_update` permission. To make the update conditional, send 
 calendar's current `etag` in `If-Match`: a stale value returns `412`. Without `If-Match` the
 update applies to the calendar as it is.
 
-Calendar is in private beta: organizations without access receive a `403`.
+Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+production (`api.agentmail.eu`). Organizations without access receive a `403`.
 </dd>
 </dl>
 </dd>
@@ -4469,7 +4471,6 @@ client = AgentMail(
 
 client.inboxes.calendar.update(
     inbox_id="scheduler@agentmail.to",
-    if_match="\"rv-0\"",
     timezone="America/New_York",
 )
 
@@ -4544,7 +4545,8 @@ use Get Agenda.
 The list is always read in the region that serves the request, so it can trail a change made
 moments earlier by a few seconds. Requires the `calendar_event_read` permission.
 
-Calendar is in private beta: organizations without access receive a `403`.
+Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+production (`api.agentmail.eu`). Organizations without access receive a `403`.
 </dd>
 </dl>
 </dd>
@@ -4639,7 +4641,9 @@ and recurring events expanded into their individual dates, with cancelled dates 
 Use it to answer "what is on the calendar".
 
 The window defaults to now through 90 days from now and can be at most 366 days. Items omit
-`description`, `metadata` and `attendees`; get an event by ID for the full object. Dates of
+`description`, `metadata` and `attendees`; get an event by ID for the full object. An item
+the inbox is invited to still carries `response_status`, so `needs_action` marks an
+invitation waiting for a reply. Dates of
 recurring events appear only up to about 90 days from now; use List Event Instances for a
 recurring event's later dates. While a recurring event's dates are being regenerated after a
 schedule change, which takes a few seconds, the agenda can briefly leave out some of them;
@@ -4649,7 +4653,8 @@ The agenda is read in the region that serves the request, so it can trail a chan
 moments earlier by a few seconds. Pass `consistency=primary` to read your own change right
 away. Requires the `calendar_event_read` permission.
 
-Calendar is in private beta: organizations without access receive a `403`.
+Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+production (`api.agentmail.eu`). Organizations without access receive a `403`.
 </dd>
 </dl>
 </dd>
@@ -4794,7 +4799,8 @@ charged again.
 The event's `etag` is the value to send in `If-Match` to make a later update or delete
 conditional. Requires the `calendar_event_create` permission.
 
-Calendar is in private beta: organizations without access receive a `403`.
+Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+production (`api.agentmail.eu`). Organizations without access receive a `403`.
 </dd>
 </dl>
 </dd>
@@ -4903,7 +4909,8 @@ to read the latest state of an event or a date. A date that has already started 
 reads back as it ran, even if a later change to the series no longer produces it. Requires
 the `calendar_event_read` permission.
 
-Calendar is in private beta: organizations without access receive a `403`.
+Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+production (`api.agentmail.eu`). Organizations without access receive a `403`.
 </dd>
 </dl>
 </dd>
@@ -5018,7 +5025,8 @@ Emailing attendees counts one send per attendee against the organization, pod an
 send limits, charged before the change is saved; an over-limit request returns `429`
 `rate_limit_exceeded` and changes nothing.
 
-Calendar is in private beta: organizations without access receive a `403`.
+Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+production (`api.agentmail.eu`). Organizations without access receive a `403`.
 </dd>
 </dl>
 </dd>
@@ -5044,7 +5052,6 @@ client = AgentMail(
 client.inboxes.calendar.update_event(
     inbox_id="scheduler@agentmail.to",
     event_id="3f8a2c1e-6b4d-4e9f-a7c2-5d1b8e0f9a36",
-    if_match="\"rv-0\"",
     start="2026-10-15T15:00:00",
     end="2026-10-15T15:30:00",
     send_invites=True,
@@ -5252,7 +5259,8 @@ Emailing cancellations counts one send per attendee against the organization, po
 send limits, charged before the delete; an over-limit request returns `429`
 `rate_limit_exceeded` and deletes nothing.
 
-Calendar is in private beta: organizations without access receive a `403`.
+Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+production (`api.agentmail.eu`). Organizations without access receive a `403`.
 </dd>
 </dl>
 </dd>
@@ -5279,7 +5287,6 @@ client.inboxes.calendar.delete_event(
     inbox_id="scheduler@agentmail.to",
     event_id="3f8a2c1e-6b4d-4e9f-a7c2-5d1b8e0f9a36",
     send_invites=True,
-    if_match="\"rv-1\"",
     idempotency_key="delete-intro-acme",
 )
 
@@ -5385,7 +5392,8 @@ and `attendees`; get a date by its ID for the full object. Like other reads, the
 trail a change made moments earlier by a few seconds; pass `consistency=primary` to read
 your own change right away. Requires the `calendar_event_read` permission.
 
-Calendar is in private beta: organizations without access receive a `403`.
+Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+production (`api.agentmail.eu`). Organizations without access receive a `403`.
 </dd>
 </dl>
 </dd>
@@ -5533,7 +5541,8 @@ A reply email counts as one send against the organization, pod and inbox send li
 charged before the response is saved; an over-limit request returns `429`
 `rate_limit_exceeded` and changes nothing.
 
-Calendar is in private beta: organizations without access receive a `403`.
+Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+production (`api.agentmail.eu`). Organizations without access receive a `403`.
 </dd>
 </dl>
 </dd>
@@ -5559,7 +5568,6 @@ client = AgentMail(
 client.inboxes.calendar.respond_to_event(
     inbox_id="scheduler@agentmail.to",
     event_id="a1d5c7e9-2b4f-4c6a-9e8d-3f7b1c5a9d20",
-    if_match="\"rv-0\"",
     status="accepted",
     comment="See you there.",
 )

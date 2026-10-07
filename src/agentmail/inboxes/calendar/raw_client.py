@@ -66,8 +66,9 @@ class RawCalendarClient:
         created. Its `etag` (also the `ETag` response header) is the value to send in `If-Match` to
         make an update conditional.
 
-        Requires the `calendar_read` permission. Calendar is in private beta: organizations without
-        access receive a `403`.
+        Requires the `calendar_read` permission. Calendar is in private beta in US production
+        (`api.agentmail.to`) and is unavailable in EU production (`api.agentmail.eu`).
+        Organizations without access receive a `403`.
 
         Parameters
         ----------
@@ -159,7 +160,8 @@ class RawCalendarClient:
         calendar's current `etag` in `If-Match`: a stale value returns `412`. Without `If-Match` the
         update applies to the calendar as it is.
 
-        Calendar is in private beta: organizations without access receive a `403`.
+        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+        production (`api.agentmail.eu`). Organizations without access receive a `403`.
 
         Parameters
         ----------
@@ -294,7 +296,8 @@ class RawCalendarClient:
         The list is always read in the region that serves the request, so it can trail a change made
         moments earlier by a few seconds. Requires the `calendar_event_read` permission.
 
-        Calendar is in private beta: organizations without access receive a `403`.
+        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+        production (`api.agentmail.eu`). Organizations without access receive a `403`.
 
         Parameters
         ----------
@@ -391,7 +394,9 @@ class RawCalendarClient:
         Use it to answer "what is on the calendar".
 
         The window defaults to now through 90 days from now and can be at most 366 days. Items omit
-        `description`, `metadata` and `attendees`; get an event by ID for the full object. Dates of
+        `description`, `metadata` and `attendees`; get an event by ID for the full object. An item
+        the inbox is invited to still carries `response_status`, so `needs_action` marks an
+        invitation waiting for a reply. Dates of
         recurring events appear only up to about 90 days from now; use List Event Instances for a
         recurring event's later dates. While a recurring event's dates are being regenerated after a
         schedule change, which takes a few seconds, the agenda can briefly leave out some of them;
@@ -401,7 +406,8 @@ class RawCalendarClient:
         moments earlier by a few seconds. Pass `consistency=primary` to read your own change right
         away. Requires the `calendar_event_read` permission.
 
-        Calendar is in private beta: organizations without access receive a `403`.
+        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+        production (`api.agentmail.eu`). Organizations without access receive a `403`.
 
         Parameters
         ----------
@@ -533,7 +539,8 @@ class RawCalendarClient:
         The event's `etag` is the value to send in `If-Match` to make a later update or delete
         conditional. Requires the `calendar_event_create` permission.
 
-        Calendar is in private beta: organizations without access receive a `403`.
+        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+        production (`api.agentmail.eu`). Organizations without access receive a `403`.
 
         Parameters
         ----------
@@ -728,7 +735,8 @@ class RawCalendarClient:
         reads back as it ran, even if a later change to the series no longer produces it. Requires
         the `calendar_event_read` permission.
 
-        Calendar is in private beta: organizations without access receive a `403`.
+        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+        production (`api.agentmail.eu`). Organizations without access receive a `403`.
 
         Parameters
         ----------
@@ -865,7 +873,8 @@ class RawCalendarClient:
         send limits, charged before the change is saved; an over-limit request returns `429`
         `rate_limit_exceeded` and changes nothing.
 
-        Calendar is in private beta: organizations without access receive a `403`.
+        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+        production (`api.agentmail.eu`). Organizations without access receive a `403`.
 
         Parameters
         ----------
@@ -1096,7 +1105,8 @@ class RawCalendarClient:
         send limits, charged before the delete; an over-limit request returns `429`
         `rate_limit_exceeded` and deletes nothing.
 
-        Calendar is in private beta: organizations without access receive a `403`.
+        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+        production (`api.agentmail.eu`). Organizations without access receive a `403`.
 
         Parameters
         ----------
@@ -1260,7 +1270,8 @@ class RawCalendarClient:
         trail a change made moments earlier by a few seconds; pass `consistency=primary` to read
         your own change right away. Requires the `calendar_event_read` permission.
 
-        Calendar is in private beta: organizations without access receive a `403`.
+        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+        production (`api.agentmail.eu`). Organizations without access receive a `403`.
 
         Parameters
         ----------
@@ -1392,7 +1403,8 @@ class RawCalendarClient:
         charged before the response is saved; an over-limit request returns `429`
         `rate_limit_exceeded` and changes nothing.
 
-        Calendar is in private beta: organizations without access receive a `403`.
+        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+        production (`api.agentmail.eu`). Organizations without access receive a `403`.
 
         Parameters
         ----------
@@ -1559,8 +1571,9 @@ class AsyncRawCalendarClient:
         created. Its `etag` (also the `ETag` response header) is the value to send in `If-Match` to
         make an update conditional.
 
-        Requires the `calendar_read` permission. Calendar is in private beta: organizations without
-        access receive a `403`.
+        Requires the `calendar_read` permission. Calendar is in private beta in US production
+        (`api.agentmail.to`) and is unavailable in EU production (`api.agentmail.eu`).
+        Organizations without access receive a `403`.
 
         Parameters
         ----------
@@ -1652,7 +1665,8 @@ class AsyncRawCalendarClient:
         calendar's current `etag` in `If-Match`: a stale value returns `412`. Without `If-Match` the
         update applies to the calendar as it is.
 
-        Calendar is in private beta: organizations without access receive a `403`.
+        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+        production (`api.agentmail.eu`). Organizations without access receive a `403`.
 
         Parameters
         ----------
@@ -1787,7 +1801,8 @@ class AsyncRawCalendarClient:
         The list is always read in the region that serves the request, so it can trail a change made
         moments earlier by a few seconds. Requires the `calendar_event_read` permission.
 
-        Calendar is in private beta: organizations without access receive a `403`.
+        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+        production (`api.agentmail.eu`). Organizations without access receive a `403`.
 
         Parameters
         ----------
@@ -1884,7 +1899,9 @@ class AsyncRawCalendarClient:
         Use it to answer "what is on the calendar".
 
         The window defaults to now through 90 days from now and can be at most 366 days. Items omit
-        `description`, `metadata` and `attendees`; get an event by ID for the full object. Dates of
+        `description`, `metadata` and `attendees`; get an event by ID for the full object. An item
+        the inbox is invited to still carries `response_status`, so `needs_action` marks an
+        invitation waiting for a reply. Dates of
         recurring events appear only up to about 90 days from now; use List Event Instances for a
         recurring event's later dates. While a recurring event's dates are being regenerated after a
         schedule change, which takes a few seconds, the agenda can briefly leave out some of them;
@@ -1894,7 +1911,8 @@ class AsyncRawCalendarClient:
         moments earlier by a few seconds. Pass `consistency=primary` to read your own change right
         away. Requires the `calendar_event_read` permission.
 
-        Calendar is in private beta: organizations without access receive a `403`.
+        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+        production (`api.agentmail.eu`). Organizations without access receive a `403`.
 
         Parameters
         ----------
@@ -2026,7 +2044,8 @@ class AsyncRawCalendarClient:
         The event's `etag` is the value to send in `If-Match` to make a later update or delete
         conditional. Requires the `calendar_event_create` permission.
 
-        Calendar is in private beta: organizations without access receive a `403`.
+        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+        production (`api.agentmail.eu`). Organizations without access receive a `403`.
 
         Parameters
         ----------
@@ -2221,7 +2240,8 @@ class AsyncRawCalendarClient:
         reads back as it ran, even if a later change to the series no longer produces it. Requires
         the `calendar_event_read` permission.
 
-        Calendar is in private beta: organizations without access receive a `403`.
+        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+        production (`api.agentmail.eu`). Organizations without access receive a `403`.
 
         Parameters
         ----------
@@ -2358,7 +2378,8 @@ class AsyncRawCalendarClient:
         send limits, charged before the change is saved; an over-limit request returns `429`
         `rate_limit_exceeded` and changes nothing.
 
-        Calendar is in private beta: organizations without access receive a `403`.
+        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+        production (`api.agentmail.eu`). Organizations without access receive a `403`.
 
         Parameters
         ----------
@@ -2589,7 +2610,8 @@ class AsyncRawCalendarClient:
         send limits, charged before the delete; an over-limit request returns `429`
         `rate_limit_exceeded` and deletes nothing.
 
-        Calendar is in private beta: organizations without access receive a `403`.
+        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+        production (`api.agentmail.eu`). Organizations without access receive a `403`.
 
         Parameters
         ----------
@@ -2753,7 +2775,8 @@ class AsyncRawCalendarClient:
         trail a change made moments earlier by a few seconds; pass `consistency=primary` to read
         your own change right away. Requires the `calendar_event_read` permission.
 
-        Calendar is in private beta: organizations without access receive a `403`.
+        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+        production (`api.agentmail.eu`). Organizations without access receive a `403`.
 
         Parameters
         ----------
@@ -2885,7 +2908,8 @@ class AsyncRawCalendarClient:
         charged before the response is saved; an over-limit request returns `429`
         `rate_limit_exceeded` and changes nothing.
 
-        Calendar is in private beta: organizations without access receive a `403`.
+        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
+        production (`api.agentmail.eu`). Organizations without access receive a `403`.
 
         Parameters
         ----------

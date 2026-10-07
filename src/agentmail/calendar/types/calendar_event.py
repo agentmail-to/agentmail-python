@@ -7,6 +7,7 @@ import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from .attendee import Attendee
+from .attendee_status import AttendeeStatus
 from .calendar_event_id import CalendarEventId
 from .calendar_event_kind import CalendarEventKind
 from .calendar_event_source import CalendarEventSource
@@ -112,6 +113,14 @@ class CalendarEvent(UncheckedBaseModel):
     attendee_count: int = pydantic.Field()
     """
     Number of attendees.
+    """
+
+    response_status: typing.Optional[AttendeeStatus] = pydantic.Field(default=None)
+    """
+    The inbox's own response: the `status` of its entry in `attendees`. Present only on events
+    the inbox can respond to: `email` events with an `organizer_email` and an
+    `origin_message_id` that list the inbox as an attendee. Included on agenda and instance list
+    items, which omit `attendees`. `needs_action` means the invitation is waiting for a reply.
     """
 
     uid: str = pydantic.Field()

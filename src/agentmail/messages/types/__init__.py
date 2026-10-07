@@ -17,6 +17,7 @@ if typing.TYPE_CHECKING:
     from .message import Message
     from .message_attachments import MessageAttachments
     from .message_bcc import MessageBcc
+    from .message_calendar_event_id import MessageCalendarEventId
     from .message_cc import MessageCc
     from .message_created_at import MessageCreatedAt
     from .message_from import MessageFrom
@@ -66,6 +67,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Message": ".message",
     "MessageAttachments": ".message_attachments",
     "MessageBcc": ".message_bcc",
+    "MessageCalendarEventId": ".message_calendar_event_id",
     "MessageCc": ".message_cc",
     "MessageCreatedAt": ".message_created_at",
     "MessageFrom": ".message_from",
@@ -139,6 +141,7 @@ __all__ = [
     "Message",
     "MessageAttachments",
     "MessageBcc",
+    "MessageCalendarEventId",
     "MessageCc",
     "MessageCreatedAt",
     "MessageFrom",

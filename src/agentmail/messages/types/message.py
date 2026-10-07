@@ -11,6 +11,7 @@ from ...inboxes.types.inbox_id import InboxId
 from ...threads.types.thread_id import ThreadId
 from .message_attachments import MessageAttachments
 from .message_bcc import MessageBcc
+from .message_calendar_event_id import MessageCalendarEventId
 from .message_cc import MessageCc
 from .message_created_at import MessageCreatedAt
 from .message_from import MessageFrom
@@ -60,6 +61,7 @@ class Message(UncheckedBaseModel):
 
     attachments: typing.Optional[MessageAttachments] = None
     in_reply_to: typing.Optional[MessageInReplyTo] = None
+    calendar_event_id: typing.Optional[MessageCalendarEventId] = None
     references: typing.Optional[MessageReferences] = None
     headers: typing.Optional[MessageHeaders] = None
     size: MessageSize

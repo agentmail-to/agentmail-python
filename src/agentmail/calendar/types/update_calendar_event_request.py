@@ -61,7 +61,8 @@ class UpdateCalendarEventRequest(UncheckedBaseModel):
     recurrence: typing.Optional[RecurrenceInput] = pydantic.Field(default=None)
     """
     Replaces the recurrence. Set to `null` to turn a series into a one-off event (only when no
-    date of it has been edited). Not accepted for dated event IDs.
+    date of it has been edited). Not accepted for dated event IDs. A series ended with a
+    `mode=future` delete stays ended: the new rule keeps its `truncate_before`.
     """
 
     attendees: typing.Optional[typing.List[Attendee]] = pydantic.Field(default=None)

@@ -24,15 +24,33 @@ if typing.TYPE_CHECKING:
         WebhookHeaders,
         WebhookId,
     )
-    from . import events
+    from . import events, polling
     from .events import SvixId, SvixSignature, SvixTimestamp
+    from .polling import (
+        CreateInboxPollingWebhookRequest,
+        CreatePodPollingWebhookRequest,
+        CreatePollingWebhookRequest,
+        CreatePollingWebhookResponse,
+        ListPollingWebhooksResponse,
+        PollingClientId,
+        PollingToken,
+        PollingWebhook,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
     "ClientId": ".types",
+    "CreateInboxPollingWebhookRequest": ".polling",
     "CreateInboxWebhookRequest": ".types",
+    "CreatePodPollingWebhookRequest": ".polling",
     "CreatePodWebhookRequest": ".types",
+    "CreatePollingWebhookRequest": ".polling",
+    "CreatePollingWebhookResponse": ".polling",
     "CreateWebhookEventTypes": ".types",
     "CreateWebhookRequest": ".types",
+    "ListPollingWebhooksResponse": ".polling",
     "ListWebhooksResponse": ".types",
+    "PollingClientId": ".polling",
+    "PollingToken": ".polling",
+    "PollingWebhook": ".polling",
     "SvixId": ".events",
     "SvixSignature": ".events",
     "SvixTimestamp": ".events",
@@ -47,6 +65,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "WebhookHeaders": ".types",
     "WebhookId": ".types",
     "events": ".events",
+    "polling": ".polling",
 }
 
 
@@ -73,11 +92,19 @@ def __dir__():
 
 __all__ = [
     "ClientId",
+    "CreateInboxPollingWebhookRequest",
     "CreateInboxWebhookRequest",
+    "CreatePodPollingWebhookRequest",
     "CreatePodWebhookRequest",
+    "CreatePollingWebhookRequest",
+    "CreatePollingWebhookResponse",
     "CreateWebhookEventTypes",
     "CreateWebhookRequest",
+    "ListPollingWebhooksResponse",
     "ListWebhooksResponse",
+    "PollingClientId",
+    "PollingToken",
+    "PollingWebhook",
     "SvixId",
     "SvixSignature",
     "SvixTimestamp",
@@ -92,4 +119,5 @@ __all__ = [
     "WebhookHeaders",
     "WebhookId",
     "events",
+    "polling",
 ]

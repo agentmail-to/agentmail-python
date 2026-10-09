@@ -4355,9 +4355,9 @@ Gets the inbox's calendar. Every inbox has one calendar, so this works before an
 created. Its `etag` (also the `ETag` response header) is the value to send in `If-Match` to
 make an update conditional.
 
-Requires the `calendar_read` permission. Calendar is in private beta in US production
-(`api.agentmail.to`) and is unavailable in EU production (`api.agentmail.eu`).
-Organizations without access receive a `403`.
+Requires the `calendar_read` permission. Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`)
+but not yet in EU production (`api.agentmail.eu`). Organizations that have not joined
+Labs receive a `403`.
 </dd>
 </dl>
 </dd>
@@ -4445,8 +4445,8 @@ Requires the `calendar_update` permission. To make the update conditional, send 
 calendar's current `etag` in `If-Match`: a stale value returns `412`. Without `If-Match` the
 update applies to the calendar as it is.
 
-Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-production (`api.agentmail.eu`). Organizations without access receive a `403`.
+Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 </dd>
 </dl>
 </dd>
@@ -4545,8 +4545,8 @@ use Get Agenda.
 The list is always read in the region that serves the request, so it can trail a change made
 moments earlier by a few seconds. Requires the `calendar_event_read` permission.
 
-Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-production (`api.agentmail.eu`). Organizations without access receive a `403`.
+Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 </dd>
 </dl>
 </dd>
@@ -4653,8 +4653,8 @@ The agenda is read in the region that serves the request, so it can trail a chan
 moments earlier by a few seconds. Pass `consistency=primary` to read your own change right
 away. Requires the `calendar_event_read` permission.
 
-Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-production (`api.agentmail.eu`). Organizations without access receive a `403`.
+Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 </dd>
 </dl>
 </dd>
@@ -4799,8 +4799,8 @@ charged again.
 The event's `etag` is the value to send in `If-Match` to make a later update or delete
 conditional. Requires the `calendar_event_create` permission.
 
-Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-production (`api.agentmail.eu`). Organizations without access receive a `403`.
+Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 </dd>
 </dl>
 </dd>
@@ -4909,8 +4909,8 @@ to read the latest state of an event or a date. A date that has already started 
 reads back as it ran, even if a later change to the series no longer produces it. Requires
 the `calendar_event_read` permission.
 
-Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-production (`api.agentmail.eu`). Organizations without access receive a `403`.
+Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 </dd>
 </dl>
 </dd>
@@ -5025,8 +5025,8 @@ Emailing attendees counts one send per attendee against the organization, pod an
 send limits, charged before the change is saved; an over-limit request returns `429`
 `rate_limit_exceeded` and changes nothing.
 
-Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-production (`api.agentmail.eu`). Organizations without access receive a `403`.
+Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 </dd>
 </dl>
 </dd>
@@ -5186,7 +5186,8 @@ client.inboxes.calendar.update_event(
 **recurrence:** `typing.Optional[RecurrenceInput]` 
 
 Replaces the recurrence. Set to `null` to turn a series into a one-off event (only when no
-date of it has been edited). Not accepted for dated event IDs.
+date of it has been edited). Not accepted for dated event IDs. A series ended with a
+`mode=future` delete stays ended: the new rule keeps its `truncate_before`.
     
 </dd>
 </dl>
@@ -5259,8 +5260,8 @@ Emailing cancellations counts one send per attendee against the organization, po
 send limits, charged before the delete; an over-limit request returns `429`
 `rate_limit_exceeded` and deletes nothing.
 
-Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-production (`api.agentmail.eu`). Organizations without access receive a `403`.
+Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 </dd>
 </dl>
 </dd>
@@ -5392,8 +5393,8 @@ and `attendees`; get a date by its ID for the full object. Like other reads, the
 trail a change made moments earlier by a few seconds; pass `consistency=primary` to read
 your own change right away. Requires the `calendar_event_read` permission.
 
-Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-production (`api.agentmail.eu`). Organizations without access receive a `403`.
+Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 </dd>
 </dl>
 </dd>
@@ -5541,8 +5542,8 @@ A reply email counts as one send against the organization, pod and inbox send li
 charged before the response is saved; an over-limit request returns `429`
 `rate_limit_exceeded` and changes nothing.
 
-Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-production (`api.agentmail.eu`). Organizations without access receive a `403`.
+Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 </dd>
 </dl>
 </dd>
@@ -9799,6 +9800,370 @@ client = AgentMail(
 )
 
 client.inboxes.webhooks.delete(
+    inbox_id="inbox_id",
+    webhook_id="webhook_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_id:** `WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Inboxes Webhooks Polling
+<details><summary><code>client.inboxes.webhooks.polling.<a href="src/agentmail/inboxes/webhooks/polling/client.py">list</a>(...) -> ListPollingWebhooksResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists the polling webhooks created through this inbox route.
+
+**CLI:**
+```bash
+agentmail inboxes webhooks polling list --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.webhooks.polling.list(
+    inbox_id="inbox_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[Limit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ascending:** `typing.Optional[Ascending]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.webhooks.polling.<a href="src/agentmail/inboxes/webhooks/polling/client.py">get</a>(...) -> PollingWebhook</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes webhooks polling get --inbox-id <inbox_id> --webhook-id <webhook_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.webhooks.polling.get(
+    inbox_id="inbox_id",
+    webhook_id="webhook_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_id:** `WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.webhooks.polling.<a href="src/agentmail/inboxes/webhooks/polling/client.py">create</a>(...) -> CreatePollingWebhookResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a polling webhook scoped to this inbox and return the `token` that reads it.
+
+**CLI:**
+```bash
+agentmail inboxes webhooks polling create --inbox-id <inbox_id> --client-id my-agent --event-types message.received
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.webhooks.polling.create(
+    inbox_id="inbox_id",
+    client_id="client_id",
+    event_types=[
+        "message.received",
+        "message.received"
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `CreateInboxPollingWebhookRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.webhooks.polling.<a href="src/agentmail/inboxes/webhooks/polling/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes webhooks polling delete --inbox-id <inbox_id> --webhook-id <webhook_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.webhooks.polling.delete(
     inbox_id="inbox_id",
     webhook_id="webhook_id",
 )
@@ -14806,6 +15171,370 @@ client.pods.webhooks.delete(
 </dl>
 </details>
 
+## Pods Webhooks Polling
+<details><summary><code>client.pods.webhooks.polling.<a href="src/agentmail/pods/webhooks/polling/client.py">list</a>(...) -> ListPollingWebhooksResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists the polling webhooks created through this pod route.
+
+**CLI:**
+```bash
+agentmail pods webhooks polling list --pod-id <pod_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.pods.webhooks.polling.list(
+    pod_id="pod_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[Limit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ascending:** `typing.Optional[Ascending]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.webhooks.polling.<a href="src/agentmail/pods/webhooks/polling/client.py">get</a>(...) -> PollingWebhook</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods webhooks polling get --pod-id <pod_id> --webhook-id <webhook_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.pods.webhooks.polling.get(
+    pod_id="pod_id",
+    webhook_id="webhook_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_id:** `WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.webhooks.polling.<a href="src/agentmail/pods/webhooks/polling/client.py">create</a>(...) -> CreatePollingWebhookResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a polling webhook scoped to this pod and return the `token` that reads it.
+
+**CLI:**
+```bash
+agentmail pods webhooks polling create --pod-id <pod_id> --client-id my-agent --event-types message.received
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.pods.webhooks.polling.create(
+    pod_id="pod_id",
+    client_id="client_id",
+    event_types=[
+        "message.received",
+        "message.received"
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `CreatePodPollingWebhookRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.webhooks.polling.<a href="src/agentmail/pods/webhooks/polling/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods webhooks polling delete --pod-id <pod_id> --webhook-id <webhook_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.pods.webhooks.polling.delete(
+    pod_id="pod_id",
+    webhook_id="webhook_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_id:** `WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Threads
 <details><summary><code>client.threads.<a href="src/agentmail/threads/client.py">list</a>(...) -> ListThreadsResponse</code></summary>
 <dl>
@@ -15409,6 +16138,340 @@ client.threads.delete(
 <dd>
 
 **thread_id:** `ThreadId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Webhooks Polling
+<details><summary><code>client.webhooks.polling.<a href="src/agentmail/webhooks/polling/client.py">list</a>(...) -> ListPollingWebhooksResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists the polling webhooks created through this route. `page_token` must come from this
+endpoint; a token from another list endpoint is rejected.
+
+**CLI:**
+```bash
+agentmail webhooks polling list
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.webhooks.polling.list()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**limit:** `typing.Optional[Limit]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**page_token:** `typing.Optional[PageToken]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ascending:** `typing.Optional[Ascending]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.webhooks.polling.<a href="src/agentmail/webhooks/polling/client.py">get</a>(...) -> PollingWebhook</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+The `token` is never returned here: create again with the same `client_id` to get a new one.
+
+**CLI:**
+```bash
+agentmail webhooks polling get --webhook-id <webhook_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.webhooks.polling.get(
+    webhook_id="webhook_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**webhook_id:** `WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.webhooks.polling.<a href="src/agentmail/webhooks/polling/client.py">create</a>(...) -> CreatePollingWebhookResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a subscription the agent polls for events, and returns the `token` that reads it. Each
+organization, pod, and inbox holds at most 10 polling webhooks; a repeat create with the same
+`client_id` re-issues the token of the existing one instead of counting against that limit.
+
+**CLI:**
+```bash
+agentmail webhooks polling create --client-id my-agent --event-types message.received
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.webhooks.polling.create(
+    client_id="client_id",
+    event_types=[
+        "message.received",
+        "message.received"
+    ],
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `CreatePollingWebhookRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.webhooks.polling.<a href="src/agentmail/webhooks/polling/client.py">delete</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Stops delivery and invalidates the subscription's token.
+
+**CLI:**
+```bash
+agentmail webhooks polling delete --webhook-id <webhook_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.webhooks.polling.delete(
+    webhook_id="webhook_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**webhook_id:** `WebhookId` 
     
 </dd>
 </dl>

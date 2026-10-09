@@ -66,9 +66,9 @@ class RawCalendarClient:
         created. Its `etag` (also the `ETag` response header) is the value to send in `If-Match` to
         make an update conditional.
 
-        Requires the `calendar_read` permission. Calendar is in private beta in US production
-        (`api.agentmail.to`) and is unavailable in EU production (`api.agentmail.eu`).
-        Organizations without access receive a `403`.
+        Requires the `calendar_read` permission. Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`)
+        but not yet in EU production (`api.agentmail.eu`). Organizations that have not joined
+        Labs receive a `403`.
 
         Parameters
         ----------
@@ -160,8 +160,8 @@ class RawCalendarClient:
         calendar's current `etag` in `If-Match`: a stale value returns `412`. Without `If-Match` the
         update applies to the calendar as it is.
 
-        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-        production (`api.agentmail.eu`). Organizations without access receive a `403`.
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 
         Parameters
         ----------
@@ -296,8 +296,8 @@ class RawCalendarClient:
         The list is always read in the region that serves the request, so it can trail a change made
         moments earlier by a few seconds. Requires the `calendar_event_read` permission.
 
-        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-        production (`api.agentmail.eu`). Organizations without access receive a `403`.
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 
         Parameters
         ----------
@@ -406,8 +406,8 @@ class RawCalendarClient:
         moments earlier by a few seconds. Pass `consistency=primary` to read your own change right
         away. Requires the `calendar_event_read` permission.
 
-        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-        production (`api.agentmail.eu`). Organizations without access receive a `403`.
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 
         Parameters
         ----------
@@ -539,8 +539,8 @@ class RawCalendarClient:
         The event's `etag` is the value to send in `If-Match` to make a later update or delete
         conditional. Requires the `calendar_event_create` permission.
 
-        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-        production (`api.agentmail.eu`). Organizations without access receive a `403`.
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 
         Parameters
         ----------
@@ -735,8 +735,8 @@ class RawCalendarClient:
         reads back as it ran, even if a later change to the series no longer produces it. Requires
         the `calendar_event_read` permission.
 
-        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-        production (`api.agentmail.eu`). Organizations without access receive a `403`.
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 
         Parameters
         ----------
@@ -873,8 +873,8 @@ class RawCalendarClient:
         send limits, charged before the change is saved; an over-limit request returns `429`
         `rate_limit_exceeded` and changes nothing.
 
-        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-        production (`api.agentmail.eu`). Organizations without access receive a `403`.
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 
         Parameters
         ----------
@@ -916,7 +916,8 @@ class RawCalendarClient:
 
         recurrence : typing.Optional[RecurrenceInput]
             Replaces the recurrence. Set to `null` to turn a series into a one-off event (only when no
-            date of it has been edited). Not accepted for dated event IDs.
+            date of it has been edited). Not accepted for dated event IDs. A series ended with a
+            `mode=future` delete stays ended: the new rule keeps its `truncate_before`.
 
         attendees : typing.Optional[typing.Sequence[Attendee]]
             Replaces the attendee list.
@@ -1105,8 +1106,8 @@ class RawCalendarClient:
         send limits, charged before the delete; an over-limit request returns `429`
         `rate_limit_exceeded` and deletes nothing.
 
-        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-        production (`api.agentmail.eu`). Organizations without access receive a `403`.
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 
         Parameters
         ----------
@@ -1270,8 +1271,8 @@ class RawCalendarClient:
         trail a change made moments earlier by a few seconds; pass `consistency=primary` to read
         your own change right away. Requires the `calendar_event_read` permission.
 
-        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-        production (`api.agentmail.eu`). Organizations without access receive a `403`.
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 
         Parameters
         ----------
@@ -1403,8 +1404,8 @@ class RawCalendarClient:
         charged before the response is saved; an over-limit request returns `429`
         `rate_limit_exceeded` and changes nothing.
 
-        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-        production (`api.agentmail.eu`). Organizations without access receive a `403`.
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 
         Parameters
         ----------
@@ -1571,9 +1572,9 @@ class AsyncRawCalendarClient:
         created. Its `etag` (also the `ETag` response header) is the value to send in `If-Match` to
         make an update conditional.
 
-        Requires the `calendar_read` permission. Calendar is in private beta in US production
-        (`api.agentmail.to`) and is unavailable in EU production (`api.agentmail.eu`).
-        Organizations without access receive a `403`.
+        Requires the `calendar_read` permission. Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`)
+        but not yet in EU production (`api.agentmail.eu`). Organizations that have not joined
+        Labs receive a `403`.
 
         Parameters
         ----------
@@ -1665,8 +1666,8 @@ class AsyncRawCalendarClient:
         calendar's current `etag` in `If-Match`: a stale value returns `412`. Without `If-Match` the
         update applies to the calendar as it is.
 
-        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-        production (`api.agentmail.eu`). Organizations without access receive a `403`.
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 
         Parameters
         ----------
@@ -1801,8 +1802,8 @@ class AsyncRawCalendarClient:
         The list is always read in the region that serves the request, so it can trail a change made
         moments earlier by a few seconds. Requires the `calendar_event_read` permission.
 
-        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-        production (`api.agentmail.eu`). Organizations without access receive a `403`.
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 
         Parameters
         ----------
@@ -1911,8 +1912,8 @@ class AsyncRawCalendarClient:
         moments earlier by a few seconds. Pass `consistency=primary` to read your own change right
         away. Requires the `calendar_event_read` permission.
 
-        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-        production (`api.agentmail.eu`). Organizations without access receive a `403`.
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 
         Parameters
         ----------
@@ -2044,8 +2045,8 @@ class AsyncRawCalendarClient:
         The event's `etag` is the value to send in `If-Match` to make a later update or delete
         conditional. Requires the `calendar_event_create` permission.
 
-        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-        production (`api.agentmail.eu`). Organizations without access receive a `403`.
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 
         Parameters
         ----------
@@ -2240,8 +2241,8 @@ class AsyncRawCalendarClient:
         reads back as it ran, even if a later change to the series no longer produces it. Requires
         the `calendar_event_read` permission.
 
-        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-        production (`api.agentmail.eu`). Organizations without access receive a `403`.
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 
         Parameters
         ----------
@@ -2378,8 +2379,8 @@ class AsyncRawCalendarClient:
         send limits, charged before the change is saved; an over-limit request returns `429`
         `rate_limit_exceeded` and changes nothing.
 
-        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-        production (`api.agentmail.eu`). Organizations without access receive a `403`.
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 
         Parameters
         ----------
@@ -2421,7 +2422,8 @@ class AsyncRawCalendarClient:
 
         recurrence : typing.Optional[RecurrenceInput]
             Replaces the recurrence. Set to `null` to turn a series into a one-off event (only when no
-            date of it has been edited). Not accepted for dated event IDs.
+            date of it has been edited). Not accepted for dated event IDs. A series ended with a
+            `mode=future` delete stays ended: the new rule keeps its `truncate_before`.
 
         attendees : typing.Optional[typing.Sequence[Attendee]]
             Replaces the attendee list.
@@ -2610,8 +2612,8 @@ class AsyncRawCalendarClient:
         send limits, charged before the delete; an over-limit request returns `429`
         `rate_limit_exceeded` and deletes nothing.
 
-        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-        production (`api.agentmail.eu`). Organizations without access receive a `403`.
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 
         Parameters
         ----------
@@ -2775,8 +2777,8 @@ class AsyncRawCalendarClient:
         trail a change made moments earlier by a few seconds; pass `consistency=primary` to read
         your own change right away. Requires the `calendar_event_read` permission.
 
-        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-        production (`api.agentmail.eu`). Organizations without access receive a `403`.
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 
         Parameters
         ----------
@@ -2908,8 +2910,8 @@ class AsyncRawCalendarClient:
         charged before the response is saved; an over-limit request returns `429`
         `rate_limit_exceeded` and changes nothing.
 
-        Calendar is in private beta in US production (`api.agentmail.to`). It is unavailable in EU
-        production (`api.agentmail.eu`). Organizations without access receive a `403`.
+        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
+        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
 
         Parameters
         ----------

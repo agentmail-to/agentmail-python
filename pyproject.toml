@@ -14,8 +14,6 @@ classifiers = [
     "Intended Audience :: Developers",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -39,8 +37,10 @@ packages = [
 Repository = 'https://github.com/agentmail-to/agentmail-python'
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.10"
 httpx = ">=0.21.2"
+# Require the TLS hostname-verification fix for SDK consumers, not only the lockfile.
+anyio = ">=4.14.2"
 pydantic = ">= 1.9.2"
 pydantic-core = ">=2.18.2"
 typing_extensions = ">= 4.0.0"

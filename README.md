@@ -22,6 +22,9 @@ The Agentmail Python library provides convenient access to the Agentmail APIs fr
 
 ## Installation
 
+Requires Python 3.10 or newer. The minimum version supports the patched AnyIO
+TLS hostname verification used by the asynchronous HTTP client.
+
 ```sh
 pip install agentmail
 ```

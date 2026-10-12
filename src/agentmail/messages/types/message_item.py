@@ -4,6 +4,7 @@ import typing
 
 import pydantic
 import typing_extensions
+from ...agent_armor.types.agent_armor_result import AgentArmorResult
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.serialization import FieldMetadata
 from ...core.unchecked_base_model import UncheckedBaseModel
@@ -45,6 +46,7 @@ class MessageItem(UncheckedBaseModel):
     calendar_event_id: typing.Optional[MessageCalendarEventId] = None
     references: typing.Optional[MessageReferences] = None
     headers: typing.Optional[MessageHeaders] = None
+    agent_armor: typing.Optional[AgentArmorResult] = None
     size: MessageSize
     updated_at: MessageUpdatedAt
     created_at: MessageCreatedAt

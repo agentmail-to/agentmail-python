@@ -22,6 +22,7 @@ from ..events.types.message_delivered_event import MessageDeliveredEvent
 from ..events.types.message_opened_event import MessageOpenedEvent
 from ..events.types.message_received_event import MessageReceivedEvent
 from ..events.types.message_rejected_event import MessageRejectedEvent
+from ..events.types.message_security_completed_event import MessageSecurityCompletedEvent
 from ..events.types.message_sent_event import MessageSentEvent
 from .types.error import Error
 from .types.subscribe import Subscribe
@@ -36,6 +37,7 @@ _logger = logging.getLogger(__name__)
 WebsocketsSocketClientResponse = typing.Union[
     Subscribed,
     MessageReceivedEvent,
+    MessageSecurityCompletedEvent,
     MessageSentEvent,
     MessageDeliveredEvent,
     MessageBouncedEvent,

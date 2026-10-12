@@ -2,6 +2,8 @@
 
 import typing
 
+from ...agent_armor.types.agent_armor_feedback import AgentArmorFeedback
+from ...agent_armor.types.agent_armor_feedback_value import AgentArmorFeedbackValue
 from ...attachments.types.attachment_id import AttachmentId
 from ...attachments.types.attachment_response import AttachmentResponse
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
@@ -260,6 +262,55 @@ class MessagesClient:
         )
         """
         _response = self._raw_client.get(inbox_id, message_id, request_options=request_options)
+        return _response.data
+
+    def create_agent_armor_feedback(
+        self,
+        inbox_id: InboxId,
+        message_id: MessageId,
+        *,
+        feedback: AgentArmorFeedbackValue,
+        notes: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AgentArmorFeedback:
+        """
+        Tell us whether Agent Armor's verdict on a message was right. The message needs a completed result. A message
+        accepts up to 20 pieces of feedback. Requires permission to read the message.
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_id : MessageId
+
+        feedback : AgentArmorFeedbackValue
+
+        notes : typing.Optional[str]
+            Anything else about the verdict, up to 2,048 characters.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AgentArmorFeedback
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.inboxes.messages.create_agent_armor_feedback(
+            inbox_id="inbox_id",
+            message_id="message_id",
+            feedback="correct_review",
+        )
+        """
+        _response = self._raw_client.create_agent_armor_feedback(
+            inbox_id, message_id, feedback=feedback, notes=notes, request_options=request_options
+        )
         return _response.data
 
     def batch_get(
@@ -1135,6 +1186,63 @@ class AsyncMessagesClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get(inbox_id, message_id, request_options=request_options)
+        return _response.data
+
+    async def create_agent_armor_feedback(
+        self,
+        inbox_id: InboxId,
+        message_id: MessageId,
+        *,
+        feedback: AgentArmorFeedbackValue,
+        notes: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AgentArmorFeedback:
+        """
+        Tell us whether Agent Armor's verdict on a message was right. The message needs a completed result. A message
+        accepts up to 20 pieces of feedback. Requires permission to read the message.
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_id : MessageId
+
+        feedback : AgentArmorFeedbackValue
+
+        notes : typing.Optional[str]
+            Anything else about the verdict, up to 2,048 characters.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AgentArmorFeedback
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.inboxes.messages.create_agent_armor_feedback(
+                inbox_id="inbox_id",
+                message_id="message_id",
+                feedback="correct_review",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.create_agent_armor_feedback(
+            inbox_id, message_id, feedback=feedback, notes=notes, request_options=request_options
+        )
         return _response.data
 
     async def batch_get(

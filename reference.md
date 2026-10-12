@@ -7232,6 +7232,98 @@ client.inboxes.messages.get(
 </dl>
 </details>
 
+<details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">create_agent_armor_feedback</a>(...) -> AgentArmorFeedback</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tell us whether Agent Armor's verdict on a message was right. The message needs a completed result. A message
+accepts up to 20 pieces of feedback. Requires permission to read the message.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.messages.create_agent_armor_feedback(
+    inbox_id="inbox_id",
+    message_id="message_id",
+    feedback="correct_review",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**message_id:** `MessageId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `CreateAgentArmorFeedbackRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.inboxes.messages.<a href="src/agentmail/inboxes/messages/client.py">batch_get</a>(...) -> BatchGetMessagesResponse</code></summary>
 <dl>
 <dd>

@@ -3,6 +3,8 @@
 import typing
 from json.decoder import JSONDecodeError
 
+from ...agent_armor.types.agent_armor_feedback import AgentArmorFeedback
+from ...agent_armor.types.agent_armor_feedback_value import AgentArmorFeedbackValue
 from ...attachments.types.attachment_id import AttachmentId
 from ...attachments.types.attachment_response import AttachmentResponse
 from ...core.api_error import ApiError
@@ -320,6 +322,100 @@ class RawMessagesClient:
                 return HttpResponse(response=_response, data=_data)
             if _response.status_code == 404:
                 raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def create_agent_armor_feedback(
+        self,
+        inbox_id: InboxId,
+        message_id: MessageId,
+        *,
+        feedback: AgentArmorFeedbackValue,
+        notes: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[AgentArmorFeedback]:
+        """
+        Tell us whether Agent Armor's verdict on a message was right. The message needs a completed result. A message
+        accepts up to 20 pieces of feedback. Requires permission to read the message.
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_id : MessageId
+
+        feedback : AgentArmorFeedbackValue
+
+        notes : typing.Optional[str]
+            Anything else about the verdict, up to 2,048 characters.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[AgentArmorFeedback]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}/agent-armor/feedback",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "feedback": feedback,
+                "notes": notes,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    AgentArmorFeedback,
+                    construct_type(
+                        type_=AgentArmorFeedback,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
@@ -1619,6 +1715,100 @@ class AsyncRawMessagesClient:
                 return AsyncHttpResponse(response=_response, data=_data)
             if _response.status_code == 404:
                 raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def create_agent_armor_feedback(
+        self,
+        inbox_id: InboxId,
+        message_id: MessageId,
+        *,
+        feedback: AgentArmorFeedbackValue,
+        notes: typing.Optional[str] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[AgentArmorFeedback]:
+        """
+        Tell us whether Agent Armor's verdict on a message was right. The message needs a completed result. A message
+        accepts up to 20 pieces of feedback. Requires permission to read the message.
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_id : MessageId
+
+        feedback : AgentArmorFeedbackValue
+
+        notes : typing.Optional[str]
+            Anything else about the verdict, up to 2,048 characters.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[AgentArmorFeedback]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}/agent-armor/feedback",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "feedback": feedback,
+                "notes": notes,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    AgentArmorFeedback,
+                    construct_type(
+                        type_=AgentArmorFeedback,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,

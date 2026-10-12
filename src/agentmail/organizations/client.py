@@ -6,6 +6,7 @@ from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.request_options import RequestOptions
 from .raw_client import AsyncRawOrganizationsClient, RawOrganizationsClient
 from .types.organization import Organization
+from .types.organization_labs import OrganizationLabs
 
 
 class OrganizationsClient:
@@ -51,6 +52,70 @@ class OrganizationsClient:
         client.organizations.get()
         """
         _response = self._raw_client.get(request_options=request_options)
+        return _response.data
+
+    def get_labs(self, *, request_options: typing.Optional[RequestOptions] = None) -> OrganizationLabs:
+        """
+        Returns whether the organization is in [AgentMail Labs](https://docs.agentmail.to/calendar), which turns on features that are still in preview, such as calendar. Requires an organization-scoped API key.
+
+        **CLI:**
+        ```bash
+        agentmail organizations get-labs
+        ```
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        OrganizationLabs
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.organizations.get_labs()
+        """
+        _response = self._raw_client.get_labs(request_options=request_options)
+        return _response.data
+
+    def join_labs(self, *, request_options: typing.Optional[RequestOptions] = None) -> OrganizationLabs:
+        """
+        Joins AgentMail Labs for the whole organization, which turns on every feature in Labs for every inbox. Joining again has no effect. There is no leave on the API; an organization admin can leave in the console under [Settings, then Labs](https://console.agentmail.to/dashboard/settings/labs).
+
+        Join only when your organization has decided to. Get Labs reads the same for an organization that never joined and one whose admin left Labs on purpose, so don't join just because `enabled` is `false`.
+
+        Requires an organization-scoped API key with no permissions restriction, and a verified organization. API keys see the change within five minutes. Where Labs isn't offered (`available` is `false` on Get Labs), joining returns `403`.
+
+        **CLI:**
+        ```bash
+        agentmail organizations join-labs
+        ```
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        OrganizationLabs
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.organizations.join_labs()
+        """
+        _response = self._raw_client.join_labs(request_options=request_options)
         return _response.data
 
 
@@ -105,4 +170,84 @@ class AsyncOrganizationsClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get(request_options=request_options)
+        return _response.data
+
+    async def get_labs(self, *, request_options: typing.Optional[RequestOptions] = None) -> OrganizationLabs:
+        """
+        Returns whether the organization is in [AgentMail Labs](https://docs.agentmail.to/calendar), which turns on features that are still in preview, such as calendar. Requires an organization-scoped API key.
+
+        **CLI:**
+        ```bash
+        agentmail organizations get-labs
+        ```
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        OrganizationLabs
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.organizations.get_labs()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_labs(request_options=request_options)
+        return _response.data
+
+    async def join_labs(self, *, request_options: typing.Optional[RequestOptions] = None) -> OrganizationLabs:
+        """
+        Joins AgentMail Labs for the whole organization, which turns on every feature in Labs for every inbox. Joining again has no effect. There is no leave on the API; an organization admin can leave in the console under [Settings, then Labs](https://console.agentmail.to/dashboard/settings/labs).
+
+        Join only when your organization has decided to. Get Labs reads the same for an organization that never joined and one whose admin left Labs on purpose, so don't join just because `enabled` is `false`.
+
+        Requires an organization-scoped API key with no permissions restriction, and a verified organization. API keys see the change within five minutes. Where Labs isn't offered (`available` is `false` on Get Labs), joining returns `403`.
+
+        **CLI:**
+        ```bash
+        agentmail organizations join-labs
+        ```
+
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        OrganizationLabs
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.organizations.join_labs()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.join_labs(request_options=request_options)
         return _response.data

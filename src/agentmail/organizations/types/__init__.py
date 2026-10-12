@@ -7,7 +7,8 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .organization import Organization
-_dynamic_imports: typing.Dict[str, str] = {"Organization": ".organization"}
+    from .organization_labs import OrganizationLabs
+_dynamic_imports: typing.Dict[str, str] = {"Organization": ".organization", "OrganizationLabs": ".organization_labs"}
 
 
 def __getattr__(attr_name: str) -> typing.Any:
@@ -31,4 +32,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["Organization"]
+__all__ = ["Organization", "OrganizationLabs"]

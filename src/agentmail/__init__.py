@@ -328,7 +328,7 @@ if typing.TYPE_CHECKING:
         UsageTypes,
         Window,
     )
-    from .organizations import Organization
+    from .organizations import Organization, OrganizationForbiddenError, OrganizationLabs
     from .threads import (
         ListThreadsResponse,
         SearchThreadHighlights,
@@ -557,7 +557,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Open": ".events",
     "OperationId": ".calendar",
     "Organization": ".organizations",
+    "OrganizationForbiddenError": ".organizations",
     "OrganizationId": ".types",
+    "OrganizationLabs": ".organizations",
     "PageToken": ".types",
     "PayloadTooLargeError": ".calendar",
     "Period": ".metrics",
@@ -913,7 +915,9 @@ __all__ = [
     "Open",
     "OperationId",
     "Organization",
+    "OrganizationForbiddenError",
     "OrganizationId",
+    "OrganizationLabs",
     "PageToken",
     "PayloadTooLargeError",
     "Period",

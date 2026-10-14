@@ -6,6 +6,7 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
+from .agent_armor_manual_override import AgentArmorManualOverride
 from .agent_armor_verdict import AgentArmorVerdict
 
 
@@ -24,6 +25,11 @@ class AgentArmorCompleteResult(UncheckedBaseModel):
     completed_at: dt.datetime = pydantic.Field()
     """
     When the scan finished.
+    """
+
+    manual_override: typing.Optional[AgentArmorManualOverride] = pydantic.Field(default=None)
+    """
+    Present on a `review` held in hold mode that someone released.
     """
 
     if IS_PYDANTIC_V2:

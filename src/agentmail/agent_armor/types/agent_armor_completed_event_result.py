@@ -9,7 +9,7 @@ from .agent_armor_complete_result import AgentArmorCompleteResult
 
 class AgentArmorCompletedEventResult(AgentArmorCompleteResult):
     """
-    The result in a `message.security.completed` event, which is always `complete`.
+    The result in a `message.security.completed` or `message.security.review` event, which is always `complete`.
     """
 
     status: typing.Literal["complete"] = "complete"

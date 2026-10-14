@@ -9,6 +9,7 @@ import pydantic
 import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
+from .agent_armor_manual_override import AgentArmorManualOverride
 from .agent_armor_unavailable_reason import AgentArmorUnavailableReason
 from .agent_armor_verdict import AgentArmorVerdict
 
@@ -48,6 +49,7 @@ class AgentArmorResult_Complete(UncheckedBaseModel):
     reason: str
     model: str
     completed_at: dt.datetime
+    manual_override: typing.Optional[AgentArmorManualOverride] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

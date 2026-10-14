@@ -17,7 +17,15 @@ if typing.TYPE_CHECKING:
     from .agent_armor_feedback_api_key_actor import AgentArmorFeedbackApiKeyActor
     from .agent_armor_feedback_console_actor import AgentArmorFeedbackConsoleActor
     from .agent_armor_feedback_value import AgentArmorFeedbackValue
+    from .agent_armor_manual_override import AgentArmorManualOverride
     from .agent_armor_pending_result import AgentArmorPendingResult
+    from .agent_armor_release_actor import (
+        AgentArmorReleaseActor,
+        AgentArmorReleaseActor_ApiKey,
+        AgentArmorReleaseActor_Console,
+    )
+    from .agent_armor_release_api_key_actor import AgentArmorReleaseApiKeyActor
+    from .agent_armor_release_console_actor import AgentArmorReleaseConsoleActor
     from .agent_armor_result import (
         AgentArmorResult,
         AgentArmorResult_Complete,
@@ -28,6 +36,8 @@ if typing.TYPE_CHECKING:
     from .agent_armor_unavailable_result import AgentArmorUnavailableResult
     from .agent_armor_verdict import AgentArmorVerdict
     from .create_agent_armor_feedback_request import CreateAgentArmorFeedbackRequest
+    from .release_agent_armor_message_request import ReleaseAgentArmorMessageRequest
+    from .release_agent_armor_message_response import ReleaseAgentArmorMessageResponse
 _dynamic_imports: typing.Dict[str, str] = {
     "AgentArmorCompleteResult": ".agent_armor_complete_result",
     "AgentArmorCompletedEventResult": ".agent_armor_completed_event_result",
@@ -38,7 +48,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentArmorFeedbackApiKeyActor": ".agent_armor_feedback_api_key_actor",
     "AgentArmorFeedbackConsoleActor": ".agent_armor_feedback_console_actor",
     "AgentArmorFeedbackValue": ".agent_armor_feedback_value",
+    "AgentArmorManualOverride": ".agent_armor_manual_override",
     "AgentArmorPendingResult": ".agent_armor_pending_result",
+    "AgentArmorReleaseActor": ".agent_armor_release_actor",
+    "AgentArmorReleaseActor_ApiKey": ".agent_armor_release_actor",
+    "AgentArmorReleaseActor_Console": ".agent_armor_release_actor",
+    "AgentArmorReleaseApiKeyActor": ".agent_armor_release_api_key_actor",
+    "AgentArmorReleaseConsoleActor": ".agent_armor_release_console_actor",
     "AgentArmorResult": ".agent_armor_result",
     "AgentArmorResult_Complete": ".agent_armor_result",
     "AgentArmorResult_Pending": ".agent_armor_result",
@@ -47,6 +63,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "AgentArmorUnavailableResult": ".agent_armor_unavailable_result",
     "AgentArmorVerdict": ".agent_armor_verdict",
     "CreateAgentArmorFeedbackRequest": ".create_agent_armor_feedback_request",
+    "ReleaseAgentArmorMessageRequest": ".release_agent_armor_message_request",
+    "ReleaseAgentArmorMessageResponse": ".release_agent_armor_message_response",
 }
 
 
@@ -81,7 +99,13 @@ __all__ = [
     "AgentArmorFeedbackApiKeyActor",
     "AgentArmorFeedbackConsoleActor",
     "AgentArmorFeedbackValue",
+    "AgentArmorManualOverride",
     "AgentArmorPendingResult",
+    "AgentArmorReleaseActor",
+    "AgentArmorReleaseActor_ApiKey",
+    "AgentArmorReleaseActor_Console",
+    "AgentArmorReleaseApiKeyActor",
+    "AgentArmorReleaseConsoleActor",
     "AgentArmorResult",
     "AgentArmorResult_Complete",
     "AgentArmorResult_Pending",
@@ -90,4 +114,6 @@ __all__ = [
     "AgentArmorUnavailableResult",
     "AgentArmorVerdict",
     "CreateAgentArmorFeedbackRequest",
+    "ReleaseAgentArmorMessageRequest",
+    "ReleaseAgentArmorMessageResponse",
 ]

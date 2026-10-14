@@ -23,6 +23,8 @@ from ..events.types.message_opened_event import MessageOpenedEvent
 from ..events.types.message_received_event import MessageReceivedEvent
 from ..events.types.message_rejected_event import MessageRejectedEvent
 from ..events.types.message_security_completed_event import MessageSecurityCompletedEvent
+from ..events.types.message_security_override_event import MessageSecurityOverrideEvent
+from ..events.types.message_security_review_event import MessageSecurityReviewEvent
 from ..events.types.message_sent_event import MessageSentEvent
 from .types.error import Error
 from .types.subscribe import Subscribe
@@ -38,6 +40,8 @@ WebsocketsSocketClientResponse = typing.Union[
     Subscribed,
     MessageReceivedEvent,
     MessageSecurityCompletedEvent,
+    MessageSecurityReviewEvent,
+    MessageSecurityOverrideEvent,
     MessageSentEvent,
     MessageDeliveredEvent,
     MessageBouncedEvent,

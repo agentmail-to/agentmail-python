@@ -5,6 +5,7 @@ from json.decoder import JSONDecodeError
 
 from ...agent_armor.types.agent_armor_feedback import AgentArmorFeedback
 from ...agent_armor.types.agent_armor_feedback_value import AgentArmorFeedbackValue
+from ...agent_armor.types.release_agent_armor_message_response import ReleaseAgentArmorMessageResponse
 from ...attachments.types.attachment_id import AttachmentId
 from ...attachments.types.attachment_response import AttachmentResponse
 from ...core.api_error import ApiError
@@ -388,6 +389,102 @@ class RawMessagesClient:
                     AgentArmorFeedback,
                     construct_type(
                         type_=AgentArmorFeedback,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def release_agent_armor_message(
+        self,
+        inbox_id: InboxId,
+        message_id: MessageId,
+        *,
+        reason: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[ReleaseAgentArmorMessageResponse]:
+        """
+        Release a message Agent Armor held for review in hold mode: your agents are sent its `message.received`
+        event, `message.security.override` is sent too, in either order, and its `agent-armor-held` label is removed.
+        Only a message whose verdict is `review` and that is still held can be released; anything else answers `409`.
+        Repeating a release with the same reason and the same API key returns the first release; any other repeat
+        answers `409`.
+
+        Requires the opt-in `agent_armor_release` permission and permission to read the message. An organization
+        admin can also release from the console.
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_id : MessageId
+
+        reason : str
+            Why the message is safe to release, up to 2,048 characters and not blank. Recorded on the message.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[ReleaseAgentArmorMessageResponse]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}/agent-armor/release",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "reason": reason,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ReleaseAgentArmorMessageResponse,
+                    construct_type(
+                        type_=ReleaseAgentArmorMessageResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1781,6 +1878,102 @@ class AsyncRawMessagesClient:
                     AgentArmorFeedback,
                     construct_type(
                         type_=AgentArmorFeedback,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def release_agent_armor_message(
+        self,
+        inbox_id: InboxId,
+        message_id: MessageId,
+        *,
+        reason: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[ReleaseAgentArmorMessageResponse]:
+        """
+        Release a message Agent Armor held for review in hold mode: your agents are sent its `message.received`
+        event, `message.security.override` is sent too, in either order, and its `agent-armor-held` label is removed.
+        Only a message whose verdict is `review` and that is still held can be released; anything else answers `409`.
+        Repeating a release with the same reason and the same API key returns the first release; any other repeat
+        answers `409`.
+
+        Requires the opt-in `agent_armor_release` permission and permission to read the message. An organization
+        admin can also release from the console.
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_id : MessageId
+
+        reason : str
+            Why the message is safe to release, up to 2,048 characters and not blank. Recorded on the message.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[ReleaseAgentArmorMessageResponse]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/messages/{jsonable_encoder(message_id)}/agent-armor/release",
+            base_url=self._client_wrapper.get_environment().http,
+            method="POST",
+            json={
+                "reason": reason,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    ReleaseAgentArmorMessageResponse,
+                    construct_type(
+                        type_=ReleaseAgentArmorMessageResponse,  # type: ignore
                         object_=_response.json(),
                     ),
                 )

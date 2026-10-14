@@ -9,6 +9,8 @@ EventType = typing.Union[
         "message.received.blocked",
         "message.received.unauthenticated",
         "message.security.completed",
+        "message.security.review",
+        "message.security.override",
         "message.sent",
         "message.delivered",
         "message.bounced",

@@ -28,6 +28,7 @@ if typing.TYPE_CHECKING:
     from .calendar.client import AsyncCalendarClient, CalendarClient
     from .drafts.client import AsyncDraftsClient, DraftsClient
     from .events.client import AsyncEventsClient, EventsClient
+    from .files.client import AsyncFilesClient, FilesClient
     from .lists.client import AsyncListsClient, ListsClient
     from .messages.client import AsyncMessagesClient, MessagesClient
     from .metrics.client import AsyncMetricsClient, MetricsClient
@@ -51,6 +52,7 @@ class InboxesClient:
         self._api_keys: typing.Optional[ApiKeysClient] = None
         self._accounts: typing.Optional[AccountsClient] = None
         self._calendar: typing.Optional[CalendarClient] = None
+        self._files: typing.Optional[FilesClient] = None
 
     @property
     def with_raw_response(self) -> RawInboxesClient:
@@ -438,6 +440,14 @@ class InboxesClient:
             self._calendar = CalendarClient(client_wrapper=self._client_wrapper)
         return self._calendar
 
+    @property
+    def files(self):
+        if self._files is None:
+            from .files.client import FilesClient  # noqa: E402
+
+            self._files = FilesClient(client_wrapper=self._client_wrapper)
+        return self._files
+
 
 class AsyncInboxesClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -453,6 +463,7 @@ class AsyncInboxesClient:
         self._api_keys: typing.Optional[AsyncApiKeysClient] = None
         self._accounts: typing.Optional[AsyncAccountsClient] = None
         self._calendar: typing.Optional[AsyncCalendarClient] = None
+        self._files: typing.Optional[AsyncFilesClient] = None
 
     @property
     def with_raw_response(self) -> AsyncRawInboxesClient:
@@ -897,3 +908,11 @@ class AsyncInboxesClient:
 
             self._calendar = AsyncCalendarClient(client_wrapper=self._client_wrapper)
         return self._calendar
+
+    @property
+    def files(self):
+        if self._files is None:
+            from .files.client import AsyncFilesClient  # noqa: E402
+
+            self._files = AsyncFilesClient(client_wrapper=self._client_wrapper)
+        return self._files

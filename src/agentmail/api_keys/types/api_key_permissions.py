@@ -57,6 +57,12 @@ class ApiKeyPermissions(UncheckedBaseModel):
     Delete messages. Also required to delete threads.
     """
 
+    agent_armor_release: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Release mail Agent Armor holds for review. Opt-in: no key has it unless it was granted explicitly, even one
+    without a `permissions` object. See [Permissions](/permissions#agent-armor).
+    """
+
     label_spam_read: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Access messages labeled spam.
@@ -248,6 +254,26 @@ class ApiKeyPermissions(UncheckedBaseModel):
     calendar_event_delete: typing.Optional[bool] = pydantic.Field(default=None)
     """
     Delete calendar events.
+    """
+
+    file_read: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    List and get Agent Drive files, with their download URLs.
+    """
+
+    file_create: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Upload Agent Drive files (Create File and Complete File).
+    """
+
+    file_update: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Update Agent Drive files. Reserved; no endpoint uses it yet.
+    """
+
+    file_delete: typing.Optional[bool] = pydantic.Field(default=None)
+    """
+    Delete Agent Drive files.
     """
 
     if IS_PYDANTIC_V2:

@@ -4,6 +4,7 @@ import typing
 
 from ...agent_armor.types.agent_armor_feedback import AgentArmorFeedback
 from ...agent_armor.types.agent_armor_feedback_value import AgentArmorFeedbackValue
+from ...agent_armor.types.release_agent_armor_message_response import ReleaseAgentArmorMessageResponse
 from ...attachments.types.attachment_id import AttachmentId
 from ...attachments.types.attachment_response import AttachmentResponse
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
@@ -310,6 +311,58 @@ class MessagesClient:
         """
         _response = self._raw_client.create_agent_armor_feedback(
             inbox_id, message_id, feedback=feedback, notes=notes, request_options=request_options
+        )
+        return _response.data
+
+    def release_agent_armor_message(
+        self,
+        inbox_id: InboxId,
+        message_id: MessageId,
+        *,
+        reason: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ReleaseAgentArmorMessageResponse:
+        """
+        Release a message Agent Armor held for review in hold mode: your agents are sent its `message.received`
+        event, `message.security.override` is sent too, in either order, and its `agent-armor-held` label is removed.
+        Only a message whose verdict is `review` and that is still held can be released; anything else answers `409`.
+        Repeating a release with the same reason and the same API key returns the first release; any other repeat
+        answers `409`.
+
+        Requires the opt-in `agent_armor_release` permission and permission to read the message. An organization
+        admin can also release from the console.
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_id : MessageId
+
+        reason : str
+            Why the message is safe to release, up to 2,048 characters and not blank. Recorded on the message.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ReleaseAgentArmorMessageResponse
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.inboxes.messages.release_agent_armor_message(
+            inbox_id="inbox_id",
+            message_id="message_id",
+            reason="reason",
+        )
+        """
+        _response = self._raw_client.release_agent_armor_message(
+            inbox_id, message_id, reason=reason, request_options=request_options
         )
         return _response.data
 
@@ -1242,6 +1295,66 @@ class AsyncMessagesClient:
         """
         _response = await self._raw_client.create_agent_armor_feedback(
             inbox_id, message_id, feedback=feedback, notes=notes, request_options=request_options
+        )
+        return _response.data
+
+    async def release_agent_armor_message(
+        self,
+        inbox_id: InboxId,
+        message_id: MessageId,
+        *,
+        reason: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> ReleaseAgentArmorMessageResponse:
+        """
+        Release a message Agent Armor held for review in hold mode: your agents are sent its `message.received`
+        event, `message.security.override` is sent too, in either order, and its `agent-armor-held` label is removed.
+        Only a message whose verdict is `review` and that is still held can be released; anything else answers `409`.
+        Repeating a release with the same reason and the same API key returns the first release; any other repeat
+        answers `409`.
+
+        Requires the opt-in `agent_armor_release` permission and permission to read the message. An organization
+        admin can also release from the console.
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        message_id : MessageId
+
+        reason : str
+            Why the message is safe to release, up to 2,048 characters and not blank. Recorded on the message.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ReleaseAgentArmorMessageResponse
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.inboxes.messages.release_agent_armor_message(
+                inbox_id="inbox_id",
+                message_id="message_id",
+                reason="reason",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.release_agent_armor_message(
+            inbox_id, message_id, reason=reason, request_options=request_options
         )
         return _response.data
 

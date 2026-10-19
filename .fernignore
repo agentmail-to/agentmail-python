@@ -5,3 +5,6 @@ tests/utils/test_query_encoding.py
 
 # Preserve the Python 3.10 CI floor across generated releases.
 .github/workflows/ci.yml
+
+# Generated releases must retain the security checks run by that workflow.
+tests/test_security_requirements.py

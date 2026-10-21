@@ -118,9 +118,32 @@ def _retry_timeout(response: httpx.Response, retries: int) -> float:
     return _add_symmetric_jitter(backoff)
 
 
-def _should_retry(response: httpx.Response) -> bool:
+def _should_retry(response: httpx.Response, keyless_send: bool = False) -> bool:
+    if keyless_send:
+        # A 5xx, 408 or 409 can arrive after the email was already sent (for example a gateway
+        # timeout), and without an Idempotency-Key the API cannot recognise a resend. A 429 means
+        # the request was rejected before it was processed, so it is still safe to retry.
+        return response.status_code == 429
     retryable_400s = [429, 408, 409]
     return response.status_code >= 500 or response.status_code in retryable_400s
+
+
+def _is_keyless_send(
+    method: str,
+    headers: typing.Optional[typing.Dict[str, typing.Any]],
+    request_options: typing.Optional[RequestOptions],
+) -> bool:
+    """
+    True for a POST to an endpoint that accepts an `Idempotency-Key` header (the send, reply,
+    reply-all, forward and draft-send endpoints declare it) when the caller did not set one,
+    either through `idempotency_key` or through `request_options["additional_headers"]`.
+    """
+    if method.upper() != "POST" or headers is None or "Idempotency-Key" not in headers:
+        return False
+    if headers["Idempotency-Key"] is not None:
+        return False
+    additional_headers = (request_options.get("additional_headers") or {}) if request_options is not None else {}
+    return not any(k.lower() == "idempotency-key" and v is not None for k, v in additional_headers.items())
 
 
 _SENSITIVE_HEADERS = frozenset(
@@ -377,7 +400,7 @@ class HttpClient:
         )
 
         max_retries: int = request_options.get("max_retries", 2) if request_options is not None else 2
-        if _should_retry(response=response):
+        if _should_retry(response=response, keyless_send=_is_keyless_send(method, headers, request_options)):
             if retries < max_retries:
                 time.sleep(_retry_timeout(response=response, retries=retries))
                 return self.request(
@@ -640,7 +663,7 @@ class AsyncHttpClient:
         )
 
         max_retries: int = request_options.get("max_retries", 2) if request_options is not None else 2
-        if _should_retry(response=response):
+        if _should_retry(response=response, keyless_send=_is_keyless_send(method, headers, request_options)):
             if retries < max_retries:
                 await asyncio.sleep(_retry_timeout(response=response, retries=retries))
                 return await self.request(

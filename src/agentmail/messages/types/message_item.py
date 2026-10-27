@@ -11,6 +11,7 @@ from ...core.unchecked_base_model import UncheckedBaseModel
 from ...inboxes.types.inbox_id import InboxId
 from ...threads.types.thread_id import ThreadId
 from .message_attachments import MessageAttachments
+from .message_authentication_results import MessageAuthenticationResults
 from .message_bcc import MessageBcc
 from .message_calendar_event_id import MessageCalendarEventId
 from .message_cc import MessageCc
@@ -46,6 +47,7 @@ class MessageItem(UncheckedBaseModel):
     calendar_event_id: typing.Optional[MessageCalendarEventId] = None
     references: typing.Optional[MessageReferences] = None
     headers: typing.Optional[MessageHeaders] = None
+    authentication_results: typing.Optional[MessageAuthenticationResults] = None
     agent_armor: typing.Optional[AgentArmorResult] = None
     size: MessageSize
     updated_at: MessageUpdatedAt

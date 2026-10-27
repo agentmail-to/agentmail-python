@@ -58,9 +58,8 @@ class CalendarClient:
         created. Its `etag` (also the `ETag` response header) is the value to send in `If-Match` to
         make an update conditional.
 
-        Requires the `calendar_read` permission. Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`)
-        but not yet in EU production (`api.agentmail.eu`). Organizations that have not joined
-        Labs receive a `403`.
+        Requires the `calendar_read` permission. Calendar is available in US production
+        (`api.agentmail.to`) but not yet in EU production (`api.agentmail.eu`), which returns `403`.
 
         Parameters
         ----------
@@ -105,8 +104,8 @@ class CalendarClient:
         calendar's current `etag` in `If-Match`: a stale value returns `412`. Without `If-Match` the
         update applies to the calendar as it is.
 
-        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+        Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+        (`api.agentmail.eu`), which returns `403`.
 
         Parameters
         ----------
@@ -160,8 +159,8 @@ class CalendarClient:
         The list is always read in the region that serves the request, so it can trail a change made
         moments earlier by a few seconds. Requires the `calendar_event_read` permission.
 
-        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+        Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+        (`api.agentmail.eu`), which returns `403`.
 
         Parameters
         ----------
@@ -225,8 +224,8 @@ class CalendarClient:
         moments earlier by a few seconds. Pass `consistency=primary` to read your own change right
         away. Requires the `calendar_event_read` permission.
 
-        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+        Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+        (`api.agentmail.eu`), which returns `403`.
 
         Parameters
         ----------
@@ -324,8 +323,8 @@ class CalendarClient:
         The event's `etag` is the value to send in `If-Match` to make a later update or delete
         conditional. Requires the `calendar_event_create` permission.
 
-        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+        Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+        (`api.agentmail.eu`), which returns `403`.
 
         Parameters
         ----------
@@ -455,8 +454,8 @@ class CalendarClient:
         reads back as it ran, even if a later change to the series no longer produces it. Requires
         the `calendar_event_read` permission.
 
-        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+        Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+        (`api.agentmail.eu`), which returns `403`.
 
         Parameters
         ----------
@@ -538,8 +537,8 @@ class CalendarClient:
         send limits, charged before the change is saved; an over-limit request returns `429`
         `rate_limit_exceeded` and changes nothing.
 
-        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+        Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+        (`api.agentmail.eu`), which returns `403`.
 
         Parameters
         ----------
@@ -669,8 +668,8 @@ class CalendarClient:
         send limits, charged before the delete; an over-limit request returns `429`
         `rate_limit_exceeded` and deletes nothing.
 
-        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+        Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+        (`api.agentmail.eu`), which returns `403`.
 
         Parameters
         ----------
@@ -749,8 +748,8 @@ class CalendarClient:
         trail a change made moments earlier by a few seconds; pass `consistency=primary` to read
         your own change right away. Requires the `calendar_event_read` permission.
 
-        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+        Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+        (`api.agentmail.eu`), which returns `403`.
 
         Parameters
         ----------
@@ -838,8 +837,8 @@ class CalendarClient:
         charged before the response is saved; an over-limit request returns `429`
         `rate_limit_exceeded` and changes nothing.
 
-        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+        Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+        (`api.agentmail.eu`), which returns `403`.
 
         Parameters
         ----------
@@ -920,9 +919,8 @@ class AsyncCalendarClient:
         created. Its `etag` (also the `ETag` response header) is the value to send in `If-Match` to
         make an update conditional.
 
-        Requires the `calendar_read` permission. Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`)
-        but not yet in EU production (`api.agentmail.eu`). Organizations that have not joined
-        Labs receive a `403`.
+        Requires the `calendar_read` permission. Calendar is available in US production
+        (`api.agentmail.to`) but not yet in EU production (`api.agentmail.eu`), which returns `403`.
 
         Parameters
         ----------
@@ -975,8 +973,8 @@ class AsyncCalendarClient:
         calendar's current `etag` in `If-Match`: a stale value returns `412`. Without `If-Match` the
         update applies to the calendar as it is.
 
-        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+        Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+        (`api.agentmail.eu`), which returns `403`.
 
         Parameters
         ----------
@@ -1038,8 +1036,8 @@ class AsyncCalendarClient:
         The list is always read in the region that serves the request, so it can trail a change made
         moments earlier by a few seconds. Requires the `calendar_event_read` permission.
 
-        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+        Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+        (`api.agentmail.eu`), which returns `403`.
 
         Parameters
         ----------
@@ -1111,8 +1109,8 @@ class AsyncCalendarClient:
         moments earlier by a few seconds. Pass `consistency=primary` to read your own change right
         away. Requires the `calendar_event_read` permission.
 
-        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+        Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+        (`api.agentmail.eu`), which returns `403`.
 
         Parameters
         ----------
@@ -1217,8 +1215,8 @@ class AsyncCalendarClient:
         The event's `etag` is the value to send in `If-Match` to make a later update or delete
         conditional. Requires the `calendar_event_create` permission.
 
-        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+        Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+        (`api.agentmail.eu`), which returns `403`.
 
         Parameters
         ----------
@@ -1356,8 +1354,8 @@ class AsyncCalendarClient:
         reads back as it ran, even if a later change to the series no longer produces it. Requires
         the `calendar_event_read` permission.
 
-        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+        Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+        (`api.agentmail.eu`), which returns `403`.
 
         Parameters
         ----------
@@ -1447,8 +1445,8 @@ class AsyncCalendarClient:
         send limits, charged before the change is saved; an over-limit request returns `429`
         `rate_limit_exceeded` and changes nothing.
 
-        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+        Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+        (`api.agentmail.eu`), which returns `403`.
 
         Parameters
         ----------
@@ -1586,8 +1584,8 @@ class AsyncCalendarClient:
         send limits, charged before the delete; an over-limit request returns `429`
         `rate_limit_exceeded` and deletes nothing.
 
-        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+        Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+        (`api.agentmail.eu`), which returns `403`.
 
         Parameters
         ----------
@@ -1674,8 +1672,8 @@ class AsyncCalendarClient:
         trail a change made moments earlier by a few seconds; pass `consistency=primary` to read
         your own change right away. Requires the `calendar_event_read` permission.
 
-        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+        Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+        (`api.agentmail.eu`), which returns `403`.
 
         Parameters
         ----------
@@ -1770,8 +1768,8 @@ class AsyncCalendarClient:
         charged before the response is saved; an over-limit request returns `429`
         `rate_limit_exceeded` and changes nothing.
 
-        Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-        in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+        Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+        (`api.agentmail.eu`), which returns `403`.
 
         Parameters
         ----------

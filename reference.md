@@ -1746,6 +1746,8 @@ Create a new agent organization with an inbox and API key. This endpoint is for 
 
 A 6-digit OTP is sent to the human's email for verification.
 
+The new organization starts with 1 inbox, no custom domains, and 10 emails per day, which can be sent only to `human_email` until the organization is verified.
+
 `human_email` is optional. Without it, the inbox can receive email but cannot send to anyone until a human is attached with the attach human endpoint or, for a US-region inbox, claims it in the AgentMail Console with the API key (see [How do I claim my agent's inbox?](https://docs.agentmail.to/knowledge-base/claiming-agent-inbox)). There is also no way to recover the API key, so store it durably. Calling sign-up again without `human_email` creates a new organization, which needs a different `username`: the original username stays with the lost organization's inbox.
 
 This endpoint is idempotent. Calling it again with the same `human_email` will rotate the API key and resend the OTP if expired.
@@ -1916,7 +1918,7 @@ client.agent.attach_human(
 
 Verify an agent organization using the 6-digit OTP sent to the human's email during sign-up.
 
-On success, the organization is upgraded from `agent_unverified` to `agent_verified`, the send allowlist is removed, and free plan entitlements are applied.
+On success, the organization is upgraded from `agent_unverified` to `agent_verified`, the send allowlist is removed, and the Free plan's entitlements are applied: 3 inboxes and 100 emails per day, at first to at most 3 distinct recipients in the first hour, 5 in the first day, and 10 in the first week.
 
 The OTP expires after 24 hours and allows a maximum of 10 attempts. If the OTP expired, call the attach human endpoint with the same `human_email` to get a new one without rotating the API key. Once all 10 attempts are used, even the correct OTP is rejected, and attach human keeps returning the same OTP until it expires, so wait for it to expire before asking for a new one. An organization that signed up without a `human_email` has no OTP until a human is attached. If you run into any difficulties receiving the OTP code, you can also create an account on [console.agentmail.to](https://console.agentmail.to) using the human email address you provided to verify your account.
 
@@ -4355,9 +4357,8 @@ Gets the inbox's calendar. Every inbox has one calendar, so this works before an
 created. Its `etag` (also the `ETag` response header) is the value to send in `If-Match` to
 make an update conditional.
 
-Requires the `calendar_read` permission. Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`)
-but not yet in EU production (`api.agentmail.eu`). Organizations that have not joined
-Labs receive a `403`.
+Requires the `calendar_read` permission. Calendar is available in US production
+(`api.agentmail.to`) but not yet in EU production (`api.agentmail.eu`), which returns `403`.
 </dd>
 </dl>
 </dd>
@@ -4445,8 +4446,8 @@ Requires the `calendar_update` permission. To make the update conditional, send 
 calendar's current `etag` in `If-Match`: a stale value returns `412`. Without `If-Match` the
 update applies to the calendar as it is.
 
-Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+(`api.agentmail.eu`), which returns `403`.
 </dd>
 </dl>
 </dd>
@@ -4545,8 +4546,8 @@ use Get Agenda.
 The list is always read in the region that serves the request, so it can trail a change made
 moments earlier by a few seconds. Requires the `calendar_event_read` permission.
 
-Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+(`api.agentmail.eu`), which returns `403`.
 </dd>
 </dl>
 </dd>
@@ -4653,8 +4654,8 @@ The agenda is read in the region that serves the request, so it can trail a chan
 moments earlier by a few seconds. Pass `consistency=primary` to read your own change right
 away. Requires the `calendar_event_read` permission.
 
-Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+(`api.agentmail.eu`), which returns `403`.
 </dd>
 </dl>
 </dd>
@@ -4799,8 +4800,8 @@ charged again.
 The event's `etag` is the value to send in `If-Match` to make a later update or delete
 conditional. Requires the `calendar_event_create` permission.
 
-Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+(`api.agentmail.eu`), which returns `403`.
 </dd>
 </dl>
 </dd>
@@ -4909,8 +4910,8 @@ to read the latest state of an event or a date. A date that has already started 
 reads back as it ran, even if a later change to the series no longer produces it. Requires
 the `calendar_event_read` permission.
 
-Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+(`api.agentmail.eu`), which returns `403`.
 </dd>
 </dl>
 </dd>
@@ -5025,8 +5026,8 @@ Emailing attendees counts one send per attendee against the organization, pod an
 send limits, charged before the change is saved; an over-limit request returns `429`
 `rate_limit_exceeded` and changes nothing.
 
-Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+(`api.agentmail.eu`), which returns `403`.
 </dd>
 </dl>
 </dd>
@@ -5260,8 +5261,8 @@ Emailing cancellations counts one send per attendee against the organization, po
 send limits, charged before the delete; an over-limit request returns `429`
 `rate_limit_exceeded` and deletes nothing.
 
-Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+(`api.agentmail.eu`), which returns `403`.
 </dd>
 </dl>
 </dd>
@@ -5393,8 +5394,8 @@ and `attendees`; get a date by its ID for the full object. Like other reads, the
 trail a change made moments earlier by a few seconds; pass `consistency=primary` to read
 your own change right away. Requires the `calendar_event_read` permission.
 
-Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+(`api.agentmail.eu`), which returns `403`.
 </dd>
 </dl>
 </dd>
@@ -5542,8 +5543,8 @@ A reply email counts as one send against the organization, pod and inbox send li
 charged before the response is saved; an over-limit request returns `429`
 `rate_limit_exceeded` and changes nothing.
 
-Calendar is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet
-in EU production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+Calendar is available in US production (`api.agentmail.to`) but not yet in EU production
+(`api.agentmail.eu`), which returns `403`.
 </dd>
 </dl>
 </dd>
@@ -11553,10 +11554,9 @@ Rolling bounce and complaint rates for the organization. At each
 `period` grid point, the bounced (or complained) messages over the
 preceding `window` divided by the messages sent over the same window,
 with the send count alongside so you can see the volume behind
-it. This is the number AgentMail's account moderation acts on: a
-warning at a 5% bounce rate and suspension at 10%, evaluated over a
-rolling 24 hours once at least 1,000 messages were sent in that
-window. Defaults to the rolling 24-hour rate sampled hourly over the
+it. AgentMail weighs bounce and complaint signals when deciding
+whether to suspend an account's sending, so keep both rates low.
+Defaults to the rolling 24-hour rate sampled hourly over the
 last day; `start` must be within the last 90 days, `window` must be a
 whole multiple of `period`, and the range plus window divided by
 `period` must not exceed 1000 buckets.
@@ -11752,7 +11752,7 @@ client.organizations.get()
 <dl>
 <dd>
 
-Returns whether the organization is in [AgentMail Labs](https://docs.agentmail.to/calendar), which turns on features that are still in preview, such as calendar. Requires an organization-scoped API key.
+Returns whether the organization is in AgentMail Labs, which turns on features that are still in preview, such as [Agent Armor](https://docs.agentmail.to/agent-armor). Requires an organization-scoped API key.
 
 **CLI:**
 ```bash

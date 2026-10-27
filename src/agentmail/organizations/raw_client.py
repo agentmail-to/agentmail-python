@@ -68,7 +68,7 @@ class RawOrganizationsClient:
 
     def get_labs(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[OrganizationLabs]:
         """
-        Returns whether the organization is in [AgentMail Labs](https://docs.agentmail.to/calendar), which turns on features that are still in preview, such as calendar. Requires an organization-scoped API key.
+        Returns whether the organization is in AgentMail Labs, which turns on features that are still in preview, such as [Agent Armor](https://docs.agentmail.to/agent-armor). Requires an organization-scoped API key.
 
         **CLI:**
         ```bash
@@ -252,7 +252,7 @@ class AsyncRawOrganizationsClient:
         self, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[OrganizationLabs]:
         """
-        Returns whether the organization is in [AgentMail Labs](https://docs.agentmail.to/calendar), which turns on features that are still in preview, such as calendar. Requires an organization-scoped API key.
+        Returns whether the organization is in AgentMail Labs, which turns on features that are still in preview, such as [Agent Armor](https://docs.agentmail.to/agent-armor). Requires an organization-scoped API key.
 
         **CLI:**
         ```bash

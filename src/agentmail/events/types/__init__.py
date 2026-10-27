@@ -36,6 +36,7 @@ if typing.TYPE_CHECKING:
     from .message_sent_event import MessageSentEvent
     from .open import Open
     from .pod_ids import PodIds
+    from .received_message import ReceivedMessage
     from .recipient import Recipient
     from .reject import Reject
     from .send import Send
@@ -71,6 +72,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MessageSentEvent": ".message_sent_event",
     "Open": ".open",
     "PodIds": ".pod_ids",
+    "ReceivedMessage": ".received_message",
     "Recipient": ".recipient",
     "Reject": ".reject",
     "Send": ".send",
@@ -130,6 +132,7 @@ __all__ = [
     "MessageSentEvent",
     "Open",
     "PodIds",
+    "ReceivedMessage",
     "Recipient",
     "Reject",
     "Send",

@@ -40,7 +40,9 @@ class Webhook(UncheckedBaseModel):
 
     enabled: bool = pydantic.Field()
     """
-    Webhook is enabled.
+    Whether the webhook is enabled. It becomes false when you disable it, and also when deliveries to
+    the URL have failed for 5 days, in which case AgentMail sends no notification. Re-enable it with
+    update and `enabled` set to true.
     """
 
     updated_at: dt.datetime = pydantic.Field()

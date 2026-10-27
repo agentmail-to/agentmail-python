@@ -11,8 +11,9 @@ from .create_pod_webhook_request import CreatePodWebhookRequest
 class CreateWebhookRequest(CreatePodWebhookRequest):
     pod_ids: typing.Optional[PodIds] = pydantic.Field(default=None)
     """
-    Pods for which to send events. Maximum 10 per webhook. The webhook receives an event that matches
-    any listed pod or inbox, so a listed pod already covers every inbox in it.
+    Pods for which to send events. A webhook can list at most 10 pods and inboxes combined; more returns
+    `403` with `limit_exceeded`. The webhook receives an event that matches any listed pod or inbox, so a
+    listed pod already covers every inbox in it.
     """
 
     if IS_PYDANTIC_V2:

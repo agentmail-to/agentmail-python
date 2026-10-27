@@ -21,6 +21,7 @@ if typing.TYPE_CHECKING:
     from .status import Status
     from .subdomains_enabled import SubdomainsEnabled
     from .tracking_enabled import TrackingEnabled
+    from .tracking_status import TrackingStatus
     from .update_domain_request import UpdateDomainRequest
     from .verification_record import VerificationRecord
     from .verification_status import VerificationStatus
@@ -40,6 +41,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Status": ".status",
     "SubdomainsEnabled": ".subdomains_enabled",
     "TrackingEnabled": ".tracking_enabled",
+    "TrackingStatus": ".tracking_status",
     "UpdateDomainRequest": ".update_domain_request",
     "VerificationRecord": ".verification_record",
     "VerificationStatus": ".verification_status",
@@ -83,6 +85,7 @@ __all__ = [
     "Status",
     "SubdomainsEnabled",
     "TrackingEnabled",
+    "TrackingStatus",
     "UpdateDomainRequest",
     "VerificationRecord",
     "VerificationStatus",

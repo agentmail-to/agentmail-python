@@ -258,22 +258,22 @@ class ApiKeyPermissions(UncheckedBaseModel):
 
     file_read: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    List and get Agent Drive files, with their download URLs.
+    Reserved; not released yet.
     """
 
     file_create: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Upload Agent Drive files (Create File and Complete File).
+    Reserved; not released yet.
     """
 
     file_update: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Update Agent Drive files. Reserved; no endpoint uses it yet.
+    Reserved; not released yet.
     """
 
     file_delete: typing.Optional[bool] = pydantic.Field(default=None)
     """
-    Delete Agent Drive files.
+    Reserved; not released yet.
     """
 
     if IS_PYDANTIC_V2:

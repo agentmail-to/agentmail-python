@@ -15,7 +15,11 @@ class CreatePodWebhookRequest(CreateInboxWebhookRequest):
     receive events for the whole pod.
     """
 
-    inbox_ids: typing.Optional[InboxIds] = None
+    inbox_ids: typing.Optional[InboxIds] = pydantic.Field(default=None)
+    """
+    Inboxes for which to send events. A webhook can list at most 10 inboxes and pods combined;
+    more returns `403` with `limit_exceeded`.
+    """
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

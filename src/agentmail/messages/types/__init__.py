@@ -16,6 +16,9 @@ if typing.TYPE_CHECKING:
     from .list_messages_response import ListMessagesResponse
     from .message import Message
     from .message_attachments import MessageAttachments
+    from .message_authentication_domain import MessageAuthenticationDomain
+    from .message_authentication_results import MessageAuthenticationResults
+    from .message_authentication_verdict import MessageAuthenticationVerdict
     from .message_bcc import MessageBcc
     from .message_calendar_event_id import MessageCalendarEventId
     from .message_cc import MessageCc
@@ -66,6 +69,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListMessagesResponse": ".list_messages_response",
     "Message": ".message",
     "MessageAttachments": ".message_attachments",
+    "MessageAuthenticationDomain": ".message_authentication_domain",
+    "MessageAuthenticationResults": ".message_authentication_results",
+    "MessageAuthenticationVerdict": ".message_authentication_verdict",
     "MessageBcc": ".message_bcc",
     "MessageCalendarEventId": ".message_calendar_event_id",
     "MessageCc": ".message_cc",
@@ -140,6 +146,9 @@ __all__ = [
     "ListMessagesResponse",
     "Message",
     "MessageAttachments",
+    "MessageAuthenticationDomain",
+    "MessageAuthenticationResults",
+    "MessageAuthenticationVerdict",
     "MessageBcc",
     "MessageCalendarEventId",
     "MessageCc",

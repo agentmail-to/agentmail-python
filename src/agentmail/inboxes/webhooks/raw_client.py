@@ -318,10 +318,12 @@ class RawWebhooksClient:
 
         enabled : typing.Optional[bool]
             Set to true to re-enable a webhook that was disabled after repeated failed deliveries, or false
-            to disable it. Events that occurred while the webhook was disabled are not redelivered.
-            Re-enabling a webhook subscribed to `message.received.spam`, `message.received.blocked`, or
-            `message.received.unauthenticated` (or to every event type, with no filter) requires the
-            matching label permissions on the API key.
+            to disable it. AgentMail does not notify you when a webhook is disabled automatically; check this
+            field when you get or list webhooks. Events that occurred while the webhook was disabled are not
+            redelivered. Re-enabling requires the read permission for every restricted event type the webhook
+            subscribes to: `label_spam_read`, `label_blocked_read`, or `label_unauthenticated_read` for the
+            received variants, `message_read` for `message.security.*`, and `calendar_event_read` for
+            `calendar.event.*`. A webhook with no event type filter is checked against all of them.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -795,10 +797,12 @@ class AsyncRawWebhooksClient:
 
         enabled : typing.Optional[bool]
             Set to true to re-enable a webhook that was disabled after repeated failed deliveries, or false
-            to disable it. Events that occurred while the webhook was disabled are not redelivered.
-            Re-enabling a webhook subscribed to `message.received.spam`, `message.received.blocked`, or
-            `message.received.unauthenticated` (or to every event type, with no filter) requires the
-            matching label permissions on the API key.
+            to disable it. AgentMail does not notify you when a webhook is disabled automatically; check this
+            field when you get or list webhooks. Events that occurred while the webhook was disabled are not
+            redelivered. Re-enabling requires the read permission for every restricted event type the webhook
+            subscribes to: `label_spam_read`, `label_blocked_read`, or `label_unauthenticated_read` for the
+            received variants, `message_read` for `message.security.*`, and `calendar_event_read` for
+            `calendar.event.*`. A webhook with no event type filter is checked against all of them.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

@@ -60,6 +60,20 @@ class Organization(UncheckedBaseModel):
     Authentication provider type.
     """
 
+    suspended_at: typing.Optional[dt.datetime] = pydantic.Field(default=None)
+    """
+    Time at which the organization was suspended. Absent when it is not suspended. A suspended
+    organization cannot send, but it still receives mail, its webhooks and WebSocket events still
+    fire, and API reads keep working. See [account_suspended](https://docs.agentmail.to/errors#account_suspended).
+    """
+
+    suspended_reason: typing.Optional[str] = pydantic.Field(default=None)
+    """
+    Why the organization is suspended, in a short machine-readable form such as `message.bounced`
+    or `message.complained`. Absent when it is not suspended. Email support@agentmail.cc to resolve
+    a suspension.
+    """
+
     updated_at: dt.datetime = pydantic.Field()
     """
     Time at which organization was last updated.

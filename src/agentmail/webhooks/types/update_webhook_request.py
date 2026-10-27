@@ -11,7 +11,8 @@ from .update_pod_webhook_request import UpdatePodWebhookRequest
 class UpdateWebhookRequest(UpdatePodWebhookRequest):
     add_pod_ids: typing.Optional[PodIds] = pydantic.Field(default=None)
     """
-    Pod IDs to subscribe to the webhook.
+    Pod IDs to subscribe to the webhook. The webhook can list at most 10 pods and inboxes combined
+    after the update.
     """
 
     remove_pod_ids: typing.Optional[PodIds] = pydantic.Field(default=None)

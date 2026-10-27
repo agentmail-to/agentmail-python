@@ -2,4 +2,4 @@
 
 import typing
 
-RecordType = typing.Union[typing.Literal["TXT", "CNAME", "MX"], typing.Any]
+RecordType = typing.Union[typing.Literal["TXT", "CNAME", "MX", "CAA"], typing.Any]

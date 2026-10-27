@@ -220,10 +220,9 @@ class RawMetricsClient:
         `period` grid point, the bounced (or complained) messages over the
         preceding `window` divided by the messages sent over the same window,
         with the send count alongside so you can see the volume behind
-        it. This is the number AgentMail's account moderation acts on: a
-        warning at a 5% bounce rate and suspension at 10%, evaluated over a
-        rolling 24 hours once at least 1,000 messages were sent in that
-        window. Defaults to the rolling 24-hour rate sampled hourly over the
+        it. AgentMail weighs bounce and complaint signals when deciding
+        whether to suspend an account's sending, so keep both rates low.
+        Defaults to the rolling 24-hour rate sampled hourly over the
         last day; `start` must be within the last 90 days, `window` must be a
         whole multiple of `period`, and the range plus window divided by
         `period` must not exceed 1000 buckets.
@@ -494,10 +493,9 @@ class AsyncRawMetricsClient:
         `period` grid point, the bounced (or complained) messages over the
         preceding `window` divided by the messages sent over the same window,
         with the send count alongside so you can see the volume behind
-        it. This is the number AgentMail's account moderation acts on: a
-        warning at a 5% bounce rate and suspension at 10%, evaluated over a
-        rolling 24 hours once at least 1,000 messages were sent in that
-        window. Defaults to the rolling 24-hour rate sampled hourly over the
+        it. AgentMail weighs bounce and complaint signals when deciding
+        whether to suspend an account's sending, so keep both rates low.
+        Defaults to the rolling 24-hour rate sampled hourly over the
         last day; `start` must be within the last 90 days, `window` must be a
         whole multiple of `period`, and the range plus window divided by
         `period` must not exceed 1000 buckets.

@@ -18,7 +18,8 @@ class UpdateDomainRequest(UncheckedBaseModel):
     unchanged; an empty body is rejected. Enabling `inbound_enabled` or
     `subdomains_enabled` on a verified domain returns it to `PENDING` until the
     newly required MX record (the apex MX, or the wildcard `*.<domain>`) is
-    published and verified.
+    published and verified. Enabling `tracking_enabled` leaves `status` as it is
+    and starts `tracking_status` at `PENDING`.
     """
 
     feedback_enabled: typing.Optional[FeedbackEnabled] = None

@@ -5,10 +5,10 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
-from ...messages.types.message import Message
 from ...threads.types.thread_item import ThreadItem
 from .event_id import EventId
 from .message_received_event_type import MessageReceivedEventType
+from .received_message import ReceivedMessage
 
 
 class MessageReceivedEvent(UncheckedBaseModel):
@@ -19,7 +19,7 @@ class MessageReceivedEvent(UncheckedBaseModel):
     type: typing.Literal["event"] = "event"
     event_type: MessageReceivedEventType
     event_id: EventId
-    message: Message
+    message: ReceivedMessage
     thread: ThreadItem
 
     if IS_PYDANTIC_V2:

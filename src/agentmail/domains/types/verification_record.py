@@ -12,7 +12,7 @@ from .record_type import RecordType
 class VerificationRecord(UncheckedBaseModel):
     type: RecordType = pydantic.Field()
     """
-    The type of the DNS record.
+    The type of the DNS record. A `CAA` record is listed only when open tracking is on and the domain's CAA records restrict which certificate authorities may issue for it: add it next to the existing CAA records, not in place of them.
     """
 
     name: str = pydantic.Field()

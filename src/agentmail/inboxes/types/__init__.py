@@ -18,6 +18,7 @@ if typing.TYPE_CHECKING:
     from .list_inboxes_response import ListInboxesResponse
     from .metadata import Metadata
     from .metadata_value import MetadataValue
+    from .pause_at import PauseAt
     from .search_inboxes_response import SearchInboxesResponse
     from .update_inbox_request import UpdateInboxRequest
     from .update_metadata import UpdateMetadata
@@ -34,6 +35,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ListInboxesResponse": ".list_inboxes_response",
     "Metadata": ".metadata",
     "MetadataValue": ".metadata_value",
+    "PauseAt": ".pause_at",
     "SearchInboxesResponse": ".search_inboxes_response",
     "UpdateInboxRequest": ".update_inbox_request",
     "UpdateMetadata": ".update_metadata",
@@ -74,6 +76,7 @@ __all__ = [
     "ListInboxesResponse",
     "Metadata",
     "MetadataValue",
+    "PauseAt",
     "SearchInboxesResponse",
     "UpdateInboxRequest",
     "UpdateMetadata",

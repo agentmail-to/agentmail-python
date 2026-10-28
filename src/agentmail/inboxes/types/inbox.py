@@ -13,6 +13,7 @@ from .email import Email
 from .inbox_id import InboxId
 from .inbox_status import InboxStatus
 from .metadata import Metadata
+from .pause_at import PauseAt
 
 
 class Inbox(UncheckedBaseModel):
@@ -26,6 +27,12 @@ class Inbox(UncheckedBaseModel):
     `paused` when the inbox is paused. Omitted when the inbox is active.
     Treat any value other than `paused` as an inbox that sends and
     receives normally.
+    """
+
+    pause_at: typing.Optional[PauseAt] = pydantic.Field(default=None)
+    """
+    When the inbox is scheduled to pause. Omitted when no pause is
+    scheduled, and cleared once the pause happens.
     """
 
     metadata: typing.Optional[Metadata] = pydantic.Field(default=None)

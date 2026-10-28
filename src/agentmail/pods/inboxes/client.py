@@ -11,6 +11,7 @@ from ...inboxes.types.inbox_id import InboxId
 from ...inboxes.types.inbox_status import InboxStatus
 from ...inboxes.types.list_inboxes_response import ListInboxesResponse
 from ...inboxes.types.metadata import Metadata
+from ...inboxes.types.pause_at import PauseAt
 from ...inboxes.types.search_inboxes_response import SearchInboxesResponse
 from ...inboxes.types.update_metadata import UpdateMetadata
 from ...types.ascending import Ascending
@@ -184,6 +185,7 @@ class InboxesClient:
         display_name: typing.Optional[DisplayName] = OMIT,
         client_id: typing.Optional[ClientId] = OMIT,
         status: typing.Optional[InboxStatus] = OMIT,
+        pause_at: typing.Optional[PauseAt] = OMIT,
         metadata: typing.Optional[Metadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Inbox:
@@ -211,6 +213,9 @@ class InboxesClient:
 
         status : typing.Optional[InboxStatus]
             Set `paused` to create the inbox paused.
+
+        pause_at : typing.Optional[PauseAt]
+            Schedule the inbox to pause at this time, for example when a fixed term ends.
 
         metadata : typing.Optional[Metadata]
             Custom metadata to attach to the inbox.
@@ -240,6 +245,7 @@ class InboxesClient:
             display_name=display_name,
             client_id=client_id,
             status=status,
+            pause_at=pause_at,
             metadata=metadata,
             request_options=request_options,
         )
@@ -252,6 +258,7 @@ class InboxesClient:
         *,
         display_name: typing.Optional[DisplayName] = OMIT,
         status: typing.Optional[InboxStatus] = OMIT,
+        pause_at: typing.Optional[PauseAt] = OMIT,
         metadata: typing.Optional[UpdateMetadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Inbox:
@@ -274,13 +281,18 @@ class InboxesClient:
             it. Mail that arrived while the inbox was paused is not delivered on
             resume.
 
+        pause_at : typing.Optional[PauseAt]
+            Schedule a pause, or move one already scheduled. Send null to cancel
+            it. Only an organization- or pod-scoped API key can change it; an
+            inbox-scoped key gets `403`.
+
         metadata : typing.Optional[UpdateMetadata]
             Metadata to merge into the inbox's existing metadata. Keys you include
             are added or overwritten; keys you omit are left unchanged. To remove a
             single key, send it with a null value. To clear all metadata, send
             `metadata` as null. Sending an empty object is rejected; use null to
             clear. Each update must include at least one of `display_name`,
-            `status`, or `metadata`.
+            `status`, `pause_at`, or `metadata`.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -306,6 +318,7 @@ class InboxesClient:
             inbox_id,
             display_name=display_name,
             status=status,
+            pause_at=pause_at,
             metadata=metadata,
             request_options=request_options,
         )
@@ -534,6 +547,7 @@ class AsyncInboxesClient:
         display_name: typing.Optional[DisplayName] = OMIT,
         client_id: typing.Optional[ClientId] = OMIT,
         status: typing.Optional[InboxStatus] = OMIT,
+        pause_at: typing.Optional[PauseAt] = OMIT,
         metadata: typing.Optional[Metadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Inbox:
@@ -561,6 +575,9 @@ class AsyncInboxesClient:
 
         status : typing.Optional[InboxStatus]
             Set `paused` to create the inbox paused.
+
+        pause_at : typing.Optional[PauseAt]
+            Schedule the inbox to pause at this time, for example when a fixed term ends.
 
         metadata : typing.Optional[Metadata]
             Custom metadata to attach to the inbox.
@@ -598,6 +615,7 @@ class AsyncInboxesClient:
             display_name=display_name,
             client_id=client_id,
             status=status,
+            pause_at=pause_at,
             metadata=metadata,
             request_options=request_options,
         )
@@ -610,6 +628,7 @@ class AsyncInboxesClient:
         *,
         display_name: typing.Optional[DisplayName] = OMIT,
         status: typing.Optional[InboxStatus] = OMIT,
+        pause_at: typing.Optional[PauseAt] = OMIT,
         metadata: typing.Optional[UpdateMetadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> Inbox:
@@ -632,13 +651,18 @@ class AsyncInboxesClient:
             it. Mail that arrived while the inbox was paused is not delivered on
             resume.
 
+        pause_at : typing.Optional[PauseAt]
+            Schedule a pause, or move one already scheduled. Send null to cancel
+            it. Only an organization- or pod-scoped API key can change it; an
+            inbox-scoped key gets `403`.
+
         metadata : typing.Optional[UpdateMetadata]
             Metadata to merge into the inbox's existing metadata. Keys you include
             are added or overwritten; keys you omit are left unchanged. To remove a
             single key, send it with a null value. To clear all metadata, send
             `metadata` as null. Sending an empty object is rejected; use null to
             clear. Each update must include at least one of `display_name`,
-            `status`, or `metadata`.
+            `status`, `pause_at`, or `metadata`.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -672,6 +696,7 @@ class AsyncInboxesClient:
             inbox_id,
             display_name=display_name,
             status=status,
+            pause_at=pause_at,
             metadata=metadata,
             request_options=request_options,
         )

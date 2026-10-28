@@ -9,6 +9,7 @@ from .client_id import ClientId
 from .display_name import DisplayName
 from .inbox_status import InboxStatus
 from .metadata import Metadata
+from .pause_at import PauseAt
 
 
 class CreateInboxRequest(UncheckedBaseModel):
@@ -29,6 +30,11 @@ class CreateInboxRequest(UncheckedBaseModel):
     status: typing.Optional[InboxStatus] = pydantic.Field(default=None)
     """
     Set `paused` to create the inbox paused.
+    """
+
+    pause_at: typing.Optional[PauseAt] = pydantic.Field(default=None)
+    """
+    Schedule the inbox to pause at this time, for example when a fixed term ends.
     """
 
     metadata: typing.Optional[Metadata] = pydantic.Field(default=None)

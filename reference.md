@@ -352,7 +352,8 @@ agentmail inboxes update --inbox-id <inbox_id> --display-name "Updated Name"
 ```
 
 To pause an inbox, set `status` to `paused`; set it back to `active` to
-resume. See [Pausing an inbox](/inboxes#pausing-an-inbox).
+resume. To pause it later, set `pause_at`. See
+[Pausing an inbox](/inboxes#pausing-an-inbox).
 </dd>
 </dl>
 </dd>
@@ -401,7 +402,7 @@ client.inboxes.update(
 <dl>
 <dd>
 
-**request:** `UpdateInboxRequest` — Expects an object; provide at least one of `display_name`, `status`, or `metadata`.
+**request:** `UpdateInboxRequest` — Expects an object; provide at least one of `display_name`, `status`, `pause_at`, or `metadata`.
     
 </dd>
 </dl>

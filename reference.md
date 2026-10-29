@@ -402,7 +402,7 @@ client.inboxes.update(
 <dl>
 <dd>
 
-**request:** `UpdateInboxRequest` — Expects an object; provide at least one of `display_name`, `status`, `pause_at`, or `metadata`.
+**request:** `UpdateInboxRequest` — Expects an object; provide at least one of `display_name`, `status`, `pause_at`, `signature`, or `metadata`.
     
 </dd>
 </dl>

@@ -6,6 +6,7 @@ import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from .display_name import DisplayName
+from .inbox_signature import InboxSignature
 from .inbox_status import InboxStatus
 from .pause_at import PauseAt
 from .update_metadata import UpdateMetadata
@@ -27,6 +28,11 @@ class UpdateInboxRequest(UncheckedBaseModel):
     inbox-scoped key gets `403`.
     """
 
+    signature: typing.Optional[InboxSignature] = pydantic.Field(default=None)
+    """
+    Set or replace the inbox's signature. Send null to remove it.
+    """
+
     metadata: typing.Optional[UpdateMetadata] = pydantic.Field(default=None)
     """
     Metadata to merge into the inbox's existing metadata. Keys you include
@@ -34,7 +40,7 @@ class UpdateInboxRequest(UncheckedBaseModel):
     single key, send it with a null value. To clear all metadata, send
     `metadata` as null. Sending an empty object is rejected; use null to
     clear. Each update must include at least one of `display_name`,
-    `status`, `pause_at`, or `metadata`.
+    `status`, `pause_at`, `signature`, or `metadata`.
     """
 
     if IS_PYDANTIC_V2:

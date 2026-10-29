@@ -7,6 +7,7 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from .client_id import ClientId
 from .display_name import DisplayName
+from .inbox_signature import InboxSignature
 from .inbox_status import InboxStatus
 from .metadata import Metadata
 from .pause_at import PauseAt
@@ -35,6 +36,11 @@ class CreateInboxRequest(UncheckedBaseModel):
     pause_at: typing.Optional[PauseAt] = pydantic.Field(default=None)
     """
     Schedule the inbox to pause at this time, for example when a fixed term ends.
+    """
+
+    signature: typing.Optional[InboxSignature] = pydantic.Field(default=None)
+    """
+    Signature to add to every message the inbox sends.
     """
 
     metadata: typing.Optional[Metadata] = pydantic.Field(default=None)

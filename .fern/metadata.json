@@ -18,5 +18,5 @@
     "pyproject_toml": "description = \"The email inbox API for AI agents. Send, receive, reply, and manage threaded email conversations programmatically.\"\nauthors = [\"AgentMail <support@agentmail.cc>\"]\nkeywords = [\"email\", \"ai\", \"agent\", \"inbox\", \"api\", \"email-api\", \"ai-agent\", \"llm\", \"langchain\", \"crewai\", \"autonomous-agent\", \"agentmail\"]\nlicense = \"MIT\"\nhomepage = \"https://agentmail.to\"\n"
   },
   "originGitCommit": "f3403536316171f00f5c526e1174c2490c32316d",
-  "sdkVersion": "2.0.21"
+  "sdkVersion": "2.0.22"
 }

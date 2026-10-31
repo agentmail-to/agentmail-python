@@ -8,3 +8,7 @@ tests/utils/test_query_encoding.py
 
 # Generated releases must retain the security checks run by that workflow.
 tests/test_security_requirements.py
+
+# Send endpoints are not retried automatically without an Idempotency-Key (no duplicate emails).
+src/agentmail/core/http_client.py
+tests/custom/test_send_retries.py

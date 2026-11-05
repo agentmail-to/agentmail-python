@@ -30,6 +30,7 @@ if typing.TYPE_CHECKING:
     from .message_in_reply_to import MessageInReplyTo
     from .message_item import MessageItem
     from .message_labels import MessageLabels
+    from .message_opened_at import MessageOpenedAt
     from .message_preview import MessagePreview
     from .message_references import MessageReferences
     from .message_reply_to import MessageReplyTo
@@ -38,6 +39,7 @@ if typing.TYPE_CHECKING:
     from .message_text import MessageText
     from .message_timestamp import MessageTimestamp
     from .message_to import MessageTo
+    from .message_track_opens import MessageTrackOpens
     from .message_updated_at import MessageUpdatedAt
     from .raw_message_response import RawMessageResponse
     from .reply_all import ReplyAll
@@ -83,6 +85,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MessageInReplyTo": ".message_in_reply_to",
     "MessageItem": ".message_item",
     "MessageLabels": ".message_labels",
+    "MessageOpenedAt": ".message_opened_at",
     "MessagePreview": ".message_preview",
     "MessageReferences": ".message_references",
     "MessageReplyTo": ".message_reply_to",
@@ -91,6 +94,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "MessageText": ".message_text",
     "MessageTimestamp": ".message_timestamp",
     "MessageTo": ".message_to",
+    "MessageTrackOpens": ".message_track_opens",
     "MessageUpdatedAt": ".message_updated_at",
     "RawMessageResponse": ".raw_message_response",
     "ReplyAll": ".reply_all",
@@ -160,6 +164,7 @@ __all__ = [
     "MessageInReplyTo",
     "MessageItem",
     "MessageLabels",
+    "MessageOpenedAt",
     "MessagePreview",
     "MessageReferences",
     "MessageReplyTo",
@@ -168,6 +173,7 @@ __all__ = [
     "MessageText",
     "MessageTimestamp",
     "MessageTo",
+    "MessageTrackOpens",
     "MessageUpdatedAt",
     "RawMessageResponse",
     "ReplyAll",

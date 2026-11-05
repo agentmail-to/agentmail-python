@@ -25,7 +25,20 @@ if typing.TYPE_CHECKING:
         UpdateInboxRequest,
         UpdateMetadata,
     )
-    from . import accounts, api_keys, calendar, drafts, events, files, lists, messages, metrics, threads, webhooks
+    from . import (
+        accounts,
+        api_keys,
+        calendar,
+        drafts,
+        events,
+        files,
+        forwarding,
+        lists,
+        messages,
+        metrics,
+        threads,
+        webhooks,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
     "AuthorizeInboxRequest": ".types",
     "AuthorizeInboxResponse": ".types",
@@ -50,6 +63,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "drafts": ".drafts",
     "events": ".events",
     "files": ".files",
+    "forwarding": ".forwarding",
     "lists": ".lists",
     "messages": ".messages",
     "metrics": ".metrics",
@@ -103,6 +117,7 @@ __all__ = [
     "drafts",
     "events",
     "files",
+    "forwarding",
     "lists",
     "messages",
     "metrics",

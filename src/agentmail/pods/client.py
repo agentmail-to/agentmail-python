@@ -21,6 +21,7 @@ if typing.TYPE_CHECKING:
     from .api_keys.client import ApiKeysClient, AsyncApiKeysClient
     from .domains.client import AsyncDomainsClient, DomainsClient
     from .drafts.client import AsyncDraftsClient, DraftsClient
+    from .forwarding.client import AsyncForwardingClient, ForwardingClient
     from .inboxes.client import AsyncInboxesClient, InboxesClient
     from .lists.client import AsyncListsClient, ListsClient
     from .metrics.client import AsyncMetricsClient, MetricsClient
@@ -40,6 +41,7 @@ class PodsClient:
         self._webhooks: typing.Optional[WebhooksClient] = None
         self._domains: typing.Optional[DomainsClient] = None
         self._lists: typing.Optional[ListsClient] = None
+        self._forwarding: typing.Optional[ForwardingClient] = None
         self._metrics: typing.Optional[MetricsClient] = None
         self._api_keys: typing.Optional[ApiKeysClient] = None
         self._accounts: typing.Optional[AccountsClient] = None
@@ -249,6 +251,14 @@ class PodsClient:
         return self._lists
 
     @property
+    def forwarding(self):
+        if self._forwarding is None:
+            from .forwarding.client import ForwardingClient  # noqa: E402
+
+            self._forwarding = ForwardingClient(client_wrapper=self._client_wrapper)
+        return self._forwarding
+
+    @property
     def metrics(self):
         if self._metrics is None:
             from .metrics.client import MetricsClient  # noqa: E402
@@ -283,6 +293,7 @@ class AsyncPodsClient:
         self._webhooks: typing.Optional[AsyncWebhooksClient] = None
         self._domains: typing.Optional[AsyncDomainsClient] = None
         self._lists: typing.Optional[AsyncListsClient] = None
+        self._forwarding: typing.Optional[AsyncForwardingClient] = None
         self._metrics: typing.Optional[AsyncMetricsClient] = None
         self._api_keys: typing.Optional[AsyncApiKeysClient] = None
         self._accounts: typing.Optional[AsyncAccountsClient] = None
@@ -522,6 +533,14 @@ class AsyncPodsClient:
 
             self._lists = AsyncListsClient(client_wrapper=self._client_wrapper)
         return self._lists
+
+    @property
+    def forwarding(self):
+        if self._forwarding is None:
+            from .forwarding.client import AsyncForwardingClient  # noqa: E402
+
+            self._forwarding = AsyncForwardingClient(client_wrapper=self._client_wrapper)
+        return self._forwarding
 
     @property
     def metrics(self):

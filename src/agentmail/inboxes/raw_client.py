@@ -433,6 +433,8 @@ class RawInboxesClient:
         self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
         """
+        Deletion is asynchronous. A `202` means it has started. While it runs, requests for this inbox return `409` `resource_deleting`. Poll `GET /v0/inboxes/{inbox_id}` until it returns `404`, then the address is free. If the inbox still has its own API keys, delete returns `409` `cannot_delete`: revoke those keys first.
+
         **CLI:**
         ```bash
         agentmail inboxes delete --inbox-id <inbox_id>
@@ -460,6 +462,17 @@ class RawInboxesClient:
                 return HttpResponse(response=_response, data=None)
             if _response.status_code == 404:
                 raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,
@@ -967,6 +980,8 @@ class AsyncRawInboxesClient:
         self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[None]:
         """
+        Deletion is asynchronous. A `202` means it has started. While it runs, requests for this inbox return `409` `resource_deleting`. Poll `GET /v0/inboxes/{inbox_id}` until it returns `404`, then the address is free. If the inbox still has its own API keys, delete returns `409` `cannot_delete`: revoke those keys first.
+
         **CLI:**
         ```bash
         agentmail inboxes delete --inbox-id <inbox_id>
@@ -994,6 +1009,17 @@ class AsyncRawInboxesClient:
                 return AsyncHttpResponse(response=_response, data=None)
             if _response.status_code == 404:
                 raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 409:
+                raise ConflictError(
                     headers=dict(_response.headers),
                     body=typing.cast(
                         ErrorResponse,

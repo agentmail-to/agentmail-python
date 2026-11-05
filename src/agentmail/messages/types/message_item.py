@@ -21,12 +21,14 @@ from .message_headers import MessageHeaders
 from .message_id import MessageId
 from .message_in_reply_to import MessageInReplyTo
 from .message_labels import MessageLabels
+from .message_opened_at import MessageOpenedAt
 from .message_preview import MessagePreview
 from .message_references import MessageReferences
 from .message_size import MessageSize
 from .message_subject import MessageSubject
 from .message_timestamp import MessageTimestamp
 from .message_to import MessageTo
+from .message_track_opens import MessageTrackOpens
 from .message_updated_at import MessageUpdatedAt
 
 
@@ -45,6 +47,8 @@ class MessageItem(UncheckedBaseModel):
     attachments: typing.Optional[MessageAttachments] = None
     in_reply_to: typing.Optional[MessageInReplyTo] = None
     calendar_event_id: typing.Optional[MessageCalendarEventId] = None
+    track_opens: typing.Optional[MessageTrackOpens] = None
+    opened_at: typing.Optional[MessageOpenedAt] = None
     references: typing.Optional[MessageReferences] = None
     headers: typing.Optional[MessageHeaders] = None
     authentication_results: typing.Optional[MessageAuthenticationResults] = None

@@ -31,6 +31,7 @@ if typing.TYPE_CHECKING:
     from .drafts.client import AsyncDraftsClient, DraftsClient
     from .events.client import AsyncEventsClient, EventsClient
     from .files.client import AsyncFilesClient, FilesClient
+    from .forwarding.client import AsyncForwardingClient, ForwardingClient
     from .lists.client import AsyncListsClient, ListsClient
     from .messages.client import AsyncMessagesClient, MessagesClient
     from .metrics.client import AsyncMetricsClient, MetricsClient
@@ -49,6 +50,7 @@ class InboxesClient:
         self._drafts: typing.Optional[DraftsClient] = None
         self._webhooks: typing.Optional[WebhooksClient] = None
         self._lists: typing.Optional[ListsClient] = None
+        self._forwarding: typing.Optional[ForwardingClient] = None
         self._metrics: typing.Optional[MetricsClient] = None
         self._events: typing.Optional[EventsClient] = None
         self._api_keys: typing.Optional[ApiKeysClient] = None
@@ -302,6 +304,8 @@ class InboxesClient:
 
     def delete(self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        Deletion is asynchronous. A `202` means it has started. While it runs, requests for this inbox return `409` `resource_deleting`. Poll `GET /v0/inboxes/{inbox_id}` until it returns `404`, then the address is free. If the inbox still has its own API keys, delete returns `409` `cannot_delete`: revoke those keys first.
+
         **CLI:**
         ```bash
         agentmail inboxes delete --inbox-id <inbox_id>
@@ -326,7 +330,7 @@ class InboxesClient:
             api_key="YOUR_API_KEY",
         )
         client.inboxes.delete(
-            inbox_id="inbox_id",
+            inbox_id="my-agent@agentmail.to",
         )
         """
         _response = self._raw_client.delete(inbox_id, request_options=request_options)
@@ -420,6 +424,14 @@ class InboxesClient:
         return self._lists
 
     @property
+    def forwarding(self):
+        if self._forwarding is None:
+            from .forwarding.client import ForwardingClient  # noqa: E402
+
+            self._forwarding = ForwardingClient(client_wrapper=self._client_wrapper)
+        return self._forwarding
+
+    @property
     def metrics(self):
         if self._metrics is None:
             from .metrics.client import MetricsClient  # noqa: E402
@@ -477,6 +489,7 @@ class AsyncInboxesClient:
         self._drafts: typing.Optional[AsyncDraftsClient] = None
         self._webhooks: typing.Optional[AsyncWebhooksClient] = None
         self._lists: typing.Optional[AsyncListsClient] = None
+        self._forwarding: typing.Optional[AsyncForwardingClient] = None
         self._metrics: typing.Optional[AsyncMetricsClient] = None
         self._events: typing.Optional[AsyncEventsClient] = None
         self._api_keys: typing.Optional[AsyncApiKeysClient] = None
@@ -772,6 +785,8 @@ class AsyncInboxesClient:
 
     async def delete(self, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
+        Deletion is asynchronous. A `202` means it has started. While it runs, requests for this inbox return `409` `resource_deleting`. Poll `GET /v0/inboxes/{inbox_id}` until it returns `404`, then the address is free. If the inbox still has its own API keys, delete returns `409` `cannot_delete`: revoke those keys first.
+
         **CLI:**
         ```bash
         agentmail inboxes delete --inbox-id <inbox_id>
@@ -801,7 +816,7 @@ class AsyncInboxesClient:
 
         async def main() -> None:
             await client.inboxes.delete(
-                inbox_id="inbox_id",
+                inbox_id="my-agent@agentmail.to",
             )
 
 
@@ -904,6 +919,14 @@ class AsyncInboxesClient:
 
             self._lists = AsyncListsClient(client_wrapper=self._client_wrapper)
         return self._lists
+
+    @property
+    def forwarding(self):
+        if self._forwarding is None:
+            from .forwarding.client import AsyncForwardingClient  # noqa: E402
+
+            self._forwarding = AsyncForwardingClient(client_wrapper=self._client_wrapper)
+        return self._forwarding
 
     @property
     def metrics(self):

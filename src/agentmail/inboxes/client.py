@@ -14,13 +14,13 @@ from ..types.page_token import PageToken
 from .raw_client import AsyncRawInboxesClient, RawInboxesClient
 from .types.authorize_inbox_response import AuthorizeInboxResponse
 from .types.create_inbox_request import CreateInboxRequest
+from .types.deactivate_at import DeactivateAt
 from .types.display_name import DisplayName
 from .types.inbox import Inbox
 from .types.inbox_id import InboxId
 from .types.inbox_signature import InboxSignature
 from .types.inbox_status import InboxStatus
 from .types.list_inboxes_response import ListInboxesResponse
-from .types.pause_at import PauseAt
 from .types.search_inboxes_response import SearchInboxesResponse
 from .types.update_metadata import UpdateMetadata
 
@@ -231,7 +231,7 @@ class InboxesClient:
         *,
         display_name: typing.Optional[DisplayName] = OMIT,
         status: typing.Optional[InboxStatus] = OMIT,
-        pause_at: typing.Optional[PauseAt] = OMIT,
+        deactivate_at: typing.Optional[DeactivateAt] = OMIT,
         signature: typing.Optional[InboxSignature] = OMIT,
         metadata: typing.Optional[UpdateMetadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -242,9 +242,9 @@ class InboxesClient:
         agentmail inboxes update --inbox-id <inbox_id> --display-name "Updated Name"
         ```
 
-        To pause an inbox, set `status` to `paused`; set it back to `active` to
-        resume. To pause it later, set `pause_at`. See
-        [Pausing an inbox](/inboxes#pausing-an-inbox).
+        To deactivate an inbox, set `status` to `deactivated`; set it back to
+        `active` to reactivate it. To deactivate it later, set `deactivate_at`.
+        See [Deactivating an inbox](/inboxes#deactivating-an-inbox).
 
         Parameters
         ----------
@@ -253,14 +253,14 @@ class InboxesClient:
         display_name : typing.Optional[DisplayName]
 
         status : typing.Optional[InboxStatus]
-            `paused` stops the inbox sending and receiving mail; `active` resumes
-            it. Mail that arrived while the inbox was paused is not delivered on
-            resume.
+            `deactivated` stops the inbox sending and receiving mail; `active`
+            reactivates it. Mail that arrived while the inbox was deactivated is
+            not delivered on reactivation.
 
-        pause_at : typing.Optional[PauseAt]
-            Schedule a pause, or move one already scheduled. Send null to cancel
-            it. Only an organization- or pod-scoped API key can change it; an
-            inbox-scoped key gets `403`.
+        deactivate_at : typing.Optional[DeactivateAt]
+            Schedule a deactivation, or move one already scheduled. Send null to
+            cancel it. Only an organization- or pod-scoped API key can change it;
+            an inbox-scoped key gets `403`.
 
         signature : typing.Optional[InboxSignature]
             Set or replace the inbox's signature. Send null to remove it.
@@ -271,7 +271,7 @@ class InboxesClient:
             single key, send it with a null value. To clear all metadata, send
             `metadata` as null. Sending an empty object is rejected; use null to
             clear. Each update must include at least one of `display_name`,
-            `status`, `pause_at`, `signature`, or `metadata`.
+            `status`, `deactivate_at`, `signature`, or `metadata`.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -295,7 +295,7 @@ class InboxesClient:
             inbox_id,
             display_name=display_name,
             status=status,
-            pause_at=pause_at,
+            deactivate_at=deactivate_at,
             signature=signature,
             metadata=metadata,
             request_options=request_options,
@@ -704,7 +704,7 @@ class AsyncInboxesClient:
         *,
         display_name: typing.Optional[DisplayName] = OMIT,
         status: typing.Optional[InboxStatus] = OMIT,
-        pause_at: typing.Optional[PauseAt] = OMIT,
+        deactivate_at: typing.Optional[DeactivateAt] = OMIT,
         signature: typing.Optional[InboxSignature] = OMIT,
         metadata: typing.Optional[UpdateMetadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -715,9 +715,9 @@ class AsyncInboxesClient:
         agentmail inboxes update --inbox-id <inbox_id> --display-name "Updated Name"
         ```
 
-        To pause an inbox, set `status` to `paused`; set it back to `active` to
-        resume. To pause it later, set `pause_at`. See
-        [Pausing an inbox](/inboxes#pausing-an-inbox).
+        To deactivate an inbox, set `status` to `deactivated`; set it back to
+        `active` to reactivate it. To deactivate it later, set `deactivate_at`.
+        See [Deactivating an inbox](/inboxes#deactivating-an-inbox).
 
         Parameters
         ----------
@@ -726,14 +726,14 @@ class AsyncInboxesClient:
         display_name : typing.Optional[DisplayName]
 
         status : typing.Optional[InboxStatus]
-            `paused` stops the inbox sending and receiving mail; `active` resumes
-            it. Mail that arrived while the inbox was paused is not delivered on
-            resume.
+            `deactivated` stops the inbox sending and receiving mail; `active`
+            reactivates it. Mail that arrived while the inbox was deactivated is
+            not delivered on reactivation.
 
-        pause_at : typing.Optional[PauseAt]
-            Schedule a pause, or move one already scheduled. Send null to cancel
-            it. Only an organization- or pod-scoped API key can change it; an
-            inbox-scoped key gets `403`.
+        deactivate_at : typing.Optional[DeactivateAt]
+            Schedule a deactivation, or move one already scheduled. Send null to
+            cancel it. Only an organization- or pod-scoped API key can change it;
+            an inbox-scoped key gets `403`.
 
         signature : typing.Optional[InboxSignature]
             Set or replace the inbox's signature. Send null to remove it.
@@ -744,7 +744,7 @@ class AsyncInboxesClient:
             single key, send it with a null value. To clear all metadata, send
             `metadata` as null. Sending an empty object is rejected; use null to
             clear. Each update must include at least one of `display_name`,
-            `status`, `pause_at`, `signature`, or `metadata`.
+            `status`, `deactivate_at`, `signature`, or `metadata`.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -776,7 +776,7 @@ class AsyncInboxesClient:
             inbox_id,
             display_name=display_name,
             status=status,
-            pause_at=pause_at,
+            deactivate_at=deactivate_at,
             signature=signature,
             metadata=metadata,
             request_options=request_options,

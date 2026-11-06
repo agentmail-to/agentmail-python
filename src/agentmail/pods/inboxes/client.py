@@ -5,6 +5,7 @@ import typing
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.request_options import RequestOptions
 from ...inboxes.types.client_id import ClientId
+from ...inboxes.types.deactivate_at import DeactivateAt
 from ...inboxes.types.display_name import DisplayName
 from ...inboxes.types.inbox import Inbox
 from ...inboxes.types.inbox_id import InboxId
@@ -12,7 +13,6 @@ from ...inboxes.types.inbox_signature import InboxSignature
 from ...inboxes.types.inbox_status import InboxStatus
 from ...inboxes.types.list_inboxes_response import ListInboxesResponse
 from ...inboxes.types.metadata import Metadata
-from ...inboxes.types.pause_at import PauseAt
 from ...inboxes.types.search_inboxes_response import SearchInboxesResponse
 from ...inboxes.types.update_metadata import UpdateMetadata
 from ...types.ascending import Ascending
@@ -186,7 +186,7 @@ class InboxesClient:
         display_name: typing.Optional[DisplayName] = OMIT,
         client_id: typing.Optional[ClientId] = OMIT,
         status: typing.Optional[InboxStatus] = OMIT,
-        pause_at: typing.Optional[PauseAt] = OMIT,
+        deactivate_at: typing.Optional[DeactivateAt] = OMIT,
         signature: typing.Optional[InboxSignature] = OMIT,
         metadata: typing.Optional[Metadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -214,10 +214,10 @@ class InboxesClient:
         client_id : typing.Optional[ClientId]
 
         status : typing.Optional[InboxStatus]
-            Set `paused` to create the inbox paused.
+            Set `deactivated` to create the inbox deactivated.
 
-        pause_at : typing.Optional[PauseAt]
-            Schedule the inbox to pause at this time, for example when a fixed term ends.
+        deactivate_at : typing.Optional[DeactivateAt]
+            Schedule the inbox to deactivate at this time, for example when a fixed term ends.
 
         signature : typing.Optional[InboxSignature]
             Signature to add to every message the inbox sends.
@@ -250,7 +250,7 @@ class InboxesClient:
             display_name=display_name,
             client_id=client_id,
             status=status,
-            pause_at=pause_at,
+            deactivate_at=deactivate_at,
             signature=signature,
             metadata=metadata,
             request_options=request_options,
@@ -264,7 +264,7 @@ class InboxesClient:
         *,
         display_name: typing.Optional[DisplayName] = OMIT,
         status: typing.Optional[InboxStatus] = OMIT,
-        pause_at: typing.Optional[PauseAt] = OMIT,
+        deactivate_at: typing.Optional[DeactivateAt] = OMIT,
         signature: typing.Optional[InboxSignature] = OMIT,
         metadata: typing.Optional[UpdateMetadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -284,14 +284,14 @@ class InboxesClient:
         display_name : typing.Optional[DisplayName]
 
         status : typing.Optional[InboxStatus]
-            `paused` stops the inbox sending and receiving mail; `active` resumes
-            it. Mail that arrived while the inbox was paused is not delivered on
-            resume.
+            `deactivated` stops the inbox sending and receiving mail; `active`
+            reactivates it. Mail that arrived while the inbox was deactivated is
+            not delivered on reactivation.
 
-        pause_at : typing.Optional[PauseAt]
-            Schedule a pause, or move one already scheduled. Send null to cancel
-            it. Only an organization- or pod-scoped API key can change it; an
-            inbox-scoped key gets `403`.
+        deactivate_at : typing.Optional[DeactivateAt]
+            Schedule a deactivation, or move one already scheduled. Send null to
+            cancel it. Only an organization- or pod-scoped API key can change it;
+            an inbox-scoped key gets `403`.
 
         signature : typing.Optional[InboxSignature]
             Set or replace the inbox's signature. Send null to remove it.
@@ -302,7 +302,7 @@ class InboxesClient:
             single key, send it with a null value. To clear all metadata, send
             `metadata` as null. Sending an empty object is rejected; use null to
             clear. Each update must include at least one of `display_name`,
-            `status`, `pause_at`, `signature`, or `metadata`.
+            `status`, `deactivate_at`, `signature`, or `metadata`.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -328,7 +328,7 @@ class InboxesClient:
             inbox_id,
             display_name=display_name,
             status=status,
-            pause_at=pause_at,
+            deactivate_at=deactivate_at,
             signature=signature,
             metadata=metadata,
             request_options=request_options,
@@ -339,6 +339,8 @@ class InboxesClient:
         self, pod_id: PodId, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
+        Deletion is asynchronous. A `202` means it has started. While it runs, requests for this inbox return `409` `resource_deleting`. Poll `GET /v0/pods/{pod_id}/inboxes/{inbox_id}` until it returns `404`, then the address is free. If the inbox still has its own API keys, delete returns `409` `cannot_delete`: revoke those keys first.
+
         **CLI:**
         ```bash
         agentmail pods inboxes delete --pod-id <pod_id> --inbox-id <inbox_id>
@@ -365,8 +367,8 @@ class InboxesClient:
             api_key="YOUR_API_KEY",
         )
         client.pods.inboxes.delete(
-            pod_id="pod_id",
-            inbox_id="inbox_id",
+            pod_id="my-pod",
+            inbox_id="my-agent@agentmail.to",
         )
         """
         _response = self._raw_client.delete(pod_id, inbox_id, request_options=request_options)
@@ -558,7 +560,7 @@ class AsyncInboxesClient:
         display_name: typing.Optional[DisplayName] = OMIT,
         client_id: typing.Optional[ClientId] = OMIT,
         status: typing.Optional[InboxStatus] = OMIT,
-        pause_at: typing.Optional[PauseAt] = OMIT,
+        deactivate_at: typing.Optional[DeactivateAt] = OMIT,
         signature: typing.Optional[InboxSignature] = OMIT,
         metadata: typing.Optional[Metadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -586,10 +588,10 @@ class AsyncInboxesClient:
         client_id : typing.Optional[ClientId]
 
         status : typing.Optional[InboxStatus]
-            Set `paused` to create the inbox paused.
+            Set `deactivated` to create the inbox deactivated.
 
-        pause_at : typing.Optional[PauseAt]
-            Schedule the inbox to pause at this time, for example when a fixed term ends.
+        deactivate_at : typing.Optional[DeactivateAt]
+            Schedule the inbox to deactivate at this time, for example when a fixed term ends.
 
         signature : typing.Optional[InboxSignature]
             Signature to add to every message the inbox sends.
@@ -630,7 +632,7 @@ class AsyncInboxesClient:
             display_name=display_name,
             client_id=client_id,
             status=status,
-            pause_at=pause_at,
+            deactivate_at=deactivate_at,
             signature=signature,
             metadata=metadata,
             request_options=request_options,
@@ -644,7 +646,7 @@ class AsyncInboxesClient:
         *,
         display_name: typing.Optional[DisplayName] = OMIT,
         status: typing.Optional[InboxStatus] = OMIT,
-        pause_at: typing.Optional[PauseAt] = OMIT,
+        deactivate_at: typing.Optional[DeactivateAt] = OMIT,
         signature: typing.Optional[InboxSignature] = OMIT,
         metadata: typing.Optional[UpdateMetadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -664,14 +666,14 @@ class AsyncInboxesClient:
         display_name : typing.Optional[DisplayName]
 
         status : typing.Optional[InboxStatus]
-            `paused` stops the inbox sending and receiving mail; `active` resumes
-            it. Mail that arrived while the inbox was paused is not delivered on
-            resume.
+            `deactivated` stops the inbox sending and receiving mail; `active`
+            reactivates it. Mail that arrived while the inbox was deactivated is
+            not delivered on reactivation.
 
-        pause_at : typing.Optional[PauseAt]
-            Schedule a pause, or move one already scheduled. Send null to cancel
-            it. Only an organization- or pod-scoped API key can change it; an
-            inbox-scoped key gets `403`.
+        deactivate_at : typing.Optional[DeactivateAt]
+            Schedule a deactivation, or move one already scheduled. Send null to
+            cancel it. Only an organization- or pod-scoped API key can change it;
+            an inbox-scoped key gets `403`.
 
         signature : typing.Optional[InboxSignature]
             Set or replace the inbox's signature. Send null to remove it.
@@ -682,7 +684,7 @@ class AsyncInboxesClient:
             single key, send it with a null value. To clear all metadata, send
             `metadata` as null. Sending an empty object is rejected; use null to
             clear. Each update must include at least one of `display_name`,
-            `status`, `pause_at`, `signature`, or `metadata`.
+            `status`, `deactivate_at`, `signature`, or `metadata`.
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -716,7 +718,7 @@ class AsyncInboxesClient:
             inbox_id,
             display_name=display_name,
             status=status,
-            pause_at=pause_at,
+            deactivate_at=deactivate_at,
             signature=signature,
             metadata=metadata,
             request_options=request_options,
@@ -727,6 +729,8 @@ class AsyncInboxesClient:
         self, pod_id: PodId, inbox_id: InboxId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
+        Deletion is asynchronous. A `202` means it has started. While it runs, requests for this inbox return `409` `resource_deleting`. Poll `GET /v0/pods/{pod_id}/inboxes/{inbox_id}` until it returns `404`, then the address is free. If the inbox still has its own API keys, delete returns `409` `cannot_delete`: revoke those keys first.
+
         **CLI:**
         ```bash
         agentmail pods inboxes delete --pod-id <pod_id> --inbox-id <inbox_id>
@@ -758,8 +762,8 @@ class AsyncInboxesClient:
 
         async def main() -> None:
             await client.pods.inboxes.delete(
-                pod_id="pod_id",
-                inbox_id="inbox_id",
+                pod_id="my-pod",
+                inbox_id="my-agent@agentmail.to",
             )
 
 

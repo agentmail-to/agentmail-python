@@ -6,11 +6,11 @@ import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from .client_id import ClientId
+from .deactivate_at import DeactivateAt
 from .display_name import DisplayName
 from .inbox_signature import InboxSignature
 from .inbox_status import InboxStatus
 from .metadata import Metadata
-from .pause_at import PauseAt
 
 
 class CreateInboxRequest(UncheckedBaseModel):
@@ -30,12 +30,12 @@ class CreateInboxRequest(UncheckedBaseModel):
     client_id: typing.Optional[ClientId] = None
     status: typing.Optional[InboxStatus] = pydantic.Field(default=None)
     """
-    Set `paused` to create the inbox paused.
+    Set `deactivated` to create the inbox deactivated.
     """
 
-    pause_at: typing.Optional[PauseAt] = pydantic.Field(default=None)
+    deactivate_at: typing.Optional[DeactivateAt] = pydantic.Field(default=None)
     """
-    Schedule the inbox to pause at this time, for example when a fixed term ends.
+    Schedule the inbox to deactivate at this time, for example when a fixed term ends.
     """
 
     signature: typing.Optional[InboxSignature] = pydantic.Field(default=None)

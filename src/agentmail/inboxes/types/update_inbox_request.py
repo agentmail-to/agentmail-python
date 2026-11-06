@@ -5,10 +5,10 @@ import typing
 import pydantic
 from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
+from .deactivate_at import DeactivateAt
 from .display_name import DisplayName
 from .inbox_signature import InboxSignature
 from .inbox_status import InboxStatus
-from .pause_at import PauseAt
 from .update_metadata import UpdateMetadata
 
 
@@ -16,16 +16,16 @@ class UpdateInboxRequest(UncheckedBaseModel):
     display_name: typing.Optional[DisplayName] = None
     status: typing.Optional[InboxStatus] = pydantic.Field(default=None)
     """
-    `paused` stops the inbox sending and receiving mail; `active` resumes
-    it. Mail that arrived while the inbox was paused is not delivered on
-    resume.
+    `deactivated` stops the inbox sending and receiving mail; `active`
+    reactivates it. Mail that arrived while the inbox was deactivated is
+    not delivered on reactivation.
     """
 
-    pause_at: typing.Optional[PauseAt] = pydantic.Field(default=None)
+    deactivate_at: typing.Optional[DeactivateAt] = pydantic.Field(default=None)
     """
-    Schedule a pause, or move one already scheduled. Send null to cancel
-    it. Only an organization- or pod-scoped API key can change it; an
-    inbox-scoped key gets `403`.
+    Schedule a deactivation, or move one already scheduled. Send null to
+    cancel it. Only an organization- or pod-scoped API key can change it;
+    an inbox-scoped key gets `403`.
     """
 
     signature: typing.Optional[InboxSignature] = pydantic.Field(default=None)
@@ -40,7 +40,7 @@ class UpdateInboxRequest(UncheckedBaseModel):
     single key, send it with a null value. To clear all metadata, send
     `metadata` as null. Sending an empty object is rejected; use null to
     clear. Each update must include at least one of `display_name`,
-    `status`, `pause_at`, `signature`, or `metadata`.
+    `status`, `deactivate_at`, `signature`, or `metadata`.
     """
 
     if IS_PYDANTIC_V2:

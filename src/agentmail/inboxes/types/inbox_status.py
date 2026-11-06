@@ -2,4 +2,4 @@
 
 import typing
 
-InboxStatus = typing.Union[typing.Literal["active", "paused"], typing.Any]
+InboxStatus = typing.Union[typing.Literal["active", "deactivated"], typing.Any]

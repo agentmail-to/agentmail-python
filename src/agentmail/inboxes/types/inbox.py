@@ -8,13 +8,13 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.unchecked_base_model import UncheckedBaseModel
 from ...pods.types.pod_id import PodId
 from .client_id import ClientId
+from .deactivate_at import DeactivateAt
 from .display_name import DisplayName
 from .email import Email
 from .inbox_id import InboxId
 from .inbox_signature import InboxSignature
 from .inbox_status import InboxStatus
 from .metadata import Metadata
-from .pause_at import PauseAt
 
 
 class Inbox(UncheckedBaseModel):
@@ -25,15 +25,15 @@ class Inbox(UncheckedBaseModel):
     client_id: typing.Optional[ClientId] = None
     status: typing.Optional[InboxStatus] = pydantic.Field(default=None)
     """
-    `paused` when the inbox is paused. Omitted when the inbox is active.
-    Treat any value other than `paused` as an inbox that sends and
-    receives normally.
+    `deactivated` when the inbox is deactivated. Omitted when the inbox
+    is active. Treat any value other than `deactivated` as an inbox that
+    sends and receives normally.
     """
 
-    pause_at: typing.Optional[PauseAt] = pydantic.Field(default=None)
+    deactivate_at: typing.Optional[DeactivateAt] = pydantic.Field(default=None)
     """
-    When the inbox is scheduled to pause. Omitted when no pause is
-    scheduled, and cleared once the pause happens.
+    When the inbox is scheduled to deactivate. Omitted when no
+    deactivation is scheduled, and cleared once it happens.
     """
 
     signature: typing.Optional[InboxSignature] = pydantic.Field(default=None)

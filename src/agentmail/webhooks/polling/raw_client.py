@@ -179,7 +179,8 @@ class RawPollingClient:
         """
         Creates a subscription the agent polls for events, and returns the `token` that reads it. Each
         organization, pod, and inbox holds at most 10 polling webhooks; a repeat create with the same
-        `client_id` re-issues the token of the existing one instead of counting against that limit.
+        `client_id` re-issues the token of the existing one instead of counting against that limit. While
+        that one is disabled, the repeat create returns `409`: enable it first.
 
         **CLI:**
         ```bash
@@ -247,6 +248,93 @@ class RawPollingClient:
                         ErrorResponse,
                         construct_type(
                             type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def update(
+        self,
+        webhook_id: WebhookId,
+        *,
+        enabled: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[PollingWebhook]:
+        """
+        Pause or resume a polling webhook with `enabled`. Disabling stops handing out events and revokes the
+        current token; the subscription, its event types and the events that arrive meanwhile are kept.
+
+        **CLI:**
+        ```bash
+        agentmail webhooks polling update --webhook-id <webhook_id> --enabled=false
+        ```
+
+        Parameters
+        ----------
+        webhook_id : WebhookId
+
+        enabled : typing.Optional[bool]
+            Set to false to pause the subscription: its token stops working at once, and the events that arrive
+            while it is disabled are kept. While it is disabled, a create with its `client_id` returns `409`.
+            Set to true to resume it, then create again with the same `client_id` to get a new token, which reads
+            the kept events from where your consumer left off. Re-enabling requires the read permission for every
+            restricted event type the subscription receives: `label_spam_read`, `label_blocked_read`, or
+            `label_unauthenticated_read` for the received variants, `message_read` for `message.security.*`, and
+            `calendar_event_read` for `calendar.event.*`.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[PollingWebhook]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/webhooks/polling/{jsonable_encoder(webhook_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="PATCH",
+            json={
+                "enabled": enabled,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    PollingWebhook,
+                    construct_type(
+                        type_=PollingWebhook,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),
@@ -459,7 +547,8 @@ class AsyncRawPollingClient:
         """
         Creates a subscription the agent polls for events, and returns the `token` that reads it. Each
         organization, pod, and inbox holds at most 10 polling webhooks; a repeat create with the same
-        `client_id` re-issues the token of the existing one instead of counting against that limit.
+        `client_id` re-issues the token of the existing one instead of counting against that limit. While
+        that one is disabled, the repeat create returns `409`: enable it first.
 
         **CLI:**
         ```bash
@@ -527,6 +616,93 @@ class AsyncRawPollingClient:
                         ErrorResponse,
                         construct_type(
                             type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def update(
+        self,
+        webhook_id: WebhookId,
+        *,
+        enabled: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[PollingWebhook]:
+        """
+        Pause or resume a polling webhook with `enabled`. Disabling stops handing out events and revokes the
+        current token; the subscription, its event types and the events that arrive meanwhile are kept.
+
+        **CLI:**
+        ```bash
+        agentmail webhooks polling update --webhook-id <webhook_id> --enabled=false
+        ```
+
+        Parameters
+        ----------
+        webhook_id : WebhookId
+
+        enabled : typing.Optional[bool]
+            Set to false to pause the subscription: its token stops working at once, and the events that arrive
+            while it is disabled are kept. While it is disabled, a create with its `client_id` returns `409`.
+            Set to true to resume it, then create again with the same `client_id` to get a new token, which reads
+            the kept events from where your consumer left off. Re-enabling requires the read permission for every
+            restricted event type the subscription receives: `label_spam_read`, `label_blocked_read`, or
+            `label_unauthenticated_read` for the received variants, `message_read` for `message.security.*`, and
+            `calendar_event_read` for `calendar.event.*`.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[PollingWebhook]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/webhooks/polling/{jsonable_encoder(webhook_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="PATCH",
+            json={
+                "enabled": enabled,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    PollingWebhook,
+                    construct_type(
+                        type_=PollingWebhook,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

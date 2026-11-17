@@ -11475,6 +11475,101 @@ client.inboxes.webhooks.polling.create(
 </dl>
 </details>
 
+<details><summary><code>client.inboxes.webhooks.polling.<a href="src/agentmail/inboxes/webhooks/polling/client.py">update</a>(...) -> PollingWebhook</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pause or resume a polling webhook created through this inbox route.
+
+**CLI:**
+```bash
+agentmail inboxes webhooks polling update --inbox-id <inbox_id> --webhook-id <webhook_id> --enabled=false
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.inboxes.webhooks.polling.update(
+    inbox_id="inbox_id",
+    webhook_id="webhook_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_id:** `WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `UpdatePollingWebhookRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.inboxes.webhooks.polling.<a href="src/agentmail/inboxes/webhooks/polling/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
@@ -17194,6 +17289,101 @@ client.pods.webhooks.polling.create(
 </dl>
 </details>
 
+<details><summary><code>client.pods.webhooks.polling.<a href="src/agentmail/pods/webhooks/polling/client.py">update</a>(...) -> PollingWebhook</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pause or resume a polling webhook created through this pod route.
+
+**CLI:**
+```bash
+agentmail pods webhooks polling update --pod-id <pod_id> --webhook-id <webhook_id> --enabled=false
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.pods.webhooks.polling.update(
+    pod_id="pod_id",
+    webhook_id="webhook_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_id:** `WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `UpdatePollingWebhookRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.pods.webhooks.polling.<a href="src/agentmail/pods/webhooks/polling/client.py">delete</a>(...)</code></summary>
 <dl>
 <dd>
@@ -18087,7 +18277,8 @@ client.webhooks.polling.get(
 
 Creates a subscription the agent polls for events, and returns the `token` that reads it. Each
 organization, pod, and inbox holds at most 10 polling webhooks; a repeat create with the same
-`client_id` re-issues the token of the existing one instead of counting against that limit.
+`client_id` re-issues the token of the existing one instead of counting against that limit. While
+that one is disabled, the repeat create returns `409`: enable it first.
 
 **CLI:**
 ```bash
@@ -18138,6 +18329,93 @@ client.webhooks.polling.create(
 <dd>
 
 **request:** `CreatePollingWebhookRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.webhooks.polling.<a href="src/agentmail/webhooks/polling/client.py">update</a>(...) -> PollingWebhook</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pause or resume a polling webhook with `enabled`. Disabling stops handing out events and revokes the
+current token; the subscription, its event types and the events that arrive meanwhile are kept.
+
+**CLI:**
+```bash
+agentmail webhooks polling update --webhook-id <webhook_id> --enabled=false
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from agentmail import AgentMail
+from agentmail.environment import AgentMailEnvironment
+
+client = AgentMail(
+    api_key="<token>",
+    environment=AgentMailEnvironment.PROD,
+)
+
+client.webhooks.polling.update(
+    webhook_id="webhook_id",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**webhook_id:** `WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `UpdatePollingWebhookRequest` 
     
 </dd>
 </dl>

@@ -251,6 +251,95 @@ class RawPollingClient:
             )
         raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
 
+    def update(
+        self,
+        inbox_id: InboxId,
+        webhook_id: WebhookId,
+        *,
+        enabled: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> HttpResponse[PollingWebhook]:
+        """
+        Pause or resume a polling webhook created through this inbox route.
+
+        **CLI:**
+        ```bash
+        agentmail inboxes webhooks polling update --inbox-id <inbox_id> --webhook-id <webhook_id> --enabled=false
+        ```
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        webhook_id : WebhookId
+
+        enabled : typing.Optional[bool]
+            Set to false to pause the subscription: its token stops working at once, and the events that arrive
+            while it is disabled are kept. While it is disabled, a create with its `client_id` returns `409`.
+            Set to true to resume it, then create again with the same `client_id` to get a new token, which reads
+            the kept events from where your consumer left off. Re-enabling requires the read permission for every
+            restricted event type the subscription receives: `label_spam_read`, `label_blocked_read`, or
+            `label_unauthenticated_read` for the received variants, `message_read` for `message.security.*`, and
+            `calendar_event_read` for `calendar.event.*`.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[PollingWebhook]
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/webhooks/polling/{jsonable_encoder(webhook_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="PATCH",
+            json={
+                "enabled": enabled,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    PollingWebhook,
+                    construct_type(
+                        type_=PollingWebhook,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
     def delete(
         self, inbox_id: InboxId, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[None]:
@@ -510,6 +599,95 @@ class AsyncRawPollingClient:
                         ErrorResponse,
                         construct_type(
                             type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except pydantic_ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def update(
+        self,
+        inbox_id: InboxId,
+        webhook_id: WebhookId,
+        *,
+        enabled: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> AsyncHttpResponse[PollingWebhook]:
+        """
+        Pause or resume a polling webhook created through this inbox route.
+
+        **CLI:**
+        ```bash
+        agentmail inboxes webhooks polling update --inbox-id <inbox_id> --webhook-id <webhook_id> --enabled=false
+        ```
+
+        Parameters
+        ----------
+        inbox_id : InboxId
+
+        webhook_id : WebhookId
+
+        enabled : typing.Optional[bool]
+            Set to false to pause the subscription: its token stops working at once, and the events that arrive
+            while it is disabled are kept. While it is disabled, a create with its `client_id` returns `409`.
+            Set to true to resume it, then create again with the same `client_id` to get a new token, which reads
+            the kept events from where your consumer left off. Re-enabling requires the read permission for every
+            restricted event type the subscription receives: `label_spam_read`, `label_blocked_read`, or
+            `label_unauthenticated_read` for the received variants, `message_read` for `message.security.*`, and
+            `calendar_event_read` for `calendar.event.*`.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[PollingWebhook]
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v0/inboxes/{jsonable_encoder(inbox_id)}/webhooks/polling/{jsonable_encoder(webhook_id)}",
+            base_url=self._client_wrapper.get_environment().http,
+            method="PATCH",
+            json={
+                "enabled": enabled,
+            },
+            request_options=request_options,
+            omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    PollingWebhook,
+                    construct_type(
+                        type_=PollingWebhook,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        construct_type(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 400:
+                raise errors_validation_error_ValidationError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ValidationErrorResponse,
+                        construct_type(
+                            type_=ValidationErrorResponse,  # type: ignore
                             object_=_response.json(),
                         ),
                     ),

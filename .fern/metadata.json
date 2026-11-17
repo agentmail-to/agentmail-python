@@ -17,6 +17,6 @@
     "should_generate_websocket_clients": true,
     "pyproject_toml": "description = \"The email inbox API for AI agents. Send, receive, reply, and manage threaded email conversations programmatically.\"\nauthors = [\"AgentMail <support@agentmail.cc>\"]\nkeywords = [\"email\", \"ai\", \"agent\", \"inbox\", \"api\", \"email-api\", \"ai-agent\", \"llm\", \"langchain\", \"crewai\", \"autonomous-agent\", \"agentmail\"]\nlicense = \"MIT\"\nhomepage = \"https://agentmail.to\"\n"
   },
-  "originGitCommit": "9aba961a824bd28bdc2832f4efcf176cd28ef7a2",
-  "sdkVersion": "2.0.25"
+  "originGitCommit": "a0d0c3ebc4413a83eec61b5c695ab8c7a1a7222d",
+  "sdkVersion": "2.0.26"
 }

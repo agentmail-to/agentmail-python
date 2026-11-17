@@ -15,6 +15,7 @@ if typing.TYPE_CHECKING:
         PollingClientId,
         PollingToken,
         PollingWebhook,
+        UpdatePollingWebhookRequest,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "CreateInboxPollingWebhookRequest": ".types",
@@ -25,6 +26,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PollingClientId": ".types",
     "PollingToken": ".types",
     "PollingWebhook": ".types",
+    "UpdatePollingWebhookRequest": ".types",
 }
 
 
@@ -58,4 +60,5 @@ __all__ = [
     "PollingClientId",
     "PollingToken",
     "PollingWebhook",
+    "UpdatePollingWebhookRequest",
 ]

@@ -35,6 +35,7 @@ if typing.TYPE_CHECKING:
         PollingClientId,
         PollingToken,
         PollingWebhook,
+        UpdatePollingWebhookRequest,
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "ClientId": ".types",
@@ -56,6 +57,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SvixTimestamp": ".events",
     "UpdateInboxWebhookRequest": ".types",
     "UpdatePodWebhookRequest": ".types",
+    "UpdatePollingWebhookRequest": ".polling",
     "UpdateWebhookEventTypes": ".types",
     "UpdateWebhookHeadersRequest": ".types",
     "UpdateWebhookRequest": ".types",
@@ -110,6 +112,7 @@ __all__ = [
     "SvixTimestamp",
     "UpdateInboxWebhookRequest",
     "UpdatePodWebhookRequest",
+    "UpdatePollingWebhookRequest",
     "UpdateWebhookEventTypes",
     "UpdateWebhookHeadersRequest",
     "UpdateWebhookRequest",

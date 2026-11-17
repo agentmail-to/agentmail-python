@@ -175,6 +175,59 @@ class PollingClient:
         )
         return _response.data
 
+    def update(
+        self,
+        pod_id: PodId,
+        webhook_id: WebhookId,
+        *,
+        enabled: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PollingWebhook:
+        """
+        Pause or resume a polling webhook created through this pod route.
+
+        **CLI:**
+        ```bash
+        agentmail pods webhooks polling update --pod-id <pod_id> --webhook-id <webhook_id> --enabled=false
+        ```
+
+        Parameters
+        ----------
+        pod_id : PodId
+
+        webhook_id : WebhookId
+
+        enabled : typing.Optional[bool]
+            Set to false to pause the subscription: its token stops working at once, and the events that arrive
+            while it is disabled are kept. While it is disabled, a create with its `client_id` returns `409`.
+            Set to true to resume it, then create again with the same `client_id` to get a new token, which reads
+            the kept events from where your consumer left off. Re-enabling requires the read permission for every
+            restricted event type the subscription receives: `label_spam_read`, `label_blocked_read`, or
+            `label_unauthenticated_read` for the received variants, `message_read` for `message.security.*`, and
+            `calendar_event_read` for `calendar.event.*`.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PollingWebhook
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.pods.webhooks.polling.update(
+            pod_id="pod_id",
+            webhook_id="webhook_id",
+        )
+        """
+        _response = self._raw_client.update(pod_id, webhook_id, enabled=enabled, request_options=request_options)
+        return _response.data
+
     def delete(
         self, pod_id: PodId, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
@@ -389,6 +442,67 @@ class AsyncPollingClient:
         _response = await self._raw_client.create(
             pod_id, client_id=client_id, event_types=event_types, inbox_ids=inbox_ids, request_options=request_options
         )
+        return _response.data
+
+    async def update(
+        self,
+        pod_id: PodId,
+        webhook_id: WebhookId,
+        *,
+        enabled: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PollingWebhook:
+        """
+        Pause or resume a polling webhook created through this pod route.
+
+        **CLI:**
+        ```bash
+        agentmail pods webhooks polling update --pod-id <pod_id> --webhook-id <webhook_id> --enabled=false
+        ```
+
+        Parameters
+        ----------
+        pod_id : PodId
+
+        webhook_id : WebhookId
+
+        enabled : typing.Optional[bool]
+            Set to false to pause the subscription: its token stops working at once, and the events that arrive
+            while it is disabled are kept. While it is disabled, a create with its `client_id` returns `409`.
+            Set to true to resume it, then create again with the same `client_id` to get a new token, which reads
+            the kept events from where your consumer left off. Re-enabling requires the read permission for every
+            restricted event type the subscription receives: `label_spam_read`, `label_blocked_read`, or
+            `label_unauthenticated_read` for the received variants, `message_read` for `message.security.*`, and
+            `calendar_event_read` for `calendar.event.*`.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PollingWebhook
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.pods.webhooks.polling.update(
+                pod_id="pod_id",
+                webhook_id="webhook_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update(pod_id, webhook_id, enabled=enabled, request_options=request_options)
         return _response.data
 
     async def delete(

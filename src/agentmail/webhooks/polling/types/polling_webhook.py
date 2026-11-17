@@ -37,6 +37,12 @@ class PollingWebhook(UncheckedBaseModel):
     list of inboxes it receives events for; see `inbox_ids`.
     """
 
+    enabled: bool = pydantic.Field()
+    """
+    Whether the subscription hands out events. A disabled one keeps the events that arrive and has no
+    working token until it is enabled again; see Update Polling Webhook.
+    """
+
     updated_at: dt.datetime = pydantic.Field()
     """
     Time at which the subscription was last updated.

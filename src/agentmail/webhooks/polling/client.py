@@ -128,7 +128,8 @@ class PollingClient:
         """
         Creates a subscription the agent polls for events, and returns the `token` that reads it. Each
         organization, pod, and inbox holds at most 10 polling webhooks; a repeat create with the same
-        `client_id` re-issues the token of the existing one instead of counting against that limit.
+        `client_id` re-issues the token of the existing one instead of counting against that limit. While
+        that one is disabled, the repeat create returns `409`: enable it first.
 
         **CLI:**
         ```bash
@@ -174,6 +175,56 @@ class PollingClient:
             inbox_ids=inbox_ids,
             request_options=request_options,
         )
+        return _response.data
+
+    def update(
+        self,
+        webhook_id: WebhookId,
+        *,
+        enabled: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PollingWebhook:
+        """
+        Pause or resume a polling webhook with `enabled`. Disabling stops handing out events and revokes the
+        current token; the subscription, its event types and the events that arrive meanwhile are kept.
+
+        **CLI:**
+        ```bash
+        agentmail webhooks polling update --webhook-id <webhook_id> --enabled=false
+        ```
+
+        Parameters
+        ----------
+        webhook_id : WebhookId
+
+        enabled : typing.Optional[bool]
+            Set to false to pause the subscription: its token stops working at once, and the events that arrive
+            while it is disabled are kept. While it is disabled, a create with its `client_id` returns `409`.
+            Set to true to resume it, then create again with the same `client_id` to get a new token, which reads
+            the kept events from where your consumer left off. Re-enabling requires the read permission for every
+            restricted event type the subscription receives: `label_spam_read`, `label_blocked_read`, or
+            `label_unauthenticated_read` for the received variants, `message_read` for `message.security.*`, and
+            `calendar_event_read` for `calendar.event.*`.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PollingWebhook
+
+        Examples
+        --------
+        from agentmail import AgentMail
+
+        client = AgentMail(
+            api_key="YOUR_API_KEY",
+        )
+        client.webhooks.polling.update(
+            webhook_id="webhook_id",
+        )
+        """
+        _response = self._raw_client.update(webhook_id, enabled=enabled, request_options=request_options)
         return _response.data
 
     def delete(self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
@@ -336,7 +387,8 @@ class AsyncPollingClient:
         """
         Creates a subscription the agent polls for events, and returns the `token` that reads it. Each
         organization, pod, and inbox holds at most 10 polling webhooks; a repeat create with the same
-        `client_id` re-issues the token of the existing one instead of counting against that limit.
+        `client_id` re-issues the token of the existing one instead of counting against that limit. While
+        that one is disabled, the repeat create returns `409`: enable it first.
 
         **CLI:**
         ```bash
@@ -390,6 +442,64 @@ class AsyncPollingClient:
             inbox_ids=inbox_ids,
             request_options=request_options,
         )
+        return _response.data
+
+    async def update(
+        self,
+        webhook_id: WebhookId,
+        *,
+        enabled: typing.Optional[bool] = OMIT,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> PollingWebhook:
+        """
+        Pause or resume a polling webhook with `enabled`. Disabling stops handing out events and revokes the
+        current token; the subscription, its event types and the events that arrive meanwhile are kept.
+
+        **CLI:**
+        ```bash
+        agentmail webhooks polling update --webhook-id <webhook_id> --enabled=false
+        ```
+
+        Parameters
+        ----------
+        webhook_id : WebhookId
+
+        enabled : typing.Optional[bool]
+            Set to false to pause the subscription: its token stops working at once, and the events that arrive
+            while it is disabled are kept. While it is disabled, a create with its `client_id` returns `409`.
+            Set to true to resume it, then create again with the same `client_id` to get a new token, which reads
+            the kept events from where your consumer left off. Re-enabling requires the read permission for every
+            restricted event type the subscription receives: `label_spam_read`, `label_blocked_read`, or
+            `label_unauthenticated_read` for the received variants, `message_read` for `message.security.*`, and
+            `calendar_event_read` for `calendar.event.*`.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        PollingWebhook
+
+        Examples
+        --------
+        import asyncio
+
+        from agentmail import AsyncAgentMail
+
+        client = AsyncAgentMail(
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.webhooks.polling.update(
+                webhook_id="webhook_id",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update(webhook_id, enabled=enabled, request_options=request_options)
         return _response.data
 
     async def delete(self, webhook_id: WebhookId, *, request_options: typing.Optional[RequestOptions] = None) -> None:

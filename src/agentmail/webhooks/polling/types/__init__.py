@@ -14,6 +14,7 @@ if typing.TYPE_CHECKING:
     from .polling_client_id import PollingClientId
     from .polling_token import PollingToken
     from .polling_webhook import PollingWebhook
+    from .update_polling_webhook_request import UpdatePollingWebhookRequest
 _dynamic_imports: typing.Dict[str, str] = {
     "CreateInboxPollingWebhookRequest": ".create_inbox_polling_webhook_request",
     "CreatePodPollingWebhookRequest": ".create_pod_polling_webhook_request",
@@ -23,6 +24,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PollingClientId": ".polling_client_id",
     "PollingToken": ".polling_token",
     "PollingWebhook": ".polling_webhook",
+    "UpdatePollingWebhookRequest": ".update_polling_webhook_request",
 }
 
 
@@ -56,4 +58,5 @@ __all__ = [
     "PollingClientId",
     "PollingToken",
     "PollingWebhook",
+    "UpdatePollingWebhookRequest",
 ]
